@@ -19,7 +19,7 @@ public class SingleFieldAlias(ISingleSelect target, string alias)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append('(');
         _target.Write(engine, sql);

@@ -1,6 +1,4 @@
-﻿using ShadowSql.CompareLogics;
-using ShadowSql.Compares;
-using ShadowSql.Identifiers;
+﻿using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
@@ -16,55 +14,106 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <typeparam name="MultiQuery"></typeparam>
-    /// <param name="multiQuery"></param>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <param name="multiTable"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static MultiQuery Where<MultiQuery>(this MultiQuery multiQuery, Func<IMultiTable, AtomicLogic> query)
-        where MultiQuery : MultiTableBase
+    public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, Func<IMultiView, AtomicLogic> query)
+        where TMultiTable : MultiTableBase
     {
-        multiQuery.InnerQuery.AddLogic(query(multiQuery));
-        return multiQuery;
+        multiTable.AddLogic(query(multiTable));
+        return multiTable;
     }
+    /// <summary>
+    /// 指定表查询
+    /// </summary>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="tableName"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, string tableName, Func<IAliasTable, AtomicLogic> query)
+        where TMultiTable : MultiTableBase
+    {
+        multiTable.AddLogic(query(multiTable.From(tableName)));
+        return multiTable;
+    }
+    /// <summary>
+    /// 指定表查询
+    /// </summary>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TMultiTable Where<TMultiTable, TTable>(this TMultiTable multiTable, string tableName, Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+        where TMultiTable : MultiTableBase
+        where TTable : ITable
+    {
+        var aliasTable = multiTable.Table<TTable>(tableName);
+        var prefixColumn = aliasTable.GetPrefixColumn(select(aliasTable.Target));
+        if (prefixColumn is not null)
+            multiTable.AddLogic(query(prefixColumn));
+        return multiTable;
+    }
+    #region IDataQuery
     /// <summary>
     /// Where
     /// </summary>
-    /// <typeparam name="MultiQuery"></typeparam>
-    /// <param name="multiQuery"></param>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <param name="multiTable"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static MultiQuery Where<MultiQuery>(this MultiQuery multiQuery, Func<IMultiTable, SqlQuery, SqlQuery> query)
-        where MultiQuery : MultiTableBase
+    public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, Func<IMultiView, Logic, Logic> query)
+        where TMultiTable : MultiTableBase, IDataQuery
     {
-        multiQuery.InnerQuery.ApplyQuery(query);
-        return multiQuery;
+        multiTable.ApplyFilter(q => query(multiTable, q));
+        return multiTable;
     }
     /// <summary>
     /// 指定表查询
     /// </summary>
-    /// <typeparam name="MultiQuery"></typeparam>
-    /// <param name="multiQuery"></param>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <param name="multiTable"></param>
     /// <param name="tableName"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static MultiQuery Where<MultiQuery>(this MultiQuery multiQuery, string tableName, Func<IAliasTable, AtomicLogic> query)
-        where MultiQuery : MultiTableBase
+    public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, string tableName, Func<IAliasTable, Logic, Logic> query)
+        where TMultiTable : MultiTableBase, IDataQuery
     {
-        multiQuery.InnerQuery.AddLogic(query(multiQuery.From(tableName)));
-        return multiQuery;
+        multiTable.ApplyFilter(q => query(multiTable.From(tableName), q));
+        return multiTable;
+    }
+    #endregion
+    #region IDataSqlQuery
+    /// <summary>
+    /// Where
+    /// </summary>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, Func<IMultiView, SqlQuery, SqlQuery> query)
+        where TMultiTable : MultiTableBase, IDataSqlQuery
+    {
+        multiTable.ApplyFilter(q => query(multiTable, q));
+        return multiTable;
     }
     /// <summary>
     /// 指定表查询
     /// </summary>
-    /// <typeparam name="MultiQuery"></typeparam>
-    /// <param name="multiQuery"></param>
+    /// <typeparam name="TMultiTable"></typeparam>
+    /// <param name="multiTable"></param>
     /// <param name="tableName"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static MultiQuery Where<MultiQuery>(this MultiQuery multiQuery, string tableName, Func<IAliasTable, SqlQuery, SqlQuery> query)
-    where MultiQuery : MultiTableBase
+    public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, string tableName, Func<IAliasTable, SqlQuery, SqlQuery> query)
+        where TMultiTable : MultiTableBase, IDataSqlQuery
     {
-        multiQuery.InnerQuery.ApplyQuery(q => query(multiQuery.From(tableName), q));
-        return multiQuery;
+        multiTable.ApplyFilter(q => query(multiTable.From(tableName), q));
+        return multiTable;
     }
+    #endregion
 }

@@ -1,11 +1,12 @@
-﻿using ShadowSql.Engines;
+﻿using ShadowSql.AliasTables;
+using ShadowSql.Engines;
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
 using ShadowSql.SingleSelect;
+using ShadowSql.Tables;
 using ShadowSql.Variants;
 using System.Text;
 
@@ -56,7 +57,7 @@ public class DapperAliasTableSingleSelect<TTable>(IExecutor executor, ITableView
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="query"></param>
-    public DapperAliasTableSingleSelect(IExecutor executor, AliasTableQuery<TTable> query)
+    public DapperAliasTableSingleSelect(IExecutor executor, AliasTableSqlQuery<TTable> query)
         : this(executor, query, new AliasTableFields<TTable>(query.Source))
     {
     }

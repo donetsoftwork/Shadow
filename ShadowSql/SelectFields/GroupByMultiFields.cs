@@ -1,24 +1,52 @@
 ﻿using ShadowSql.Aggregates;
+using ShadowSql.Fetches;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
-using System.Collections.Generic;
 
 namespace ShadowSql.SelectFields;
 
 /// <summary>
 /// 多(联)表分组后字段筛选
 /// </summary>
-/// <param name="source"></param>
-public class GroupByMultiFields(GroupByMultiQuery source) :
-    SelectFieldsBase<GroupByMultiQuery>(source), ISelectFields
+public class GroupByMultiFields
+    : SelectFieldsBase<IGroupByView>, ISelectFields
 {
+    /// <summary>
+    /// 多(联)表分组后字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    public GroupByMultiFields(GroupByMultiQuery source)
+        : this(source, source.Source)
+    {
+    }
+    /// <summary>
+    /// 多(联)表分组后字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    public GroupByMultiFields(GroupByMultiSqlQuery source)
+        : this(source, source.Source)
+    {
+    }
+    /// <summary>
+    /// 多(联)表分组后字段筛选
+    /// </summary>
+    /// <param name="fetch"></param>
+    public GroupByMultiFields(GroupByMultiFetch fetch)
+        : this(fetch.Source, fetch.MultiTable)
+    {
+    }
+    private GroupByMultiFields(IGroupByView groupBy, IMultiView multiTable)
+        : base(groupBy)
+    {
+        _multiTable = multiTable;
+    }
     #region 配置
-    private readonly IMultiTable _multiTable = source.Source;
+    private readonly IMultiView _multiTable;
     /// <summary>
     /// 多(联)表
     /// </summary>
-    public IMultiTable MultiTable
+    public IMultiView MultiTable
         => _multiTable;
     #endregion
     #region 功能
@@ -37,7 +65,7 @@ public class GroupByMultiFields(GroupByMultiQuery source) :
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByMultiFields SelectAggregate(Func<IMultiTable, IAggregateFieldAlias> select)
+    public GroupByMultiFields SelectAggregate(Func<IMultiView, IAggregateFieldAlias> select)
     {
         SelectCore(select(_multiTable));
         return this;

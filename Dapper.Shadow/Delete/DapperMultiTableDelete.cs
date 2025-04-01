@@ -10,7 +10,7 @@ namespace Dapper.Shadow.Delete;
 /// <param name="executor"></param>
 /// <param name="multiTable"></param>
 /// <param name="target"></param>
-public class DapperMultiTableDelete(IExecutor executor, IMultiTableQuery multiTable, IAliasTable target)
+public class DapperMultiTableDelete(IExecutor executor, IMultiView multiTable, IAliasTable target)
     : MultiTableDelete(multiTable, target), IDapperExecute
 {
     /// <summary>
@@ -18,7 +18,7 @@ public class DapperMultiTableDelete(IExecutor executor, IMultiTableQuery multiTa
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="multiTable"></param>
-    public DapperMultiTableDelete(IExecutor executor, IMultiTableQuery multiTable)
+    public DapperMultiTableDelete(IExecutor executor, IMultiView multiTable)
         : this(executor, multiTable, multiTable.Tables.First())
     {
     }

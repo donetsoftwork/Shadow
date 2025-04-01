@@ -1,4 +1,5 @@
 ﻿using ShadowSql.Aggregates;
+using ShadowSql.Fetches;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Variants;
@@ -10,19 +11,55 @@ namespace ShadowSql.SelectFields;
 /// 别名表分组字段筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-public class GroupByAliasTableFields<TTable>(GroupByAliasTable<TTable> source)
-    : SelectFieldsBase<GroupByAliasTable<TTable>>(source), ISelectFields
+public class GroupByAliasTableFields<TTable>
+    : SelectFieldsBase<ITableView>, ISelectFields
     where TTable : ITable
 {
+    /// <summary>
+    /// 别名表分组字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    public GroupByAliasTableFields(GroupByAliasTableQuery<TTable> source)
+        : this(source, source, source.Source, source.Source.Target)
+    {
+    }
+    /// <summary>
+    /// 别名表分组字段筛选
+    /// </summary>
+    /// <param name="fetch"></param>
+    public GroupByAliasTableFields(GroupByAliasTableFetch<TTable> fetch)
+        : this(fetch, fetch.Source, fetch.AliasTable, fetch.Table)
+    { 
+    }
+    /// <summary>
+    /// 别名表分组字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    public GroupByAliasTableFields(GroupByAliasTableSqlQuery<TTable> source)
+        : this(source, source, source.Source, source.Source.Target)
+    {
+    }
+    private GroupByAliasTableFields(ITableView source, IGroupByView groupBy, TableAlias<TTable> aliasTable, TTable table)
+        : base(source)
+    {
+        _groupBy = groupBy;
+        _aliasTable = aliasTable;
+        _table = table;
+    }
     #region 配置
-    private readonly TableAlias<TTable> _aliasTable = source.Source;
+    private readonly IGroupByView _groupBy;
+    /// <summary>
+    /// 分组查询
+    /// </summary>
+    public IGroupByView GroupBy
+        => _groupBy;
+    private readonly TableAlias<TTable> _aliasTable;
     /// <summary>
     /// 别名表
     /// </summary>
     public TableAlias<TTable> AliasTable
         => _aliasTable;
-    private readonly TTable _table = source.Table;
+    private readonly TTable _table;
     /// <summary>
     /// 表
     /// </summary>
@@ -36,7 +73,7 @@ public class GroupByAliasTableFields<TTable>(GroupByAliasTable<TTable> source)
     /// <param name="select"></param>
     public GroupByAliasTableFields<TTable> Select(Func<IGroupByView, IField> select)
     {
-        SelectCore(select(_source));
+        SelectCore(select(_groupBy));
         return this;
     }
     #region SelectAggregate

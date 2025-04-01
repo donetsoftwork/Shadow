@@ -2,7 +2,7 @@
 using Dapper.Shadow.Update;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
+using ShadowSql.Tables;
 using ShadowSql.Update;
 using System;
 
@@ -37,7 +37,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableQuery<TTable> tableQuery)
+    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
         where TTable : IDapperTable
         => new(tableQuery.Source.Executor, tableQuery.Source, tableQuery.Filter);
     #endregion
@@ -47,7 +47,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="view"></param>
     /// <returns></returns>
-    public static DapperMultiTableUpdate ToDapperUpdate(this DapperMultiTableQuery view)
+    public static DapperMultiTableUpdate ToDapperUpdate(this DapperMultiTableSqlQuery view)
         => new(view.Executor, view);
     #endregion
 
@@ -79,7 +79,7 @@ public static partial class DapperShadowServices
     /// <param name="tableQuery"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableQuery<TTable> tableQuery, IExecutor executor)
+    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery, IExecutor executor)
         where TTable : ITable
         => new(executor, tableQuery.Source, tableQuery.Filter);
     #endregion
@@ -90,7 +90,7 @@ public static partial class DapperShadowServices
     /// <param name="view"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperMultiTableUpdate ToDapperUpdate(this IMultiTableQuery view, IExecutor executor)
+    public static DapperMultiTableUpdate ToDapperUpdate(this IMultiView view, IExecutor executor)
         => new(executor, view);
     #endregion    
 }

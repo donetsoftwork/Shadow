@@ -8,15 +8,15 @@ namespace ShadowSql.SelectFields;
 /// 多(联)表字段筛选
 /// </summary>
 /// <param name="source"></param>
-public class MultiTableFields(IMultiTableQuery source) :
-    SelectFieldsBase<IMultiTableQuery>(source), ISelectFields
+public class MultiTableFields(IMultiView source) :
+    SelectFieldsBase<IMultiView>(source), ISelectFields
 {
     #region 功能
     /// <summary>
     /// 筛选列
     /// </summary>
     /// <param name="select"></param>
-    public MultiTableFields Select(Func<IMultiTable, IFieldView> select)
+    public MultiTableFields Select(Func<IMultiView, IFieldView> select)
     {
         SelectCore(select(_source));
         return this;

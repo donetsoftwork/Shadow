@@ -16,7 +16,7 @@ namespace Shadow.DDL.Schemas;
 /// <param name="columns"></param>
 /// <param name="schema"></param>
 public class TableSchema(string name, ColumnSchema[] columns, string schema = "")
-    : Identifier(name), ITable
+    : Identifier(name), ITable, ISqlEntity
 {
     private readonly string _schema = schema;
     private readonly ColumnSchema[] _columns = columns;
@@ -80,7 +80,6 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         var ignoreType = ColumnType.Identity | ColumnType.Key | ColumnType.Computed;
         return fields.Where(o => (o.ColumnType & ignoreType) == ColumnType.Empty);
     }
-
     /// <summary>
     /// 查找字段
     /// </summary>
@@ -91,13 +90,14 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         return _columns.FirstOrDefault(c => c.IsMatch(columName))
             ?? Table.GetColumnWithTablePrefix(_name, _columns, columName);
     }
+    #region ISqlEntity
     /// <summary>
     /// 拼写sql
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    private void Write(ISqlEngine engine, StringBuilder sql)
     {
         if (!string.IsNullOrEmpty(_schema))
         {
@@ -106,6 +106,9 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         }
         engine.Identifier(sql, _name);
     }
+    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
+        => Write(engine, sql);
+    #endregion
     #region ITable
     IEnumerable<IColumn> IInsertTable.InsertColumns
         => _insertColumns;

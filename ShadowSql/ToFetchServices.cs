@@ -1,8 +1,9 @@
-﻿using ShadowSql.Fetches;
+﻿using ShadowSql.AliasTables;
+using ShadowSql.Fetches;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
+using ShadowSql.Tables;
 using ShadowSql.Variants;
 
 namespace ShadowSql;
@@ -47,6 +48,17 @@ public static partial class ShadowSqlServices
     public static TableFetch<TTable> ToFetch<TTable>(this TableQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query.Filter, limit, offset);
+    /// <summary>
+    /// 表查询范围筛选
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static TableFetch<TTable> ToFetch<TTable>(this TableSqlQuery<TTable> query, int limit = 0, int offset = 0)
+        where TTable : ITable
+        => new(query.Source, query.Filter, limit, offset);
     #endregion
     #region AliasTableFetch
     /// <summary>
@@ -83,6 +95,17 @@ public static partial class ShadowSqlServices
     public static AliasTableFetch<TTable> ToFetch<TTable>(this AliasTableQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query.Filter, limit, offset);
+    /// <summary>
+    /// 别名表查询范围筛选
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static AliasTableFetch<TTable> ToFetch<TTable>(this AliasTableSqlQuery<TTable> query, int limit = 0, int offset = 0)
+        where TTable : ITable
+        => new(query.Source, query.Filter, limit, offset);
     #endregion
     #region MultiTableFetch
     /// <summary>
@@ -92,7 +115,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static MultiTableFetch ToFetch(this IMultiTableQuery query, int limit = 0, int offset = 0)
+    public static MultiTableFetch ToFetch(this IMultiView query, int limit = 0, int offset = 0)
         => new(query, limit, offset);
     #endregion
     #region GroupByTableFetch
@@ -104,7 +127,18 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByTableFetch<TTable> ToFetch<TTable>(this GroupByTable<TTable> groupBy, int limit = 0, int offset = 0)
+    public static GroupByTableFetch<TTable> ToFetch<TTable>(this GroupByTableSqlQuery<TTable> groupBy, int limit = 0, int offset = 0)
+        where TTable : ITable
+        => new(groupBy, limit, offset);
+    /// <summary>
+    /// 表分组后范围筛选
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="groupBy"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static GroupByTableFetch<TTable> ToFetch<TTable>(this GroupByTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(groupBy, limit, offset);
     #endregion
@@ -117,7 +151,18 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByAliasTableFetch<TTable> ToFetch<TTable>(this GroupByAliasTable<TTable> groupBy, int limit = 0, int offset = 0)
+    public static GroupByAliasTableFetch<TTable> ToFetch<TTable>(this GroupByAliasTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
+        where TTable : ITable
+        => new(groupBy, limit, offset);
+    /// <summary>
+    /// 别名表分组后范围筛选
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="groupBy"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static GroupByAliasTableFetch<TTable> ToFetch<TTable>(this GroupByAliasTableSqlQuery<TTable> groupBy, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(groupBy, limit, offset);
     #endregion
@@ -130,6 +175,15 @@ public static partial class ShadowSqlServices
     /// <param name="offset"></param>
     /// <returns></returns>
     public static GroupByMultiFetch ToFetch(this GroupByMultiQuery groupBy, int limit = 0, int offset = 0)
+        => new(groupBy, limit, offset);
+    /// <summary>
+    /// 多(联)表分组后范围筛选
+    /// </summary>
+    /// <param name="groupBy"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static GroupByMultiFetch ToFetch(this GroupByMultiSqlQuery groupBy, int limit = 0, int offset = 0)
         => new(groupBy, limit, offset);
     #endregion
 }

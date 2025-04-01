@@ -16,13 +16,14 @@ public class JoinTableSelectTests
     {
         var joinOn = new Table("Comments").As("c")
             .Join(new Table("Posts").As("p"))
-            .OnColumn("PostId", "Id")
-            .WhereLeft(left => left.Field("Pick").EqualValue(true))
-            .WhereRight(right => right.Field("Author").EqualValue("jxj"));
+            .OnColumn("PostId", "Id");
 
-        var query = joinOn.Root.ToFetch()
-             .Desc("c", c => c.Field("Id"))
-             .ToSelect();
+        var query = joinOn.Root
+            .TableColumnEqualValue("c", "Pick", true)
+            .TableColumnEqualValue("p", "Author", "jxj")
+            .ToFetch()
+            .Desc("c", c => c.Field("Id"))
+            .ToSelect();
         query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
         var sql = _engine.Sql(query);
         Assert.Equal("SELECT c.`Id`,c.`Content` FROM `Comments` AS c INNER JOIN `Posts` AS p ON c.`PostId`=p.`Id` WHERE c.`Pick`=1 AND p.`Author`='jxj' ORDER BY c.`Id` DESC", sql);

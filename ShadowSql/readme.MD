@@ -74,19 +74,19 @@ public interface ILogic : ISqlFragment
 public interface IAndLogic : ISqlLogic
 {
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="atomic"></param>
     /// <returns></returns>
     IAndLogic And(AtomicLogic atomic);
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
     IAndLogic And(IAndLogic and);
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
@@ -101,19 +101,19 @@ public interface IAndLogic : ISqlLogic
 public interface IOrLogic : ISqlLogic
 {
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="atomic"></param>
     /// <returns></returns>
     IOrLogic Or(AtomicLogic atomic);
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
     IOrLogic Or(IOrLogic or);
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
@@ -122,7 +122,7 @@ public interface IOrLogic : ISqlLogic
 ~~~
 
 #### 2.4 原子逻辑(AtomicLogic)
->构成And和Or逻辑的最小单元逻辑
+>构成And和或逻辑的最小单元逻辑
 
 ~~~csharp
 /// <summary>

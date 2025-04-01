@@ -26,15 +26,14 @@ public sealed class CompareRawFieldInfo : Identifier, ISqlValue
     /// 缓存
     /// </summary>
     private static readonly CacheService<CompareRawFieldInfo> _cacher = new(statement => new CompareRawFieldInfo(statement));
-
+    #region ISqlEntity
     /// <summary>
     /// 拼写sql
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-    {
-        sql.Append(_name);
-    }
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
+        => sql.Append(_name);
+    #endregion
 }

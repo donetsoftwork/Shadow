@@ -2,20 +2,21 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
+using ShadowSql.Variants;
 
 namespace Dapper.Shadow.GroupBy;
 
 /// <summary>
-/// 对Table进行分组查询
+/// 对别名表分组
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
-/// <param name="table"></param>
+/// <param name="source"></param>
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class DapperGroupByTable<TTable>(IExecutor executor, TTable table, ISqlLogic where, IFieldView[] fields, SqlQuery having)
-    : GroupByTable<TTable>(table, where, fields, having)
+public class DapperGroupByAliasTableSqlQuery<TTable>(IExecutor executor, TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, SqlQuery having)
+    : GroupByAliasTableSqlQuery<TTable>(source, where, fields, having)
     , IDapperSource
     where TTable : ITable
 {

@@ -2,25 +2,46 @@
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
-using System.Collections.Generic;
 
 namespace ShadowSql.Fetches;
 
 /// <summary>
 /// 多(联)表分组后范围筛选
 /// </summary>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class GroupByMultiFetch(GroupByMultiQuery source, int limit, int offset)
-    : FetchBase<GroupByMultiQuery>(source, offset, limit)
+public class GroupByMultiFetch : FetchBase<IGroupByView>
 {
+    /// <summary>
+    /// 多(联)表分组后范围筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    public GroupByMultiFetch(GroupByMultiQuery source, int limit, int offset)
+        : this(source, source.Source, limit, offset)
+    {
+    }
+    /// <summary>
+    /// 多(联)表分组后范围筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    public GroupByMultiFetch(GroupByMultiSqlQuery source, int limit, int offset)
+        : this(source, source.Source, limit, offset)
+    {
+    }
+    private GroupByMultiFetch(IGroupByView source, IMultiView multiTable, int limit, int offset)
+        : base(source, limit, offset)
+    {
+        _multiTable = multiTable;
+    }
+
     #region 配置
-    private readonly IMultiTable _multiTable = source.Source;
+    private readonly IMultiView _multiTable;
     /// <summary>
     /// 多(联)表
     /// </summary>
-    public IMultiTable MultiTable
+    public IMultiView MultiTable
         => _multiTable;
     #endregion
     

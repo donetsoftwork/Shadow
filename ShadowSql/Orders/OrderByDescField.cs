@@ -24,7 +24,7 @@ internal class OrderByDescField : Identifier, IOrderField
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         base.Write(engine, sql);
         sql.Append(Desc);

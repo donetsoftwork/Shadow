@@ -10,7 +10,7 @@ namespace Dapper.Shadow.Fetches;
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class DapperMultiTableFetch(IExecutor executor, IMultiTableQuery source, int limit, int offset)
+public class DapperMultiTableFetch(IExecutor executor, IMultiView source, int limit, int offset)
     : MultiTableFetch(source, limit, offset)
 {
     #region 配置

@@ -1,6 +1,6 @@
 ﻿using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
+using ShadowSql.Tables;
 using ShadowSql.Update;
 using System;
 
@@ -35,7 +35,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static TableUpdate<TTable> ToUpdate<TTable>(this TableQuery<TTable> tableQuery)
+    public static TableUpdate<TTable> ToUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
         where TTable : ITable
         => new(tableQuery.Source, tableQuery.Filter);
     #endregion
@@ -45,7 +45,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="view"></param>
     /// <returns></returns>
-    public static MultiTableUpdate ToUpdate(this IMultiTableQuery view)
+    public static MultiTableUpdate ToUpdate(this IMultiView view)
         => new(view);
     #endregion    
 }

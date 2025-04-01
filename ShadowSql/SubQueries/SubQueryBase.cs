@@ -10,11 +10,11 @@ namespace ShadowSql.SubQueries;
 /// <typeparam name="PTable"></typeparam>
 /// <param name="parentTable"></param>
 /// <param name="query"></param>
-public abstract class SubQueryBase<PTable>(TableAlias<PTable> parentTable, IDataQuery query)
+public abstract class SubQueryBase<PTable>(TableAlias<PTable> parentTable, IDataSqlQuery query)
     where PTable : ITable
 {
     private readonly TableAlias<PTable> _parentTable = parentTable;
-    private readonly IDataQuery _query = query;
+    private readonly IDataSqlQuery _query = query;
     //todo: scalar_expression { = | <> | != | > | >= | !> | < | <= | !< } (SELECT Min|Max(Field) FROM ...)
     //todo: scalar_expression { = | <> | != | > | >= | !> | < | <= | !< } {SOME|ANY}(subquery)
     //todo: IN(subquery)

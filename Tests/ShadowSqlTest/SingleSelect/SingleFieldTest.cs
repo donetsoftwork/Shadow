@@ -17,7 +17,7 @@ public class SingleFieldTest
         var u = _db.From("Users")
             .As("u");
         var count = _db.From("Orders")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("UserId=u.Id")
             .GroupBy("UserId")
             .ToSingle();
@@ -37,7 +37,7 @@ public class SingleFieldTest
         var u = _db.From("Users")
             .As("u");
         var count = _db.From("Orders")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("UserId=u.Id")
             .GroupBy("UserId")
             .ToSingle();

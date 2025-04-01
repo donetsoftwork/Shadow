@@ -2,7 +2,7 @@
 using ShadowSql.Delete;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
+using ShadowSql.Tables;
 using System;
 
 namespace Dapper.Shadow;
@@ -36,7 +36,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static DapperTableDelete ToDapperDelete<TSource>(this TableQuery<TSource> tableQuery)
+    public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> tableQuery)
         where TSource : IDapperTable
         => new(tableQuery.Source.Executor, tableQuery.Source, tableQuery.Filter);
     /// <summary>
@@ -54,7 +54,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static DapperTableDelete ToDapperDelete<TSource>(this TableQuery<TSource> tableQuery, IExecutor executor)
+    public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> tableQuery, IExecutor executor)
         where TSource : ITable
         => new(executor, tableQuery.Source, tableQuery.Filter);
     #endregion
@@ -64,7 +64,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="view"></param>
     /// <returns></returns>
-    public static DapperMultiTableDelete ToDapperDelete(this IMultiTableQuery view, IExecutor executor)
+    public static DapperMultiTableDelete ToDapperDelete(this IMultiView view, IExecutor executor)
         => new(executor, view);
     #endregion
     #region TruncateTable

@@ -13,8 +13,8 @@ public interface IDelete : IExecuteSql
     /// 源表
     /// </summary>
     ITableView Source { get; }
-    /// <summary>
-    /// 过滤条件
-    /// </summary>
-    ISqlLogic Filter { get; }
+    ///// <summary>
+    ///// 过滤条件
+    ///// </summary>
+    //ISqlLogic Filter { get; }
 }

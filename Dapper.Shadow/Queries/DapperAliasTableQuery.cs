@@ -1,5 +1,6 @@
-﻿using ShadowSql.Identifiers;
-using ShadowSql.Queries;
+﻿using ShadowSql.AliasTables;
+using ShadowSql.Identifiers;
+using ShadowSql.Logics;
 using ShadowSql.Variants;
 
 namespace Dapper.Shadow.Queries;
@@ -11,7 +12,7 @@ namespace Dapper.Shadow.Queries;
 /// <param name="executor"></param>
 /// <param name="table"></param>
 /// <param name="query"></param>
-public class DapperAliasTableQuery<TTable>(IExecutor executor, TableAlias<TTable> table, SqlQuery query)
+public class DapperAliasTableQuery<TTable>(IExecutor executor, TableAlias<TTable> table, Logic query)
     : AliasTableQuery<TTable>(table, query), IDapperSource
     where TTable : ITable
 {

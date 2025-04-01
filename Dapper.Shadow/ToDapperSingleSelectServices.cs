@@ -3,10 +3,11 @@ using Dapper.Shadow.GroupBy;
 using Dapper.Shadow.Join;
 using Dapper.Shadow.Queries;
 using Dapper.Shadow.SingleSelect;
+using ShadowSql.AliasTables;
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
+using ShadowSql.Tables;
 using ShadowSql.Variants;
 
 namespace Dapper.Shadow;
@@ -42,7 +43,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static DapperTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperTableQuery<TTable> query)
+    public static DapperTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperTableSqlQuery<TTable> query)
         where TTable : ITable
         => new(query.Executor, query);
     /// <summary>
@@ -51,7 +52,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static DapperTableSingleSelect<TTable> ToDapperSingle<TTable>(this TableQuery<TTable> query)
+    public static DapperTableSingleSelect<TTable> ToDapperSingle<TTable>(this TableSqlQuery<TTable> query)
         where TTable : IDapperTable
         => new(query.Source.Executor, query);
     /// <summary>
@@ -90,7 +91,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static DapperAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this AliasTableQuery<TTable> query)
+    public static DapperAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this AliasTableSqlQuery<TTable> query)
         where TTable : IDapperTable
         => new(query.Table.Executor, query);
     /// <summary>
@@ -99,7 +100,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static DapperAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperAliasTableQuery<TTable> query)
+    public static DapperAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperAliasTableSqlQuery<TTable> query)
         where TTable : ITable
         => new(query.Executor, query);
     /// <summary>
@@ -118,14 +119,14 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="multiTable"></param>
     /// <returns></returns>
-    public static DapperMultiTableSingleSelect ToDapperSingle(this DapperMultiTableQuery multiTable)
+    public static DapperMultiTableSingleSelect ToDapperSingle(this DapperMultiTableSqlQuery multiTable)
         => new(multiTable.Executor, multiTable);
     /// <summary>
     /// 联表筛选单列
     /// </summary>
     /// <param name="joinTable"></param>
     /// <returns></returns>
-    public static DapperMultiTableSingleSelect ToDapperSingle(this DapperJoinTableQuery joinTable)
+    public static DapperMultiTableSingleSelect ToDapperSingle(this DapperJoinTableSqlQuery joinTable)
         => new(joinTable.Executor, joinTable);
     /// <summary>
     /// 多(联)表筛选单列
@@ -142,7 +143,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="source"></param>
     /// <returns></returns>
-    public static DapperGroupByTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByTable<TTable> source)
+    public static DapperGroupByTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByTableSqlQuery<TTable> source)
         where TTable : IDapperTable
         => new(source.Executor, source);
     /// <summary>
@@ -162,7 +163,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="source"></param>
     /// <returns></returns>
-    public static DapperGroupByAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByAliasTable<TTable> source)
+    public static DapperGroupByAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByAliasTableSqlQuery<TTable> source)
         where TTable : IDapperTable
         => new(source.Executor, source);
     /// <summary>
@@ -181,7 +182,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="groupBy"></param>
     /// <returns></returns>
-    public static DapperGroupByMultiSingleSelect ToDapperSingle(this DapperGroupByMultiQuery groupBy)
+    public static DapperGroupByMultiSingleSelect ToDapperSingle(this DapperGroupByMultiSqlQuery groupBy)
         => new(groupBy.Executor, groupBy);
     /// <summary>
     /// GroupBy后再范围(分页)及单列筛选

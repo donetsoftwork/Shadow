@@ -48,13 +48,13 @@ public class JoinOnQueryTests
 
 
 
-    private static JoinOnQuery<Table, Table> CreateJoin()
+    private static JoinOnSqlQuery<Table, Table> CreateJoin()
     {
         var employees = _db.From("Employees")
             .DefineColums("Id", "Name", "DepartmentId");
         var departments = _db.From("Departments")
             .DefineColums("Id", "Name", "Manager", "ParentId", "RootId");
 
-        return employees.Join(departments);
+        return employees.SqlJoin(departments);
     }
 }

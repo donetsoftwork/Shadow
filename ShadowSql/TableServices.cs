@@ -18,7 +18,7 @@ public static partial class ShadowSqlServices
     /// <param name="tableName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IAliasTable From(this IMultiTable multiTable, string tableName)
+    public static IAliasTable From(this IMultiView multiTable, string tableName)
         => multiTable.GetMember(tableName)
         ?? throw new ArgumentException(tableName + "表不存在", nameof(tableName));
     /// <summary>
@@ -29,7 +29,7 @@ public static partial class ShadowSqlServices
     /// <param name="tableName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static TableAlias<TTable> Table<TTable>(this IMultiTable multiTable, string tableName)
+    public static TableAlias<TTable> Table<TTable>(this IMultiView multiTable, string tableName)
         where TTable : ITable
     {
         foreach (var table in multiTable.Tables)

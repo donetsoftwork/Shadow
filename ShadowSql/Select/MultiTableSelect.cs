@@ -11,14 +11,14 @@ namespace ShadowSql.Select;
 /// </summary>
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
-public class MultiTableSelect(IMultiTableQuery multiTable, MultiTableFields fields)
-    : SelectBase<IMultiTable, MultiTableFields>(multiTable, fields)
+public class MultiTableSelect(IMultiView multiTable, MultiTableFields fields)
+    : SelectBase<IMultiView, MultiTableFields>(multiTable, fields)
 {
     /// <summary>
     /// 多表视图筛选列
     /// </summary>
     /// <param name="multiTable"></param>
-    public MultiTableSelect(IMultiTableQuery multiTable)
+    public MultiTableSelect(IMultiView multiTable)
         : this(multiTable, new MultiTableFields(multiTable))
     {
     }

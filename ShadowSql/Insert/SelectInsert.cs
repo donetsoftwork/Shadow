@@ -75,7 +75,7 @@ public class SelectInsert<TTable>(TTable table, ISelect select)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {        
         engine.InsertPrefix(sql);
         _table.Write(engine, sql);

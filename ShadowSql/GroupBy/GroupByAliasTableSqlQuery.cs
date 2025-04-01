@@ -5,7 +5,6 @@ using ShadowSql.Logics;
 using ShadowSql.Queries;
 using ShadowSql.Variants;
 using System;
-using System.Drawing;
 using System.Text;
 
 namespace ShadowSql.GroupBy;
@@ -18,8 +17,8 @@ namespace ShadowSql.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class GroupByAliasTable<TTable>(TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, SqlQuery having)
-    : GroupByBase<TableAlias<TTable>>(source, fields, having)
+public class GroupByAliasTableSqlQuery<TTable>(TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, SqlQuery having)
+    : GroupBySqlQueryBase<TableAlias<TTable>>(source, fields, having)
     where TTable : ITable
 {
     /// <summary>
@@ -28,38 +27,38 @@ public class GroupByAliasTable<TTable>(TableAlias<TTable> source, ISqlLogic wher
     /// <param name="table"></param>
     /// <param name="where"></param>
     /// <param name="fields"></param>
-    public GroupByAliasTable(TableAlias<TTable> table, ISqlLogic where, IFieldView[] fields)
+    public GroupByAliasTableSqlQuery(TableAlias<TTable> table, ISqlLogic where, IFieldView[] fields)
         : this(table, where, fields, SqlQuery.CreateAndQuery())
     {
     }
     #region 配置
-    private readonly ISqlLogic _where = where;
-    /// <summary>
-    /// where查询条件
-    /// </summary>
-    public ISqlLogic Where
-        => _where;
     private readonly TTable _table = source.Target;
     /// <summary>
     /// 原始表
     /// </summary>
     public TTable Table
         => _table;
+    private readonly ISqlLogic _where = where;
+    /// <summary>
+    /// where查询条件
+    /// </summary>
+    public ISqlLogic Where
+        => _where;
     #endregion
+
     #region HavingAggregate
     /// <summary>
     /// 按聚合逻辑查询
     /// </summary>
     /// <param name="select"></param>
-    /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByAliasTable<TTable> HavingAggregate(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
+    public GroupByAliasTableSqlQuery<TTable> Having(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
     {
         //增加前缀
         var prefixColumn = _source.GetPrefixColumn(select(_table));
         if (prefixColumn != null)
-            _innerQuery.AddLogic(query(aggregate(prefixColumn)));
+            AddLogic(query(prefixColumn));
         return this;
     }
     #endregion
@@ -70,7 +69,7 @@ public class GroupByAliasTable<TTable>(TableAlias<TTable> source, ISqlLogic wher
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    protected override void AcceptSource(ISqlEngine engine, StringBuilder sql)
+    protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
     {
         _source.Write(engine, sql);
         var point = sql.Length;
@@ -81,19 +80,6 @@ public class GroupByAliasTable<TTable>(TableAlias<TTable> source, ISqlLogic wher
             //回滚
             sql.Length = point;
         }
-        //if (_source.Write(engine, sql))
-        //{
-        //    var point = sql.Length;
-        //    //可选的WHERE
-        //    engine.WherePrefix(sql);
-        //    if (!_where.Write(engine, sql))
-        //    {
-        //        //回滚
-        //        sql.Length = point;
-        //    }
-        //    return true;
-        //}
-        //return false;
     }
     #endregion
 }

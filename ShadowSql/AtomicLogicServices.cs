@@ -13,7 +13,7 @@ public static partial class ShadowSqlServices
     #region And
     #region AtomicLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -24,7 +24,7 @@ public static partial class ShadowSqlServices
     #endregion
     //#region IAndLogic
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -34,7 +34,7 @@ public static partial class ShadowSqlServices
     //#endregion
     #region AndLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -44,7 +44,7 @@ public static partial class ShadowSqlServices
     #endregion
     #region ComplexAndLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -54,7 +54,7 @@ public static partial class ShadowSqlServices
     #endregion
     //#region IOrLogic
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -62,7 +62,7 @@ public static partial class ShadowSqlServices
     //public static IAndLogic And(this AtomicLogic logic, IOrLogic other)
     //    => other.And(logic);
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
     ///// <param name="logic"></param>
@@ -73,7 +73,7 @@ public static partial class ShadowSqlServices
     //#endregion
     #region OrLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -83,7 +83,7 @@ public static partial class ShadowSqlServices
     #endregion
     #region ComplexOrLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -95,7 +95,7 @@ public static partial class ShadowSqlServices
     #region Or
     #region AtomicLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -106,7 +106,7 @@ public static partial class ShadowSqlServices
     #endregion
     //#region IAndLogic
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -114,7 +114,7 @@ public static partial class ShadowSqlServices
     //public static IOrLogic Or(this AtomicLogic logic, IAndLogic other)
     //    => other.Or(logic);
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
     ///// <param name="logic"></param>
@@ -125,7 +125,7 @@ public static partial class ShadowSqlServices
     //#endregion
     #region AndLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -135,7 +135,7 @@ public static partial class ShadowSqlServices
     #endregion
     #region ComplexAndLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -145,7 +145,7 @@ public static partial class ShadowSqlServices
     #endregion
     //#region IOrLogic
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -155,7 +155,7 @@ public static partial class ShadowSqlServices
     //#endregion
     #region OrLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -165,7 +165,7 @@ public static partial class ShadowSqlServices
     #endregion
     #region ComplexOrLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>

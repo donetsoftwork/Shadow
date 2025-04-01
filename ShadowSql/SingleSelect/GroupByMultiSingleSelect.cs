@@ -19,7 +19,7 @@ public class GroupByMultiSingleSelect(IGroupByView groupBy, GroupByMultiFields f
     /// GroupBy后再筛选单列
     /// </summary>
     /// <param name="groupBy"></param>
-    public GroupByMultiSingleSelect(GroupByMultiQuery groupBy)
+    public GroupByMultiSingleSelect(GroupByMultiSqlQuery groupBy)
         : this(groupBy, new GroupByMultiFields(groupBy))
     {
     }
@@ -38,7 +38,7 @@ public class GroupByMultiFetchSingleSelect(IFetch fetch, GroupByMultiFields fiel
     /// </summary>
     /// <param name="fetch"></param>
     public GroupByMultiFetchSingleSelect(GroupByMultiFetch fetch)
-        : this(fetch, new GroupByMultiFields(fetch.Source))
+        : this(fetch, new GroupByMultiFields(fetch))
     {
     }
     /// <summary>

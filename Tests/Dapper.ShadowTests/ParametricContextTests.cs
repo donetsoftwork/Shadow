@@ -16,7 +16,7 @@ public class ParametricContextTests
     public void ColumnValue()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .ColumnValue("Id", 100, "<")
             .ColumnValue("Status", true);
         ParametricContext context = new(_engine);
@@ -30,7 +30,7 @@ public class ParametricContextTests
     public void ColumnInValue()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .ColumnInValue("Id", 1, 2, 3)
             .ColumnValue("Status", true);
         ParametricContext context = new(_engine);
@@ -43,7 +43,7 @@ public class ParametricContextTests
     public void Select()
     {
         var query = new Table("Posts")
-            .ToQuery()
+            .ToSqlQuery()
             .ColumnEqualValue("Id", 10)
             .ToSelect();
         ParametricContext context = new(_engine);

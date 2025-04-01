@@ -1,4 +1,5 @@
 ﻿using ShadowSql.Aggregates;
+using ShadowSql.Fetches;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
@@ -9,13 +10,54 @@ namespace ShadowSql.SelectFields;
 /// 表分组后字段筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-public class GroupByTableFields<TTable>(GroupByTable<TTable> source)
-    : SelectFieldsBase<GroupByTable<TTable>>(source), ISelectFields
+public class GroupByTableFields<TTable>
+    : SelectFieldsBase<ITableView>, ISelectFields
     where TTable : ITable
 {
+    /// <summary>
+    /// 表分组后字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    public GroupByTableFields(GroupByTableQuery<TTable> source)
+        : this(source, source, source.Source)
+    {
+    }
+    /// <summary>
+    /// 表分组后字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    public GroupByTableFields(GroupByTableSqlQuery<TTable> source)
+        : this(source, source, source.Source)
+    {
+    }
+    /// <summary>
+    /// 表分组后字段筛选
+    /// </summary>
+    /// <param name="fetch"></param>
+    public GroupByTableFields(GroupByTableFetch<TTable> fetch)
+    : this(fetch.Source, fetch.Source, fetch.Table)
+    {
+    }
+    /// <summary>
+    /// 表分组后字段筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="groupBy"></param>
+    /// <param name="table"></param>
+    private GroupByTableFields(ITableView source, IGroupByView groupBy, TTable table)
+        : base(source)
+    {
+        _groupBy = groupBy;
+        _table = table;
+    }
     #region 配置
-    private readonly TTable _table = source.Source;
+    private readonly IGroupByView _groupBy;
+    /// <summary>
+    /// 分组查询
+    /// </summary>
+    public IGroupByView GroupBy
+        => _groupBy;
+    private readonly TTable _table;
     /// <summary>
     /// 表
     /// </summary>
@@ -29,7 +71,7 @@ public class GroupByTableFields<TTable>(GroupByTable<TTable> source)
     /// <param name="select"></param>
     public GroupByTableFields<TTable> Select(Func<IGroupByView, IFieldView> select)
     {
-        SelectCore(select(_source));
+        SelectCore(select(_groupBy));
         return this;
     }
     #region SelectAggregate

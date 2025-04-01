@@ -18,7 +18,7 @@ public class SubInLogicTests
             .ToSingle();
         userIds.Fields.Select("UserId");
         var select = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(u => u.Field("Id").In(userIds))
             .ToSelect();
         select.Fields.Select("Id", "Name");
@@ -33,7 +33,7 @@ public class SubInLogicTests
             .ToSingle();
         userIds.Fields.Select("UserId");
         var select = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(u => u.Field("Id").NotIn(userIds))
             .ToSelect();
         select.Fields.Select("Id", "Name");

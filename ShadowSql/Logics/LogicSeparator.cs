@@ -47,7 +47,7 @@ public abstract class LogicSeparator(string separator)
         /// <param name="engine"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public override void Write(ISqlEngine engine, StringBuilder sql)
+        internal override void Write(ISqlEngine engine, StringBuilder sql)
         {
             sql.Append(separator);
         }
@@ -67,7 +67,7 @@ public abstract class LogicSeparator(string separator)
         /// <param name="engine"></param>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public override void Write(ISqlEngine engine, StringBuilder sql)
+        internal override void Write(ISqlEngine engine, StringBuilder sql)
         {
             sql.Append(separator);
         }

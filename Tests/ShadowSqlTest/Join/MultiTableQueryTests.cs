@@ -14,18 +14,18 @@ public class MultiTableQueryTests
     [Fact]
     public void CreateMember()
     {
-        var multiTable = new MultiTableQuery();
-        multiTable.CreateMemberQuery(_db.From("Employees"));
-        multiTable.CreateMemberQuery(_db.From("Departments"));
+        var multiTable = new MultiTableSqlQuery();
+        multiTable.CreateMember(_db.From("Employees"));
+        multiTable.CreateMember(_db.From("Departments"));
         var sql = _engine.Sql(multiTable);
         Assert.Equal("[Employees] AS t1,[Departments] AS t2", sql);
     }
     [Fact]
     public void SelfJoin()
     {
-        var multiTable = new MultiTableQuery();
-        multiTable.CreateMemberQuery(_db.From("Departments"));
-        multiTable.CreateMemberQuery(_db.From("Departments"));
+        var multiTable = new MultiTableSqlQuery();
+        multiTable.CreateMember(_db.From("Departments"));
+        multiTable.CreateMember(_db.From("Departments"));
 
         var sql = _engine.Sql(multiTable);
         Assert.Equal("[Departments] AS t1,[Departments] AS t2", sql);
@@ -33,9 +33,9 @@ public class MultiTableQueryTests
     [Fact]
     public void Where()
     {
-        var multiTable = new MultiTableQuery();
-        multiTable.CreateMemberQuery(_db.From("Departments"));
-        multiTable.CreateMemberQuery(_db.From("Departments"));
+        var multiTable = new MultiTableSqlQuery();
+        multiTable.CreateMember(_db.From("Departments"));
+        multiTable.CreateMember(_db.From("Departments"));
         multiTable.Where("t1.DepartmentId=t2.Id");
         var sql = _engine.Sql(multiTable);
         Assert.Equal("[Departments] AS t1,[Departments] AS t2 WHERE t1.DepartmentId=t2.Id", sql);

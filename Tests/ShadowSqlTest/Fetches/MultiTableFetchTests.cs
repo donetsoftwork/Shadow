@@ -16,7 +16,7 @@ public class MultiTableFetchTests
     {
         int limit = 10;
         int offset = 10;
-        var fetch = new MultiTableQuery()
+        var fetch = new MultiTableSqlQuery()
             .AddMember(_db.From("Employees").As("e"))
             .AddMember(_db.From("Departments").As("d"))
             .ToFetch(limit, offset);
@@ -27,7 +27,7 @@ public class MultiTableFetchTests
     [Fact]
     public void AscMuti()
     {
-        var fetch = new MultiTableQuery()
+        var fetch = new MultiTableSqlQuery()
             .AddMember(_db.From("Employees").As("e"))
             .AddMember(_db.From("Departments").As("d"))
             .ToFetch()
@@ -39,7 +39,7 @@ public class MultiTableFetchTests
     [Fact]
     public void DescTable()
     {
-        var fetch = new MultiTableQuery()
+        var fetch = new MultiTableSqlQuery()
             .AddMember(_db.From("Employees").As("e"))
             .AddMember(_db.From("Departments").As("d"))
             .ToFetch()

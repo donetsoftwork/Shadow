@@ -1,5 +1,6 @@
 ﻿using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using ShadowSql.Tables;
 
 namespace Dapper.Shadow;
 

@@ -1,7 +1,6 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
-using ShadowSql.Logics;
 using System.Linq;
 using System.Text;
 
@@ -12,19 +11,19 @@ namespace ShadowSql.Delete;
 /// </summary>
 /// <param name="multiTable"></param>
 /// <param name="target"></param>
-public class MultiTableDelete(IMultiTableQuery multiTable, IAliasTable target)
+public class MultiTableDelete(IMultiView multiTable, IAliasTable target)
     : IDelete
 {
     /// <summary>
     /// 多表(联表)数据删除
     /// </summary>
     /// <param name="multiTable"></param>
-    public MultiTableDelete(IMultiTableQuery multiTable)
+    public MultiTableDelete(IMultiView multiTable)
         : this(multiTable, multiTable.Tables.First())
     { 
     }
     #region 配置
-    private readonly IMultiTableQuery _multiTable = multiTable;
+    private readonly IMultiView _multiTable = multiTable;
     private IAliasTable _source = target;
     /// <summary>
     /// 被删除表
@@ -34,7 +33,7 @@ public class MultiTableDelete(IMultiTableQuery multiTable, IAliasTable target)
     /// <summary>
     /// 多表(联表)
     /// </summary>
-    public IMultiTableQuery MultiTable
+    public IMultiView MultiTable
         => _multiTable;
     #endregion
     /// <summary>
@@ -51,8 +50,6 @@ public class MultiTableDelete(IMultiTableQuery multiTable, IAliasTable target)
     #region IDelete
     ITableView IDelete.Source
         => _source;
-    ISqlLogic IDelete.Filter
-        => _multiTable.Filter;
     #endregion
     #region ISqlEntity
     /// <summary>
@@ -61,7 +58,7 @@ public class MultiTableDelete(IMultiTableQuery multiTable, IAliasTable target)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public void Write(ISqlEngine engine, StringBuilder sql)
+    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.DeletePrefix(sql);
         sql.Append(_source.Alias);

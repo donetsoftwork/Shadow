@@ -13,7 +13,7 @@ public class DapperTableDeleteTests : ExecuteTestBase
     public void ToDapperDelete()
     {
         var table = new StudentTable();
-        var result = table.ToQuery()
+        var result = table.ToSqlQuery()
             .Where(table.Age.LessValue(7))
             .ToDapperDelete(SqliteExecutor)
             .Execute();

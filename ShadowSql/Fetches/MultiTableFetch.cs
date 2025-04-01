@@ -9,8 +9,8 @@ namespace ShadowSql.Fetches;
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class MultiTableFetch(IMultiTableQuery source, int limit, int offset)
-    : FetchBase<IMultiTableQuery>(source, offset, limit)
+public class MultiTableFetch(IMultiView source, int limit, int offset)
+    : FetchBase<IMultiView>(source, offset, limit)
 {
     #region 功能
     /// <summary>
@@ -18,7 +18,7 @@ public class MultiTableFetch(IMultiTableQuery source, int limit, int offset)
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Asc(Func<IMultiTable, IOrderView> select)
+    public MultiTableFetch Asc(Func<IMultiView, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -28,7 +28,7 @@ public class MultiTableFetch(IMultiTableQuery source, int limit, int offset)
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Desc(Func<IMultiTable, IOrderAsc> select)
+    public MultiTableFetch Desc(Func<IMultiView, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;

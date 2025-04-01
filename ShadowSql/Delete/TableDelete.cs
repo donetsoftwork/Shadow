@@ -1,4 +1,5 @@
 ﻿using ShadowSql.Engines;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using System.Text;
@@ -40,7 +41,7 @@ public class TableDelete(ITable table, ISqlLogic filter)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public void Write(ISqlEngine engine, StringBuilder sql)
+    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.DeletePrefix(sql);
         sql.Append("FROM ");

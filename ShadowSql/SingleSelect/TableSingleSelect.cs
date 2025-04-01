@@ -2,8 +2,8 @@
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.SelectFields;
+using ShadowSql.Tables;
 using System.Text;
 
 namespace ShadowSql.SingleSelect;
@@ -47,7 +47,7 @@ public sealed class TableSingleSelect<TTable>(ITableView view, TableFields<TTabl
     /// 表筛选单列
     /// </summary>
     /// <param name="query"></param>
-    public TableSingleSelect(TableQuery<TTable> query)
+    public TableSingleSelect(TableSqlQuery<TTable> query)
         : this(query, new TableFields<TTable>(query.Source))
     {
     }

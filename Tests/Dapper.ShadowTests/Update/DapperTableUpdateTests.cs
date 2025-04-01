@@ -14,7 +14,7 @@ public class DapperTableUpdateTests : ExecuteTestBase
     public void ToDapperUpdate()
     {
         var table = new StudentTable();
-        var result = table.ToQuery()
+        var result = table.ToSqlQuery()
             .Where(table.Age.LessValue(7))
             .ToDapperUpdate(SqliteExecutor)
             .Set(table.ClassId.EqualToValue(1))

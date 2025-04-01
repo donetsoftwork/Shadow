@@ -1,7 +1,7 @@
 ﻿using ShadowSql.Delete;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
+using ShadowSql.Tables;
 using System;
 
 namespace ShadowSql;
@@ -35,7 +35,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static TableDelete ToDelete<TSource>(this TableQuery<TSource> tableQuery)
+    public static TableDelete ToDelete<TSource>(this TableSqlQuery<TSource> tableQuery)
         where TSource : ITable
         => new(tableQuery.Source, tableQuery.Filter);
     #endregion
@@ -45,7 +45,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="view"></param>
     /// <returns></returns>
-    public static MultiTableDelete ToDelete(this IMultiTableQuery view)
+    public static MultiTableDelete ToDelete(this IMultiView view)
         => new(view);
     #endregion
     #region TruncateTable

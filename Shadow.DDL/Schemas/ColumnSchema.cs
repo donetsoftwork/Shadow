@@ -13,7 +13,7 @@ namespace Shadow.DDL.Schemas;
 /// <param name="name"></param>
 /// <param name="sqlType"></param>
 public class ColumnSchema(string name, string sqlType = "INT")
-    : ColumnBase(name), IColumn
+    : ColumnBase(name), IColumn, IMatch
 {
     private readonly string _sqlType = sqlType.ToUpperInvariant();
     /// <summary>
@@ -99,6 +99,18 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// <returns></returns>
     public IColumn ToColumn()
         => this;
+
+    #region IMatch
+    /// <summary>
+    /// 是否匹配
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    internal bool IsMatch(string name)
+        => Identifier.Match(name, _name);
+    bool IMatch.IsMatch(string name)
+        => IsMatch(name);
+    #endregion
 }
 
 /// <summary>

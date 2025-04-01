@@ -24,7 +24,7 @@ public class DapperGroupByMultiSingleSelect(IExecutor executor, IGroupByView gro
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
-    public DapperGroupByMultiSingleSelect(IExecutor executor, GroupByMultiQuery groupBy)
+    public DapperGroupByMultiSingleSelect(IExecutor executor, GroupByMultiSqlQuery groupBy)
         :this(executor, groupBy, new GroupByMultiFields(groupBy))
     {
     }
@@ -54,7 +54,7 @@ public class DapperGroupByMultiFetchSingleSelect(IExecutor executor, GroupByMult
     /// <param name="executor"></param>
     /// <param name="fetch"></param>
     public DapperGroupByMultiFetchSingleSelect(IExecutor executor, GroupByMultiFetch fetch)
-        : this(executor, fetch, new GroupByMultiFields(fetch.Source))
+        : this(executor, fetch, new GroupByMultiFields(fetch))
     {
     }
     #region 配置

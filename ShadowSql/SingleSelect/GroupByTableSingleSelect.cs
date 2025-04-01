@@ -21,7 +21,7 @@ public class GroupByTableSingleSelect<TTable>(IGroupByView groupBy, GroupByTable
     /// GroupBy后再筛选单列
     /// </summary>
     /// <param name="groupBy"></param>
-    public GroupByTableSingleSelect(GroupByTable<TTable> groupBy)
+    public GroupByTableSingleSelect(GroupByTableSqlQuery<TTable> groupBy)
         : this(groupBy, new GroupByTableFields<TTable>(groupBy))
     {
     }
@@ -41,7 +41,7 @@ public class GroupByTableFetchSingleSelect<TTable>(IFetch fetch, GroupByTableFie
     /// </summary>
     /// <param name="fetch"></param>
     public GroupByTableFetchSingleSelect(GroupByTableFetch<TTable> fetch)
-        : this(fetch, new GroupByTableFields<TTable>(fetch.Source))
+        : this(fetch, new GroupByTableFields<TTable>(fetch))
     {
     }
     /// <summary>

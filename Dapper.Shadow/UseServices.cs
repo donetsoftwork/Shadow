@@ -1,11 +1,12 @@
 ﻿using Dapper.Shadow.Insert;
 using Dapper.Shadow.Select;
 using ShadowSql;
+using ShadowSql.AliasTables;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
-using ShadowSql.Queries;
 using ShadowSql.Select;
+using ShadowSql.Tables;
 using System.Data;
 
 namespace Dapper.Shadow;
@@ -33,7 +34,7 @@ public static partial class DapperShadowServices
     /// <param name="query"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperFilter<TTable> Use<TTable>(this TableQuery<TTable> query, IExecutor executor)
+    public static DapperFilter<TTable> Use<TTable>(this TableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable
         => new(executor, query.Source, query.Filter);
     /// <summary>
@@ -43,7 +44,7 @@ public static partial class DapperShadowServices
     /// <param name="query"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperFilter<IAliasTable> Use<TTable>(this AliasTableQuery<TTable> query, IExecutor executor)
+    public static DapperFilter<IAliasTable> Use<TTable>(this AliasTableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable
         => new(executor, query.Source, query.Filter);
     #endregion

@@ -1,6 +1,8 @@
-﻿using ShadowSql.Logics;
+﻿using ShadowSql.Filters;
+using ShadowSql.Identifiers;
+using ShadowSql.Logics;
 
-namespace ShadowSql.Identifiers;
+namespace ShadowSql.Tables;
 
 /// <summary>
 /// 表数据过滤
@@ -9,7 +11,7 @@ namespace ShadowSql.Identifiers;
 /// <param name="source"></param>
 /// <param name="filter"></param>
 public class TableFilter<TTable>(TTable source, ISqlLogic filter)
-    : DataFilterBase<TTable, ISqlLogic>(source, filter)
+    : SqlLogicFilterBase<TTable>(source, filter)
     where TTable : ITableView
 {
 }

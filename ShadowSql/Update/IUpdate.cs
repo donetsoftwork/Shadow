@@ -24,10 +24,10 @@ public interface IUpdate : IExecuteSql
     /// </summary>
     /// <param name="operation"></param>
     IUpdate Set(IAssignOperation operation);
-    /// <summary>
-    /// 过滤条件
-    /// </summary>
-    ISqlLogic Filter { get; }
+    ///// <summary>
+    ///// 过滤条件
+    ///// </summary>
+    //ISqlLogic Filter { get; }
     /// <summary>
     /// 获取列
     /// </summary>

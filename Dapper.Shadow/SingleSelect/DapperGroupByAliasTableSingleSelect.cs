@@ -26,7 +26,7 @@ public class DapperGroupByAliasTableSingleSelect<TTable>(IExecutor executor, IGr
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
-    public DapperGroupByAliasTableSingleSelect(IExecutor executor, GroupByAliasTable<TTable> groupBy)
+    public DapperGroupByAliasTableSingleSelect(IExecutor executor, GroupByAliasTableSqlQuery<TTable> groupBy)
         : this(executor, groupBy, new GroupByAliasTableFields<TTable>(groupBy))
     {
     }
@@ -58,7 +58,7 @@ public class DapperGroupByAliasTableFetchSingleSelect<TTable>(IExecutor executor
     /// <param name="executor"></param>
     /// <param name="fetch"></param>
     public DapperGroupByAliasTableFetchSingleSelect(IExecutor executor, GroupByAliasTableFetch<TTable> fetch)
-        : this(executor, fetch, new GroupByAliasTableFields<TTable>(fetch.Source))
+        : this(executor, fetch, new GroupByAliasTableFields<TTable>(fetch))
     {
     }
     #region 配置

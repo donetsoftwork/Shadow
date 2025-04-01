@@ -25,17 +25,7 @@ public static partial class ShadowSqlServices
         andComplex.NotLogics(orComplex._logics);
         andComplex.NotOthers(orComplex);
         return and;
-    }    
-    ///// <summary>
-    ///// not子项
-    ///// </summary>
-    ///// <param name="logic"></param>
-    ///// <param name="others"></param>
-    //internal static void NotOthers(this SqlAndQuery logic, IEnumerable<IComplexAndLogic> others)
-    //{
-    //    foreach (var item in others)
-    //        logic._others.Add(item.Not());
-    //}
+    }
     #endregion
     #region CopyTo
     /// <summary>

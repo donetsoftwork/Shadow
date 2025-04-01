@@ -1,4 +1,5 @@
 ﻿using ShadowSql.Engines;
+using ShadowSql.Fragments;
 using ShadowSql.Previews;
 using System;
 using System.Collections.Generic;
@@ -12,27 +13,32 @@ namespace ShadowSql.Logics;
 /// <param name="separator"></param>
 /// <param name="logics"></param>
 public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
-    : ISqlLogic
+    : ISqlLogic, IPreview<AtomicLogic>
 {
     /// <summary>
     /// 逻辑连接(and/or)
     /// </summary>
-    protected readonly LogicSeparator _separator = separator;
+    internal readonly LogicSeparator _separator = separator;
     /// <summary>
     /// 子逻辑
     /// </summary>
     internal readonly List<AtomicLogic> _logics = logics;
     /// <summary>
-    /// 逻辑连接(and/or)
+    /// 子逻辑数量
     /// </summary>
-    public LogicSeparator Separator
-        => _separator;
+    internal int LogicCount
+        => _logics.Count;
+    /// <summary>
+    /// 第一个子逻辑
+    /// </summary>
+    internal AtomicLogic FirstLogic
+        => _logics[0];
     /// <summary>
     /// 子逻辑预览
     /// </summary>
     /// <returns></returns>
     internal virtual IPreview<AtomicLogic> Preview()
-        => new LogicPreview(this);
+        => this;
     /// <summary>
     /// 转化为And查询
     /// </summary>
@@ -43,122 +49,70 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// </summary>
     /// <returns></returns>
     public abstract Logic ToOr();
-    #region And逻辑
+    #region 与逻辑
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="atomic"></param>
     /// <returns></returns>
     public abstract Logic And(AtomicLogic atomic);
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
     public abstract Logic And(AndLogic and);
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
     public abstract Logic And(ComplexAndLogic and);
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
     public abstract Logic And(OrLogic or);
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
     public abstract Logic And(ComplexOrLogic or);
-    ///// <summary>
-    ///// And逻辑
-    ///// </summary>
-    ///// <param name="logic"></param>
-    ///// <returns></returns>
-    //public abstract Logic And(Logic logic);
     #endregion
-    #region Or逻辑
+    #region 或逻辑
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="atomic"></param>
     /// <returns></returns>
     public abstract Logic Or(AtomicLogic atomic);
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
     public abstract Logic Or(OrLogic or);
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
     public abstract Logic Or(ComplexOrLogic or);
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
     public abstract Logic Or(AndLogic and);
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
     public abstract Logic Or(ComplexAndLogic and);
-    ///// <summary>
-    ///// Or逻辑
-    ///// </summary>
-    ///// <param name="logic"></param>
-    ///// <returns></returns>
-    //public abstract Logic Or(Logic logic);
     #endregion
-    //#region MergeToAnd
-    ///// <summary>
-    ///// 合并
-    ///// </summary>
-    ///// <param name="and"></param>
-    ///// <returns></returns>
-    //internal abstract Logic MergeTo(AndLogic and);
-    ///// <summary>
-    ///// 合并
-    ///// </summary>
-    ///// <param name="and"></param>
-    ///// <returns></returns>
-    //internal abstract Logic MergeTo(ComplexAndLogic and);
-    ///// <summary>
-    ///// 合并
-    ///// </summary>
-    ///// <param name="query"></param>
-    ///// <returns></returns>
-    //internal abstract SqlAndQuery MergeTo(SqlAndQuery query);
-    //#endregion
-    //#region MergeToOr
-    ///// <summary>
-    ///// 合并
-    ///// </summary>
-    ///// <param name="or"></param>
-    ///// <returns></returns>
-    //internal abstract Logic MergeTo(OrLogic or);
-    ///// <summary>
-    ///// 合并
-    ///// </summary>
-    ///// <param name="or"></param>
-    ///// <returns></returns>
-    //internal abstract Logic MergeTo(ComplexOrLogic or);
-    ///// <summary>
-    ///// 合并
-    ///// </summary>
-    ///// <param name="query"></param>
-    ///// <returns></returns>
-    //internal abstract SqlOrQuery MergeTo(SqlOrQuery query);
-    //#endregion
     /// <summary>
     /// 增加逻辑
     /// </summary>
@@ -191,7 +145,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public virtual bool TryWrite(ISqlEngine engine, StringBuilder sql)
+    internal virtual bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         var appended = false;
         foreach (var item in _logics)
@@ -348,6 +302,22 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
         => logic.Not();
     #endregion
     #endregion
+    #region IPreview<AtomicLogic>
+    bool IPreview<AtomicLogic>.IsEmpty
+        => _logics.Count == 0;
+    AtomicLogic IPreview<AtomicLogic>.First
+        => _logics[0];
+    bool IPreview<AtomicLogic>.HasSecond
+        => _logics.Count >= 2;
+    #endregion
+    /// <summary>
+    /// 拼写sql
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    /// <returns></returns>
+    bool ISqlFragment.TryWrite(ISqlEngine engine, StringBuilder sql)
+        => TryWrite(engine, sql);
     /// <summary>
     /// 否定逻辑
     /// </summary>

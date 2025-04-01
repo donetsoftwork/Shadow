@@ -1,11 +1,12 @@
-﻿using ShadowSql.Fetches;
+﻿using ShadowSql.AliasTables;
+using ShadowSql.Fetches;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.Select;
 using ShadowSql.SingleSelect;
+using ShadowSql.Tables;
 using ShadowSql.Variants;
 
 namespace ShadowSql;
@@ -41,7 +42,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static TableSingleSelect<TTable> ToSingle<TTable>(this TableQuery<TTable> query)
+    public static TableSingleSelect<TTable> ToSingle<TTable>(this TableSqlQuery<TTable> query)
         where TTable : ITable
         => new(query);
     /// <summary>
@@ -80,7 +81,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static AliasTableSingleSelect<TTable> ToSingle<TTable>(this AliasTableQuery<TTable> query)
+    public static AliasTableSingleSelect<TTable> ToSingle<TTable>(this AliasTableSqlQuery<TTable> query)
         where TTable : ITable
         => new(query);
     /// <summary>
@@ -99,7 +100,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static MultiTableSelect ToSingle(this MultiTableQuery table)
+    public static MultiTableSelect ToSingle(this IMultiView table)
         => new(table);
     /// <summary>
     /// 多(联)表筛选单列
@@ -116,7 +117,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="source"></param>
     /// <returns></returns>
-    public static GroupByTableSingleSelect<TTable> ToSingle<TTable>(this GroupByTable<TTable> source)
+    public static GroupByTableSingleSelect<TTable> ToSingle<TTable>(this GroupByTableSqlQuery<TTable> source)
         where TTable : ITable
         => new(source);
     /// <summary>
@@ -136,7 +137,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="source"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTable<TTable> source)
+    public static GroupByAliasTableSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableSqlQuery<TTable> source)
         where TTable : ITable
         => new(source);
     /// <summary>
@@ -156,7 +157,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="groupBy"></param>
     /// <returns></returns>
-    public static GroupByMultiSelect ToSingle(this GroupByMultiQuery groupBy)
+    public static GroupByMultiSelect ToSingle(this GroupByMultiSqlQuery groupBy)
         => new(groupBy);
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选单列

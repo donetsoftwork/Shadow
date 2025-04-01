@@ -38,12 +38,18 @@ public class AggregateAliasFieldInfo(string aggregate, string column, string ali
         => Alias;
     IColumn IFieldView.ToColumn()
         => Column.Use(Alias);
-
-    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
+    #region ISqlEntity
+    /// <summary>
+    /// 拼写sql
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(_aggregate).Append('(');
         engine.Identifier(sql, _name);
         sql.Append(')');
         engine.ColumnAs(sql, Alias);
     }
+    #endregion
 }

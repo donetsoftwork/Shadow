@@ -17,9 +17,9 @@ public class ExistsLogicTests
         var u = _db.From("Users")
             .As("u");
         var orders = _db.From("Orders")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("UserId=u.Id");
-        var select = u.ToQuery()
+        var select = u.ToSqlQuery()
             .Exists(orders)
             .ToSelect();
         var sql = _engine.Sql(select);
@@ -33,9 +33,9 @@ public class ExistsLogicTests
         var u = _db.From("Users")
             .As("u");
         var orders = _db.From("Orders")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("UserId=u.Id");
-        var select = u.ToQuery()
+        var select = u.ToSqlQuery()
             .NotExists(orders)
             .ToSelect();
         var sql = _engine.Sql(select);

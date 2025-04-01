@@ -41,7 +41,7 @@ public class AliasTableDelete(IAliasTable table, ISqlLogic filter)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public void Write(ISqlEngine engine, StringBuilder sql)
+    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.DeletePrefix(sql);
         sql.Append(_source.Alias)
@@ -54,18 +54,6 @@ public class AliasTableDelete(IAliasTable table, ISqlLogic filter)
             //回滚
             sql.Length = point;
         }
-        //if (_source.Write(engine, sql))
-        //{
-        //    var point = sql.Length;
-        //    engine.WherePrefix(sql);
-        //    if (!_filter.Write(engine, sql))
-        //    {
-        //        //回滚
-        //        sql.Length = point;
-        //    }
-        //    return true;
-        //}
-        //return false;
     }
     #endregion
     #region IDelete

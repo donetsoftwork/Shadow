@@ -1,6 +1,5 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Previews;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,9 +36,11 @@ public abstract class ComplexLogicBase(LogicSeparator separator, List<AtomicLogi
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
-    {        
+    internal override bool TryWrite(ISqlEngine engine, StringBuilder sql)
+    {
         var appended = base.TryWrite(engine, sql);
+        if (!appended && _others.Count == 1)
+            return _others[0].TryWrite(engine, sql);
 
         foreach (ComplexLogicBase item in _others)
         {

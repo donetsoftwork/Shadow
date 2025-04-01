@@ -25,12 +25,31 @@ public class GroupByBench
         .AddColums(PostId, Category, Pick);
 
     [Benchmark]
-    public string ShadowSqlByFieldName()
+    public string ShadowSqlBySqlQuery()
+    {
+        var query = new Table("Comments")
+            .ToSqlQuery()
+            .ColumnEqualValue("Category", "csharp")
+            .ColumnEqualValue("Pick", true)
+            .GroupBy("PostId")
+            .HavingAggregate("SUM", "Hits", hits => hits.GreaterEqualValue(100))
+            .ToFetch()
+            .Desc(PostId)
+            .ToSelect();
+        query.Fields.Select("PostId")
+            .SelectCount("Count");
+        ParametricContext context = new(_engine);
+        var sql = context.Sql(query);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+    [Benchmark]
+    public string ShadowSqlByQuery()
     {
         var query = new Table("Comments")
             .ToQuery()
-            .Column("Category", category => category.EqualValue("csharp"))
-            .Column("Pick", pick => pick.EqualValue(true))
+            .ColumnEqualValue("Category", "csharp")
+            .ColumnEqualValue("Pick", true)
             .GroupBy("PostId")
             .HavingAggregate("SUM", "Hits", hits => hits.GreaterEqualValue(100))
             .ToFetch()

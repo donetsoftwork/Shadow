@@ -43,7 +43,7 @@ public class TableDeleteTests
     public void TableQuery()
     {
         var delete = _db.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(table => table.Field("Score").LessValue(60))
             .ToDelete();
         var sql = _engine.Sql(delete);

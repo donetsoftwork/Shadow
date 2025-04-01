@@ -2,9 +2,9 @@
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
+using ShadowSql.Tables;
 using System.Text;
 
 namespace Dapper.Shadow.Select;
@@ -54,7 +54,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="query"></param>
-    public DapperTableSelect(IExecutor executor, TableQuery<TTable> query)
+    public DapperTableSelect(IExecutor executor, TableSqlQuery<TTable> query)
         : this(executor, query, new TableFields<TTable>(query.Source))
     {
     }

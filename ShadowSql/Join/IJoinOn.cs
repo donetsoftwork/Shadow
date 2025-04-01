@@ -7,12 +7,12 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表俩俩关联
 /// </summary>
-public interface IJoinOn : IMultiTable, ISqlEntity
+public interface IJoinOn : IMultiView, ISqlEntity
 {
     /// <summary>
     /// 联表
     /// </summary>
-    JoinTableQuery Root { get; }
+    IJoinTable Root { get; }
     /// <summary>
     /// 联表类型
     /// </summary>
@@ -24,7 +24,7 @@ public interface IJoinOn : IMultiTable, ISqlEntity
     /// <summary>
     /// 右表
     /// </summary>
-    IAliasTable Right { get; }
+    IAliasTable Source { get; }
     /// <summary>
     /// 联表条件
     /// </summary>

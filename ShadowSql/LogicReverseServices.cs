@@ -15,12 +15,25 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     internal static Logic ToOrCore(this AndLogic and)
     {
-        var preview = and.Preview();
-        if (preview.IsEmpty)
-            return new OrLogic();
-        if (preview.HasSecond)
-            return new ComplexOrLogic().AddOtherCore(and.MergeTo(new ComplexAndLogic()));
-        return new OrLogic(preview.First);
+        return and.LogicCount switch
+        {
+            0 => new OrLogic(),
+            1 => new OrLogic(and.FirstLogic),
+            _ => new ComplexOrLogic().AddOtherCore(and.MergeTo(new ComplexAndLogic())),
+        };
+    }
+    /// <summary>
+    /// 反转
+    /// </summary>
+    /// <returns></returns>
+    internal static Logic ToOrCore(this AndLogic and, AtomicLogic atomic)
+    {
+        return and.LogicCount switch
+        {
+            0 => new OrLogic(atomic),
+            1 => new OrLogic(and.FirstLogic).OrCore(atomic),
+            _ => new ComplexOrLogic().AddOtherCore(and.MergeTo(new ComplexAndLogic())).OrCore(atomic),
+        };
     }
     #endregion
     #region ComplexAndLogic
@@ -47,12 +60,25 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     internal static Logic ToAndCore(this OrLogic or)
     {
-        var preview = or.Preview();
-        if (preview.IsEmpty)
-            return new AndLogic();
-        if (preview.HasSecond)
-            return new ComplexAndLogic().AddOtherCore(or.MergeTo(new ComplexOrLogic()));
-        return new AndLogic(preview.First);
+        return or.LogicCount switch
+        {
+            0 => new AndLogic(),
+            1 => new AndLogic(or.FirstLogic),
+            _ => new ComplexAndLogic().AddOtherCore(or.MergeTo(new ComplexOrLogic())),
+        };
+    }
+    /// <summary>
+    /// 反转
+    /// </summary>
+    /// <returns></returns>
+    internal static Logic ToAndCore(this OrLogic or, AtomicLogic atomic)
+    {
+        return or.LogicCount switch
+        {
+            0 => new AndLogic(atomic),
+            1 => new AndLogic(or.FirstLogic).AndCore(atomic),
+            _ => new ComplexAndLogic().AddOtherCore(or.MergeTo(new ComplexOrLogic())).AndCore(atomic),
+        };
     }
     #endregion
     #region ComplexOrLogic
@@ -68,6 +94,19 @@ public static partial class ShadowSqlServices
         if (preview.HasSecond)
             return new ComplexAndLogic().AddOtherCore(or);
         return new AndLogic(preview.First);
+    }
+    /// <summary>
+    /// 反转
+    /// </summary>
+    /// <returns></returns>
+    internal static Logic ToAndCore(this ComplexOrLogic or, AtomicLogic atomic)
+    {
+        var preview = or.Preview();
+        if (preview.IsEmpty)
+            return new AndLogic(atomic);
+        if (preview.HasSecond)
+            return new ComplexAndLogic().AddOtherCore(or).AndCore(atomic);
+        return new AndLogic(preview.First).AndCore(atomic);
     }
     #endregion
     #endregion

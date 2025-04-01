@@ -97,7 +97,7 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
         => engine.Parameter(sql, _name);
     private static readonly CacheService<Parameter> _cacher = new(name => new Parameter(name));
 

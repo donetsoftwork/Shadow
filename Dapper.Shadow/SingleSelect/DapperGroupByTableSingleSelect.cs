@@ -26,7 +26,7 @@ public class DapperGroupByTableSingleSelect<TTable>(IExecutor executor, IGroupBy
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
-    public DapperGroupByTableSingleSelect(IExecutor executor, GroupByTable<TTable> groupBy)
+    public DapperGroupByTableSingleSelect(IExecutor executor, GroupByTableSqlQuery<TTable> groupBy)
         : this(executor, groupBy, new GroupByTableFields<TTable>(groupBy))
     {
     }
@@ -58,7 +58,7 @@ public class DapperGroupByTableFetchSingleSelect<TTable>(IExecutor executor, IFe
     /// <param name="executor"></param>
     /// <param name="fetch"></param>
     public DapperGroupByTableFetchSingleSelect(IExecutor executor, GroupByTableFetch<TTable> fetch)
-        : this(executor, fetch, new GroupByTableFields<TTable>(fetch.Source))
+        : this(executor, fetch, new GroupByTableFields<TTable>(fetch))
     {
     }
     #region 配置

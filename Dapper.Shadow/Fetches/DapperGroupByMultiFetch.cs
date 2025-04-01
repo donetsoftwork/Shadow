@@ -10,7 +10,7 @@ namespace Dapper.Shadow.Fetches;
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class DapperGroupByMultiFetch(IExecutor executor, GroupByMultiQuery source, int limit, int offset)
+public class DapperGroupByMultiFetch(IExecutor executor, GroupByMultiSqlQuery source, int limit, int offset)
     : GroupByMultiFetch(source, limit, offset)
 {
     #region 配置

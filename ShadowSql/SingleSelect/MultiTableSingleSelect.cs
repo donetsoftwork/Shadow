@@ -13,14 +13,14 @@ namespace ShadowSql.SingleSelect;
 /// <typeparam name="TSource"></typeparam>
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
-public class MultiTableSingleSelect<TSource>(IMultiTableQuery multiTable, MultiTableFields fields)
-    : SingleSelectBase<IMultiTable, MultiTableFields>(multiTable, fields)
+public class MultiTableSingleSelect<TSource>(IMultiView multiTable, MultiTableFields fields)
+    : SingleSelectBase<IMultiView, MultiTableFields>(multiTable, fields)
 {
     /// <summary>
     /// 多表视图筛选单列
     /// </summary>
     /// <param name="multiTable"></param>
-    public MultiTableSingleSelect(IMultiTableQuery multiTable)
+    public MultiTableSingleSelect(IMultiView multiTable)
         : this(multiTable, new MultiTableFields(multiTable))
     {
     }

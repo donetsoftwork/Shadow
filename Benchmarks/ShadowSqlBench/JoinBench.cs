@@ -22,15 +22,36 @@ public class JoinBench
     private static PostTable p = new("p");
 
     [Benchmark]
-    public string ShadowSqlByFieldName()
+    public string ShadowSqlBySqlQuery()
+    {
+        var joinOn = new Table("Comments").As("c")
+            .SqlJoin(new Table("Posts").As("p"))
+            .OnColumn("PostId", "Id");
+
+        var query = joinOn.Root
+            .TableColumnEqualValue("c", "Pick", true)
+            .TableColumnEqualValue("p", "Author", "jxj")
+            .ToFetch()
+             .Desc("c", c => c.Field("Id"))
+             .ToSelect();
+        query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
+
+        ParametricContext context = new(_engine);
+        var sql = context.Sql(query);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+    [Benchmark]
+    public string ShadowSqlByQuery()
     {
         var joinOn = new Table("Comments").As("c")
             .Join(new Table("Posts").As("p"))
-            .OnColumn("PostId", "Id")
-            .WhereLeft(left => left.Field("Pick").EqualValue(true))
-            .WhereRight(right => right.Field("Author").EqualValue("jxj"));
+            .OnColumn("PostId", "Id");
 
-        var query = joinOn.Root.ToFetch()
+        var query = joinOn.Root
+            .TableColumnEqualValue("c", "Pick", true)
+            .TableColumnEqualValue("p", "Author", "jxj")
+            .ToFetch()
              .Desc("c", c => c.Field("Id"))
              .ToSelect();
         query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);

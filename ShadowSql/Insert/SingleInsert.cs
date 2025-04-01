@@ -50,7 +50,7 @@ public class SingleInsert<TTable>(TTable table)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.InsertPrefix(sql);
         _table.Write(engine, sql);

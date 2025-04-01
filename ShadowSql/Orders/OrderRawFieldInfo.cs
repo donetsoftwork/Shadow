@@ -32,8 +32,6 @@ public sealed class OrderRawFieldInfo : Identifier, IOrderView
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-    {
-        sql.Append(_name);
-    }
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
+        => sql.Append(_name);
 }

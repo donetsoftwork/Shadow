@@ -22,7 +22,25 @@ public class FetchBench
     private static IColumn Pick = ShadowSql.Identifiers.Column.Use("Pick");
 
     [Benchmark]
-    public string ShadowSqlByFieldName()
+    public string ShadowSqlBySqlQuery()
+    {
+        var query = new Table("Posts")
+            .ToSqlQuery()
+            .ColumnEqualValue("Category", "csharp")
+            .ColumnEqualValue("Pick", true)
+            .ToFetch()
+            .Skip(10)
+            .Take(10)
+            .Desc(Id)
+            .ToSelect();
+        query.Fields.Select("Id", "Title");
+        ParametricContext context = new(_engine);
+        var sql = context.Sql(query);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+    [Benchmark]
+    public string ShadowSqlByQuery()
     {
         var query = new Table("Posts")
             .ToQuery()
@@ -38,14 +56,12 @@ public class FetchBench
         var sql = context.Sql(query);
         //Console.WriteLine(sql);
         return sql;
-    }    
+    }
     [Benchmark]
     public string ShadowSqlByParametricLogic()
     {
         var query = _db.From("Posts")
-            .ToFetch(Category.EqualValue("csharp") & Pick.EqualValue(true))
-            .Skip(10)
-            .Take(10)
+            .ToFetch(Category.EqualValue("csharp") & Pick.EqualValue(true), 10, 10)
             .Desc(Id)
             .ToSelect()
             .Select(select => select.Fields.Select(Id, Title));
@@ -58,9 +74,7 @@ public class FetchBench
     public string ShadowSqlByLogic()
     {
         var query = _db.From("Posts")
-            .ToFetch(Category.Equal().And(Pick.Equal()))
-            .Skip(10)
-            .Take(10)
+            .ToFetch(Category.Equal().And(Pick.Equal()), 10, 10)
             .Desc(Id)
             .ToSelect();
         query.Fields.Select(Id, Title);

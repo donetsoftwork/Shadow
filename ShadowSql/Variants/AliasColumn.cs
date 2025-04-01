@@ -19,23 +19,6 @@ public class AliasColumn<TColumn>(TColumn target, string alias)
         => _name;
 
     /// <summary>
-    /// sql拼接
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder builder)
-    {
-        _target.Write(engine, builder);
-        engine.ColumnAs(builder, _name);
-        //if (_target.Write(engine, builder))
-        //{
-        //    engine.ColumnAs(builder, _name);
-        //    return true;
-        //}
-        //return false;
-    }
-    /// <summary>
     /// 聚合
     /// </summary>
     /// <param name="aggregate"></param>
@@ -56,14 +39,21 @@ public class AliasColumn<TColumn>(TColumn target, string alias)
         return Column.Use(_name)
             .As(alias);
     }
-    ///// <summary>
-    ///// 是否匹配
-    ///// </summary>
-    ///// <param name="name"></param>
-    ///// <returns></returns>
-    //public override bool IsMatch(string name)
-    //    => Identifier.Match(name, _name);
 
     IColumn IFieldView.ToColumn()
         => Column.Use(_name);
+
+    #region ISqlEntity
+    /// <summary>
+    /// sql拼接
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    internal override void Write(ISqlEngine engine, StringBuilder builder)
+    {
+        _target.Write(engine, builder);
+        engine.ColumnAs(builder, _name);
+    }
+    #endregion
 }

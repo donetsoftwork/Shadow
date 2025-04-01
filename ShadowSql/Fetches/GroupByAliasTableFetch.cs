@@ -1,8 +1,8 @@
 ﻿using ShadowSql.Aggregates;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
+using ShadowSql.Variants;
 using System;
-using System.Collections.Generic;
 
 namespace ShadowSql.Fetches;
 
@@ -10,21 +10,43 @@ namespace ShadowSql.Fetches;
 /// 别名表分组后范围筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class GroupByAliasTableFetch<TTable>(GroupByAliasTable<TTable> source, int limit, int offset)
-    : FetchBase<GroupByAliasTable<TTable>>(source, offset, limit)
+public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     where TTable : ITable
 {
+    /// <summary>
+    /// 别名表分组后范围筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    public GroupByAliasTableFetch(GroupByAliasTableQuery<TTable> source, int limit, int offset)
+        : this(source, source.Source, source.Source.Target, limit, offset)
+    {
+    }
+    /// <summary>
+    /// 别名表分组后范围筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    public GroupByAliasTableFetch(GroupByAliasTableSqlQuery<TTable> source, int limit, int offset)
+        : this(source, source.Source, source.Source.Target, limit, offset)
+    {
+    }
+    private GroupByAliasTableFetch(IGroupByView groupBy, TableAlias<TTable> aliasTable, TTable table, int limit, int offset)
+        : base(groupBy, limit, offset)
+    {
+        _aliasTable = aliasTable;
+        _table = table;
+    }
     #region 配置
-    private readonly IAliasTable _aliasTable = source.Source;
+    private readonly TableAlias<TTable> _aliasTable;
     /// <summary>
     /// 别名表
     /// </summary>
-    public IAliasTable AliasTable
+    public TableAlias<TTable> AliasTable
         => _aliasTable;
-    private readonly TTable _table = source.Table;
+    private readonly TTable _table;
     /// <summary>
     /// 表
     /// </summary>

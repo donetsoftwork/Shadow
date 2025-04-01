@@ -15,7 +15,7 @@ public class SelectInsertTests
     public void ToInsert()
     {
         var select = _db.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("AddTime between '2024-01-01' and '2025-01-01'")
             .ToSelect();
         select.Fields.Select(_name, _age);
@@ -32,7 +32,7 @@ public class SelectInsertTests
         var backup = _db.From("Backup2024")
             .AddColums(_name, _age);
         var insert = _db.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("AddTime between '2024-01-01' and '2025-01-01'")
             .ToSelect()
             .Select(select => select.Fields.Select(_name, _age))

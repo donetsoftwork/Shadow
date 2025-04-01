@@ -1,6 +1,6 @@
 ﻿using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.Queries;
+using ShadowSql.Logics;
 
 namespace Dapper.Shadow.GroupBy;
 
@@ -11,7 +11,7 @@ namespace Dapper.Shadow.GroupBy;
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
 /// <param name="filter"></param>
-public class DapperGroupByMultiQuery(IExecutor executor, IMultiTableQuery multiTable, IFieldView[] fields, SqlQuery filter)
+public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, IFieldView[] fields, Logic filter)
     : GroupByMultiQuery(multiTable, fields, filter)
     , IDapperSource
 {

@@ -1,5 +1,5 @@
 ﻿using ShadowSql.Fragments;
-using ShadowSql.Logics;
+using ShadowSql.Join;
 using ShadowSql.Queries;
 using System.Collections.Generic;
 
@@ -59,16 +59,16 @@ public interface ITableView : ISqlEntity
     /// <returns></returns>
     IField Field(string fieldName);
 }
+///// <summary>
+///// 多表(联表)查询
+///// </summary>
+//public interface IMultiTableQuery : IDataSqlQuery, IMultiTable
+//{
+//}
 /// <summary>
-/// 多表(联表)查询
+/// 多表视图
 /// </summary>
-public interface IMultiTableQuery : IDataQuery, IMultiTable
-{
-}
-/// <summary>
-/// 多表(联表)
-/// </summary>
-public interface IMultiTable : ITableView
+public interface IMultiView : ITableView
 {
     /// <summary>
     /// 表
@@ -82,34 +82,46 @@ public interface IMultiTable : ITableView
     IAliasTable? GetMember(string tableName);
 }
 /// <summary>
-///  聚合视图
+/// 多表(联表)
 /// </summary>
-public interface IGroupByQuery : IDataQuery, IGroupByView
-{
-    ///// <summary>
-    ///// 源表
-    ///// </summary>
-    //IDataView Source { get; }
-}
-/// <summary>
-/// 聚合多表视图
-/// </summary>
-public interface IGroupByMultiQuery : IDataQuery, IGroupByView
+public interface IMultiTable : IMultiView
 {
     /// <summary>
-    /// 源表
+    /// 构造新成员名
     /// </summary>
-    IMultiTableQuery MultiSource { get; }
+    /// <returns></returns>
+    string CreateMemberName();
+    /// <summary>
+    /// 添加表成员
+    /// </summary>
+    /// <param name="aliasTable"></param>
+    void AddMember(IAliasTable aliasTable);
+}
+
+/// <summary>
+/// 联表
+/// </summary>
+public interface IJoinTable : IMultiTable
+{
+    /// <summary>
+    /// 连接
+    /// </summary>
+    IEnumerable<IJoinOn> JoinOns { get;  }
+    /// <summary>
+    /// 添加连接
+    /// </summary>
+    /// <param name="joinOn"></param>
+    void AddJoinOn(IJoinOn joinOn);
 }
 /// <summary>
 /// 分组视图
 /// </summary>
 public interface IGroupByView : ITableView
 {
-    /// <summary>
-    /// 数据源表
-    /// </summary>
-    ITableView Source { get; }
+    ///// <summary>
+    ///// 数据源表
+    ///// </summary>
+    //ITableView Source { get; }
 }
 /// <summary>
 /// 表别名
@@ -141,11 +153,3 @@ public interface IAliasTable : IView, ITableView
     /// <returns></returns>
     IPrefixColumn? GetPrefixColumn(IColumn column);
 }
-///// <summary>
-///// 连接
-///// 多个表按给定的条件进行拼接
-///// </summary>
-//public interface IJoinView : ITableView
-//{
-    
-//}

@@ -10,14 +10,15 @@ namespace Dapper.Shadow.Update;
 /// <param name="executor"></param>
 /// <param name="multiTable"></param>
 /// <param name="target"></param>
-public class DapperMultiTableUpdate(IExecutor executor, IMultiTableQuery multiTable, IAliasTable target)
+public class DapperMultiTableUpdate(IExecutor executor, IMultiView multiTable, IAliasTable target)
     : MultiTableUpdate(multiTable, target), IDapperExecute
 {
     /// <summary>
     /// 多表(联表)修改
     /// </summary>
+    /// <param name="executor"></param>
     /// <param name="multiTable"></param>
-    public DapperMultiTableUpdate(IExecutor executor, IMultiTableQuery multiTable)
+    public DapperMultiTableUpdate(IExecutor executor, IMultiView multiTable)
         : this(executor, multiTable, multiTable.Tables.First())
     {
     }

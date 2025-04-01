@@ -34,14 +34,14 @@ public static partial class ShadowSqlServices
         => new([.. source._items], source._separator);
     #region And
     /// <summary>
-    /// 复制And逻辑
+    /// 复制与逻辑
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
     public static AndLogic Copy(this AndLogic source)
         => new([.. source._logics]);
     /// <summary>
-    /// 复制复合And逻辑
+    /// 复制复合与逻辑
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
@@ -56,14 +56,14 @@ public static partial class ShadowSqlServices
     #endregion
     #region Or
     /// <summary>
-    /// 复制Or逻辑
+    /// 复制或逻辑
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>
     public static OrLogic Copy(this OrLogic source)
         => new([.. source._logics]);
     /// <summary>
-    /// 复制复合Or逻辑
+    /// 复制复合或逻辑
     /// </summary>
     /// <param name="source"></param>
     /// <returns></returns>

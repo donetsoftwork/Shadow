@@ -1,6 +1,6 @@
 ﻿using ShadowSql.Generators;
 using ShadowSql.Join;
-using ShadowSql.Queries;
+using ShadowSql.Logics;
 
 namespace Dapper.Shadow.Join;
 
@@ -10,7 +10,7 @@ namespace Dapper.Shadow.Join;
 /// <param name="executor"></param>
 /// <param name="aliasGenerator"></param>
 /// <param name="filter"></param>
-public class DapperJoinTableQuery(IExecutor executor, IIdentifierGenerator aliasGenerator, SqlQuery filter)
+public class DapperJoinTableQuery(IExecutor executor, IIdentifierGenerator aliasGenerator, Logic filter)
     : JoinTableQuery(aliasGenerator, filter), IDapperSource
 {
     #region 配置

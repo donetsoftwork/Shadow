@@ -30,22 +30,6 @@ public class GroupByQueryTests
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [City]", sql);
     }
-
-    [Fact]
-    public void Having()
-    {
-        var table = _db.From("Users");
-        var query = table.ToQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("City");
-        groupBy.Having(q => q
-                .And("Count(City)>100")
-            );
-
-       
-        var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [City] HAVING Count(City)>100", sql);
-    }
     [Fact]
     public void HavingQuery()
     {

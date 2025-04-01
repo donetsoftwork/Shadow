@@ -32,7 +32,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void Where()
     {
         var students = SqliteExecutor.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("Age=10")
             .ToDapperSelect()
             .Get<Student>()
@@ -47,7 +47,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     {
         var ageFilter = Column.Use("Age").EqualValue(10);
         var students = SqliteExecutor.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(ageFilter)
             .ToDapperSelect()
             .Get<Student>()
@@ -61,7 +61,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void Or()
     {
         var students = SqliteExecutor.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .ColumnValue("Age", 10)
             .ToOr()
             .ColumnLikeValue("Name", "张%")
@@ -78,7 +78,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void ColumnValue()
     {
         var students = SqliteExecutor.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .ColumnValue("Age", 10)
             .ToDapperSelect()
             .Get<Student>()
@@ -93,7 +93,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     {
         var age = Column.Use("Age");
         var students = SqliteExecutor.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(age.EqualValue(10))
             .ToDapperSelect()
             .Get<Student>()
@@ -107,7 +107,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void CustomizeTable()
     {
         var table = new StudentTable("Students");
-        var students = table.ToQuery()
+        var students = table.ToSqlQuery()
             .Where(table.Age.EqualValue(10))
             .ToSelect()
             .Get<Student>(SqliteExecutor)
@@ -121,7 +121,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void Func()
     {
         var students = new StudentTable("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(table => table.Age.EqualValue(10))
             .ToSelect()
             .Get<Student>(SqliteExecutor)
@@ -136,7 +136,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     {
         var students = new Table("Students")
             .DefineColums("Age")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(student => student.Column("Age").EqualValue(10))
             .ToSelect()
             .Get<Student>(SqliteExecutor)
@@ -151,7 +151,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void Field()
     {
         var students = SqliteExecutor.From("Students")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(student => student.Field("Age").EqualValue(10))
             .ToDapperSelect()
             .Get<Student>()
@@ -191,7 +191,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void Fetch()
     {
         var table = new StudentTable("Students");
-        var students = table.ToQuery()
+        var students = table.ToSqlQuery()
             .Where(table.Age.GreaterEqualValue(9))
             .ToFetch()
             .Desc(table.Id)

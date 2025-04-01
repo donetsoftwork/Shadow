@@ -13,8 +13,8 @@ namespace Dapper.Shadow.Select;
 /// <param name="executor"></param>
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
-public class DapperMultiTableSelect(IExecutor executor, IMultiTable multiTable, MultiTableFields fields)
-    : SelectBase<IMultiTable, MultiTableFields>(multiTable, fields)
+public class DapperMultiTableSelect(IExecutor executor, IMultiView multiTable, MultiTableFields fields)
+    : SelectBase<IMultiView, MultiTableFields>(multiTable, fields)
     , IDapperSelect
 {
     /// <summary>
@@ -22,7 +22,7 @@ public class DapperMultiTableSelect(IExecutor executor, IMultiTable multiTable, 
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="multiTable"></param>
-    public DapperMultiTableSelect(IExecutor executor, IMultiTableQuery multiTable)
+    public DapperMultiTableSelect(IExecutor executor, IMultiView multiTable)
         : this(executor, multiTable, new MultiTableFields(multiTable))
     {
     }

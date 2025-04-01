@@ -4,9 +4,9 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
 
-namespace ShadowSqlTest.Queries;
+namespace ShadowSqlTest.Tables;
 
-public class TableQueryTests
+public class TableSqlQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
     static readonly IDB _db = SimpleDB.Use("MyDb");
@@ -16,7 +16,7 @@ public class TableQueryTests
     public void AndQuery()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("Id=@Id", "Status=@Status");
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE Id=@Id AND Status=@Status", sql);
@@ -25,7 +25,7 @@ public class TableQueryTests
     public void OrQuery()
     {
         var query = _db.From("Users")
-            .ToOrQuery()
+            .ToSqlOrQuery()
             .Where("Id=@Id", "Status=@Status");
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE Id=@Id OR Status=@Status", sql);
@@ -34,7 +34,7 @@ public class TableQueryTests
     public void Where()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .Where("Id=@Id", "Status=@Status");
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE Id=@Id AND Status=@Status", sql);
@@ -43,7 +43,7 @@ public class TableQueryTests
     public void WhereAnd()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(q => q
                 .And("Id=@Id")
                 .And("Status=@Status")
@@ -55,7 +55,7 @@ public class TableQueryTests
     public void WhereOr()
     {
         var query = _db.From("Users")
-            .ToOrQuery()
+            .ToSqlOrQuery()
             .Where(q => q
                 .Or("Id=@Id")
                 .Or("Status=@Status")
@@ -67,7 +67,7 @@ public class TableQueryTests
     public void Column()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .ColumnParameter("Id", "<", "LastId")
             .ColumnParameter("Status", "=", "state");
         var sql = _engine.Sql(query);
@@ -78,7 +78,7 @@ public class TableQueryTests
     public void ColumnValue()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .ToOr()
             .ColumnValue("Id", 100, "<")
             .ColumnValue("Status", true);
@@ -90,7 +90,7 @@ public class TableQueryTests
     public void FieldCompare()
     {
         var query = _db.From("Users")
-            .ToQuery()
+            .ToSqlQuery()
             .Where(q => q.Field("Id").Less("LastId"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<@LastId", sql);
@@ -99,28 +99,16 @@ public class TableQueryTests
     public void Logic()
     {
         var query = new Users()
-            .ToQuery()
+            .ToSqlQuery()
             .Where(_id.LessValue(100));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<100", sql);
     }
     [Fact]
-    public void Table()
-    {
-        var query = new Users()
-            .ToQuery()
-            .Where((user, q) => q
-                .And(user.Id.LessValue(100))
-                .And(user.Status.EqualValue(true))
-            );
-        var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<100 AND [Status]=1", sql);
-    }
-    [Fact]
     public void TableLogic()
     {
         var query = new Users()
-            .ToQuery()
+            .ToSqlQuery()
             .Where(user => user.Id.Less("LastId"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<@LastId", sql);

@@ -4,9 +4,9 @@ using Microsoft.Data.Sqlite;
 using Shadow.DDL;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
-using ShadowSql.Engines;
+using ShadowSql.Components;
+using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
-using ShadowSql.SqlVales;
 using System.Collections;
 
 namespace Shadow.DDLTests;
@@ -28,7 +28,7 @@ public abstract class ExecuteTestBase
     {
         var provider = new DictionaryProvider(new Hashtable())
             .AddComponent<IDefineColumComponent>(new DefineSqliteColumComponent());
-        var engine = new Sqlite(new SqlValueProvider("1", "0", "NULL"), provider);
+        var engine = new SqliteEngine(new SqliteSelectComponent(), new SqlValueComponent("1", "0", "NULL"), provider);
 
         var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
         return new DapperExecutor(engine, connection);

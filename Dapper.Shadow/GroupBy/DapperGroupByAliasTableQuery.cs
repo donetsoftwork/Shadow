@@ -1,7 +1,6 @@
 ﻿using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.Variants;
 
 namespace Dapper.Shadow.GroupBy;
@@ -15,8 +14,8 @@ namespace Dapper.Shadow.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class DapperGroupByAliasTable<TTable>(IExecutor executor, TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, SqlQuery having)
-    : GroupByAliasTable<TTable>(source, where, fields, having)
+public class DapperGroupByAliasTableQuery<TTable>(IExecutor executor, TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, Logic having)
+    : GroupByAliasTableQuery<TTable>(source, where, fields, having)
     , IDapperSource
     where TTable : ITable
 {

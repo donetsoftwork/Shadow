@@ -1,7 +1,6 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using System;
 using System.Text;
 
 namespace ShadowSql.Update;
@@ -12,43 +11,38 @@ namespace ShadowSql.Update;
 /// <param name="table"></param>
 /// <param name="filter"></param>
 public class TableUpdate<TTable>(TTable table, ISqlLogic filter)
-    : UpdateBase<TTable>(table, filter)
+    : UpdateBase<TTable>(table)
     where TTable : ITable
 {
-    #region ISqlFragment
+    #region 配置
+    /// <summary>
+    /// 过滤条件
+    /// </summary>
+    protected readonly ISqlLogic _filter = filter;
+    /// <summary>
+    /// 过滤条件
+    /// </summary>
+    public ISqlLogic Filter
+        => _filter;
+    #endregion
+    #region ISqlEntity
     /// <summary>
     /// 拼写sql
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    protected override void Write(ISqlEngine engine, StringBuilder sql)
     {
-        engine.UpdatePrefix(sql);
-        _source.Write(engine, sql);
-
-        sql.Append(" SET ");
-        var appended = false;
-        foreach (var assign in _assignInfos)
+        WriteUpdate(engine, sql);
+        WriteSource(engine, sql);
+        WriteSet(engine, sql);
+        var point = sql.Length;
+        engine.WherePrefix(sql);
+        if (!_filter.TryWrite(engine, sql))
         {
-            if (appended)
-                sql.Append(',');
-            assign.Write(engine, sql);
-            appended = true;
-        }
-        if (appended)
-        {
-            var point = sql.Length;
-            engine.WherePrefix(sql);
-            if(!_filter.TryWrite(engine, sql))
-            {
-                //回滚
-                sql.Length = point;
-            }
-        }
-        else
-        {
-            throw new InvalidOperationException("没有设置修改信息");
+            //回滚
+            sql.Length = point;
         }
     }
     #endregion

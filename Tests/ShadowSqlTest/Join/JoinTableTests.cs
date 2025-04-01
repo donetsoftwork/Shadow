@@ -39,7 +39,7 @@ public class JoinTableTests
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
 
-        var departmentJoinOn = employees.Join(departments)
+        var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = departmentJoinOn.Root
             .Where("Manager='CEO'");
@@ -68,7 +68,7 @@ public class JoinTableTests
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
 
-        var departmentJoinOn = employees.Join(departments)
+        var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = departmentJoinOn.Root
             .Where(q => q.And("Manager='CEO'"));

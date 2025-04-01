@@ -24,11 +24,11 @@ public class TableAlias<TTable>
         :base(target, tableAlias)
     {
         _tablePrefix = [tableAlias, "."];
+        //内联的展开运算符“..”
         _prefixColumns = [.. GetPrefixColumns(_tablePrefix, target.Columns)];
     }
     #region 配置
     private readonly string[] _tablePrefix;
-    //内联的展开运算符“..”
     /// <summary>
     /// 表前缀包装列
     /// </summary>
@@ -67,7 +67,7 @@ public class TableAlias<TTable>
     /// <param name="engine"></param>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder builder)
+    internal override void Write(ISqlEngine engine, StringBuilder builder)
     {
         _target.Write(engine, builder);
         engine.TableAs(builder, _name);
@@ -77,7 +77,7 @@ public class TableAlias<TTable>
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public override bool IsMatch(string name)
+    internal override bool IsMatch(string name)
     {
         return base.IsMatch(name)
             || _target.IsMatch(name);

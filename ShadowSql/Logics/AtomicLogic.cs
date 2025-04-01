@@ -31,7 +31,7 @@ public abstract class AtomicLogic : ISqlLogic
     #region And
     #region AtomicLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -41,7 +41,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     //#region IAndLogic
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -49,7 +49,7 @@ public abstract class AtomicLogic : ISqlLogic
     //public static IAndLogic operator &(AtomicLogic logic, IAndLogic other)
     //    => other.And(logic);
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
     ///// <param name="logic"></param>
@@ -59,7 +59,7 @@ public abstract class AtomicLogic : ISqlLogic
     //#endregion
     #region AndLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -69,7 +69,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     #region ComplexAndLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -79,7 +79,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     //#region IOrLogic
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -87,7 +87,7 @@ public abstract class AtomicLogic : ISqlLogic
     //public static IAndLogic operator &(AtomicLogic logic, IOrLogic other)
     //    => other.And(logic);
     ///// <summary>
-    ///// And逻辑
+    ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
     ///// <param name="logic"></param>
@@ -97,7 +97,7 @@ public abstract class AtomicLogic : ISqlLogic
     //#endregion
     #region OrLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -107,7 +107,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     #region ComplexOrLogic
     /// <summary>
-    /// And逻辑
+    /// 与逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -119,7 +119,7 @@ public abstract class AtomicLogic : ISqlLogic
     #region Or
     #region AtomicLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -129,7 +129,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     //#region IAndLogic
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -137,7 +137,7 @@ public abstract class AtomicLogic : ISqlLogic
     //public static IOrLogic operator |(AtomicLogic logic, IAndLogic other)
     //    => other.Or(logic);
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
     ///// <param name="logic"></param>
@@ -147,7 +147,7 @@ public abstract class AtomicLogic : ISqlLogic
     //#endregion
     #region AndLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -157,7 +157,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     #region ComplexAndLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -167,7 +167,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     //#region IOrLogic
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="logic"></param>
     ///// <param name="other"></param>
@@ -175,7 +175,7 @@ public abstract class AtomicLogic : ISqlLogic
     //public static IOrLogic operator |(AtomicLogic logic, IOrLogic other)
     //    => other.Or(logic);
     ///// <summary>
-    ///// Or逻辑
+    ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
     ///// <param name="logic"></param>
@@ -185,7 +185,7 @@ public abstract class AtomicLogic : ISqlLogic
     //#endregion
     #region OrLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>
@@ -195,7 +195,7 @@ public abstract class AtomicLogic : ISqlLogic
     #endregion
     #region ComplexOrLogic
     /// <summary>
-    /// Or逻辑
+    /// 或逻辑
     /// </summary>
     /// <param name="logic"></param>
     /// <param name="other"></param>

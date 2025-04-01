@@ -1,7 +1,6 @@
 ﻿using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Variants;
-using System.Reflection.Emit;
 
 namespace ShadowSql;
 
@@ -11,6 +10,7 @@ namespace ShadowSql;
 public static partial class ShadowSqlServices
 {
     #region Join
+    #region JoinTableQuery
     /// <summary>
     /// 联表(创建新联表)
     /// </summary>
@@ -45,25 +45,6 @@ public static partial class ShadowSqlServices
         joinTable.AddMember(right);
         JoinOnQuery<LTable, RTable> joinOn = new(joinTable, left, right);
         joinTable.AddJoinOn(joinOn);
-        return joinOn;
-    }
-    /// <summary>
-    /// 联表(用左表查询联右表)
-    /// </summary>
-    /// <typeparam name="LTable"></typeparam>
-    /// <typeparam name="RTable"></typeparam>
-    /// <param name="left"></param>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static JoinOnQuery<LTable, RTable> Join<LTable, RTable>(this MemberQuery<LTable> left, RTable table)
-        where LTable : ITable
-        where RTable : ITable
-    {
-        if (left.InnerQuery.Source is not JoinTableQuery root)
-            return Join(left.Source.Target, table);
-        var right = root.CreateMember(table);
-        var joinOn = new JoinOnQuery<LTable, RTable>(root, left.Source, right);
-        root.AddJoinOn(joinOn);
         return joinOn;
     }
     /// <summary>
@@ -107,66 +88,112 @@ public static partial class ShadowSqlServices
         return joinOnNew;
     }
     #endregion
-    #region PairMemberQuery
+    #region JoinTableSqlQuery
     /// <summary>
-    /// 两表查询
+    /// 联表(创建新联表)
+    /// </summary>
+    /// <param name="main"></param>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static JoinOnSqlQuery<LTable, RTable> SqlJoin<LTable, RTable>(this LTable main, RTable table)
+        where LTable : ITable
+        where RTable : ITable
+    {
+        JoinTableSqlQuery joinTable = new();
+        var leftTable = joinTable.CreateMember(main);
+        var rightTable = joinTable.CreateMember(table);
+        JoinOnSqlQuery<LTable, RTable> joinOn = new(joinTable, leftTable, rightTable);
+        joinTable.AddJoinOn(joinOn);
+        return joinOn;
+    }
+    /// <summary>
+    /// 联表(创建新联表)
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="multiTable"></param>
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static PairMemberQuery<LTable, RTable> ToPairQuery<LTable, RTable>(this MultiTableBase multiTable, string left, string right)
+    public static JoinOnSqlQuery<LTable, RTable> SqlJoin<LTable, RTable>(this TableAlias<LTable> left, TableAlias<RTable> right)
         where LTable : ITable
         where RTable : ITable
-        => new(multiTable.Table<LTable>(left), multiTable.Table<RTable>(right), multiTable.InnerQuery);
-    #endregion
-    #region MemberQuery
+    {
+        JoinTableSqlQuery joinTable = new();
+        joinTable.AddMember(left);
+        joinTable.AddMember(right);
+        JoinOnSqlQuery<LTable, RTable> joinOn = new(joinTable, left, right);
+        joinTable.AddJoinOn(joinOn);
+        return joinOn;
+    }
     /// <summary>
-    /// 单独查询左表
+    /// 用左表联新表
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <returns></returns>
-    public static MemberQuery<LTable> ToLeftQuery<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn)
-        where LTable : ITable
-        where RTable : ITable
-        => new(joinOn.Left, joinOn.Root.InnerQuery);
-    /// <summary>
-    /// 单独查询右表
-    /// </summary>
-    /// <typeparam name="LTable"></typeparam>
-    /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <returns></returns>
-    public static MemberQuery<RTable> ToRightQuery<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn)
-        where LTable : ITable
-        where RTable : ITable
-        => new(joinOn.Source, joinOn.Root.InnerQuery);
-    /// <summary>
-    /// 构造表成员
-    /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="multiTable"></param>
+    /// <param name="joinOn"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static MemberQuery<TTable> CreateMemberQuery<TTable>(this MultiTableBase multiTable, TTable table)
+    public static JoinOnSqlQuery<LTable, TTable> JoinLeftTable<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
+        where LTable : ITable
+        where RTable : ITable
         where TTable : ITable
-        => new(multiTable.CreateMember(table), multiTable.InnerQuery);
+    {
+        var root = joinOn.Root;
+        var rightNew = root.CreateMember(table);
+        var joinOnNew = new JoinOnSqlQuery<LTable, TTable>(root, joinOn.Left, rightNew);
+        root.AddJoinOn(joinOnNew);
+        return joinOnNew;
+    }
+    /// <summary>
+    /// 用右表联新表
+    /// </summary>
+    /// <typeparam name="LTable"></typeparam>
+    /// <typeparam name="RTable"></typeparam>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="joinOn"></param>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static JoinOnSqlQuery<RTable, TTable> JoinRightTable<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
+        where LTable : ITable
+        where RTable : ITable
+        where TTable : ITable
+    {
+        var root = joinOn.Root;
+        var rightNew = root.CreateMember(table);
+        var joinOnNew = new JoinOnSqlQuery<RTable, TTable>(root, joinOn.Source, rightNew);
+        root.AddJoinOn(joinOnNew);
+        return joinOnNew;
+    }
+    #endregion
     #endregion
     /// <summary>
     /// 添加表成员
     /// </summary>
-    /// <typeparam name="MultiQuery"></typeparam>
-    /// <param name="multiQuery"></param>
+    /// <typeparam name="MultiTable"></typeparam>
+    /// <param name="multiTable"></param>
     /// <param name="aliasTable"></param>
     /// <returns></returns>
-    public static MultiQuery AddMember<MultiQuery>(this MultiQuery multiQuery, IAliasTable aliasTable)
-        where MultiQuery : MultiTableBase
+    public static MultiTable AddMember<MultiTable>(this MultiTable multiTable, IAliasTable aliasTable)
+        where MultiTable : MultiTableBase
     {
-        multiQuery.AddMemberCore(aliasTable);
-        return multiQuery;
+        multiTable.AddMemberCore(aliasTable);
+        return multiTable;
+    }
+    /// <summary>
+    /// 构造表成员
+    /// </summary>
+    /// <typeparam name="MultiTable"></typeparam>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static TableAlias<TTable> CreateMember<MultiTable, TTable>(this MultiTable multiTable, TTable table)
+        where MultiTable : IMultiTable
+        where TTable : ITable
+    {
+        var aliasTable = table.As(multiTable.CreateMemberName());
+        multiTable.AddMember(aliasTable);
+        return aliasTable;
     }
 }

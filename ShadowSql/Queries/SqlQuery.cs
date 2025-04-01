@@ -67,7 +67,7 @@ public abstract class SqlQuery(ComplexLogicBase complex, SqlConditionLogic condi
         => new();
     #endregion
     /// <summary>
-    /// 增加条件
+    /// 增加sql条件
     /// </summary>
     /// <param name="conditions"></param>
     internal void AddConditions(params IEnumerable<string> conditions)

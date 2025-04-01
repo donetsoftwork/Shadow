@@ -19,7 +19,7 @@ public sealed class GroupByMultiSelect(IGroupByView groupBy, GroupByMultiFields 
     /// GroupBy后再筛选列
     /// </summary>
     /// <param name="groupBy"></param>
-    public GroupByMultiSelect(GroupByMultiQuery groupBy)
+    public GroupByMultiSelect(GroupByMultiSqlQuery groupBy)
         : this(groupBy, new GroupByMultiFields(groupBy))
     {
     }
@@ -38,7 +38,7 @@ public sealed class GroupByMultiFetchSelect(IFetch fetch, GroupByMultiFields fie
     /// </summary>
     /// <param name="fetch"></param>
     public GroupByMultiFetchSelect(GroupByMultiFetch fetch)
-        : this(fetch, new GroupByMultiFields(fetch.Source))
+        : this(fetch, new GroupByMultiFields(fetch))
     {
     }
     /// <summary>

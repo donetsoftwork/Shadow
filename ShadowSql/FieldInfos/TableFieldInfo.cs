@@ -26,7 +26,7 @@ public class TableFieldInfo(string tableName, string name)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(_tableName).Append('.');
         engine.Identifier(sql, _name);

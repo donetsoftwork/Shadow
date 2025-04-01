@@ -21,7 +21,7 @@ public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, GroupB
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <param name="groupBy"></param>
-    public GroupByAliasTableSelect(GroupByAliasTable<TTable> groupBy)
+    public GroupByAliasTableSelect(GroupByAliasTableSqlQuery<TTable> groupBy)
         : this(groupBy, new GroupByAliasTableFields<TTable>(groupBy))
     {
     }
@@ -42,7 +42,7 @@ public sealed class GroupByAliasTableFetchSelect<TTable>(IFetch fetch, GroupByAl
     /// </summary>
     /// <param name="fetch"></param>
     public GroupByAliasTableFetchSelect(GroupByAliasTableFetch<TTable> fetch)
-        : this(fetch, new GroupByAliasTableFields<TTable>(fetch.Source))
+        : this(fetch, new GroupByAliasTableFields<TTable>(fetch))
     {
     }
     /// <summary>

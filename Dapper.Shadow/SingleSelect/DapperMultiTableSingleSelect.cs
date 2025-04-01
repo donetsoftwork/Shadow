@@ -14,8 +14,8 @@ namespace Dapper.Shadow.SingleSelect;
 /// <param name="executor"></param>
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
-public class DapperMultiTableSingleSelect(IExecutor executor, IMultiTable multiTable, MultiTableFields fields)
-    : SingleSelectBase<IMultiTable, MultiTableFields>(multiTable, fields)
+public class DapperMultiTableSingleSelect(IExecutor executor, IMultiView multiTable, MultiTableFields fields)
+    : SingleSelectBase<IMultiView, MultiTableFields>(multiTable, fields)
     , IDapperSingleSelect
 {
     /// <summary>
@@ -23,7 +23,7 @@ public class DapperMultiTableSingleSelect(IExecutor executor, IMultiTable multiT
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="multiTable"></param>
-    public DapperMultiTableSingleSelect(IExecutor executor, IMultiTableQuery multiTable)
+    public DapperMultiTableSingleSelect(IExecutor executor, IMultiView multiTable)
         : this(executor, multiTable, new MultiTableFields(multiTable))
     {
     }

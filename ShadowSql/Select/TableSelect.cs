@@ -2,8 +2,8 @@
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.SelectFields;
+using ShadowSql.Tables;
 using System.Text;
 
 namespace ShadowSql.Select;
@@ -12,12 +12,19 @@ namespace ShadowSql.Select;
 /// 表筛选列
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="view"></param>
-/// <param name="fields"></param>
-public sealed class TableSelect<TTable>(ITableView view, TableFields<TTable> fields)
-    : SelectBase<ITableView, TableFields<TTable>>(view, fields)
+public sealed class TableSelect<TTable>
+    : SelectBase<ITableView, TableFields<TTable>>
     where TTable : ITable
 {
+    /// <summary>
+    /// 表筛选列
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="fields"></param>
+    internal TableSelect(ITableView view, TableFields<TTable> fields)
+        : base(view, fields)
+    {
+    }
     /// <summary>
     /// 表筛选列
     /// </summary>
@@ -51,27 +58,15 @@ public sealed class TableSelect<TTable>(ITableView view, TableFields<TTable> fie
         : this(query, new TableFields<TTable>(query.Source))
     {
     }
+    /// <summary>
+    /// 表筛选列
+    /// </summary>
+    /// <param name="query"></param>
+    public TableSelect(TableSqlQuery<TTable> query)
+        : this(query, new TableFields<TTable>(query.Source))
+    {
+    }
 }
-///// <summary>
-///// 表过滤筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="filter"></param>
-//public sealed class TableFilterSelect<TTable>(TableFilter<TTable> filter)
-//    : SelectBase<ITableView, TableFields<TTable>>(filter, new TableFields<TTable>(filter.Source))
-//    where TTable : ITable
-//{
-//}
-///// <summary>
-///// 表(及查询)筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="query"></param>
-//public sealed class TableQuerySelect<TTable>(TableQuery<TTable> query)
-//    : SelectBase<ITableView, TableFields<TTable>>(query, new TableFields<TTable>(query.Source))
-//    where TTable : ITable
-//{
-//}
 /// <summary>
 /// 表范围(分页)及列筛选
 /// </summary>

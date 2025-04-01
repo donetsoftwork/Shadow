@@ -43,14 +43,14 @@ public class MultiInsert<TTable>(TTable table)
     {
         _items.Add(select(_table));
         return this;
-    }    
+    }
     /// <summary>
     /// 拼写sql
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         if(_items.Count == 0)
             throw new InvalidOperationException("未设置插入值");
@@ -88,45 +88,6 @@ public class MultiInsert<TTable>(TTable table)
             sql.Append(')');
             appended = true;
         }
-
-        //if (_table.Write(engine, sql))
-        //{
-        //    var appended = false;
-        //    sql.Append('(');
-        //    foreach (var item in _items)
-        //    {
-        //        if (appended)
-        //            sql.Append(',');
-        //        engine.Identifier(sql, item.Column.ViewName);
-        //        // 避免出现列名前缀可能导致错误
-        //        //if (item.Column.Write(engine, sql))
-        //        appended = true;
-        //    }
-        //    if (!appended)
-        //        return false;
-        //    sql.Append(")VALUES");
-        //    var count = _items[0].Values.Length;
-        //    appended = false;
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        if (appended)
-        //            sql.Append(',');
-        //        sql.Append('(');
-        //        var appended2 = false;
-        //        foreach (var item in _items)
-        //        {
-        //            if (appended2)
-        //                sql.Append(',');
-        //            if (item.Values[i].Write(engine, sql))
-        //                appended2 = true;
-        //        }
-        //        sql.Append(')');
-        //        appended = true;
-        //    }          
-
-        //    return true;
-        //}
-        //return false;
     }
 
     #region IMultiInsert

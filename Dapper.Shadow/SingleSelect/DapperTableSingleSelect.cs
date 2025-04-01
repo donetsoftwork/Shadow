@@ -2,10 +2,10 @@
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
 using ShadowSql.SingleSelect;
+using ShadowSql.Tables;
 using System.Text;
 
 namespace Dapper.Shadow.SingleSelect;
@@ -55,7 +55,7 @@ public class DapperTableSingleSelect<TTable>(IExecutor executor, ITableView tabl
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="query"></param>
-    public DapperTableSingleSelect(IExecutor executor, TableQuery<TTable> query)
+    public DapperTableSingleSelect(IExecutor executor, TableSqlQuery<TTable> query)
         : this(executor, query, new TableFields<TTable>(query.Source))
     {
     }

@@ -1,46 +1,111 @@
-﻿using ShadowSql.Logics;
+﻿using ShadowSql.Engines;
+using ShadowSql.Identifiers;
+using ShadowSql.Logics;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ShadowSql.Filters;
 
 /// <summary>
-/// 逻辑过滤基类
+/// 数据筛选基类
 /// </summary>
-public abstract class DataFilterBase(Logic filter) 
-    : FilterBase
+/// <typeparam name="TSource"></typeparam>
+/// <typeparam name="TFilter"></typeparam>
+/// <param name="source"></param>
+/// <param name="filter"></param>
+public abstract class DataFilterBase<TSource, TFilter>(TSource source, TFilter filter)
+    : FilterBase, ITableView, IDataFilter
+    where TSource : ITableView
+    where TFilter : ISqlLogic
 {
+    #region 配置
     /// <summary>
-    /// 逻辑过滤器
+    /// 数据源表
     /// </summary>
-    protected Logic _filter = filter;
-    #region 过滤逻辑
+    protected readonly TSource _source = source;
     /// <summary>
-    /// 添加查询
+    /// 数据源表
     /// </summary>
-    /// <param name="condition"></param>
-    internal override void AddLogic(AtomicLogic condition)
-    {
-        _filter.AddLogic(condition);
-    }
-    ///// <summary>
-    ///// 切换为And
-    ///// </summary>
-    //internal void ToAndCore()
-    //{
-    //    _filter = _filter.ToAnd();
-    //}
-    ///// <summary>
-    ///// 切换为Or
-    ///// </summary>
-    //internal void ToOrCore()
-    //{
-    //    _filter = _filter.ToOr();
-    //}
+    public TSource Source
+        => _source;
+    /// <summary>
+    /// 过滤条件
+    /// </summary>
+    protected TFilter _filter = filter;
+    /// <summary>
+    /// 过滤条件
+    /// </summary>
+    public TFilter Filter
+        => _filter;
+    #endregion
+    #region ApplyFilter
     /// <summary>
     /// 应用过滤
     /// </summary>
     /// <param name="filter"></param>
-    internal void ApplyFilter(Func<Logic, Logic> filter)
+    internal void ApplyFilter(Func<TFilter, TFilter> filter)
         => _filter = filter(_filter);
+    /// <summary>
+    /// 应用过滤
+    /// </summary>
+    /// <param name="filter"></param>
+    internal void ApplyFilter(Func<TSource, TFilter, TFilter> filter)
+         => _filter = filter(_source, _filter);
+    #endregion
+    #region IDataFilter
+    /// <summary>
+    /// 过滤查询数据源
+    /// </summary>
+    /// <returns></returns>
+    internal override ITableView GetFilterSource()
+        => _source;
+    ITableView IDataFilter.Source
+        => GetFilterSource();
+    ISqlLogic IDataFilter.Filter
+        => _filter;
+    void IDataFilter.AddLogic(AtomicLogic condition)
+        => AddLogic(condition);
+    ICompareField IDataFilter.GetCompareField(string fieldName)
+        => GetCompareField(fieldName);
+    #endregion
+    #region ITableView
+    /// <summary>
+    /// 获取列
+    /// </summary>
+    /// <returns></returns>
+    protected override IEnumerable<IColumn> GetColumns()
+        => _source.Columns;
+    /// <summary>
+    /// 获取列
+    /// </summary>
+    /// <param name="columName"></param>
+    /// <returns></returns>
+    public override IColumn? GetColumn(string columName)
+        => _source.GetColumn(columName);
+    /// <summary>
+    /// 获取字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    public override IField Field(string fieldName)
+        => _source.Field(fieldName);
+    #endregion
+    #region ISqlEntity
+    /// <summary>
+    /// 拼写数据源(表)sql
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    /// <returns></returns>
+    protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
+        => _source.Write(engine, sql);
+    /// <summary>
+    /// 筛选条件可选
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
+        => _filter.TryWrite(engine, sql);
     #endregion
 }

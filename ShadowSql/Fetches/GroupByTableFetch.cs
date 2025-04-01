@@ -2,7 +2,6 @@
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
-using System.Collections.Generic;
 
 namespace ShadowSql.Fetches;
 
@@ -10,15 +9,36 @@ namespace ShadowSql.Fetches;
 /// 表分组后范围筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class GroupByTableFetch<TTable>(GroupByTable<TTable> source, int limit, int offset)
-    : FetchBase<GroupByTable<TTable>>(source, offset, limit)
+public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     where TTable : ITable
 {
+    /// <summary>
+    /// 表分组后范围筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    public GroupByTableFetch(GroupByTableQuery<TTable> source, int limit, int offset)
+        : this(source, source.Source, limit, offset)
+    {
+    }
+    /// <summary>
+    /// 表分组后范围筛选
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    public GroupByTableFetch(GroupByTableSqlQuery<TTable> source, int limit, int offset)
+        : this(source, source.Source, limit, offset)
+    {
+    }
+    private GroupByTableFetch(IGroupByView source, TTable table, int limit, int offset)
+        : base(source, limit, offset)
+    {
+        _table = table;
+    }
     #region 配置
-    private readonly TTable _table = source.Source;
+    private readonly TTable _table;
     /// <summary>
     /// 表
     /// </summary>

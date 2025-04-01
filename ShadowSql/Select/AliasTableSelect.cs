@@ -1,9 +1,10 @@
-﻿using ShadowSql.Engines;
+﻿using ShadowSql.AliasTables;
+using ShadowSql.Engines;
 using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 using ShadowSql.SelectFields;
+using ShadowSql.Tables;
 using ShadowSql.Variants;
 using System.Text;
 
@@ -48,7 +49,7 @@ public sealed class AliasTableSelect<TTable>(ITableView source, AliasTableFields
     /// 别名表过滤筛选列
     /// </summary>
     /// <param name="query"></param>
-    public AliasTableSelect(AliasTableQuery<TTable> query)
+    public AliasTableSelect(AliasTableSqlQuery<TTable> query)
         : this(query, new AliasTableFields<TTable>(query.Source))
     {
     }

@@ -3,6 +3,7 @@ using ShadowSql.Assigns;
 using ShadowSql.CompareLogics;
 using ShadowSql.Compares;
 using ShadowSql.FieldInfos;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Logics;
@@ -30,6 +31,40 @@ public static partial class ShadowSqlServices
     public static IColumn Column(this ITableView view, string columnName)
         => view.GetColumn(columnName)
         ?? throw new ArgumentException("列不存在", nameof(columnName));
+    /// <summary>
+    /// 获取比较字段
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    public static ICompareField Compare(this IDataFilter filter, string fieldName)
+        => filter.GetCompareField(fieldName);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    public static ICompareField GetCompareField(this ITableView table,  string fieldName)
+    {
+        if(table.GetColumn(fieldName) is IColumn column)
+            return column;
+        return table.Field(fieldName);
+    }
+    /// <summary>
+    /// 获取指定表比较字段
+    /// </summary>
+    /// <param name="multi"></param>
+    /// <param name="tableName"></param>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    public static ICompareField TableCompare(this IMultiView multi, string tableName, string fieldName)
+    {
+        var member = multi.From(tableName);
+        if (member.GetPrefixColumn(fieldName) is IPrefixColumn prefixColumn)
+            return prefixColumn;
+        return member.Field(fieldName);
+    }
     /// <summary>
     /// 定位到前缀列
     /// </summary>

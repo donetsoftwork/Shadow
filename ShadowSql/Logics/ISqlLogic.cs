@@ -13,3 +13,11 @@ public interface ISqlLogic : ISqlFragment
     /// <returns></returns>
     ISqlLogic Not();
 }
+/// <summary>
+/// 与逻辑标记
+/// </summary>
+public interface IAndLogic { }
+/// <summary>
+/// 或逻辑标记
+/// </summary>
+public interface IOrLogic { }
