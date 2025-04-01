@@ -1,0 +1,24 @@
+﻿@startmindmap sql逻辑
+
+*: ISqlLogic
+逻辑
+;
+
+**: IEmptyLogic
+空逻辑
+;
+
+**: IAtomicLogic
+原子逻辑
+;
+
+**: IAndLogic
+与逻辑
+;
+
+**: IOrLogic
+或逻辑
+;
+
+
+@endmindmap

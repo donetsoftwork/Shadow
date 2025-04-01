@@ -1,0 +1,51 @@
+@startmindmap 表
+* 表
+**: 模式
+ITable
+;
+***: 简单模式
+SimpleTable
+;
+**** 没有列
+
+***: 普通模式
+Table
+;
+**** 有列名无类型
+
+***: Schema模式
+TableSchema
+;
+**** 支持表Schema限定名
+**** 有列含类型
+**** 支持生成CreateTable的sql
+
+**: 用途
+IDataView
+<code>
+interface IDataView {
+IEnumerable<IColumn> Columns { get; }
+IColumn GetColumn(string columName)
+}
+</code>
+;
+
+***: 单表视图
+ITableView
+;
+****: 原始表
+ITable
+;
+****: 表别名
+IAliasTable
+;
+***: 多表(联表)视图
+IMultiTableView
+;
+***: 单表分组视图
+IAggregateView
+;
+***: 多表(联表)分组视图
+IAggregateMultiView
+;
+@endmindmap

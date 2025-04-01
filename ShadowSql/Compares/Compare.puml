@@ -1,0 +1,68 @@
+@startmindmap 比较运算符
+*: Compare
+运算符
+;
+
+** 单元运算符号
+*** 判空
+****: IsNull
+是否为空
+IS NULL
+;
+****: NotNull
+是否非空
+IS NOT NULL
+;
+
+** 二元运算符号
+
+*** 判同
+****: Equal
+相同
+=
+;
+****: NotEqual
+不同
+<>
+;
+
+*** 值大小
+****: Greater
+大于
+>
+;
+****: LessEqual
+小于等于
+<=
+;
+****: Less
+小于
+<
+;
+****: GreaterEqual
+大于等于
+>=
+;
+
+*** 集合
+****:In
+在...之内
+IN
+;
+****:NotIn
+不在...之内
+NOT IN
+;
+
+** 三元运算符
+*** 范围
+****: Between
+在...之间
+BETWEEN
+;
+****: NotBetween
+不在...之间
+NOT BETWEEN
+;
+
+@endmindmap

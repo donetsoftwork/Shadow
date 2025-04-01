@@ -1,0 +1,78 @@
+@startmindmap 列
+*: 列
+IColumn : IIdentifier
+ , IField
+ , ICompareField
+ , ISqlValue
+;
+
+**: IField
+用于select、group by
+;
+***: IFieldInfo
+用于构造IField
+用于select
+;
+**: ICompareField
+<code>
+IOrderField
+ : IOrderField
+ , ICompareFieldInfo
+ , ISqlValue
+</code>
+用于where和having左侧字段
+用于Order By
+;
+***: ICompareFieldInfo
+用于构造ICompareField
+用于where和having
+;
+**: IOrderField
+用于Order By
+;
+**: ISqlValue
+用于where和having右侧值(或字段)
+;
+
+**:变形
+Variants
+;
+***: IPrefixColumn
+<code>
+IPrefixColumn : IColumn
+{
+    /// <summary>
+    /// 全名
+    /// </summary>
+    string FullName { get; }
+}
+</code>
+用于多表(联表)需要增加限定符
+;
+***: IAliasField
+<code>
+IAliasField
+ : IField
+ , ICompareFieldInfo
+</code>
+用于select
+;
+***: IAggregateField
+<code>
+IAggregateField
+ : IAggregate
+ , ICompareField
+</code>
+用于group by之后的聚合
+;
+***: IAggregateFieldAlias
+<code>
+IAggregateFieldAlias
+ : IAggregate
+ , IAliasField
+</code>
+用于group by之后的聚合
+;
+
+
+@endmindmap
