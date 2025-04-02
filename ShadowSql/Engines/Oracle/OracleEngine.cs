@@ -1,7 +1,4 @@
 ﻿using ShadowSql.Components;
-using ShadowSql.Fetches;
-using ShadowSql.Select;
-using ShadowSql.SqlVales;
 using System.Text;
 
 namespace ShadowSql.Engines.Oracle;

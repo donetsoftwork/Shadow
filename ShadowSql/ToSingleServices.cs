@@ -1,5 +1,5 @@
 ﻿using ShadowSql.AliasTables;
-using ShadowSql.Fetches;
+using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
@@ -49,11 +49,11 @@ public static partial class ShadowSqlServices
     /// 表范围筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static TableFetchSingleSelect<TTable> ToSingle<TTable>(this TableFetch<TTable> fetch)
+    public static TableFetchSingleSelect<TTable> ToSingle<TTable>(this TableCursor<TTable> cursor)
         where TTable : ITable
-        => new(fetch);
+        => new(cursor);
     #endregion
     #region AliasTableFields
     /// <summary>
@@ -88,11 +88,11 @@ public static partial class ShadowSqlServices
     /// 别名表范围筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static AliasTableFetchSingleSelect<TTable> ToSingle<TTable>(this AliasTableFetch<TTable> fetch)
+    public static AliasTableFetchSingleSelect<TTable> ToSingle<TTable>(this AliasTableCursor<TTable> cursor)
         where TTable : ITable
-        => new(fetch);
+        => new(cursor);
     #endregion
     #region MultiTableFields
     /// <summary>
@@ -105,10 +105,10 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 多(联)表筛选单列
     /// </summary>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static MultiTableFetchSelect ToSingle(this MultiTableFetch fetch)
-        => new(fetch);
+    public static MultiTableFetchSelect ToSingle(this MultiTableCursor cursor)
+        => new(cursor);
     #endregion
     #region GroupByTableFields
     /// <summary>
@@ -124,11 +124,11 @@ public static partial class ShadowSqlServices
     /// GroupBy后再范围(分页)及列筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static GroupByTableFetchSingleSelect<TTable> ToSingle<TTable>(this GroupByTableFetch<TTable> fetch)
+    public static GroupByTableFetchSingleSelect<TTable> ToSingle<TTable>(this GroupByTableCursor<TTable> cursor)
         where TTable : ITable
-        => new(fetch);
+        => new(cursor);
     #endregion
     #region GroupByAliasTableFields
     /// <summary>
@@ -144,12 +144,12 @@ public static partial class ShadowSqlServices
     /// GroupBy别名表后再范围(分页)及列筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
 
-    public static GroupByAliasTableFetchSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableFetch<TTable> fetch)
+    public static GroupByAliasTableFetchSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor)
         where TTable : ITable
-        => new(fetch);
+        => new(cursor);
     #endregion
     #region GroupByMultiFields
     /// <summary>
@@ -162,9 +162,9 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选单列
     /// </summary>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static GroupByMultiFetchSelect ToSingle(this GroupByMultiFetch fetch)
-        => new(fetch);
+    public static GroupByMultiFetchSelect ToSingle(this GroupByMultiCursor cursor)
+        => new(cursor);
     #endregion
 }

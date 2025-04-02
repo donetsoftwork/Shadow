@@ -28,7 +28,7 @@ public class AliasTableSelectTests
         int offset = 10;
         var select = _db.From("Users")
             .As("u")
-            .ToFetch()
+            .ToCursor()
             .Skip(offset)
             .Take(limit)
             .ToSelect();
@@ -40,7 +40,7 @@ public class AliasTableSelectTests
     {
         var select = _db.From("Users")
             .As("u")
-            .ToFetch()
+            .ToCursor()
             .Desc(u => u.Field("Age"))
             .Asc(u => u.Field("Id"))
             .ToSelect();

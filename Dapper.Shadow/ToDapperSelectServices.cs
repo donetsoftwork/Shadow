@@ -4,7 +4,7 @@ using Dapper.Shadow.Join;
 using Dapper.Shadow.Queries;
 using Dapper.Shadow.Select;
 using ShadowSql.AliasTables;
-using ShadowSql.Fetches;
+using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
@@ -61,11 +61,11 @@ public static partial class DapperShadowServices
     /// 表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperTableFetchSelect<TTable> ToDapperSelect<TTable>(this TableFetch<TTable> fetch)
+    public static DapperTableFetchSelect<TTable> ToDapperSelect<TTable>(this TableCursor<TTable> cursor)
         where TTable : IDapperTable
-        => new(fetch.Source.Executor, fetch);
+        => new(cursor.Source.Executor, cursor);
     #endregion
     #region AliasTable
     /// <summary>
@@ -109,11 +109,11 @@ public static partial class DapperShadowServices
     /// 别名表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this AliasTableFetch<TTable> fetch)
+    public static DapperAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this AliasTableCursor<TTable> cursor)
         where TTable : IDapperTable
-        => new(fetch.Table.Executor, fetch);
+        => new(cursor.Table.Executor, cursor);
     #endregion
     #region MultiTable
     /// <summary>
@@ -133,10 +133,10 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperMultiTableFetchSelect ToDapperSelect(this DapperMultiTableFetch fetch)
-        => new(fetch.Executor, fetch);
+    public static DapperMultiTableFetchSelect ToDapperSelect(this DapperMultiTableFetch cursor)
+        => new(cursor.Executor, cursor);
     #endregion
     #region GroupByTable
     /// <summary>
@@ -152,11 +152,11 @@ public static partial class DapperShadowServices
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperGroupByTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByTableFetch<TTable> fetch)
+    public static DapperGroupByTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByTableCursor<TTable> cursor)
         where TTable : IDapperTable
-        => new(fetch.Table.Executor, fetch);
+        => new(cursor.Table.Executor, cursor);
     #endregion
     #region GroupByAliasTable
     /// <summary>
@@ -172,11 +172,11 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperGroupByAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableFetch<TTable> fetch)
+    public static DapperGroupByAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableCursor<TTable> cursor)
         where TTable : IDapperTable
-        => new(fetch.Table.Executor, fetch);
+        => new(cursor.Table.Executor, cursor);
     #endregion
     #region GroupByMulti
     /// <summary>
@@ -189,10 +189,10 @@ public static partial class DapperShadowServices
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperGroupByMultiFetchSelect ToDapperSelect(this DapperGroupByMultiFetch fetch)
-        => new(fetch.Executor, fetch);
+    public static DapperGroupByMultiFetchSelect ToDapperSelect(this DapperGroupByMultiFetch cursor)
+        => new(cursor.Executor, cursor);
     #endregion
     #region Table
     /// <summary>
@@ -230,12 +230,12 @@ public static partial class DapperShadowServices
     /// 表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperTableFetchSelect<TTable> ToDapperSelect<TTable>(this TableFetch<TTable> fetch, IExecutor executor)
+    public static DapperTableFetchSelect<TTable> ToDapperSelect<TTable>(this TableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
-        => new(executor, fetch);
+        => new(executor, cursor);
     #endregion
     #region AliasTable
     /// <summary>
@@ -273,12 +273,12 @@ public static partial class DapperShadowServices
     /// 别名表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this AliasTableFetch<TTable> fetch, IExecutor executor)
+    public static DapperAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this AliasTableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
-        => new(executor, fetch);
+        => new(executor, cursor);
     #endregion
     #region MultiTable
     /// <summary>
@@ -300,11 +300,11 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperMultiTableFetchSelect ToDapperSelect(this MultiTableFetch fetch, IExecutor executor)
-        => new(executor, fetch);
+    public static DapperMultiTableFetchSelect ToDapperSelect(this MultiTableCursor cursor, IExecutor executor)
+        => new(executor, cursor);
     #endregion
     #region GroupByTable
     /// <summary>
@@ -321,12 +321,12 @@ public static partial class DapperShadowServices
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperGroupByTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByTableFetch<TTable> fetch, IExecutor executor)
+    public static DapperGroupByTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByTableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
-        => new(executor, fetch);
+        => new(executor, cursor);
     #endregion
     #region GroupByAliasTable
     /// <summary>
@@ -343,12 +343,12 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperGroupByAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableFetch<TTable> fetch, IExecutor executor)
+    public static DapperGroupByAliasTableFetchSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
-        => new(executor, fetch);
+        => new(executor, cursor);
     #endregion
     #region GroupByMulti
     /// <summary>
@@ -362,10 +362,10 @@ public static partial class DapperShadowServices
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
+    /// <param name="cursor"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperGroupByMultiFetchSelect ToDapperSelect(this GroupByMultiFetch fetch, IExecutor executor)
-        => new(executor, fetch);
+    public static DapperGroupByMultiFetchSelect ToDapperSelect(this GroupByMultiCursor cursor, IExecutor executor)
+        => new(executor, cursor);
     #endregion
 }

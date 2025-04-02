@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.Select;
 using System.Text;
 

@@ -1,5 +1,5 @@
 ﻿using ShadowSql.AliasTables;
-using ShadowSql.Fetches;
+using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -13,7 +13,7 @@ namespace ShadowSql;
 /// </summary>
 public static partial class ShadowSqlServices
 {
-    #region TableFetch
+    #region TableCursor
     /// <summary>
     /// 表范围筛选
     /// </summary>
@@ -23,7 +23,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static TableFetch<TTable> ToFetch<TTable>(this TTable source, ISqlLogic where, int limit = 0, int offset = 0)
+    public static TableCursor<TTable> ToCursor<TTable>(this TTable source, ISqlLogic where, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(source, where, limit, offset);
     /// <summary>
@@ -34,7 +34,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static TableFetch<TTable> ToFetch<TTable>(this TTable source, int limit = 0, int offset = 0)
+    public static TableCursor<TTable> ToCursor<TTable>(this TTable source, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(source, EmptyLogic.Instance, limit, offset);
     /// <summary>
@@ -45,7 +45,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static TableFetch<TTable> ToFetch<TTable>(this TableQuery<TTable> query, int limit = 0, int offset = 0)
+    public static TableCursor<TTable> ToCursor<TTable>(this TableQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query._filter, limit, offset);
     /// <summary>
@@ -56,11 +56,11 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static TableFetch<TTable> ToFetch<TTable>(this TableSqlQuery<TTable> query, int limit = 0, int offset = 0)
+    public static TableCursor<TTable> ToCursor<TTable>(this TableSqlQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query._filter, limit, offset);
     #endregion
-    #region AliasTableFetch
+    #region AliasTableCursor
     /// <summary>
     /// 别名表范围筛选
     /// </summary>
@@ -70,7 +70,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static AliasTableFetch<TTable> ToFetch<TTable>(this TableAlias<TTable> source, ISqlLogic where, int limit = 0, int offset = 0)
+    public static AliasTableCursor<TTable> ToCursor<TTable>(this TableAlias<TTable> source, ISqlLogic where, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(source, where, limit, offset);
     /// <summary>
@@ -81,7 +81,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static AliasTableFetch<TTable> ToFetch<TTable>(this TableAlias<TTable> source, int limit = 0, int offset = 0)
+    public static AliasTableCursor<TTable> ToCursor<TTable>(this TableAlias<TTable> source, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(source, EmptyLogic.Instance, limit, offset);
     /// <summary>
@@ -92,7 +92,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static AliasTableFetch<TTable> ToFetch<TTable>(this AliasTableQuery<TTable> query, int limit = 0, int offset = 0)
+    public static AliasTableCursor<TTable> ToCursor<TTable>(this AliasTableQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query._filter, limit, offset);
     /// <summary>
@@ -103,11 +103,11 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static AliasTableFetch<TTable> ToFetch<TTable>(this AliasTableSqlQuery<TTable> query, int limit = 0, int offset = 0)
+    public static AliasTableCursor<TTable> ToCursor<TTable>(this AliasTableSqlQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query._filter, limit, offset);
     #endregion
-    #region MultiTableFetch
+    #region MultiTableCursor
     /// <summary>
     /// 多联表范围筛选
     /// </summary>
@@ -115,10 +115,10 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static MultiTableFetch ToFetch(this IMultiView query, int limit = 0, int offset = 0)
+    public static MultiTableCursor ToCursor(this IMultiView query, int limit = 0, int offset = 0)
         => new(query, limit, offset);
     #endregion
-    #region GroupByTableFetch
+    #region GroupByTableCursor
     /// <summary>
     /// 表分组后范围筛选
     /// </summary>
@@ -127,7 +127,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByTableFetch<TTable> ToFetch<TTable>(this GroupByTableSqlQuery<TTable> groupBy, int limit = 0, int offset = 0)
+    public static GroupByTableCursor<TTable> ToCursor<TTable>(this GroupByTableSqlQuery<TTable> groupBy, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(groupBy, limit, offset);
     /// <summary>
@@ -138,11 +138,11 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByTableFetch<TTable> ToFetch<TTable>(this GroupByTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
+    public static GroupByTableCursor<TTable> ToCursor<TTable>(this GroupByTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(groupBy, limit, offset);
     #endregion
-    #region GroupByAliasTableFetch
+    #region GroupByAliasTableCursor
     /// <summary>
     /// 别名表分组后范围筛选
     /// </summary>
@@ -151,7 +151,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByAliasTableFetch<TTable> ToFetch<TTable>(this GroupByAliasTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
+    public static GroupByAliasTableCursor<TTable> ToCursor<TTable>(this GroupByAliasTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(groupBy, limit, offset);
     /// <summary>
@@ -162,11 +162,11 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByAliasTableFetch<TTable> ToFetch<TTable>(this GroupByAliasTableSqlQuery<TTable> groupBy, int limit = 0, int offset = 0)
+    public static GroupByAliasTableCursor<TTable> ToCursor<TTable>(this GroupByAliasTableSqlQuery<TTable> groupBy, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(groupBy, limit, offset);
     #endregion
-    #region GroupByMultiFetch
+    #region GroupByMultiCursor
     /// <summary>
     /// 多(联)表分组后范围筛选
     /// </summary>
@@ -174,7 +174,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByMultiFetch ToFetch(this GroupByMultiQuery groupBy, int limit = 0, int offset = 0)
+    public static GroupByMultiCursor ToCursor(this GroupByMultiQuery groupBy, int limit = 0, int offset = 0)
         => new(groupBy, limit, offset);
     /// <summary>
     /// 多(联)表分组后范围筛选
@@ -183,7 +183,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static GroupByMultiFetch ToFetch(this GroupByMultiSqlQuery groupBy, int limit = 0, int offset = 0)
+    public static GroupByMultiCursor ToCursor(this GroupByMultiSqlQuery groupBy, int limit = 0, int offset = 0)
         => new(groupBy, limit, offset);
     #endregion
 }

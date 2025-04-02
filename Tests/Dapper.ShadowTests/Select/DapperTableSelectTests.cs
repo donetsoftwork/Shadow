@@ -193,7 +193,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
         var table = new StudentTable("Students");
         var students = table.ToSqlQuery()
             .Where(table.Age.GreaterEqualValue(9))
-            .ToFetch()
+            .ToCursor()
             .Desc(table.Id)
             .Skip(1)
             .Take(10)

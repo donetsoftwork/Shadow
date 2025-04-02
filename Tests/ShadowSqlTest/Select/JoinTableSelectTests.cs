@@ -23,7 +23,7 @@ public class JoinTableSelectTests
         var query = joinOn.Root
             .And(Comments.Field("Pick").EqualValue(true))
             .And(Posts.Field("Author").EqualValue("jxj"))
-            .ToFetch()
+            .ToCursor()
             .Desc("c", c => c.Field("Id"))
             .ToSelect();
         query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
@@ -39,7 +39,7 @@ public class JoinTableSelectTests
         var query = joinOn.Root
             .And(c.Pick.Equal())
             .And(p.Author.Equal())
-            .ToFetch()
+            .ToCursor()
             .Desc(c.Id)
             .ToSelect();
         query.Fields.Select(c.Id, c.Content);

@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
@@ -41,19 +41,19 @@ public class DapperGroupByMultiSelect(IExecutor executor, IGroupByView groupBy, 
 /// GroupBy后再范围(分页)及列筛选
 /// </summary>
 /// <param name="executor"></param>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiFetch fetch, GroupByMultiFields fields)
-    : SelectBase<IFetch, GroupByMultiFields>(fetch, fields)
+public class DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiCursor cursor, GroupByMultiFields fields)
+    : SelectBase<ICursor, GroupByMultiFields>(cursor, fields)
     , IDapperSelect
 {
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <param name="executor"></param>
-    /// <param name="fetch"></param>
-    public DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiFetch fetch)
-        : this(executor, fetch, new GroupByMultiFields(fetch))
+    /// <param name="cursor"></param>
+    public DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiCursor cursor)
+        : this(executor, cursor, new GroupByMultiFields(cursor))
     {
     }
     #region 配置

@@ -11,7 +11,7 @@ namespace ShadowSqlBench;
 
 [MemoryDiagnoser, SimpleJob(launchCount: 4, warmupCount: 10, iterationCount: 10, invocationCount: 10000)]
 //[MemoryDiagnoser, SimpleJob(launchCount: 1, warmupCount: 1, iterationCount: 1, invocationCount: 1)]
-public class FetchBench
+public class CursorBench
 {
     private static ISqlEngine _engine = new MySqlEngine();
     private static DB _db = DB.Use("ShadowSql");
@@ -28,7 +28,7 @@ public class FetchBench
             .ToSqlQuery()
             .ColumnEqualValue("Category", "csharp")
             .ColumnEqualValue("Pick", true)
-            .ToFetch()
+            .ToCursor()
             .Skip(10)
             .Take(10)
             .Desc(Id)
@@ -46,7 +46,7 @@ public class FetchBench
             .ToQuery()
             .And(Category.EqualValue("csharp"))
             .And(Pick.EqualValue(true))
-            .ToFetch()
+            .ToCursor()
             .Skip(10)
             .Take(10)
             .Desc(Id)
@@ -61,7 +61,7 @@ public class FetchBench
     public string ShadowSqlByParametricLogic()
     {
         var query = _db.From("Posts")
-            .ToFetch(Category.EqualValue("csharp") & Pick.EqualValue(true), 10, 10)
+            .ToCursor(Category.EqualValue("csharp") & Pick.EqualValue(true), 10, 10)
             .Desc(Id)
             .ToSelect()
             .Select(select => select.Fields.Select(Id, Title));
@@ -74,7 +74,7 @@ public class FetchBench
     public string ShadowSqlByLogic()
     {
         var query = _db.From("Posts")
-            .ToFetch(Category.Equal().And(Pick.Equal()), 10, 10)
+            .ToCursor(Category.Equal().And(Pick.Equal()), 10, 10)
             .Desc(Id)
             .ToSelect();
         query.Fields.Select(Id, Title);

@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.SelectFields;
@@ -29,17 +29,17 @@ public class MultiTableSingleSelect<TSource>(IMultiView multiTable, MultiTableFi
 /// 多表视图范围(分页)及单列筛选
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class MultiTableFetchSingleSelect<TSource>(MultiTableFetch fetch, MultiTableFields fields)
-    : SingleSelectBase<IFetch, MultiTableFields>(fetch, fields)
+public class MultiTableFetchSingleSelect<TSource>(MultiTableCursor cursor, MultiTableFields fields)
+    : SingleSelectBase<ICursor, MultiTableFields>(cursor, fields)
 {
     /// <summary>
     /// 多表视图范围(分页)及单列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public MultiTableFetchSingleSelect(MultiTableFetch fetch)
-        : this(fetch, new MultiTableFields(fetch.Source))
+    /// <param name="cursor"></param>
+    public MultiTableFetchSingleSelect(MultiTableCursor cursor)
+        : this(cursor, new MultiTableFields(cursor.Source))
     {
     }
     /// <summary>

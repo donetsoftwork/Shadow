@@ -6,65 +6,65 @@ using ShadowSql.Simples;
 
 namespace ShadowSqlTest.Fetches;
 
-public class AliasTableSelectTests
+public class AliasTableCursorTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
     static readonly IDB _db = SimpleDB.Use("MyDb");
 
     [Fact]
-    public void ToFetch()
+    public void ToCursor()
     {
         int limit = 10;
         int offset = 10;
-        var fetch = _db.From("Users")
+        var cursor = _db.From("Users")
             .As("u")
-            .ToFetch(limit, offset);
-        Assert.Equal(limit, fetch.Limit);
-        Assert.Equal(offset, fetch.Offset);
+            .ToCursor(limit, offset);
+        Assert.Equal(limit, cursor.Limit);
+        Assert.Equal(offset, cursor.Offset);
     }
     [Fact]
     public void Cursor()
     {
         int limit = 10;
         int offset = 10;
-        var fetch = _db.From("Users")
+        var cursor = _db.From("Users")
             .As("u")
-            .ToFetch()
+            .ToCursor()
             .Skip(offset)
             .Take(limit);
-        Assert.Equal(limit, fetch.Limit);
-        Assert.Equal(offset, fetch.Offset);
+        Assert.Equal(limit, cursor.Limit);
+        Assert.Equal(offset, cursor.Offset);
     }
     [Fact]
     public void Where()
     {
         var age = Column.Use("Age");
         var where = age.GreaterValue(30);
-        var fetch = _db.From("Users")
+        var cursor = _db.From("Users")
             .As("u")
-            .ToFetch(where);
-        var sql = _engine.Sql(fetch);
+            .ToCursor(where);
+        var sql = _engine.Sql(cursor);
         Assert.Equal("[Users] AS u WHERE [Age]>30", sql);
     }
     [Fact]
     public void Asc()
     {
-        var fetch = _db.From("Users")
+        var cursor = _db.From("Users")
             .As("u")
-            .ToFetch()
+            .ToCursor()
             .Asc("Age");
-        var sql = _engine.Sql(fetch);
+        var sql = _engine.Sql(cursor);
         Assert.Equal("[Users] AS u ORDER BY [Age]", sql);
     }
     [Fact]
     public void AscField()
     {
         var age = Column.Use("Age");
-        var fetch = _db.From("Users")
+        var cursor = _db.From("Users")
             .As("u")
-            .ToFetch()
+            .ToCursor()
             .Asc(age);
-        var sql = _engine.Sql(fetch);
+        var sql = _engine.Sql(cursor);
         Assert.Equal("[Users] AS u ORDER BY [Age]", sql);
     }
 }

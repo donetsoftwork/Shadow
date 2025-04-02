@@ -5,18 +5,18 @@ using ShadowSql.Variants;
 using System;
 using System.Text;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 别名表范围筛选
+/// 别名表范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="source"></param>
 /// <param name="where"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public sealed class AliasTableFetch<TTable>(TableAlias<TTable> source, ISqlLogic where, int limit, int offset)
-    : FetchBase<TableAlias<TTable>>(source, offset, limit)
+public sealed class AliasTableCursor<TTable>(TableAlias<TTable> source, ISqlLogic where, int limit, int offset)
+    : CursorBase<TableAlias<TTable>>(source, offset, limit)
     where TTable : ITable
 {
     #region 配置
@@ -39,7 +39,7 @@ public sealed class AliasTableFetch<TTable>(TableAlias<TTable> source, ISqlLogic
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public AliasTableFetch<TTable> Asc(Func<IAliasTable, IOrderView> select)
+    public AliasTableCursor<TTable> Asc(Func<IAliasTable, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -49,7 +49,7 @@ public sealed class AliasTableFetch<TTable>(TableAlias<TTable> source, ISqlLogic
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public AliasTableFetch<TTable> Desc(Func<IAliasTable, IOrderAsc> select)
+    public AliasTableCursor<TTable> Desc(Func<IAliasTable, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;
@@ -59,7 +59,7 @@ public sealed class AliasTableFetch<TTable>(TableAlias<TTable> source, ISqlLogic
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public AliasTableFetch<TTable> Asc(Func<TTable, IColumn> select)
+    public AliasTableCursor<TTable> Asc(Func<TTable, IColumn> select)
     {
         //增加前缀
         var prefixColumn = _source.GetPrefixColumn(select(_table));
@@ -72,7 +72,7 @@ public sealed class AliasTableFetch<TTable>(TableAlias<TTable> source, ISqlLogic
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public AliasTableFetch<TTable> Desc(Func<TTable, IColumn> select)
+    public AliasTableCursor<TTable> Desc(Func<TTable, IColumn> select)
     {
         //增加前缀
         var prefixColumn = _source.GetPrefixColumn(select(_table));

@@ -2,7 +2,7 @@
 using ShadowSqlBench;
 
 //BenchmarkRunner.Run<WhereBench>();
-BenchmarkRunner.Run<FetchBench>();
+BenchmarkRunner.Run<CursorBench>();
 //BenchmarkRunner.Run<GroupByBench>();
 //BenchmarkRunner.Run<JoinBench>();
 

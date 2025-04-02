@@ -1,6 +1,6 @@
 ﻿using ShadowSql.AliasTables;
+using ShadowSql.Cursors;
 using ShadowSql.Engines;
-using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.SelectFields;
@@ -58,18 +58,18 @@ public sealed class AliasTableSelect<TTable>(ITableView source, AliasTableFields
 /// 别名表范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class AliasTableFetchSelect<TTable>(IFetch fetch, AliasTableFields<TTable> fields)
-    : SelectBase<IFetch, AliasTableFields<TTable>>(fetch, fields)
+public sealed class AliasTableFetchSelect<TTable>(ICursor cursor, AliasTableFields<TTable> fields)
+    : SelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
     /// <summary>
     /// 别名表范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public AliasTableFetchSelect(AliasTableFetch<TTable> fetch)
-        : this(fetch, new AliasTableFields<TTable>(fetch.Source))
+    /// <param name="cursor"></param>
+    public AliasTableFetchSelect(AliasTableCursor<TTable> cursor)
+        : this(cursor, new AliasTableFields<TTable>(cursor.Source))
     {
     }
 

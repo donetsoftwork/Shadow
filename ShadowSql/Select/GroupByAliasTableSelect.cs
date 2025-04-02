@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
@@ -31,18 +31,18 @@ public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, GroupB
 /// GroupBy别名表后再范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class GroupByAliasTableFetchSelect<TTable>(IFetch fetch, GroupByAliasTableFields<TTable> fields)
-    : SelectBase<IFetch, GroupByAliasTableFields<TTable>>(fetch, fields)
+public sealed class GroupByAliasTableFetchSelect<TTable>(ICursor cursor, GroupByAliasTableFields<TTable> fields)
+    : SelectBase<ICursor, GroupByAliasTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public GroupByAliasTableFetchSelect(GroupByAliasTableFetch<TTable> fetch)
-        : this(fetch, new GroupByAliasTableFields<TTable>(fetch))
+    /// <param name="cursor"></param>
+    public GroupByAliasTableFetchSelect(GroupByAliasTableCursor<TTable> cursor)
+        : this(cursor, new GroupByAliasTableFields<TTable>(cursor))
     {
     }
     /// <summary>

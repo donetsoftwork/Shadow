@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
@@ -45,10 +45,10 @@ public class DapperGroupByAliasTableSingleSelect<TTable>(IExecutor executor, IGr
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperGroupByAliasTableFetchSingleSelect<TTable>(IExecutor executor, IFetch fetch, GroupByAliasTableFields<TTable> fields)
-    : SingleSelectBase<IFetch, GroupByAliasTableFields<TTable>>(fetch, fields)
+public class DapperGroupByAliasTableFetchSingleSelect<TTable>(IExecutor executor, ICursor cursor, GroupByAliasTableFields<TTable> fields)
+    : SingleSelectBase<ICursor, GroupByAliasTableFields<TTable>>(cursor, fields)
     , IDapperSingleSelect
     where TTable : ITable
 {
@@ -56,9 +56,9 @@ public class DapperGroupByAliasTableFetchSingleSelect<TTable>(IExecutor executor
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <param name="executor"></param>
-    /// <param name="fetch"></param>
-    public DapperGroupByAliasTableFetchSingleSelect(IExecutor executor, GroupByAliasTableFetch<TTable> fetch)
-        : this(executor, fetch, new GroupByAliasTableFields<TTable>(fetch))
+    /// <param name="cursor"></param>
+    public DapperGroupByAliasTableFetchSingleSelect(IExecutor executor, GroupByAliasTableCursor<TTable> cursor)
+        : this(executor, cursor, new GroupByAliasTableFields<TTable>(cursor))
     {
     }
     #region 配置

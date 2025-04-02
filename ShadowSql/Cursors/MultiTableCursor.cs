@@ -1,16 +1,16 @@
 ﻿using ShadowSql.Identifiers;
 using System;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 多联表范围筛选
+/// 多联表范围筛选游标
 /// </summary>
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class MultiTableFetch(IMultiView source, int limit, int offset)
-    : FetchBase<IMultiView>(source, offset, limit)
+public class MultiTableCursor(IMultiView source, int limit, int offset)
+    : CursorBase<IMultiView>(source, offset, limit)
 {
     #region 功能
     /// <summary>
@@ -18,7 +18,7 @@ public class MultiTableFetch(IMultiView source, int limit, int offset)
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Asc(Func<IMultiView, IOrderView> select)
+    public MultiTableCursor Asc(Func<IMultiView, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -28,7 +28,7 @@ public class MultiTableFetch(IMultiView source, int limit, int offset)
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Desc(Func<IMultiView, IOrderAsc> select)
+    public MultiTableCursor Desc(Func<IMultiView, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;
@@ -39,7 +39,7 @@ public class MultiTableFetch(IMultiView source, int limit, int offset)
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Asc(string tableName, Func<IAliasTable, IOrderView> select)
+    public MultiTableCursor Asc(string tableName, Func<IAliasTable, IOrderView> select)
     {
         var member = _source.From(tableName);
         AscCore(select(member));
@@ -51,7 +51,7 @@ public class MultiTableFetch(IMultiView source, int limit, int offset)
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Desc(string tableName, Func<IAliasTable, IOrderAsc> select)
+    public MultiTableCursor Desc(string tableName, Func<IAliasTable, IOrderAsc> select)
     {
         var member = _source.From(tableName);
         DescCore(select(member));
@@ -64,7 +64,7 @@ public class MultiTableFetch(IMultiView source, int limit, int offset)
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Asc<TTable>(string tableName, Func<TTable, IColumn> select)
+    public MultiTableCursor Asc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
     {
         var member = _source.Table<TTable>(tableName);
@@ -81,7 +81,7 @@ public class MultiTableFetch(IMultiView source, int limit, int offset)
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableFetch Desc<TTable>(string tableName, Func<TTable, IColumn> select)
+    public MultiTableCursor Desc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
     {
         var member = _source.Table<TTable>(tableName);

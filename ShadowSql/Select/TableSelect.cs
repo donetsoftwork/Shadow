@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.SelectFields;
@@ -71,18 +71,18 @@ public sealed class TableSelect<TTable>
 /// 表范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class TableFetchSelect<TTable>(TableFetch<TTable> fetch, TableFields<TTable> fields)
-    : SelectBase<TableFetch<TTable>, TableFields<TTable>>(fetch, fields)
+public sealed class TableFetchSelect<TTable>(TableCursor<TTable> cursor, TableFields<TTable> fields)
+    : SelectBase<TableCursor<TTable>, TableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
     /// <summary>
     /// 表范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public TableFetchSelect(TableFetch<TTable> fetch)
-        : this(fetch, new TableFields<TTable>(fetch.Source))
+    /// <param name="cursor"></param>
+    public TableFetchSelect(TableCursor<TTable> cursor)
+        : this(cursor, new TableFields<TTable>(cursor.Source))
     {
     }
     /// <summary>

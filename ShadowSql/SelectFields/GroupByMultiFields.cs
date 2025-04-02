@@ -1,5 +1,5 @@
 ﻿using ShadowSql.Aggregates;
-using ShadowSql.Fetches;
+using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
@@ -31,9 +31,9 @@ public class GroupByMultiFields
     /// <summary>
     /// 多(联)表分组后字段筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public GroupByMultiFields(GroupByMultiFetch fetch)
-        : this(fetch.Source, fetch.MultiTable)
+    /// <param name="cursor"></param>
+    public GroupByMultiFields(GroupByMultiCursor cursor)
+        : this(cursor.Source, cursor.MultiTable)
     {
     }
     private GroupByMultiFields(IGroupByView groupBy, IMultiView multiTable)

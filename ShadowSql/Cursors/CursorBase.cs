@@ -4,17 +4,17 @@ using ShadowSql.Orders;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 范围筛选基类
+/// 范围筛选游标基类
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class FetchBase<TSource>(TSource source, int limit, int offset)
-    : FetchBase(limit, offset), IFetch, ITableView
+public class CursorBase<TSource>(TSource source, int limit, int offset)
+    : CursorBase(limit, offset), ICursor
     where TSource : ITableView
 {
     #region 配置
@@ -67,14 +67,20 @@ public class FetchBase<TSource>(TSource source, int limit, int offset)
     ICompareField ITableView.GetCompareField(string fieldName)
         => _source.GetCompareField(fieldName);
     #endregion
+    #region ICursor
+    ICursor ICursor.Skip(int offset)
+    {
+        SkipCore(offset);
+        return this;
+    }
+    #endregion
 }
 /// <summary>
 /// 范围筛选基类
 /// </summary>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public abstract class FetchBase(int limit, int offset)
-    : ICursor
+public abstract class CursorBase(int limit, int offset)
 {
     #region 配置
     /// <summary>
@@ -221,12 +227,5 @@ public abstract class FetchBase(int limit, int offset)
         sql.Length = point;
         return false;
     }
-    #region ICursor
-    ICursor ICursor.Skip(int offset)
-    {
-        SkipCore(offset);
-        return this;
-    }
-    #endregion
 }
 

@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
@@ -40,19 +40,19 @@ public class DapperMultiTableSingleSelect(IExecutor executor, IMultiView multiTa
 /// 多表视图范围(分页)及列筛选
 /// </summary>
 /// <param name="executor"></param>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableFetch fetch, MultiTableFields fields)
-    : SingleSelectBase<MultiTableFetch, MultiTableFields>(fetch, fields)
+public class DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableCursor cursor, MultiTableFields fields)
+    : SingleSelectBase<MultiTableCursor, MultiTableFields>(cursor, fields)
     , IDapperSingleSelect
 {
     /// <summary>
     /// 多表视图范围(分页)及列筛选
     /// </summary>
     /// <param name="executor"></param>
-    /// <param name="fetch"></param>
-    public DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableFetch fetch)
-        : this(executor, fetch, new MultiTableFields(fetch.Source))
+    /// <param name="cursor"></param>
+    public DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableCursor cursor)
+        : this(executor, cursor, new MultiTableFields(cursor.Source))
     {
     }
     #region 配置

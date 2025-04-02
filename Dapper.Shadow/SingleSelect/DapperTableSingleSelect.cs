@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Select;
@@ -113,10 +113,10 @@ public class DapperTableSingleSelect<TTable>(IExecutor executor, ITableView tabl
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class DapperTableFetchSingleSelect<TTable>(IExecutor executor, TableFetch<TTable> fetch, TableFields<TTable> fields)
-    : SingleSelectBase<IFetch, TableFields<TTable>>(fetch, fields)
+public sealed class DapperTableFetchSingleSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor, TableFields<TTable> fields)
+    : SingleSelectBase<ICursor, TableFields<TTable>>(cursor, fields)
     , IDapperSingleSelect
     where TTable : ITable
 {
@@ -124,9 +124,9 @@ public sealed class DapperTableFetchSingleSelect<TTable>(IExecutor executor, Tab
     /// 表范围(分页)及列筛选
     /// </summary>
     /// <param name="executor"></param>
-    /// <param name="fetch"></param>
-    public DapperTableFetchSingleSelect(IExecutor executor, TableFetch<TTable> fetch)
-        : this(executor, fetch, new TableFields<TTable>(fetch.Source))
+    /// <param name="cursor"></param>
+    public DapperTableFetchSingleSelect(IExecutor executor, TableCursor<TTable> cursor)
+        : this(executor, cursor, new TableFields<TTable>(cursor.Source))
     {
     }
     #region 配置

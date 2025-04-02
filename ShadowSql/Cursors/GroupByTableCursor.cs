@@ -3,13 +3,13 @@ using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 表分组后范围筛选
+/// 表分组后范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
+public class GroupByTableCursor<TTable> : CursorBase<IGroupByView>
     where TTable : ITable
 {
     /// <summary>
@@ -18,7 +18,7 @@ public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="source"></param>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
-    public GroupByTableFetch(GroupByTableQuery<TTable> source, int limit, int offset)
+    public GroupByTableCursor(GroupByTableQuery<TTable> source, int limit, int offset)
         : this(source, source.Source, limit, offset)
     {
     }
@@ -28,11 +28,11 @@ public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="source"></param>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
-    public GroupByTableFetch(GroupByTableSqlQuery<TTable> source, int limit, int offset)
+    public GroupByTableCursor(GroupByTableSqlQuery<TTable> source, int limit, int offset)
         : this(source, source.Source, limit, offset)
     {
     }
-    private GroupByTableFetch(IGroupByView source, TTable table, int limit, int offset)
+    private GroupByTableCursor(IGroupByView source, TTable table, int limit, int offset)
         : base(source, limit, offset)
     {
         _table = table;
@@ -52,7 +52,7 @@ public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByTableFetch<TTable> Asc(Func<IGroupByView, IOrderView> select)
+    public GroupByTableCursor<TTable> Asc(Func<IGroupByView, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -62,7 +62,7 @@ public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByTableFetch<TTable> Desc(Func<IGroupByView, IOrderAsc> select)
+    public GroupByTableCursor<TTable> Desc(Func<IGroupByView, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;
@@ -75,7 +75,7 @@ public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByTableFetch<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByTableCursor<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     {
         AscCore(aggregate(select(_table)));
         return this;
@@ -86,7 +86,7 @@ public class GroupByTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByTableFetch<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByTableCursor<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     {
         DescCore(aggregate(select(_table)));
         return this;

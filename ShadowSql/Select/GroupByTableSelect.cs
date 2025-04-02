@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
@@ -31,18 +31,18 @@ public class GroupByTableSelect<TTable>(IGroupByView groupBy, GroupByTableFields
 /// GroupBy后再范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class GroupByTableFetchSelect<TTable>(IFetch fetch, GroupByTableFields<TTable> fields)
-    : SelectBase<IFetch, GroupByTableFields<TTable>>(fetch, fields)
+public class GroupByTableFetchSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
+    : SelectBase<ICursor, GroupByTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public GroupByTableFetchSelect(GroupByTableFetch<TTable> fetch)
-        : this(fetch, new GroupByTableFields<TTable>(fetch))
+    /// <param name="cursor"></param>
+    public GroupByTableFetchSelect(GroupByTableCursor<TTable> cursor)
+        : this(cursor, new GroupByTableFields<TTable>(cursor))
     {
     }
     /// <summary>

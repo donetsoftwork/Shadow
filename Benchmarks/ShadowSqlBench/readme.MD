@@ -16,8 +16,8 @@
 | ShadowSqlByLogic           |   190.1 ns |   3.54 ns |   5.92 ns |   188.1 ns |  0.04 |    0.00 |      - |     608 B |        0.05 |
 | SqlKataBench               | 4,519.9 ns | 216.02 ns | 383.98 ns | 4,347.3 ns |  1.01 |    0.11 | 0.7000 |   12712 B |        1.00 |
 
-## 2、FetchBench
->* 单表排序筛选对比
+## 2、CursorBench
+>* 单表排序筛选游标对比
 >* SqlKata耗时是SqlQuery的4倍多
 >* SqlKata耗时是Query的8倍多
 >* SqlKata耗时是ByParametricLogic的9倍

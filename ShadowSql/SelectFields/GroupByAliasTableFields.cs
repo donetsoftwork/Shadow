@@ -1,5 +1,5 @@
 ﻿using ShadowSql.Aggregates;
-using ShadowSql.Fetches;
+using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Variants;
@@ -26,9 +26,9 @@ public class GroupByAliasTableFields<TTable>
     /// <summary>
     /// 别名表分组字段筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public GroupByAliasTableFields(GroupByAliasTableFetch<TTable> fetch)
-        : this(fetch, fetch.Source, fetch.AliasTable, fetch.Table)
+    /// <param name="cursor"></param>
+    public GroupByAliasTableFields(GroupByAliasTableCursor<TTable> cursor)
+        : this(cursor, cursor.Source, cursor.AliasTable, cursor.Table)
     { 
     }
     /// <summary>

@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
@@ -28,17 +28,17 @@ public sealed class GroupByMultiSelect(IGroupByView groupBy, GroupByMultiFields 
 /// <summary>
 /// GroupBy后再范围(分页)及列筛选
 /// </summary>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class GroupByMultiFetchSelect(IFetch fetch, GroupByMultiFields fields)
-    : SelectBase<IFetch, GroupByMultiFields>(fetch, fields)
+public sealed class GroupByMultiFetchSelect(ICursor cursor, GroupByMultiFields fields)
+    : SelectBase<ICursor, GroupByMultiFields>(cursor, fields)
 {
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public GroupByMultiFetchSelect(GroupByMultiFetch fetch)
-        : this(fetch, new GroupByMultiFields(fetch))
+    /// <param name="cursor"></param>
+    public GroupByMultiFetchSelect(GroupByMultiCursor cursor)
+        : this(cursor, new GroupByMultiFields(cursor))
     {
     }
     /// <summary>

@@ -4,10 +4,10 @@ using ShadowSql.SqlVales;
 using ShadowSql.Engines;
 using System.Text;
 using ShadowSql.Select;
-using ShadowSql.Fetches;
 using ShadowSql.Components;
 using ShadowSql;
 using ShadowSql.Fragments;
+using ShadowSql.Cursors;
 
 namespace Dapper.Shadow;
 

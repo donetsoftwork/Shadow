@@ -3,12 +3,12 @@ using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 多(联)表分组后范围筛选
+/// 多(联)表分组后范围筛选游标
 /// </summary>
-public class GroupByMultiFetch : FetchBase<IGroupByView>
+public class GroupByMultiCursor : CursorBase<IGroupByView>
 {
     /// <summary>
     /// 多(联)表分组后范围筛选
@@ -16,7 +16,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// <param name="source"></param>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
-    public GroupByMultiFetch(GroupByMultiQuery source, int limit, int offset)
+    public GroupByMultiCursor(GroupByMultiQuery source, int limit, int offset)
         : this(source, source.Source, limit, offset)
     {
     }
@@ -26,11 +26,11 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// <param name="source"></param>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
-    public GroupByMultiFetch(GroupByMultiSqlQuery source, int limit, int offset)
+    public GroupByMultiCursor(GroupByMultiSqlQuery source, int limit, int offset)
         : this(source, source.Source, limit, offset)
     {
     }
-    private GroupByMultiFetch(IGroupByView source, IMultiView multiTable, int limit, int offset)
+    private GroupByMultiCursor(IGroupByView source, IMultiView multiTable, int limit, int offset)
         : base(source, limit, offset)
     {
         _multiTable = multiTable;
@@ -52,7 +52,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByMultiFetch Asc(Func<IGroupByView, IOrderView> select)
+    public GroupByMultiCursor Asc(Func<IGroupByView, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -62,7 +62,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByMultiFetch Desc(Func<IGroupByView, IOrderAsc> select)
+    public GroupByMultiCursor Desc(Func<IGroupByView, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;
@@ -75,7 +75,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByMultiFetch AggregateAsc(string tableName, Func<IAliasTable, IAggregateField> select)
+    public GroupByMultiCursor AggregateAsc(string tableName, Func<IAliasTable, IAggregateField> select)
     {
         var member = _multiTable.From(tableName);
         AscCore(select(member));
@@ -87,7 +87,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByMultiFetch AggregateDesc(string tableName, Func<IAliasTable, IAggregateField> select)
+    public GroupByMultiCursor AggregateDesc(string tableName, Func<IAliasTable, IAggregateField> select)
     {
         DescCore(select(_multiTable.From(tableName)));
         return this;
@@ -100,7 +100,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByMultiFetch AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
         where TTable : ITable
     {
         var member = _multiTable.Table<TTable>(tableName);
@@ -117,7 +117,7 @@ public class GroupByMultiFetch : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByMultiFetch AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
         where TTable : ITable
     {
         var member = _multiTable.Table<TTable>(tableName);

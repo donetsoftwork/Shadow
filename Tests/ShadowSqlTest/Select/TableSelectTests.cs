@@ -26,7 +26,7 @@ public class TableSelectTests
         int limit = 10;
         int offset = 10;
         var select = _db.From("Users")
-            .ToFetch()
+            .ToCursor()
             .Skip(offset)
             .Take(limit)
             .ToSelect();
@@ -37,7 +37,7 @@ public class TableSelectTests
     public void Desc()
     {
         var select = _db.From("Users")
-            .ToFetch()
+            .ToCursor()
             .Desc(u => u.Field("Age"))
             .Asc(u => u.Field("Id"))
             .ToSelect();

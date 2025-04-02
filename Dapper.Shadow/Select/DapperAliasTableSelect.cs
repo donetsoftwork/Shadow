@@ -1,6 +1,6 @@
 ﻿using ShadowSql.AliasTables;
+using ShadowSql.Cursors;
 using ShadowSql.Engines;
-using ShadowSql.Fetches;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Select;
@@ -69,56 +69,15 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
         => _executor;
     #endregion
 }
-///// <summary>
-///// 别名表过滤筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="executor"></param>
-///// <param name="filter"></param>
-//public sealed class DapperAliasTableFilterSelect<TTable>(IExecutor executor, TableFilter<TableAlias<TTable>> filter)
-//    : SelectBase<ITableView, AliasTableFields<TTable>>(filter, new AliasTableFields<TTable>(filter.Source))
-//    , IDapperSelect
-//    where TTable : ITable
-//{
-
-//    #region 配置
-//    private readonly IExecutor _executor = executor;
-//    /// <summary>
-//    /// 执行器
-//    /// </summary>
-//    public IExecutor Executor
-//        => _executor;
-//    #endregion
-//}
-///// <summary>
-///// 别名表(及查询)筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="executor"></param>
-///// <param name="query"></param>
-//public class DapperAliasTableQuerySelect<TTable>(IExecutor executor, AliasTableQuery<TTable> query)
-//    : SelectBase<ITableView, AliasTableFields<TTable>>(query, new AliasTableFields<TTable>(query.Source))
-//    , IDapperSelect
-//    where TTable : ITable
-//{
-//    #region 配置
-//    private readonly IExecutor _executor = executor;
-//    /// <summary>
-//    /// 执行器
-//    /// </summary>
-//    public IExecutor Executor
-//        => _executor;
-//    #endregion
-//}
 /// <summary>
 /// 别名表范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperAliasTableFetchSelect<TTable>(IExecutor executor, IFetch fetch, AliasTableFields<TTable> fields)
-    : SelectBase<IFetch, AliasTableFields<TTable>>(fetch, fields)
+public class DapperAliasTableFetchSelect<TTable>(IExecutor executor, ICursor cursor, AliasTableFields<TTable> fields)
+    : SelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
     , IDapperSelect
     where TTable : ITable
 {
@@ -126,9 +85,9 @@ public class DapperAliasTableFetchSelect<TTable>(IExecutor executor, IFetch fetc
     /// 别名表范围(分页)及列筛选
     /// </summary>
     /// <param name="executor"></param>
-    /// <param name="fetch"></param>
-    public DapperAliasTableFetchSelect(IExecutor executor, AliasTableFetch<TTable> fetch)
-        : this(executor, fetch, new AliasTableFields<TTable>(fetch.Source))
+    /// <param name="cursor"></param>
+    public DapperAliasTableFetchSelect(IExecutor executor, AliasTableCursor<TTable> cursor)
+        : this(executor, cursor, new AliasTableFields<TTable>(cursor.Source))
     {
     }
     #region 配置

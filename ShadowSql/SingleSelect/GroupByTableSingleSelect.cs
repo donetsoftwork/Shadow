@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
@@ -30,18 +30,18 @@ public class GroupByTableSingleSelect<TTable>(IGroupByView groupBy, GroupByTable
 /// GroupBy后再范围(分页)及单列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class GroupByTableFetchSingleSelect<TTable>(IFetch fetch, GroupByTableFields<TTable> fields)
-    : SingleSelectBase<IFetch, GroupByTableFields<TTable>>(fetch, fields)
+public class GroupByTableFetchSingleSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
+    : SingleSelectBase<ICursor, GroupByTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
     /// <summary>
     /// GroupBy后再范围(分页)及单列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public GroupByTableFetchSingleSelect(GroupByTableFetch<TTable> fetch)
-        : this(fetch, new GroupByTableFields<TTable>(fetch))
+    /// <param name="cursor"></param>
+    public GroupByTableFetchSingleSelect(GroupByTableCursor<TTable> cursor)
+        : this(cursor, new GroupByTableFields<TTable>(cursor))
     {
     }
     /// <summary>

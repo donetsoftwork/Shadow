@@ -4,18 +4,18 @@ using ShadowSql.Logics;
 using System;
 using System.Text;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 表范围筛选
+/// 表范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="source"></param>
 /// <param name="where"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public sealed class TableFetch<TTable>(TTable source, ISqlLogic where, int limit, int offset)
-    : FetchBase<TTable>(source, offset, limit)
+public sealed class TableCursor<TTable>(TTable source, ISqlLogic where, int limit, int offset)
+    : CursorBase<TTable>(source, offset, limit)
     where TTable : ITable
 {
     #region 配置
@@ -32,7 +32,7 @@ public sealed class TableFetch<TTable>(TTable source, ISqlLogic where, int limit
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public TableFetch<TTable> Asc(Func<TTable, IOrderView> select)
+    public TableCursor<TTable> Asc(Func<TTable, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -42,7 +42,7 @@ public sealed class TableFetch<TTable>(TTable source, ISqlLogic where, int limit
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public TableFetch<TTable> Desc(Func<TTable, IOrderAsc> select)
+    public TableCursor<TTable> Desc(Func<TTable, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;

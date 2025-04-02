@@ -4,13 +4,13 @@ using ShadowSql.Identifiers;
 using ShadowSql.Variants;
 using System;
 
-namespace ShadowSql.Fetches;
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 别名表分组后范围筛选
+/// 别名表分组后范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
+public class GroupByAliasTableCursor<TTable> : CursorBase<IGroupByView>
     where TTable : ITable
 {
     /// <summary>
@@ -19,7 +19,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="source"></param>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
-    public GroupByAliasTableFetch(GroupByAliasTableQuery<TTable> source, int limit, int offset)
+    public GroupByAliasTableCursor(GroupByAliasTableQuery<TTable> source, int limit, int offset)
         : this(source, source.Source, source.Source.Target, limit, offset)
     {
     }
@@ -29,11 +29,11 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="source"></param>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
-    public GroupByAliasTableFetch(GroupByAliasTableSqlQuery<TTable> source, int limit, int offset)
+    public GroupByAliasTableCursor(GroupByAliasTableSqlQuery<TTable> source, int limit, int offset)
         : this(source, source.Source, source.Source.Target, limit, offset)
     {
     }
-    private GroupByAliasTableFetch(IGroupByView groupBy, TableAlias<TTable> aliasTable, TTable table, int limit, int offset)
+    private GroupByAliasTableCursor(IGroupByView groupBy, TableAlias<TTable> aliasTable, TTable table, int limit, int offset)
         : base(groupBy, limit, offset)
     {
         _aliasTable = aliasTable;
@@ -60,7 +60,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByAliasTableFetch<TTable> Asc(Func<IGroupByView, IOrderView> select)
+    public GroupByAliasTableCursor<TTable> Asc(Func<IGroupByView, IOrderView> select)
     {
         AscCore(select(_source));
         return this;
@@ -70,7 +70,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public GroupByAliasTableFetch<TTable> Desc(Func<IGroupByView, IOrderAsc> select)
+    public GroupByAliasTableCursor<TTable> Desc(Func<IGroupByView, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;
@@ -83,7 +83,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByAliasTableFetch<TTable> AggregateAsc(Func<IAliasTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByAliasTableCursor<TTable> AggregateAsc(Func<IAliasTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     {
         AscCore(aggregate(select(_aliasTable)));
         return this;
@@ -94,7 +94,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByAliasTableFetch<TTable> AggregateDesc(Func<IAliasTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByAliasTableCursor<TTable> AggregateDesc(Func<IAliasTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     {
         DescCore(aggregate(select(_aliasTable)));
         return this;
@@ -105,7 +105,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByAliasTableFetch<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByAliasTableCursor<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     {
         //增加前缀
         var prefixColumn = _aliasTable.GetPrefixColumn(select(_table));
@@ -119,7 +119,7 @@ public class GroupByAliasTableFetch<TTable> : FetchBase<IGroupByView>
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByAliasTableFetch<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByAliasTableCursor<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     {
         //增加前缀
         var prefixColumn = _aliasTable.GetPrefixColumn(select(_table));

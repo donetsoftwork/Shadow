@@ -1,5 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.Fetches;
+﻿using ShadowSql.Cursors;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
 using System.Text;
@@ -26,17 +26,17 @@ public class MultiTableSelect(IMultiView multiTable, MultiTableFields fields)
 /// <summary>
 /// 多表视图范围(分页)及列筛选
 /// </summary>
-/// <param name="fetch"></param>
+/// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class MultiTableFetchSelect(MultiTableFetch fetch, MultiTableFields fields)
-    : SelectBase<IFetch, MultiTableFields>(fetch, fields)
+public class MultiTableFetchSelect(MultiTableCursor cursor, MultiTableFields fields)
+    : SelectBase<ICursor, MultiTableFields>(cursor, fields)
 {
     /// <summary>
     /// 多表视图范围(分页)及列筛选
     /// </summary>
-    /// <param name="fetch"></param>
-    public MultiTableFetchSelect(MultiTableFetch fetch)
-        : this(fetch, new MultiTableFields(fetch.Source))
+    /// <param name="cursor"></param>
+    public MultiTableFetchSelect(MultiTableCursor cursor)
+        : this(cursor, new MultiTableFields(cursor.Source))
     {
     }
     /// <summary>

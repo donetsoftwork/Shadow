@@ -31,7 +31,7 @@ public class JoinBench
         var query = joinOn.Root
             .TableColumnEqualValue("c", "Pick", true)
             .TableColumnEqualValue("p", "Author", "jxj")
-            .ToFetch()
+            .ToCursor()
              .Desc("c", c => c.Field("Id"))
              .ToSelect();
         query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
@@ -51,7 +51,7 @@ public class JoinBench
         var query = joinOn.Root
             .TableColumnEqualValue("c", "Pick", true)
             .TableColumnEqualValue("p", "Author", "jxj")
-            .ToFetch()
+            .ToCursor()
              .Desc("c", c => c.Field("Id"))
              .ToSelect();
         query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
@@ -69,7 +69,7 @@ public class JoinBench
         var query = joinOn.Root
             .And(c.Pick.EqualValue(true))
             .And(p.Author.EqualValue("jxj"))
-            .ToFetch()
+            .ToCursor()
             .Desc(c.Id)
             .ToSelect();
         query.Fields.Select(c.Id, c.Content);
@@ -86,7 +86,7 @@ public class JoinBench
         var query = joinOn.Root
             .And(c.Pick.Equal())
             .And(p.Author.Equal())
-            .ToFetch()
+            .ToCursor()
             .Desc(c.Id)
             .ToSelect();
         query.Fields.Select(c.Id, c.Content);

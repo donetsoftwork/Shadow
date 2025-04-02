@@ -1,9 +1,11 @@
-﻿namespace ShadowSql.Fetches;
+﻿using ShadowSql.Identifiers;
+
+namespace ShadowSql.Cursors;
 
 /// <summary>
-/// 游标
+/// 范围筛选游标
 /// </summary>
-public interface ICursor
+public interface ICursor : ITableView
 {
     /// <summary>
     /// 获取数量

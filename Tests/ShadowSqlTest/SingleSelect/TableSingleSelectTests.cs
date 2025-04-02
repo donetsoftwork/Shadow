@@ -14,10 +14,10 @@ public class TableSingleSelectTests
     [Fact]
     public void Select()
     {
-        var fetch = _db.From("Users")
+        var cursor = _db.From("Users")
             .ToSingle();
-        fetch.Fields.Select("Id", "Name");
-        var sql = _engine.Sql(fetch);
+        cursor.Fields.Select("Id", "Name");
+        var sql = _engine.Sql(cursor);
         //取最后一个字段
         Assert.Equal("SELECT [Name] FROM [Users]", sql);
     }
@@ -27,7 +27,7 @@ public class TableSingleSelectTests
         int limit = 10;
         int offset = 10;
         var select = _db.From("Users")
-            .ToFetch()
+            .ToCursor()
             .Skip(offset)
             .Take(limit)
             .ToSingle();
@@ -38,7 +38,7 @@ public class TableSingleSelectTests
     public void Desc()
     {
         var select = _db.From("Users")
-            .ToFetch()
+            .ToCursor()
             .Desc(u => u.Field("Age"))
             .Asc(u => u.Field("Id"))
             .ToSingle();
