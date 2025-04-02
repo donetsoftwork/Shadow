@@ -32,12 +32,12 @@ public class GroupByAliasTableSqlQuery<TTable>(TableAlias<TTable> source, ISqlLo
     {
     }
     #region 配置
-    private readonly TTable _table = source.Target;
-    /// <summary>
-    /// 原始表
-    /// </summary>
-    public TTable Table
-        => _table;
+    //private readonly TTable _table = source.Target;
+    ///// <summary>
+    ///// 原始表
+    ///// </summary>
+    //public TTable Table
+    //    => _table;
     private readonly ISqlLogic _where = where;
     /// <summary>
     /// where查询条件
@@ -45,20 +45,17 @@ public class GroupByAliasTableSqlQuery<TTable>(TableAlias<TTable> source, ISqlLo
     public ISqlLogic Where
         => _where;
     #endregion
-
     #region HavingAggregate
     /// <summary>
     /// 按聚合逻辑查询
     /// </summary>
     /// <param name="select"></param>
+    /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByAliasTableSqlQuery<TTable> Having(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public GroupByAliasTableSqlQuery<TTable> HavingAggregate(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        //增加前缀
-        var prefixColumn = _source.GetPrefixColumn(select(_table));
-        if (prefixColumn != null)
-            AddLogic(query(prefixColumn));
+        _filter.AddLogic(query(_source.Aggregate(select, aggregate)));
         return this;
     }
     #endregion

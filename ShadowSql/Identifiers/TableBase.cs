@@ -31,7 +31,16 @@ public abstract class TableBase(string name)
     /// <param name="columName"></param>
     /// <returns></returns>
     public abstract IColumn? GetColumn(string columName);
-    #endregion
+    #endregion  
+    /// <summary>
+    /// 获取字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    public IField Field(string fieldName)
+        => FieldInfo.Use(fieldName);
+    IEnumerable<IColumn> IUpdateTable.UpdateColumns
+        => UpdateColumns;
     #region ITableView
     string IView.ViewName
         => _name;
@@ -44,15 +53,7 @@ public abstract class TableBase(string name)
     /// <returns></returns>
     IColumn? ITableView.GetColumn(string columName)
         => GetColumn(columName);
+    ICompareField ITableView.GetCompareField(string fieldName)
+        => this.GetCompareField(fieldName);
     #endregion
-    IEnumerable<IColumn> IUpdateTable.UpdateColumns
-        => UpdateColumns;
-  
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    public IField Field(string fieldName)
-        => FieldInfo.Use(fieldName);
 }

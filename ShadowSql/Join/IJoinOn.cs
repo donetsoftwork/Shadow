@@ -24,7 +24,7 @@ public interface IJoinOn : IMultiView, ISqlEntity
     /// <summary>
     /// 右表
     /// </summary>
-    IAliasTable Source { get; }
+    IAliasTable JoinSource { get; }
     /// <summary>
     /// 联表条件
     /// </summary>

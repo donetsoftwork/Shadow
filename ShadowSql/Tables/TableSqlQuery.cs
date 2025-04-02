@@ -11,9 +11,9 @@ namespace ShadowSql.Tables;
 /// </summary>
 /// <param name="table"></param>
 /// <param name="query"></param>
-public class TableSqlQuery<TTable>(TTable table, SqlQuery query)   
-    : DataSqlQuery<TTable>(table, query), ITableView, IWhere
-     where TTable : ITable
+public class TableSqlQuery<TTable>(TTable table, SqlQuery query)
+    : DataFilterBase<TTable, SqlQuery>(table, query), IDataSqlQuery, IWhere
+    where TTable : ITable
 {
     #region 扩展查询功能
     /// <summary>
@@ -23,8 +23,15 @@ public class TableSqlQuery<TTable>(TTable table, SqlQuery query)
     /// <returns></returns>
     public TableSqlQuery<TTable> Where(Func<TTable, AtomicLogic> query)
     {
-        AddLogic(query(_source));
+        _filter.AddLogic(query(_source));
         return this;
+    }
+    #endregion
+    #region IDataQuery
+    SqlQuery IDataSqlQuery.Query
+    {
+        get => _filter;
+        set => _filter = value;
     }
     #endregion
 }

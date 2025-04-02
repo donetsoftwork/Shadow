@@ -44,8 +44,8 @@ public class FetchBench
     {
         var query = new Table("Posts")
             .ToQuery()
-            .ColumnEqualValue("Category", "csharp")
-            .ColumnEqualValue("Pick", true)
+            .And(Category.EqualValue("csharp"))
+            .And(Pick.EqualValue(true))
             .ToFetch()
             .Skip(10)
             .Take(10)

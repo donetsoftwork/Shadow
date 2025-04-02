@@ -14,7 +14,7 @@ namespace ShadowSql.AliasTables;
 /// <param name="table"></param>
 /// <param name="filter"></param>
 public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
-    : DataQuery<TableAlias<TTable>>(table, filter), IWhere
+    : DataFilterBase<TableAlias<TTable>, Logic>(table, filter), IDataQuery, IWhere
     where TTable : ITable
 {
     /// <summary>
@@ -33,20 +33,43 @@ public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
     public TTable Table
         => _table;
     #endregion
+
     #region 查询扩展
     /// <summary>
-    /// 按逻辑查询
+    /// 与逻辑
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public AliasTableQuery<TTable> Where(Func<TTable, IColumn> column, Func<IColumn, AtomicLogic> query)
+    public AliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
     {
-        //增加前缀
-        var prefixColumn = _source.GetPrefixColumn(column(_table));
-        if (prefixColumn is not null)
-            AddLogic(query(prefixColumn));
+        _filter = _filter.And(query(Prefix(select)));
         return this;
+    }
+    /// <summary>
+    /// 或逻辑
+    /// </summary>
+    /// <param name="select"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public AliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    {
+        _filter = _filter.Or(query(Prefix(select)));
+        return this;
+    }
+    /// <summary>
+    /// 增加前缀
+    /// </summary>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    private IPrefixColumn Prefix(Func<TTable, IColumn> select)
+        => _source.Prefix(select(_table));
+    #endregion
+    #region IDataQuery
+    Logic IDataQuery.Logic
+    {
+        get => _filter;
+        set => _filter = value;
     }
     #endregion
 }

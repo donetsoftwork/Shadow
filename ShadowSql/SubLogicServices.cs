@@ -1,5 +1,5 @@
-﻿using ShadowSql.Filters;
-using ShadowSql.Identifiers;
+﻿using ShadowSql.Identifiers;
+using ShadowSql.Queries;
 using ShadowSql.SingleSelect;
 using ShadowSql.SubQueries;
 
@@ -53,9 +53,9 @@ public static partial class ShadowSqlServices
     /// <param name="source"></param>
     /// <returns></returns>
     public static Query Exists<Query>(this Query query, ITableView source)
-        where Query : IDataFilter
+        where Query : IDataSqlQuery
     {
-        query.AddLogic(source.AsExists());
+        query.Query.AddLogic(source.AsExists());
         return query;
     }
     /// <summary>
@@ -66,9 +66,9 @@ public static partial class ShadowSqlServices
     /// <param name="source"></param>
     /// <returns></returns>
     public static Query NotExists<Query>(this Query query, ITableView source)
-        where Query : IDataFilter
+        where Query : IDataSqlQuery
     {
-        query.AddLogic(source.AsNotExists());
+        query.Query.AddLogic(source.AsNotExists());
         return query;
     }
     /// <summary>
@@ -80,9 +80,9 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <returns></returns>
     public static Query In<Query>(this Query query, ICompareView field, ISingleSelect select)
-        where Query : IDataFilter
+        where Query : IDataSqlQuery
     {
-        query.AddLogic(field.In(select));
+        query.Query.AddLogic(field.In(select));
         return query;
     }
     /// <summary>
@@ -94,9 +94,9 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <returns></returns>
     public static Query NotIn<Query>(this Query query, ICompareView field, ISingleSelect select)
-        where Query : IDataFilter
+        where Query : IDataSqlQuery
     {
-        query.AddLogic(field.NotIn(select));
+        query.Query.AddLogic(field.NotIn(select));
         return query;
     }
     #endregion

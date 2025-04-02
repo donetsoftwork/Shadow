@@ -54,9 +54,7 @@ public class FetchBase<TSource>(TSource source, int limit, int offset)
     /// <param name="sql"></param>
     /// <returns></returns>
     protected virtual void WriteSource(ISqlEngine engine, StringBuilder sql)
-    {
-        _source.Write(engine, sql);
-    }    
+        => _source.Write(engine, sql);
     #endregion
 
     #region ITableView
@@ -66,6 +64,8 @@ public class FetchBase<TSource>(TSource source, int limit, int offset)
         => _source.Field(fieldName);
     IColumn? ITableView.GetColumn(string columName)
         => _source.GetColumn(columName);
+    ICompareField ITableView.GetCompareField(string fieldName)
+        => _source.GetCompareField(fieldName);
     #endregion
 }
 /// <summary>
@@ -100,7 +100,6 @@ public abstract class FetchBase(int limit, int offset)
     public int Offset
         => _offset;
     #endregion
-
     #region 功能
     /// <summary>
     /// 跳过数量
@@ -114,7 +113,7 @@ public abstract class FetchBase(int limit, int offset)
     /// <param name="limit"></param>
     internal void TakeCore(int limit)
         => _limit = limit;
-    #region ICompareField
+    #region IOrderField
     /// <summary>
     /// 正序
     /// </summary>

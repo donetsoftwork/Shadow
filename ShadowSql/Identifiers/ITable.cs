@@ -58,6 +58,12 @@ public interface ITableView : ISqlEntity
     /// <param name="fieldName"></param>
     /// <returns></returns>
     IField Field(string fieldName);
+    /// <summary>
+    /// 获取比较字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    ICompareField GetCompareField(string fieldName);
 }
 ///// <summary>
 ///// 多表(联表)查询

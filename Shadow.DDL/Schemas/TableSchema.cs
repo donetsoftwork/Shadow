@@ -114,17 +114,15 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         => _insertColumns;
     IEnumerable<IColumn> IUpdateTable.UpdateColumns
         => _updateColumns;
-
     IEnumerable<IColumn> ITableView.Columns
         => _columns;
-
     string IView.ViewName
         => _name;
-
     IColumn? ITableView.GetColumn(string columName)
         => GetColumn(columName);
-
     IField ITableView.Field(string fieldName)
         => FieldInfo.Use(fieldName);
+    ICompareField ITableView.GetCompareField(string fieldName)
+        => this.GetCompareField(fieldName);
     #endregion
 }

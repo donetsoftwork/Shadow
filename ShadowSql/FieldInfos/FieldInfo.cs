@@ -25,7 +25,7 @@ public sealed class FieldInfo : FieldInfoBase, IField, ICompareField
     /// <param name="aggregate"></param>
     /// <returns></returns>
     public AggregateFieldInfo FieldAggregateTo(string aggregate)
-        => new(aggregate, _name);
+        => new(this, aggregate);
     /// <summary>
     /// 聚合
     /// </summary>

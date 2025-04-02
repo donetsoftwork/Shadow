@@ -2,6 +2,7 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
+using System;
 
 namespace ShadowSql.Tables;
 
@@ -9,10 +10,10 @@ namespace ShadowSql.Tables;
 /// 逻辑查询表
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
+/// <param name="table"></param>
 /// <param name="filter"></param>
-public class TableQuery<TTable>(TTable source, Logic filter)
-    : DataQuery<TTable>(source, filter), IWhere
+public class TableQuery<TTable>(TTable table, Logic filter)
+    : DataFilterBase<TTable, Logic>(table, filter), IDataQuery, IWhere
     where TTable : ITable
 {
     /// <summary>
@@ -23,4 +24,33 @@ public class TableQuery<TTable>(TTable source, Logic filter)
         : this(source, new AndLogic())
     {
     }
+    #region 扩展查询功能
+    /// <summary>
+    /// 与逻辑
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public TableQuery<TTable> And(Func<TTable, AtomicLogic> query)
+    {
+        _filter = _filter.And(query(_source));
+        return this;
+    }
+    /// <summary>
+    /// 或逻辑
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public TableQuery<TTable> Or(Func<TTable, AtomicLogic> query)
+    {
+        _filter = _filter.Or(query(_source));
+        return this;
+    }
+    #endregion
+    #region IDataQuery
+    Logic IDataQuery.Logic 
+    {
+        get => _filter;
+        set => _filter = value;
+    }
+    #endregion
 }

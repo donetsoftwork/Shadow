@@ -10,8 +10,9 @@ public class JoinMemberQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
     static readonly DB _db = DB.Use("MyDb");
+    static readonly IColumn Id = Column.Use("Id");
+    static readonly IColumn DepartmentId = Column.Use("DepartmentId");
 
-    
     [Fact]
     public void Where()
     {
@@ -23,10 +24,10 @@ public class JoinMemberQueryTests
             .As("d");
   
         var departmentJoin = e.Join(d)
-            .OnColumn("DepartmentId", "Id");
+            .And(e.Prefix(DepartmentId).Equal(d.Prefix(Id)));
         var joinTableQuery = departmentJoin.Root
-            .Where(e.Field("Age").GreaterValue(40))
-            .Where(d.Column("Manager").NotEqualValue("CEO"));
+            .And(e.Field("Age").GreaterValue(40))
+            .And(d.Column("Manager").NotEqualValue("CEO"));
         var sql = _engine.Sql(joinTableQuery);
         Assert.Equal("[Employees] AS e INNER JOIN [Departments] AS d ON e.[DepartmentId]=d.[Id] WHERE e.[Age]>40 AND d.[Manager]<>'CEO'", sql);
     }

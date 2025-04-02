@@ -47,7 +47,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableFetch<TTable> ToFetch<TTable>(this TableQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
-        => new(query.Source, query.Filter, limit, offset);
+        => new(query.Source, query._filter, limit, offset);
     /// <summary>
     /// 表查询范围筛选
     /// </summary>
@@ -58,7 +58,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableFetch<TTable> ToFetch<TTable>(this TableSqlQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
-        => new(query.Source, query.Filter, limit, offset);
+        => new(query.Source, query._filter, limit, offset);
     #endregion
     #region AliasTableFetch
     /// <summary>
@@ -94,7 +94,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static AliasTableFetch<TTable> ToFetch<TTable>(this AliasTableQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
-        => new(query.Source, query.Filter, limit, offset);
+        => new(query.Source, query._filter, limit, offset);
     /// <summary>
     /// 别名表查询范围筛选
     /// </summary>
@@ -105,7 +105,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static AliasTableFetch<TTable> ToFetch<TTable>(this AliasTableSqlQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
-        => new(query.Source, query.Filter, limit, offset);
+        => new(query.Source, query._filter, limit, offset);
     #endregion
     #region MultiTableFetch
     /// <summary>

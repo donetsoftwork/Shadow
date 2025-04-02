@@ -1,7 +1,4 @@
-﻿using ShadowSql.Aggregates;
-using ShadowSql.FieldInfos;
-using ShadowSql.Fragments;
-using ShadowSql.Identifiers;
+﻿using ShadowSql.Identifiers;
 using ShadowSql.Variants;
 using System;
 
@@ -58,39 +55,7 @@ public class ColumnSchema(string name, string sqlType = "INT")
     public IPrefixColumn GetPrefixColumn(params string[] prefix)
     {
         return new PrefixColumn(this, prefix);
-    }
-    /// <summary>
-    /// 生成别名
-    /// </summary>
-    /// <param name="alias"></param>
-    /// <returns></returns>
-    public override IFieldAlias As(string alias)
-    {
-        return new AliasColumn<ColumnSchema>(this, alias);
-    }
-    /// <summary>
-    /// 聚合别名
-    /// </summary>
-    /// <param name="aggregate"></param>
-    /// <param name="alias"></param>
-    /// <returns></returns>
-    public override IAggregateFieldAlias AggregateAs(string aggregate, string alias)
-    {
-        if (AggregateConstants.MatchCount(aggregate))
-            return new DistinctCountAliasFieldInfo(this, aggregate);
-        return new AggregateColumnAlias<ColumnSchema>(aggregate, this, alias);
-    }
-    /// <summary>
-    /// 聚合
-    /// </summary>
-    /// <param name="aggregate"></param>
-    /// <returns></returns>
-    public override IAggregateField AggregateTo(string aggregate)
-    {
-        if (AggregateConstants.MatchCount(aggregate))
-            return new DistinctCountFieldInfo(this);
-        return new AggregateColumn<ColumnSchema>(aggregate, this);
-    }
+    }    
     string IView.ViewName
         => _name;
     /// <summary>
@@ -99,7 +64,6 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// <returns></returns>
     public IColumn ToColumn()
         => this;
-
     #region IMatch
     /// <summary>
     /// 是否匹配

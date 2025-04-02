@@ -14,13 +14,15 @@ public class JoinTableSelectTests
     [Fact]
     public void ByFieldName()
     {
-        var joinOn = new Table("Comments").As("c")
-            .Join(new Table("Posts").As("p"))
-            .OnColumn("PostId", "Id");
+        var Comments = new Table("Comments").As("c");
+        var Posts = new Table("Posts").As("p");
+        var joinOn = Comments
+            .Join(Posts)
+            .And(Comments.Field("PostId").Equal(Posts.Field("Id")));
 
         var query = joinOn.Root
-            .TableColumnEqualValue("c", "Pick", true)
-            .TableColumnEqualValue("p", "Author", "jxj")
+            .And(Comments.Field("Pick").EqualValue(true))
+            .And(Posts.Field("Author").EqualValue("jxj"))
             .ToFetch()
             .Desc("c", c => c.Field("Id"))
             .ToSelect();
@@ -33,10 +35,10 @@ public class JoinTableSelectTests
     public void ByLogic()
     {
         var joinOn = c.Join(p)
-            .On(c.PostId.Equal(p.Id));
+            .And(c.PostId.Equal(p.Id));
         var query = joinOn.Root
-            .Where(c.Pick.Equal())
-            .Where(p.Author.Equal())
+            .And(c.Pick.Equal())
+            .And(p.Author.Equal())
             .ToFetch()
             .Desc(c.Id)
             .ToSelect();

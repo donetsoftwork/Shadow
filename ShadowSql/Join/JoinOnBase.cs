@@ -18,8 +18,8 @@ namespace ShadowSql.Join;
 /// <param name="root"></param>
 /// <param name="left"></param>
 /// <param name="right"></param>
-/// <param name="onQuery"></param>
-public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, TableAlias<LTable> left, TableAlias<RTable> right, TFilter onQuery)
+/// <param name="filter"></param>
+public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, TableAlias<LTable> left, TableAlias<RTable> right, TFilter filter)
     : JoinOnBase(root), IJoinOn, IMultiView, IDataFilter
     where LTable : ITable
     where RTable : ITable
@@ -51,12 +51,7 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
     /// <summary>
     /// 联表条件
     /// </summary>
-    protected TFilter _onQuery = onQuery;
-    /// <summary>
-    /// 联表条件
-    /// </summary>
-    public TFilter Filter
-        => _onQuery;
+    internal TFilter _filter = filter;
     #endregion
     #region Column
     /// <summary>
@@ -93,10 +88,10 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
     #region IJoinOn
     IAliasTable IJoinOn.Left
         => _left;
-    IAliasTable IJoinOn.Source
+    IAliasTable IJoinOn.JoinSource
         => _source;
     ISqlLogic IJoinOn.On
-        => _onQuery;
+        => _filter;
     #endregion
     #region IMultiTable
     /// <summary>
@@ -119,23 +114,19 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
     /// </summary>
     /// <param name="filter"></param>
     internal void ApplyFilter(Func<TFilter, TFilter> filter)
-        => _onQuery = filter(_onQuery);
-    /// <summary>
-    /// 过滤查询数据源
-    /// </summary>
-    /// <returns></returns>
-    internal override ITableView GetFilterSource()
-        => this;
+        => _filter = filter(_filter);
+    ///// <summary>
+    ///// 过滤查询数据源
+    ///// </summary>
+    ///// <returns></returns>
+    //protected override ITableView GetFilterSource()
+    //    => this;
     #endregion
     #region IDataFilter
     ITableView IDataFilter.Source
         => this;
     ISqlLogic IDataFilter.Filter
-        => _onQuery;
-    void IDataFilter.AddLogic(AtomicLogic condition)
-        => AddLogic(condition);
-    ICompareField IDataFilter.GetCompareField(string fieldName)
-        => GetCompareField(fieldName);
+        => _filter;
     #endregion
     #region IDataView
     /// <summary>
@@ -167,7 +158,7 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
     /// <param name="sql"></param>
     /// <returns></returns>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
-        => _onQuery.TryWrite(engine, sql);
+        => _filter.TryWrite(engine, sql);
     #endregion
 }
 /// <summary>
@@ -297,14 +288,14 @@ public abstract class JoinOnBase(IJoinTable root)
     /// <returns></returns>
     public abstract IAliasTable? GetMember(string tableName);
     #endregion
-    #region FilterBase
-    /// <summary>
-    /// 过滤查询数据源
-    /// </summary>
-    /// <returns></returns>
-    internal override ITableView GetFilterSource()
-        => this;
-    #endregion
+    //#region FilterBase
+    ///// <summary>
+    ///// 过滤查询数据源
+    ///// </summary>
+    ///// <returns></returns>
+    //protected override ITableView GetFilterSource()
+    //    => this;
+    //#endregion
     #region ISqlEntity
     /// <summary>
     /// 筛选前缀

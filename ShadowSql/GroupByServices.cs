@@ -37,7 +37,7 @@ public static partial class ShadowSqlServices
         var table = query.Source;
         var columns = table.SelectFields(columnNames)
             .ToArray();
-        return new GroupByTableQuery<TTable>(table, query.Filter, columns);
+        return new GroupByTableQuery<TTable>(table, query._filter, columns);
     }
     /// <summary>
     /// 分组查询
@@ -77,7 +77,7 @@ public static partial class ShadowSqlServices
         var table = query.Source;
         var columns = table.SelectFields(columnNames)
             .ToArray();
-        return new GroupByTableSqlQuery<TTable>(table, query.Filter, columns);
+        return new GroupByTableSqlQuery<TTable>(table, query._filter, columns);
     }
     /// <summary>
     /// 分组查询

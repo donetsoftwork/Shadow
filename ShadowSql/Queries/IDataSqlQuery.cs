@@ -10,6 +10,10 @@ namespace ShadowSql.Queries;
 /// </summary>
 public interface IDataSqlQuery : IDataFilter
 {
+    /// <summary>
+    /// sql查询
+    /// </summary>
+    SqlQuery Query { get; set; }
     ///// <summary>
     ///// 数据源表
     ///// </summary>
@@ -33,17 +37,17 @@ public interface IDataSqlQuery : IDataFilter
     ///// </summary>
     ///// <param name="condition"></param>
     //void AddLogic(AtomicLogic condition);
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <param name="conditions"></param>
-    /// <returns></returns>
-    void AddConditions(IEnumerable<string> conditions);
-    /// <summary>
-    /// 应用查询
-    /// </summary>
-    /// <param name="query"></param>
-    void ApplyFilter(Func<SqlQuery, SqlQuery> query);
+    ///// <summary>
+    ///// And查询
+    ///// </summary>
+    ///// <param name="conditions"></param>
+    ///// <returns></returns>
+    //void AddConditions(IEnumerable<string> conditions);
+    ///// <summary>
+    ///// 应用查询
+    ///// </summary>
+    ///// <param name="query"></param>
+    //void ApplyFilter(Func<SqlQuery, SqlQuery> query);
     ///// <summary>
     ///// 添加子逻辑
     ///// </summary>

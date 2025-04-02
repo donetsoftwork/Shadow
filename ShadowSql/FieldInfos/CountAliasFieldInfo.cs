@@ -1,14 +1,17 @@
-﻿using ShadowSql.Services;
+﻿using ShadowSql.Engines;
+using ShadowSql.Identifiers;
+using ShadowSql.Services;
+using System.Text;
 
 namespace ShadowSql.FieldInfos;
 
 /// <summary>
 /// 计数字段别名信息
 /// </summary>
-public sealed class CountAliasFieldInfo : AliasFieldInfo
+public sealed class CountAliasFieldInfo : IdentifierBase, IFieldAlias
 {
     private CountAliasFieldInfo(string alias)
-        : base(CountFieldInfo.Count, alias)
+        : base(alias)
     {
     }
     /// <summary>
@@ -22,4 +25,21 @@ public sealed class CountAliasFieldInfo : AliasFieldInfo
     /// 缓存
     /// </summary>
     private static readonly CacheService<CountAliasFieldInfo> _cacher = new(alias => new CountAliasFieldInfo(alias));
+    #region IFieldAlias
+    IColumn IFieldView.ToColumn()
+        => Column.Use(_name);
+    IFieldAlias IFieldView.As(string alias)
+        => Column.Use(_name).As(alias);
+    string IFieldAlias.Alias
+        => _name;
+    string IView.ViewName 
+        => _name;
+    #endregion
+    #region ISqlEntity
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
+    {
+        sql.Append(CountFieldInfo.Count);
+        engine.ColumnAs(sql, _name);
+    }
+    #endregion
 }

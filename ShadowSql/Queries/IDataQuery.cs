@@ -10,8 +10,12 @@ namespace ShadowSql.Queries;
 public interface IDataQuery : IDataFilter
 {
     /// <summary>
-    /// 应用查询
+    /// 过滤逻辑
     /// </summary>
-    /// <param name="filter"></param>
-    void ApplyFilter(Func<Logic, Logic> filter);
+    Logic Logic { get; set; }
+    ///// <summary>
+    ///// 应用查询
+    ///// </summary>
+    ///// <param name="filter"></param>
+    //void ApplyFilter(Func<Logic, Logic> filter);
 }

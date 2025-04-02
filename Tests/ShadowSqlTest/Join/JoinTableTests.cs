@@ -18,9 +18,9 @@ public class JoinTableTests
         var departments = _db.From("Departments")
             .DefineColums("Id", "Name", "Manager", "ParentId", "RootId");
 
-        var departmentJoinOn = employees.Join(departments)
-            .On(static (t1, t2) => t1.Column("DepartmentId").Equal(t2.Column("Id")));
-        var sql = _engine.Sql(departmentJoinOn.Root);
+        var joinOn = employees.Join(departments);
+        joinOn.And(joinOn.Left.Column("DepartmentId").Equal(joinOn.Source.Column("Id")));
+        var sql = _engine.Sql(joinOn.Root);
         Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id]", sql);
     }
     [Fact]
@@ -28,8 +28,10 @@ public class JoinTableTests
     {
         var departments = _db.From("Departments");
         var departmentJoinOn = departments.Join(departments)
-            .AsLeftJoin()
-            .On(static (t1, t2) => t1.Field("ParentId").Equal(t2.Field("Id")));
+            .AsLeftJoin();
+        var t1 = departmentJoinOn.Left;
+        var t2 = departmentJoinOn.Source;
+        departmentJoinOn.And(t1.Field("ParentId").Equal(t2.Field("Id")));
         var sql = _engine.Sql(departmentJoinOn.Root);
         Assert.Equal("[Departments] AS t1 LEFT JOIN [Departments] AS t2 ON t1.[ParentId]=t2.[Id]", sql);
     }
@@ -53,7 +55,7 @@ public class JoinTableTests
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
 
-        var departmentJoinOn = employees.Join(departments)
+        var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var manager = Column.Use("Manager");
         var joinTable = departmentJoinOn.Root
@@ -82,7 +84,7 @@ public class JoinTableTests
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
 
-        var departmentJoinOn = employees.Join(departments)
+        var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = departmentJoinOn.Root
             .Where((join, query) => query
@@ -100,7 +102,7 @@ public class JoinTableTests
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
 
-        var departmentJoinOn = employees.Join(departments)
+        var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = departmentJoinOn.Root
             .Where("t1", (employee, query) => query.And(employee.Field("Age").GreaterEqualValue(40)));
@@ -114,7 +116,7 @@ public class JoinTableTests
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
 
-        var departmentJoinOn = employees.Join(departments)
+        var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = departmentJoinOn.Root
             .Where(join => join.From("t2").Field("Manager").EqualValue("CEO"));

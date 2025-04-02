@@ -13,86 +13,86 @@ namespace ShadowSql.Filters;
 /// </summary>
 public abstract class FilterBase : ITableView
 {
-    /// <summary>
-    /// 过滤查询数据源
-    /// </summary>
-    /// <returns></returns>
-    internal abstract ITableView GetFilterSource();
-    /// <summary>
-    /// 添加子逻辑
-    /// </summary>
-    /// <param name="condition"></param>
-    internal abstract void AddLogic(AtomicLogic condition);
-    /// <summary>
-    /// 切换为And
-    /// </summary>
-    internal abstract void ToAndCore();
-    /// <summary>
-    /// 切换为Or
-    /// </summary>
-    internal abstract void ToOrCore();
-    #region Logic
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void AndCore(AtomicLogic condition) { }
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void AndCore(AndLogic condition) { }
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void AndCore(ComplexAndLogic condition) { }
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void AndCore(OrLogic condition) { }
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void AndCore(ComplexOrLogic condition) { }
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void AndCore(Logic condition) { }
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void OrCore(AtomicLogic condition) { }
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void OrCore(AndLogic condition) { }
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void OrCore(ComplexAndLogic condition) { }
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void OrCore(OrLogic condition) { }
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void OrCore(ComplexOrLogic condition) { }
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal virtual void OrCore(Logic condition) { }
-    #endregion
+    ///// <summary>
+    ///// 过滤查询数据源
+    ///// </summary>
+    ///// <returns></returns>
+    //protected abstract ITableView GetFilterSource();
+    ///// <summary>
+    ///// 添加子逻辑
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal abstract void AddLogic(AtomicLogic condition);
+    ///// <summary>
+    ///// 切换为And
+    ///// </summary>
+    //internal abstract void ToAndCore();
+    ///// <summary>
+    ///// 切换为Or
+    ///// </summary>
+    //internal abstract void ToOrCore();
+    //#region Logic
+    ///// <summary>
+    ///// 与运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void AndCore(AtomicLogic condition) { }
+    ///// <summary>
+    ///// 与运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void AndCore(AndLogic condition) { }
+    ///// <summary>
+    ///// 与运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void AndCore(ComplexAndLogic condition) { }
+    ///// <summary>
+    ///// 与运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void AndCore(OrLogic condition) { }
+    ///// <summary>
+    ///// 与运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void AndCore(ComplexOrLogic condition) { }
+    ///// <summary>
+    ///// 与运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void AndCore(Logic condition) { }
+    ///// <summary>
+    ///// 或运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void OrCore(AtomicLogic condition) { }
+    ///// <summary>
+    ///// 或运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void OrCore(AndLogic condition) { }
+    ///// <summary>
+    ///// 或运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void OrCore(ComplexAndLogic condition) { }
+    ///// <summary>
+    ///// 或运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void OrCore(OrLogic condition) { }
+    ///// <summary>
+    ///// 或运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void OrCore(ComplexOrLogic condition) { }
+    ///// <summary>
+    ///// 或运算
+    ///// </summary>
+    ///// <param name="condition"></param>
+    //internal virtual void OrCore(Logic condition) { }
+    //#endregion
     #region ITableView
     /// <summary>
     /// 获取所有列
@@ -128,6 +128,8 @@ public abstract class FilterBase : ITableView
     /// </summary>
     IEnumerable<IColumn> ITableView.Columns
         => GetColumns();
+    ICompareField ITableView.GetCompareField(string fieldName)
+        => GetCompareField(fieldName);
     #endregion
     #region ISqlEntity
     /// <summary>

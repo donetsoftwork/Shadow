@@ -10,6 +10,10 @@ public class GroupByQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
     static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IColumn Age = Column.Use("Age");
+    static readonly IColumn City = Column.Use("City");
+    static readonly IColumn CityId = Column.Use("CityId");
+    static readonly IColumn Level = Column.Use("Level");
 
     [Fact]
     public void Table()
@@ -25,7 +29,7 @@ public class GroupByQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToQuery()
-            .ColumnEqualValue("Age", 20);
+            .And(Age.EqualValue(20));
         var groupBy = query.GroupBy("City");
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [City]", sql);
@@ -35,10 +39,10 @@ public class GroupByQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToQuery()
-            .ColumnEqualValue("Age", 20);
+            .And(Age.EqualValue(20));
         var groupBy = query.GroupBy("CityId")
-            .ColumnInValue("City", "北京", "上海")
-            .ColumnBetweenValue("CityId", 1, 11);
+            .And(City.InValue("北京", "上海"))
+            .And(CityId.BetweenValue(1, 11));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海') AND [CityId] BETWEEN 1 AND 11", sql);
     }
@@ -47,20 +51,20 @@ public class GroupByQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToQuery()
-            .ColumnEqualValue("Age", 20);
+            .And(Age.EqualValue(20));
         var groupBy = query.GroupBy("CityId")
-            .Having(source => source.Field("City").InValue("北京", "上海"));
+            .And(CityId.BetweenValue(1, 11));
         var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海')", sql);
+        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [CityId] BETWEEN 1 AND 11", sql);
     }
     [Fact]
     public void SourceAggregate()
     {
         var table = _db.From("Users");
         var query = table.ToQuery()
-            .ColumnEqualValue("Age", 20);
+            .And(Age.EqualValue(20));
         var groupBy = query.GroupBy("CityId")
-            .Having(q => q.Aggregate("MAX", "Level").GreaterValue(9));
+            .And(Level.Max().GreaterValue(9));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9", sql);
     }
@@ -69,9 +73,9 @@ public class GroupByQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToQuery()
-            .ColumnEqualValue("Age", 20);
+            .And(Age.EqualValue(20));
         var groupBy = query.GroupBy("CityId")
-            .Having(source => source.Max("Level").GreaterValue(9));
+            .And(Level.Max().GreaterValue(9));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9", sql);
     }

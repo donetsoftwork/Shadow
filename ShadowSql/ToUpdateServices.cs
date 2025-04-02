@@ -37,7 +37,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
         where TTable : ITable
-        => new(tableQuery.Source, tableQuery.Filter);
+        => new(tableQuery.Source, tableQuery._filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>

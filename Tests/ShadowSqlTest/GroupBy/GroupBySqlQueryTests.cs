@@ -104,7 +104,7 @@ public class GroupBySqlQueryTests
         var query = table.ToSqlQuery()
             .ColumnEqualValue("Age", 20);
         var groupBy = query.GroupBy("CityId")
-            .Having(q => q.Aggregate("MAX", "Level").GreaterValue(9));
+            .Having(g => g.Aggregate("MAX", "Level").GreaterValue(9));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9", sql);
     }

@@ -19,8 +19,8 @@ public class TableQueryTests
     {
         var query = _db.From("Users")
             .ToQuery()
-            .Where(_id.Equal())
-            .Where(_status.Equal("Status"));
+            .And(_id.Equal())
+            .And(_status.Equal("Status"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id AND [Status]=@Status", sql);
     }
@@ -29,42 +29,11 @@ public class TableQueryTests
     {
         var query = _db.From("Users")
             .ToOrQuery()
-            .Where(_id.Equal())
-            .Where(_status.Equal("Status"));
+            .Or(_id.Equal())
+            .Or(_status.Equal("Status"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id OR [Status]=@Status", sql);
-    }   
-    [Fact]
-    public void Column()
-    {
-        var query = _db.From("Users")
-            .ToQuery()
-            .ColumnParameter("Id", "<", "LastId")
-            .ColumnParameter("Status", "=", "state");
-        var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<@LastId AND [Status]=@state", sql);
-    }
-
-    [Fact]
-    public void ColumnValue()
-    {
-        var query = _db.From("Users")
-            .ToOrQuery()
-            .ColumnValue("Id", 100, "<")
-            .ColumnValue("Status", true);
-        var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<100 OR [Status]=1", sql);
-    }
-
-    [Fact]
-    public void FieldCompare()
-    {
-        var query = _db.From("Users")
-            .ToQuery()
-            .Where(q => q.Field("Id").Less("LastId"));
-        var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<@LastId", sql);
-    }
+    }    
     [Fact]
     public void AndAtomicLogic()
     {

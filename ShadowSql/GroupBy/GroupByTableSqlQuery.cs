@@ -41,11 +41,12 @@ public class GroupByTableSqlQuery<TTable>(TTable table, ISqlLogic where, IFieldV
     /// <summary>
     /// 按逻辑查询
     /// </summary>
+    /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByTableSqlQuery<TTable> Having(Func<TTable, AtomicLogic> query)
+    public GroupByTableSqlQuery<TTable> HavingAggregate(Func<TTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        AddLogic(query(_source));
+        _filter.AddLogic(query(aggregate(_source)));
         return this;
     }
     #endregion

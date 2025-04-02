@@ -36,7 +36,7 @@ public class WhereBench
     {
         var query = new Table("Posts")
             .ToQuery()
-            .ColumnEqualValue("Id", 10)
+            .And(Id.EqualValue(10))
             .ToSelect();
         ParametricContext context = new(_engine);
         var sql = context.Sql(query);

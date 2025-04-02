@@ -14,8 +14,8 @@ namespace ShadowSql.GroupBy;
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
 /// <param name="fields"></param>
-/// <param name="having"></param>
-public abstract class GroupByBase<TFilter>(IFieldView[] fields, TFilter having)
+/// <param name="filter"></param>
+public abstract class GroupByBase<TFilter>(IFieldView[] fields, TFilter filter)
     : GroupByBase(fields), IDataFilter
     where TFilter : ISqlLogic
 {
@@ -23,30 +23,13 @@ public abstract class GroupByBase<TFilter>(IFieldView[] fields, TFilter having)
     /// <summary>
     /// 过滤条件
     /// </summary>
-    protected TFilter _having = having;
-    /// <summary>
-    /// 过滤条件
-    /// </summary>
-    public TFilter Filter
-        => _having;
-    #endregion
-    #region ApplyHaving
-    /// <summary>
-    /// 应用过滤
-    /// </summary>
-    /// <param name="having"></param>
-    internal void ApplyHaving(Func<TFilter, TFilter> having)
-        => _having = having(_having);
+    internal TFilter _filter = filter;
     #endregion
     #region IDataFilter
     ITableView IDataFilter.Source
-        => GetFilterSource();
+        => this;
     ISqlLogic IDataFilter.Filter
-        => _having;
-    void IDataFilter.AddLogic(AtomicLogic condition)
-        => AddLogic(condition);
-    ICompareField IDataFilter.GetCompareField(string fieldName)
-        => GetCompareField(fieldName);
+        => _filter;
     #endregion
     #region ISqlEntity
     /// <summary>
@@ -55,7 +38,7 @@ public abstract class GroupByBase<TFilter>(IFieldView[] fields, TFilter having)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
-        => _having.TryWrite(engine, sql);
+        => _filter.TryWrite(engine, sql);
     #endregion
 }
 /// <summary>
@@ -86,8 +69,12 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     public IColumn[] Columns
         => _columns.Value;
     #endregion
-    internal override ITableView GetFilterSource()
-        => this;
+    ///// <summary>
+    ///// 查询数据源
+    ///// </summary>
+    ///// <returns></returns>
+    //protected override ITableView GetFilterSource()
+    //    => this;
     #region ISqlEntity
     /// <summary>
     /// 拼写数据源

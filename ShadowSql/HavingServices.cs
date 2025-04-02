@@ -1,5 +1,4 @@
 ﻿using ShadowSql.Aggregates;
-using ShadowSql.Filters;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -19,14 +18,14 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 按原始sql查询
     /// </summary>
-    /// <typeparam name="TGroupByQuery"></typeparam>
+    /// <typeparam name="TGroupBy"></typeparam>
     /// <param name="groupBy"></param>
     /// <param name="conditions"></param>
     /// <returns></returns>
-    public static TGroupByQuery Having<TGroupByQuery>(this TGroupByQuery groupBy, params IEnumerable<string> conditions)
-        where TGroupByQuery : GroupByQueryBase
+    public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, params IEnumerable<string> conditions)
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.AddConditions(conditions);
+        groupBy.Query.AddConditions(conditions);
         return groupBy;
     }
     #endregion
@@ -39,9 +38,9 @@ public static partial class ShadowSqlServices
     /// <param name="logic"></param>
     /// <returns></returns>
     public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, AtomicLogic logic)
-        where TGroupBy : GroupByBase
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.AddLogic(logic);
+        groupBy.Query.AddLogic(logic);
         return groupBy;
     }
     /// <summary>
@@ -52,9 +51,9 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, Func<IGroupByView, AtomicLogic> query)
-        where TGroupBy : GroupByBase
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.AddLogic(query(groupBy));
+        groupBy.Query.AddLogic(query(groupBy));
         return groupBy;
     }
     #endregion
@@ -62,55 +61,27 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 按SqlQuery查询
     /// </summary>
-    /// <typeparam name="TGroupByQuery"></typeparam>
+    /// <typeparam name="TGroupBy"></typeparam>
     /// <param name="groupBy"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static TGroupByQuery Having<TGroupByQuery>(this TGroupByQuery groupBy, Func<SqlQuery, SqlQuery> query)
-        where TGroupByQuery : GroupByQueryBase
+    public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, Func<SqlQuery, SqlQuery> query)
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.ApplyHaving(query);
+        groupBy.Query = query(groupBy.Query);
         return groupBy;
     }
     /// <summary>
     /// 按SqlQuery查询
     /// </summary>
-    /// <typeparam name="TGroupByQuery"></typeparam>
+    /// <typeparam name="TGroupBy"></typeparam>
     /// <param name="groupBy"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static TGroupByQuery Having<TGroupByQuery>(this TGroupByQuery groupBy, Func<IGroupByView, SqlQuery, SqlQuery> query)
-        where TGroupByQuery : GroupByQueryBase, IDataFilter
+    public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, Func<IGroupByView, SqlQuery, SqlQuery> query)
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.ApplyHaving(sqlQuery => query(groupBy, sqlQuery));
-        return groupBy;
-    }
-    #endregion
-    #region Logic
-    /// <summary>
-    /// 按Logic查询
-    /// </summary>
-    /// <typeparam name="TGroupByLogic"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static TGroupByLogic Having<TGroupByLogic>(this TGroupByLogic groupBy, Func<Logic, Logic> query)
-        where TGroupByLogic : GroupByLogicBase
-    {
-        groupBy.ApplyHaving(query);
-        return groupBy;
-    }
-    /// <summary>
-    /// 按Logic查询
-    /// </summary>
-    /// <typeparam name="TGroupByLogic"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static TGroupByLogic Having<TGroupByLogic>(this TGroupByLogic groupBy, Func<IGroupByView, Logic, Logic> query)
-        where TGroupByLogic : GroupByLogicBase
-    {
-        groupBy.ApplyHaving(logic => query(groupBy, logic));
+        groupBy.Query = query(groupBy, groupBy.Query);
         return groupBy;
     }
     #endregion
@@ -125,9 +96,9 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static TGroupBy HavingAggregate<TGroupBy>(this TGroupBy groupBy, Func<IGroupByView, IAggregateField> select, Func<IAggregateField, AtomicLogic> query)
-        where TGroupBy : GroupByBase
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.AddLogic(query(select(groupBy)));
+        groupBy.Query.AddLogic(query(select(groupBy)));
         return groupBy;
     }
     /// <summary>
@@ -140,9 +111,9 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static TGroupBy HavingAggregate<TGroupBy>(this TGroupBy groupBy, string aggregate, string columnName, Func<IAggregateField, AtomicLogic> query)
-        where TGroupBy : GroupByBase, IDataFilter
+        where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.AddLogic(query(groupBy.GetCompareField(columnName).AggregateTo(aggregate)));
+        groupBy.Query.AddLogic(query(groupBy.GetCompareField(columnName).AggregateTo(aggregate)));
         return groupBy;
     }
     #endregion

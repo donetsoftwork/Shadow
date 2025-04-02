@@ -1,7 +1,5 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using System;
-using System.Linq;
 using System.Text;
 
 namespace ShadowSql.Aggregates;
@@ -30,7 +28,7 @@ public class DistinctCountAliasFieldInfo
         : this(alias, column)
     {
     }
-    private DistinctCountAliasFieldInfo(string alias, IFieldView target)
+    internal DistinctCountAliasFieldInfo(string alias, IFieldView target)
         : base(target)
     {
         _alias = alias;
@@ -43,11 +41,16 @@ public class DistinctCountAliasFieldInfo
     public string Alias
         => _alias;
     #endregion
-
+    /// <summary>
+    /// 匹配
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public bool IsMatch(string name)
+        => Identifier.Match(name, _alias);
     #region IFieldView
     string IView.ViewName
         => _alias;
-
     IColumn IFieldView.ToColumn()
         => Column.Use(_alias);
     IFieldAlias IFieldView.As(string alias)
@@ -60,17 +63,13 @@ public class DistinctCountAliasFieldInfo
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
+    protected override void Write(ISqlEngine engine, StringBuilder sql)
     {
-        base.Write(engine, sql);
+        sql.Append(AggregateConstants.Count)
+            .Append("(DISTINCT ");
+        _target.Write(engine, sql);
+        sql.Append(')');
         engine.ColumnAs(sql, _alias);
     }
-    /// <summary>
-    /// 匹配
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public bool IsMatch(string name)
-        => Identifier.Match(name, _alias);
     #endregion
 }

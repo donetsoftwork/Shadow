@@ -1,5 +1,5 @@
 ﻿using Dapper.Shadow.Delete;
-using ShadowSql.Delete;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
@@ -18,6 +18,7 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="table"></param>
     /// <param name="where"></param>
+    /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete(this ITable table, ISqlLogic where, IExecutor executor)
         => new(executor, table, where);
@@ -38,13 +39,14 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> tableQuery)
         where TSource : IDapperTable
-        => new(tableQuery.Source.Executor, tableQuery.Source, tableQuery.Filter);
+        => new(tableQuery.Source.Executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
     /// <summary>
     /// 删除
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <param name="query"></param>
+    /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TTable>(this TTable table, Func<TTable, ISqlLogic> query, IExecutor executor)
         where TTable : ITable
@@ -53,16 +55,18 @@ public static partial class DapperShadowServices
     /// 删除
     /// </summary>
     /// <param name="tableQuery"></param>
+    /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> tableQuery, IExecutor executor)
         where TSource : ITable
-        => new(executor, tableQuery.Source, tableQuery.Filter);
+        => new(executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
     #endregion
     #region MultiTableDelete
     /// <summary>
     /// 删除
     /// </summary>
     /// <param name="view"></param>
+    /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperMultiTableDelete ToDapperDelete(this IMultiView view, IExecutor executor)
         => new(executor, view);

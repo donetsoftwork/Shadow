@@ -9,7 +9,7 @@ namespace ShadowSql.FieldInfos;
 /// <summary>
 /// 比较原始sql语句
 /// </summary>
-public sealed class CompareRawFieldInfo : Identifier, ISqlValue
+public sealed class CompareRawFieldInfo : IdentifierBase, ISqlValue
 {
     private CompareRawFieldInfo(string statement)
         : base(statement)

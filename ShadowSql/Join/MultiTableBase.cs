@@ -24,30 +24,13 @@ public abstract class MultiTableBase<TFilter>(IIdentifierGenerator aliasGenerato
     /// <summary>
     /// 过滤条件
     /// </summary>
-    protected TFilter _filter = filter;
-    /// <summary>
-    /// 过滤条件
-    /// </summary>
-    public TFilter Filter
-        => _filter;
+    internal TFilter _filter = filter;
     #endregion
-    #region FilterBase
-    /// <summary>
-    /// 应用过滤
-    /// </summary>
-    /// <param name="filter"></param>
-    internal void ApplyFilter(Func<TFilter, TFilter> filter)
-        => _filter = filter(_filter);
-    #endregion   
     #region IDataFilter
     ITableView IDataFilter.Source
         => this;
     ISqlLogic IDataFilter.Filter
         => _filter;
-    void IDataFilter.AddLogic(AtomicLogic condition)
-        => AddLogic(condition);
-    ICompareField IDataFilter.GetCompareField(string fieldName)
-        => GetCompareField(fieldName);
     #endregion
     #region ISqlEntity
     /// <summary>
@@ -122,14 +105,14 @@ public abstract class MultiTableBase(IIdentifierGenerator aliasGenerator)
         }
         return null;
     }
-    #region FilterBase
-    /// <summary>
-    /// 过滤查询数据源
-    /// </summary>
-    /// <returns></returns>
-    internal override ITableView GetFilterSource()
-        => this;
-    #endregion
+    //#region FilterBase
+    ///// <summary>
+    ///// 过滤查询数据源
+    ///// </summary>
+    ///// <returns></returns>
+    //protected override ITableView GetFilterSource()
+    //    => this;
+    //#endregion
     #region IDataView
     /// <summary>
     /// 列

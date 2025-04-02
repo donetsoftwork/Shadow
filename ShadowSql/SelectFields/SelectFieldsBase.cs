@@ -94,7 +94,7 @@ public abstract class SelectFieldsBase
     /// <returns></returns>
     internal void AliasCore(string alias, string statement)
     {
-        _selected.Add(new AliasFieldInfo(statement, alias));
+        _selected.Add(new RawFieldAliasInfo(statement, alias));
     }
     /// <summary>
     /// 获取列

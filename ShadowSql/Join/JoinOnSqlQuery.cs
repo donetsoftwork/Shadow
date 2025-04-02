@@ -36,34 +36,11 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     public new JoinTableSqlQuery Root
         => _root;
     #endregion
-    #region FilterBase
-    /// <summary>
-    /// 增加sql条件
-    /// </summary>
-    /// <param name="conditions"></param>
-    internal void AddConditions(params IEnumerable<string> conditions)
-        => _onQuery.AddConditions(conditions);
-    /// <summary>
-    /// 增加逻辑
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AddLogic(AtomicLogic condition)
-        => _onQuery.AddLogic(condition);
-    /// <summary>
-    /// And查询
-    /// </summary>
-    internal override void ToAndCore()
-        => _onQuery = _onQuery.ToAnd();
-    /// <summary>
-    /// Or查询
-    /// </summary>
-    internal override void ToOrCore()
-        => _onQuery = _onQuery.ToOr();
-    #endregion
     #region IDataQuery
-    void IDataSqlQuery.AddConditions(IEnumerable<string> conditions)
-    => _onQuery.AddConditions(conditions);
-    void IDataSqlQuery.ApplyFilter(Func<SqlQuery, SqlQuery> query)
-        => ApplyFilter(query);
+    SqlQuery IDataSqlQuery.Query
+    {
+        get => _filter;
+        set => _filter = value;
+    }
     #endregion
 }

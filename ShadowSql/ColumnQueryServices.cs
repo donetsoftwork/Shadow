@@ -1,9 +1,9 @@
 ﻿using ShadowSql.CompareLogics;
 using ShadowSql.Compares;
-using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Logics;
+using ShadowSql.Queries;
 using ShadowSql.SqlVales;
 using System;
 
@@ -29,9 +29,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnParameter<TQuery>(this TQuery query, string columnName, string op = "=", string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CheckParameter(query, columnName, CompareSymbol.Get(op), parameter));
+        query.Query.AddLogic(CheckParameter(query, columnName, CompareSymbol.Get(op), parameter));
         return query;
     }
     /// <summary>
@@ -52,9 +52,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnValue<TQuery, TValue>(this TQuery query, string columnName, TValue value, string op = "=")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CheckValue(query, columnName, CompareSymbol.Get(op), value));
+        query.Query.AddLogic(CheckValue(query, columnName, CompareSymbol.Get(op), value));
         return query;
     }
     /// <summary>
@@ -73,9 +73,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnEqual<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Equal, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Equal, parameter));
         return query;
     }
     /// <summary>
@@ -95,9 +95,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnEqualValue<TQuery, TValue>(this TQuery query, string columnName, TValue value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Equal, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Equal, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -116,9 +116,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotEqual<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.NotEqual, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.NotEqual, parameter));
         return query;
     }
     /// <summary>
@@ -138,9 +138,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotEqualValue<TQuery, TValue>(this TQuery query, string columnName, TValue value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.NotEqual, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.NotEqual, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -159,9 +159,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnGreater<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Greater, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Greater, parameter));
         return query;
     }
     /// <summary>
@@ -181,9 +181,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnGreaterValue<TQuery, TValue>(this TQuery query, string columnName, TValue value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Greater, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Greater, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -202,9 +202,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnLess<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Less, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Less, parameter));
         return query;
     }
     /// <summary>
@@ -224,9 +224,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnLessValue<TQuery, TValue>(this TQuery query, string columnName, TValue value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Less, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Less, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -245,9 +245,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnGreaterEqual<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.GreaterEqual, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.GreaterEqual, parameter));
         return query;
     }
     /// <summary>
@@ -267,9 +267,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnGreaterEqualValue<TQuery, TValue>(this TQuery query, string columnName, TValue value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.GreaterEqual, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.GreaterEqual, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -288,9 +288,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnLessEqual<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.LessEqual, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.LessEqual, parameter));
         return query;
     }
     /// <summary>
@@ -310,9 +310,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnLessEqualValue<TQuery, TValue>(this TQuery query, string columnName, TValue value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.LessEqual, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.LessEqual, SqlValue.From(value)));
         return query;
     }
 
@@ -332,9 +332,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnIn<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.In, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.In, parameter));
         return query;
     }
     /// <summary>
@@ -354,9 +354,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnInValue<TQuery, TValue>(this TQuery query, string columnName, params TValue[] values)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.In, SqlValue.Values(values)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.In, SqlValue.Values(values)));
         return query;
     }
     /// <summary>
@@ -375,9 +375,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotIn<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.NotIn, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.NotIn, parameter));
         return query;
     }
     /// <summary>
@@ -397,9 +397,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotInValue<TQuery, TValue>(this TQuery query, string columnName, params TValue[] values)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.NotIn, SqlValue.Values(values)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.NotIn, SqlValue.Values(values)));
         return query;
     }
     /// <summary>
@@ -417,9 +417,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnIsNull<TQuery>(this TQuery query, string columnName)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new IsNullLogic(query.GetCompareField(columnName)));
+        query.Query.AddLogic(new IsNullLogic(query.GetCompareField(columnName)));
         return query;
     }
     /// <summary>
@@ -437,9 +437,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotNull<TQuery>(this TQuery query, string columnName)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new IsNullLogic(query.GetCompareField(columnName)));
+        query.Query.AddLogic(new IsNullLogic(query.GetCompareField(columnName)));
         return query;
     }
     /// <summary>
@@ -458,9 +458,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnLike<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Like, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.Like, parameter));
         return query;
     }
     /// <summary>
@@ -479,9 +479,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnLikeValue<TQuery>(this TQuery query, string columnName, string value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Like, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.Like, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -500,9 +500,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotLike<TQuery>(this TQuery query, string columnName, string parameter = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.NotLike, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.NotLike, parameter));
         return query;
     }
     /// <summary>
@@ -521,9 +521,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotLikeValue<TQuery>(this TQuery query, string columnName, string value)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.NotLike, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.GetCompareField(columnName), CompareSymbol.NotLike, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -543,11 +543,11 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnBetween<TQuery>(this TQuery query, string columnName, string begin = "", string end = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
         begin = Parameter.CheckName(begin, columnName);
         end = Parameter.CheckName2(end, begin);
-        query.AddLogic(new BetweenLogic(query.GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
+        query.Query.AddLogic(new BetweenLogic(query.GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
         return query;
     }
     /// <summary>
@@ -568,9 +568,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnBetweenValue<TQuery, TValue>(this TQuery query, string columnName, TValue begin, TValue end)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new BetweenLogic(query.GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
+        query.Query.AddLogic(new BetweenLogic(query.GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
         return query;
     }
     /// <summary>
@@ -590,11 +590,11 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotBetween<TQuery>(this TQuery query, string columnName, string begin = "", string end = "")
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
         begin = Parameter.CheckName(begin, columnName);
         end = Parameter.CheckName(end, begin);
-        query.AddLogic(new NotBetweenLogic(query.GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
+        query.Query.AddLogic(new NotBetweenLogic(query.GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
         return query;
     }
     /// <summary>
@@ -615,9 +615,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery ColumnNotBetweenValue<TQuery, TValue>(this TQuery query, string columnName, TValue begin, TValue end)
-        where TQuery : IDataFilter
+        where TQuery : IDataSqlQuery
     {
-        query.AddLogic(new NotBetweenLogic(query.GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
+        query.Query.AddLogic(new NotBetweenLogic(query.GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
         return query;
     }
     #endregion
@@ -640,9 +640,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnParameter<TQuery>(this TQuery query, string tableName, string columnName, string op = "=", string parameter = "")
-        where TQuery : IMultiView, IDataFilter
+        where TQuery : IMultiView, IDataSqlQuery
     {
-        query.AddLogic(CheckParameter(query.From(tableName), columnName, CompareSymbol.Get(op), parameter));
+        query.Query.AddLogic(CheckParameter(query.From(tableName), columnName, CompareSymbol.Get(op), parameter));
         return query;
     }
     /// <summary>
@@ -664,9 +664,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value, string op = "=")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CheckValue(query.From(tableName), columnName, CompareSymbol.Get(op), value));
+        query.Query.AddLogic(CheckValue(query.From(tableName), columnName, CompareSymbol.Get(op), value));
         return query;
     }
     /// <summary>
@@ -686,9 +686,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Equal, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Equal, parameter));
         return query;
     }
     /// <summary>
@@ -709,9 +709,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Equal, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Equal, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -731,9 +731,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.NotEqual, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.NotEqual, parameter));
         return query;
     }
     /// <summary>
@@ -754,9 +754,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.NotEqual, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.NotEqual, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -776,9 +776,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnGreater<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Greater, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Greater, parameter));
         return query;
     }
     /// <summary>
@@ -799,9 +799,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnGreaterValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Greater, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Greater, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -821,9 +821,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnLess<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Less, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Less, parameter));
         return query;
     }
     /// <summary>
@@ -844,9 +844,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnLessValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Less, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Less, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -866,9 +866,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnGreaterEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.GreaterEqual, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.GreaterEqual, parameter));
         return query;
     }
     /// <summary>
@@ -889,9 +889,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnGreaterEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.GreaterEqual, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.GreaterEqual, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -911,9 +911,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnLessEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.LessEqual, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.LessEqual, parameter));
         return query;
     }
     /// <summary>
@@ -934,9 +934,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnLessEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.LessEqual, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.LessEqual, SqlValue.From(value)));
         return query;
     }
 
@@ -957,9 +957,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnIn<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.In, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.In, parameter));
         return query;
     }
     /// <summary>
@@ -980,9 +980,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, params TValue[] values)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.In, SqlValue.Values(values)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.In, SqlValue.Values(values)));
         return query;
     }
     /// <summary>
@@ -1002,9 +1002,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotIn<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.NotIn, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.NotIn, parameter));
         return query;
     }
     /// <summary>
@@ -1025,9 +1025,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, params TValue[] values)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.NotIn, SqlValue.Values(values)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.NotIn, SqlValue.Values(values)));
         return query;
     }
     /// <summary>
@@ -1046,9 +1046,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnIsNull<TQuery>(this TQuery query, string tableName, string columnName)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new IsNullLogic(query.From(tableName).GetCompareField(columnName)));
+        query.Query.AddLogic(new IsNullLogic(query.From(tableName).GetCompareField(columnName)));
         return query;
     }
     /// <summary>
@@ -1067,9 +1067,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotNull<TQuery>(this TQuery query, string tableName, string columnName)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new IsNullLogic(query.From(tableName).GetCompareField(columnName)));
+        query.Query.AddLogic(new IsNullLogic(query.From(tableName).GetCompareField(columnName)));
         return query;
     }
     /// <summary>
@@ -1089,9 +1089,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnLike<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Like, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.Like, parameter));
         return query;
     }
     /// <summary>
@@ -1111,9 +1111,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnLikeValue<TQuery>(this TQuery query, string tableName, string columnName, string value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Like, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.Like, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -1133,9 +1133,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotLike<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.NotLike, parameter));
+        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.NotLike, parameter));
         return query;
     }
     /// <summary>
@@ -1155,9 +1155,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotLikeValue<TQuery>(this TQuery query, string tableName, string columnName, string value)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.NotLike, SqlValue.From(value)));
+        query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(columnName), CompareSymbol.NotLike, SqlValue.From(value)));
         return query;
     }
     /// <summary>
@@ -1178,11 +1178,11 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnBetween<TQuery>(this TQuery query, string tableName, string columnName, string begin = "", string end = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
         begin = Parameter.CheckName(begin, columnName);
         end = Parameter.CheckName2(end, begin);
-        query.AddLogic(new BetweenLogic(query.From(tableName).GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
+        query.Query.AddLogic(new BetweenLogic(query.From(tableName).GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
         return query;
     }
     /// <summary>
@@ -1204,9 +1204,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnBetweenValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue begin, TValue end)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new BetweenLogic(query.From(tableName).GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
+        query.Query.AddLogic(new BetweenLogic(query.From(tableName).GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
         return query;
     }
     /// <summary>
@@ -1227,11 +1227,11 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotBetween<TQuery>(this TQuery query, string tableName, string columnName, string begin = "", string end = "")
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
         begin = Parameter.CheckName(begin, columnName);
         end = Parameter.CheckName(end, begin);
-        query.AddLogic(new NotBetweenLogic(query.From(tableName).GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
+        query.Query.AddLogic(new NotBetweenLogic(query.From(tableName).GetCompareField(columnName), Parameter.Use(begin), Parameter.Use(end)));
         return query;
     }
     /// <summary>
@@ -1253,9 +1253,9 @@ public static partial class ShadowSqlServices
     /// </code>
     /// </example>
     public static TQuery TableColumnNotBetweenValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue begin, TValue end)
-        where TQuery : MultiTableBase, IDataFilter
+        where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.AddLogic(new NotBetweenLogic(query.From(tableName).GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
+        query.Query.AddLogic(new NotBetweenLogic(query.From(tableName).GetCompareField(columnName), SqlValue.From(begin), SqlValue.From(end)));
         return query;
     }
     #endregion

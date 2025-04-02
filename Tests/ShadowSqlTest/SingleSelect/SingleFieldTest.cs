@@ -21,14 +21,14 @@ public class SingleFieldTest
             .Where("UserId=u.Id")
             .GroupBy("UserId")
             .ToSingle();
-        count.Fields.Select(order => order.CountAs("Id"));
+        count.Fields.Select(order => order.CountAs("Count"));
 
         var fetch = u.ToSelect();
         fetch.Fields.Select("Id", "Name");
         fetch.Fields.Select(count);
         var sql = _engine.Sql(fetch);
         //取最后一个字段
-        Assert.Equal("SELECT u.[Id],u.[Name],(SELECT COUNT([Id]) AS COUNTId FROM [Orders] WHERE UserId=u.Id GROUP BY [UserId]) FROM [Users] AS u", sql);
+        Assert.Equal("SELECT u.[Id],u.[Name],(SELECT COUNT(*) AS Count FROM [Orders] WHERE UserId=u.Id GROUP BY [UserId]) FROM [Users] AS u", sql);
     }
 
     [Fact]
@@ -48,6 +48,6 @@ public class SingleFieldTest
         fetch.Fields.Select(count, "OrderCount");
         var sql = _engine.Sql(fetch);
         //取最后一个字段
-        Assert.Equal("SELECT u.[Id],u.[Name],(SELECT COUNT([Id]) AS Count FROM [Orders] WHERE UserId=u.Id GROUP BY [UserId]) AS OrderCount FROM [Users] AS u", sql);
+        Assert.Equal("SELECT u.[Id],u.[Name],(SELECT COUNT(DISTINCT [Id]) AS Count FROM [Orders] WHERE UserId=u.Id GROUP BY [UserId]) AS OrderCount FROM [Users] AS u", sql);
     }
 }

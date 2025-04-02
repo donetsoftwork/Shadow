@@ -37,7 +37,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableDelete ToDelete<TSource>(this TableSqlQuery<TSource> tableQuery)
         where TSource : ITable
-        => new(tableQuery.Source, tableQuery.Filter);
+        => new(tableQuery.Source, tableQuery._filter);
     #endregion
     #region MultiTableDelete
     /// <summary>

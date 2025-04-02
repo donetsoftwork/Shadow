@@ -48,10 +48,10 @@ public class GroupByBench
     {
         var query = new Table("Comments")
             .ToQuery()
-            .ColumnEqualValue("Category", "csharp")
-            .ColumnEqualValue("Pick", true)
+            .And(Category.EqualValue("csharp"))
+            .And(Pick.EqualValue(true))
             .GroupBy("PostId")
-            .HavingAggregate("SUM", "Hits", hits => hits.GreaterEqualValue(100))
+            .And(Hits.Sum().GreaterEqualValue(100))
             .ToFetch()
             .Desc(PostId)
             .ToSelect();
@@ -67,7 +67,7 @@ public class GroupByBench
     {
         var query = Comments
             .GroupBy(Category.EqualValue("csharp") & Pick.EqualValue(true), [PostId])
-            .Having(Hits.Sum().GreaterEqualValue(100))
+            .And(Hits.Sum().GreaterEqualValue(100))
             .ToFetch()
             .Desc(PostId)
             .ToSelect();
@@ -83,7 +83,7 @@ public class GroupByBench
     {
         var query = Comments
             .GroupBy(Category.Equal().And(Pick.Equal()), [PostId])
-            .Having(Hits.Sum().GreaterEqual("Hits"))
+            .And(Hits.Sum().GreaterEqual("Hits"))
             .ToFetch()
             .Desc(PostId)
             .ToSelect();

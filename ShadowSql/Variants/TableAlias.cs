@@ -116,5 +116,12 @@ public class TableAlias<TTable>
         => _prefixColumns;
     IColumn? ITableView.GetColumn(string columName)
         => GetPrefixColumn(columName);
+
+    ICompareField ITableView.GetCompareField(string fieldName)
+    {
+        if(GetPrefixColumn(fieldName) is IPrefixColumn prefixColumn)
+            return prefixColumn;
+        return Field(fieldName);
+    }
     #endregion
 }

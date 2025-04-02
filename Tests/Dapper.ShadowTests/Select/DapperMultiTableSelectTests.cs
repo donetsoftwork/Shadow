@@ -30,7 +30,7 @@ public class DapperMultiTableSelectTests : ExecuteTestBase, IDisposable
         var s = new StudentAliasTable("s");
         var c = new SchoolClassAliaTable("c");
         var select = s.Join(c)
-            .On(s.ClassId.Equal(c.Id))
+            .And(s.ClassId.Equal(c.Id))
             .Root.ToSelect();
         select.Fields.Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
 

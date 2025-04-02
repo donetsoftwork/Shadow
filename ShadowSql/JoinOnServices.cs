@@ -76,7 +76,7 @@ public static partial class ShadowSqlServices
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, params IEnumerable<string> conditions)
         where TJoinOn : JoinOnBase, IDataSqlQuery
     {
-        joinOn.AddConditions(conditions);
+        joinOn.Query.AddConditions(conditions);
         return joinOn;
     }
     #endregion
@@ -89,9 +89,9 @@ public static partial class ShadowSqlServices
     /// <param name="logic"></param>
     /// <returns></returns>
     public static TjoinOn On<TjoinOn>(this TjoinOn joinOn, AtomicLogic logic)
-        where TjoinOn : JoinOnBase
+        where TjoinOn : JoinOnBase, IDataSqlQuery
     {
-        joinOn.AddLogic(logic);
+        joinOn.Query.AddLogic(logic);
         return joinOn;
     }
     /// <summary>
@@ -102,9 +102,9 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static TjoinOn On<TjoinOn>(this TjoinOn joinOn, Func<IJoinOn, AtomicLogic> query)
-        where TjoinOn : JoinOnBase, IJoinOn
+        where TjoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
     {
-        joinOn.AddLogic(query(joinOn));
+        joinOn.Query.AddLogic(query(joinOn));
         return joinOn;
     }
     /// <summary>
@@ -115,9 +115,9 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static TjoinOn On<TjoinOn>(this TjoinOn joinOn, Func<IAliasTable, IAliasTable, AtomicLogic> query)
-        where TjoinOn : JoinOnBase, IJoinOn
+        where TjoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
     {
-        joinOn.AddLogic(query(joinOn.Left, joinOn.Source));
+        joinOn.Query.AddLogic(query(joinOn.Left, joinOn.JoinSource));
         return joinOn;
     }
     #endregion
@@ -132,7 +132,7 @@ public static partial class ShadowSqlServices
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, Func<SqlQuery, SqlQuery> query)
         where TJoinOn : JoinOnBase, IDataSqlQuery
     {
-        joinOn.ApplyFilter(query);
+        joinOn.Query = query(joinOn.Query);
         return joinOn;
     }
     /// <summary>
@@ -145,35 +145,7 @@ public static partial class ShadowSqlServices
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, Func<IJoinOn, SqlQuery, SqlQuery> query)
         where TJoinOn : JoinOnBase, IDataSqlQuery, IJoinOn
     {
-        joinOn.ApplyFilter(sqlQuery => query(joinOn, sqlQuery));
-        return joinOn;
-    }
-    #endregion
-    #region Logic
-    /// <summary>
-    /// 按Logic查询
-    /// </summary>
-    /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, Func<Logic, Logic> query)
-        where TJoinOn : JoinOnBase, IDataQuery
-    {
-        joinOn.ApplyFilter(query);
-        return joinOn;
-    }
-    /// <summary>
-    /// 按Logic查询
-    /// </summary>
-    /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, Func<IMultiView, Logic, Logic> query)
-        where TJoinOn : JoinOnBase, IDataQuery
-    {
-        joinOn.ApplyFilter(logic => query(joinOn, logic));
+        joinOn.Query = query(joinOn, joinOn.Query);
         return joinOn;
     }
     #endregion
@@ -210,7 +182,7 @@ public static partial class ShadowSqlServices
         var leftColumn = joinOn.Left.SelectPrefixColumn(left);
         var rightColumn = joinOn.Source.SelectPrefixColumn(right);
         if (leftColumn != null && rightColumn != null)
-            joinOn.AddLogic(new CompareLogic(leftColumn, compare, rightColumn));
+            joinOn._filter.AddLogic(new CompareLogic(leftColumn, compare, rightColumn));
 
         return joinOn;
     }
@@ -224,7 +196,7 @@ public static partial class ShadowSqlServices
     /// <param name="right"></param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IColumn left, IColumn right)
-        where TJoinOn : JoinOnBase, IJoinOn
+        where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
         => On(joinOn, left, CompareSymbol.Equal, right);
     /// <summary>
     /// 按列联表
@@ -236,12 +208,12 @@ public static partial class ShadowSqlServices
     /// <param name="right"></param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IColumn left, CompareSymbol compare, IColumn right)
-        where TJoinOn : JoinOnBase, IJoinOn
+        where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
     {
         var leftColumn = joinOn.Left.GetPrefixColumn(left);
-        var rightColumn = joinOn.Source.GetPrefixColumn(right);
+        var rightColumn = joinOn.JoinSource.GetPrefixColumn(right);
         if (leftColumn != null && rightColumn != null)
-            joinOn.AddLogic(new CompareLogic(leftColumn, compare, rightColumn));
+            joinOn.Query.AddLogic(new CompareLogic(leftColumn, compare, rightColumn));
         return joinOn;
     }
     /// <summary>
@@ -252,7 +224,7 @@ public static partial class ShadowSqlServices
     /// <param name="rightColumn"></param>
     /// <returns></returns>
     public static TJoinOn OnColumn<TJoinOn>(this TJoinOn joinOn, string leftColumn, string rightColumn)
-        where TJoinOn : JoinOnBase, IJoinOn
+        where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
         => OnColumn(joinOn, leftColumn, CompareSymbol.Equal, rightColumn);
     /// <summary>
     /// 对列进行联表查询
@@ -263,7 +235,7 @@ public static partial class ShadowSqlServices
     /// <param name="rightColumn"></param>
     /// <returns></returns>
     public static TJoinOn OnColumn<TJoinOn>(this TJoinOn joinOn, string leftColumn, CompareSymbol op, string rightColumn)
-        where TJoinOn : JoinOnBase, IJoinOn
+        where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
         => joinOn.On(new CompareLogic(joinOn.GetLeftCompareField(leftColumn), op, joinOn.GetRightCompareField(rightColumn)));
     #endregion
 }

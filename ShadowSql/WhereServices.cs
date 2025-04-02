@@ -23,7 +23,7 @@ public static partial class ShadowSqlServices
     public static Query Where<Query>(this Query query, params IEnumerable<string> conditions)
         where Query : IDataSqlQuery, IWhere
     {
-        query.AddConditions(conditions);
+        query.Query.AddConditions(conditions);
         return query;
     }
     /// <summary>
@@ -34,9 +34,9 @@ public static partial class ShadowSqlServices
     /// <param name="logic"></param>
     /// <returns></returns>
     public static Query Where<Query>(this Query query, AtomicLogic logic)
-        where Query : IDataFilter, IWhere
+        where Query : IDataSqlQuery, IWhere
     {
-        query.AddLogic(logic);
+        query.Query.AddLogic(logic);
         return query;
     }
     /// <summary>
@@ -47,9 +47,9 @@ public static partial class ShadowSqlServices
     /// <param name="logic"></param>
     /// <returns></returns>
     public static Query Where<Query>(this Query query, Func<ITableView, AtomicLogic> logic)
-        where Query : IDataFilter, IWhere
+        where Query : IDataSqlQuery, IWhere
     {
-        query.AddLogic(logic(query.Source));
+        query.Query.AddLogic(logic(query.Source));
         return query;
     }
     /// <summary>
@@ -61,9 +61,9 @@ public static partial class ShadowSqlServices
     /// <param name="compare"></param>
     /// <returns></returns>
     public static Query Column<Query>(this Query query, string columnName, Func<ICompareField, AtomicLogic> compare)
-        where Query : IDataFilter
+        where Query : IDataSqlQuery
     {
-        query.AddLogic(compare(query.GetCompareField(columnName)));
+        query.Query.AddLogic(compare(query.GetCompareField(columnName)));
         return query;
     }
     #endregion
@@ -72,29 +72,14 @@ public static partial class ShadowSqlServices
     /// Where
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="dataQuery"></param>
     /// <param name="query"></param>
+    /// <param name="where"></param>
     /// <returns></returns>
-    public static Query Where<Query>(this Query dataQuery, Func<SqlQuery, SqlQuery> query)
+    public static Query Where<Query>(this Query query, Func<SqlQuery, SqlQuery> where)
         where Query : IDataSqlQuery, IWhere
     {
-        dataQuery.ApplyFilter(query);
-        return dataQuery;
-    }
-    #endregion
-    #region Logic
-    /// <summary>
-    /// Where
-    /// </summary>
-    /// <typeparam name="Query"></typeparam>
-    /// <param name="dataQuery"></param>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static Query Where<Query>(this Query dataQuery, Func<Logic, Logic> query)
-        where Query : IDataQuery, IWhere
-    {
-        dataQuery.ApplyFilter(query);
-        return dataQuery;
+        query.Query = where(query.Query);
+        return query;
     }
     #endregion
 }

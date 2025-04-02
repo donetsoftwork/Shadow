@@ -35,100 +35,11 @@ public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable>
     public new JoinTableQuery Root
         => _root;
     #endregion
-    #region FilterBase
-    /// <summary>
-    /// 增加逻辑
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AddLogic(AtomicLogic condition)
-        => _onQuery.AddLogic(condition);
-    /// <summary>
-    /// And查询
-    /// </summary>
-    internal override void ToAndCore()
-        => _onQuery = _onQuery.ToAnd();
-    /// <summary>
-    /// Or查询
-    /// </summary>
-    internal override void ToOrCore()
-        => _onQuery = _onQuery.ToOr();
-    #region Logic
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AndCore(AtomicLogic condition)
-        => _onQuery = _onQuery.And(condition);
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AndCore(AndLogic condition)
-        => _onQuery = _onQuery.And(condition);
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AndCore(ComplexAndLogic condition)
-        => _onQuery = _onQuery.And(condition);
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AndCore(OrLogic condition)
-        => _onQuery = _onQuery.And(condition);
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AndCore(ComplexOrLogic condition)
-        => _onQuery = _onQuery.And(condition);
-    /// <summary>
-    /// 与运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void AndCore(Logic condition)
-        => _onQuery = _onQuery.And(condition);
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void OrCore(AtomicLogic condition)
-        => _onQuery = _onQuery.Or(condition);
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void OrCore(AndLogic condition)
-        => _onQuery = _onQuery.Or(condition);
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void OrCore(ComplexAndLogic condition)
-        => _onQuery = _onQuery.Or(condition);
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void OrCore(OrLogic condition)
-        => _onQuery = _onQuery.Or(condition);
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void OrCore(ComplexOrLogic condition)
-        => _onQuery = _onQuery.Or(condition);
-    /// <summary>
-    /// 或运算
-    /// </summary>
-    /// <param name="condition"></param>
-    internal override void OrCore(Logic condition)
-        => _onQuery = _onQuery.Or(condition);
-    #endregion
-    #endregion
     #region IDataQuery
-    void IDataQuery.ApplyFilter(Func<Logic, Logic> query)
-        => ApplyFilter(query);
+    Logic IDataQuery.Logic
+    {
+        get => _filter;
+        set => _filter = value;
+    }
     #endregion
 }

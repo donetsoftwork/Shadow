@@ -45,7 +45,7 @@ public class JoinBench
     public string ShadowSqlByQuery()
     {
         var joinOn = new Table("Comments").As("c")
-            .Join(new Table("Posts").As("p"))
+            .SqlJoin(new Table("Posts").As("p"))
             .OnColumn("PostId", "Id");
 
         var query = joinOn.Root
@@ -65,10 +65,10 @@ public class JoinBench
     public string ShadowSqlByParametricLogic()
     {
         var joinOn = c.Join(p)
-            .On(c.PostId.Equal(p.Id));
+            .And(c.PostId.Equal(p.Id));
         var query = joinOn.Root
-            .Where(c.Pick.EqualValue(true))
-            .Where(p.Author.EqualValue("jxj"))
+            .And(c.Pick.EqualValue(true))
+            .And(p.Author.EqualValue("jxj"))
             .ToFetch()
             .Desc(c.Id)
             .ToSelect();
@@ -82,10 +82,10 @@ public class JoinBench
     public string ShadowSqlByLogic()
     {
         var joinOn = c.Join(p)
-            .On(c.PostId.Equal(p.Id));
+            .And(c.PostId.Equal(p.Id));
         var query = joinOn.Root
-            .Where(c.Pick.Equal())
-            .Where(p.Author.Equal())
+            .And(c.Pick.Equal())
+            .And(p.Author.Equal())
             .ToFetch()
             .Desc(c.Id)
             .ToSelect();

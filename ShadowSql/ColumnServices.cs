@@ -76,7 +76,7 @@ public static partial class ShadowSqlServices
         => table.GetPrefixColumn(columnName)
         ?? throw new ArgumentException("列不存在", nameof(columnName));
     /// <summary>
-    /// 定位到前缀列
+    /// 增加前缀
     /// </summary>
     /// <param name="table"></param>
     /// <param name="column"></param>

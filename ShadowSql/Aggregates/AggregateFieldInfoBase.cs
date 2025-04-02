@@ -1,4 +1,5 @@
 ﻿using ShadowSql.FieldInfos;
+using ShadowSql.Identifiers;
 
 namespace ShadowSql.Aggregates;
 
@@ -6,10 +7,11 @@ namespace ShadowSql.Aggregates;
 /// 聚合字段信息
 /// </summary>
 /// <param name="aggregate"></param>
-/// <param name="columnName"></param>
-public abstract class AggregateFieldInfoBase(string aggregate, string columnName)
-    : FieldInfoBase(columnName)
+/// <param name="target"></param>
+public abstract class AggregateFieldInfoBase(string aggregate, IFieldView target)
+    : VariantFieldInfoBase(target)
 {
+    #region 配置
     /// <summary>
     /// 聚合函数
     /// </summary>
@@ -19,4 +21,6 @@ public abstract class AggregateFieldInfoBase(string aggregate, string columnName
     /// </summary>
     public string Aggregate
         => _aggregate;
+    #endregion
+
 }

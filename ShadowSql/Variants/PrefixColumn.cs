@@ -1,4 +1,5 @@
 ﻿using ShadowSql.Aggregates;
+using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 
@@ -31,7 +32,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
     {
         if (AggregateConstants.MatchCount(aggregate))
             return new DistinctCountAliasFieldInfo(this, aggregate);
-        return new AggregateColumnAlias<IPrefixColumn>(aggregate, this, alias);
+        return new AggregateAliasFieldInfo(this, aggregate,  alias);
     }
     /// <summary>
     /// 聚合
@@ -42,7 +43,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
     {
         if (AggregateConstants.MatchCount(aggregate))
             return new DistinctCountFieldInfo(this);
-        return new AggregateColumn<IPrefixColumn>(aggregate, this);
+        return new AggregateFieldInfo(this, aggregate);
     }
     /// <summary>
     /// 生成别名
@@ -51,7 +52,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
     /// <returns></returns>
     public IFieldAlias As(string alias)
     {
-        return new AliasColumn<IPrefixColumn>(this, alias);
+        return new AliasFieldInfo(this, alias);
     }
     /// <summary>
     /// 匹配列

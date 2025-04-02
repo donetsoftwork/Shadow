@@ -7,29 +7,49 @@ namespace ShadowSql.FieldInfos;
 /// <summary>
 /// 别名字段信息
 /// </summary>
-/// <param name="statement"></param>
-/// <param name="alias"></param>
-public class AliasFieldInfo(string statement, string alias)
-     : IdentifierBase(alias), IFieldAlias
+public class AliasFieldInfo
+     : VariantFieldInfoBase, IFieldAlias
 {
-    private readonly string _statement = statement;
+    #region 配置
+    private readonly string _alias;
     /// <summary>
     /// 别名
     /// </summary>
     public string Alias
-        => _name;
+        => _alias;
+    #endregion
+    internal AliasFieldInfo(string alias, IFieldView target)
+        : base(target)
+    {
+        _alias = alias;
+    }
     /// <summary>
-    /// 语句
+    /// 别名字段信息
     /// </summary>
-    public string Statement
-        => _statement;
+    /// <param name="field"></param>
+    /// <param name="alias"></param>
+    public AliasFieldInfo(IField field, string alias)
+        : this(alias, field)
+    {
+    }
+    /// <summary>
+    /// 别名字段信息
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="alias"></param>
+    public AliasFieldInfo(IColumn column, string alias)
+        : this(alias, column)
+    {
+    }
 
     string IView.ViewName
-        => _name;
+        => _alias;
     IColumn IFieldView.ToColumn()
-        => Column.Use(_name);
+        => Column.Use(_alias);
     IFieldAlias IFieldView.As(string alias)
-        => new AliasFieldInfo(_statement, alias);
+        => new AliasFieldInfo(alias, _target);
+    bool IMatch.IsMatch(string name)
+         => Identifier.Match(name, _alias);
     #region ISqlEntity
     /// <summary>
     /// sql拼接
@@ -37,10 +57,10 @@ public class AliasFieldInfo(string statement, string alias)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    internal override void Write(ISqlEngine engine, StringBuilder sql)
+    protected override void Write(ISqlEngine engine, StringBuilder sql)
     {
-        sql.Append(_statement);
-        engine.ColumnAs(sql, _name);
+        _target.Write(engine, sql);
+        engine.ColumnAs(sql, _alias);
     }
     #endregion
 }

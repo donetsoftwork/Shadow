@@ -1,5 +1,6 @@
 ﻿using Dapper.Shadow.Join;
 using Dapper.Shadow.Update;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
@@ -39,7 +40,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
         where TTable : IDapperTable
-        => new(tableQuery.Source.Executor, tableQuery.Source, tableQuery.Filter);
+        => new(tableQuery.Source.Executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>
@@ -81,7 +82,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery, IExecutor executor)
         where TTable : ITable
-        => new(executor, tableQuery.Source, tableQuery.Filter);
+        => new(executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>

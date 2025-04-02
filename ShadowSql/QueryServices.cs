@@ -14,13 +14,13 @@ public static partial class ShadowSqlServices
     /// 切换为And
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="dataQuery"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static Query ToAnd<Query>(this Query dataQuery)
+    public static Query ToAnd<Query>(this Query query)
         where Query : IDataSqlQuery
     {
-        dataQuery.ApplyFilter(query => query.ToAnd());
-        return dataQuery;
+        query.Query = query.Query.ToAnd();
+        return query;
     }
     #endregion
     #region ToOr
@@ -28,13 +28,13 @@ public static partial class ShadowSqlServices
     /// 切换为Or
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="dataQuery"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static Query ToOr<Query>(this Query dataQuery)
+    public static Query ToOr<Query>(this Query query)
         where Query : IDataSqlQuery
     {
-        dataQuery.ApplyFilter(query => query.ToOr());
-        return dataQuery;
+        query.Query = query.Query.ToOr();
+        return query;
     }
     #endregion
     #region Logic
@@ -48,7 +48,7 @@ public static partial class ShadowSqlServices
     public static Query And<Query>(this Query query, AtomicLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.AndCore(condition);
+        query.Logic = query.Logic.And(condition);
         return query;
     }
     /// <summary>
@@ -60,7 +60,7 @@ public static partial class ShadowSqlServices
     public static Query And<Query>(this Query query, AndLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.AndCore(condition);
+        query.Logic = query.Logic.And(condition);
         return query;
     }
     /// <summary>
@@ -72,7 +72,7 @@ public static partial class ShadowSqlServices
     public static Query And<Query>(this Query query, ComplexAndLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.AndCore(condition);
+        query.Logic = query.Logic.And(condition);
         return query;
     }
     /// <summary>
@@ -84,7 +84,7 @@ public static partial class ShadowSqlServices
     public static Query And<Query>(this Query query, OrLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.AndCore(condition);
+        query.Logic = query.Logic.And(condition);
         return query;
     }
     /// <summary>
@@ -96,7 +96,7 @@ public static partial class ShadowSqlServices
     public static Query And<Query>(this Query query, ComplexOrLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.AndCore(condition);
+        query.Logic = query.Logic.And(condition);
         return query;
     }
     /// <summary>
@@ -108,7 +108,7 @@ public static partial class ShadowSqlServices
     public static Query And<Query>(this Query query, Logic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.AndCore(condition);
+        query.Logic = query.Logic.And(condition);
         return query;
     }
     /// <summary>
@@ -120,7 +120,7 @@ public static partial class ShadowSqlServices
     public static Query Or<Query>(this Query query, AtomicLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.OrCore(condition);
+        query.Logic = query.Logic.Or(condition);
         return query;
     }
     /// <summary>
@@ -132,7 +132,7 @@ public static partial class ShadowSqlServices
     public static Query Or<Query>(this Query query, AndLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.OrCore(condition);
+        query.Logic = query.Logic.Or(condition);
         return query;
     }
     /// <summary>
@@ -144,7 +144,7 @@ public static partial class ShadowSqlServices
     public static Query Or<Query>(this Query query, ComplexAndLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.OrCore(condition);
+        query.Logic = query.Logic.Or(condition);
         return query;
     }
     /// <summary>
@@ -156,7 +156,7 @@ public static partial class ShadowSqlServices
     public static Query Or<Query>(this Query query, OrLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.OrCore(condition);
+        query.Logic = query.Logic.Or(condition);
         return query;
     }
     /// <summary>
@@ -168,7 +168,7 @@ public static partial class ShadowSqlServices
     public static Query Or<Query>(this Query query, ComplexOrLogic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.OrCore(condition);
+        query.Logic = query.Logic.Or(condition);
         return query;
     }
     /// <summary>
@@ -180,7 +180,7 @@ public static partial class ShadowSqlServices
     public static Query Or<Query>(this Query query, Logic condition)
         where Query : FilterBase, IDataQuery
     {
-        query.OrCore(condition);
+        query.Logic = query.Logic.Or(condition);
         return query;
     }
     #endregion
