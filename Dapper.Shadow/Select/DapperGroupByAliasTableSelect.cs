@@ -29,6 +29,15 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
         : this(executor, groupBy, new GroupByAliasTableFields<TTable>(groupBy))
     {
     }
+    /// <summary>
+    /// GroupBy别名表后再筛选列
+    /// </summary>
+    /// <param name="executor"></param>
+    /// <param name="groupBy"></param>
+    public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableQuery<TTable> groupBy)
+        : this(executor, groupBy, new GroupByAliasTableFields<TTable>(groupBy))
+    {
+    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>

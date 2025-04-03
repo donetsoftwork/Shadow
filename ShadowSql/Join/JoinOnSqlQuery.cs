@@ -1,4 +1,5 @@
-﻿using ShadowSql.Identifiers;
+﻿using ShadowSql.Compares;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
 using ShadowSql.Variants;
@@ -41,6 +42,94 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     {
         get => _filter;
         set => _filter = value;
+    }
+    #endregion
+    #region On
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<IAliasTable, AtomicLogic> query)
+    {
+        _filter.AddLogic(query(_left));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="select"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<LTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    {
+        _filter.AddLogic(query(_left.Prefix(select(_left.Target))));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> OnRight(Func<IAliasTable, AtomicLogic> query)
+    {
+        _filter.AddLogic(query(_source));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="select"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> OnRight(Func<RTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    {
+        _filter.AddLogic(query(_left.Prefix(select(_source.Target))));
+        return this;
+    }
+    #endregion
+    #region Where
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<IAliasTable, AtomicLogic> query)
+    {
+        root.Where(query(_left));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="select"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<LTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    {
+        root.Where(query(_left.Prefix(select(_left.Target))));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<IAliasTable, AtomicLogic> query)
+    {
+        root.Where(query(_source));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="select"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<RTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    {
+        root.Where(query(_left.Prefix(select(_source.Target))));
+        return this;
     }
     #endregion
 }

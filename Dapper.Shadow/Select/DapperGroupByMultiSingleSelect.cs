@@ -27,6 +27,15 @@ public class DapperGroupByMultiSelect(IExecutor executor, IGroupByView groupBy, 
         :this(executor, groupBy, new GroupByMultiFields(groupBy))
     {
     }
+    /// <summary>
+    /// GroupBy后再筛选列
+    /// </summary>
+    /// <param name="executor"></param>
+    /// <param name="groupBy"></param>
+    public DapperGroupByMultiSelect(IExecutor executor, GroupByMultiQuery groupBy)
+        : this(executor, groupBy, new GroupByMultiFields(groupBy))
+    {
+    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>

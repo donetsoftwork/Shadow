@@ -60,6 +60,15 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
         : this(executor, query, new AliasTableFields<TTable>(query.Source))
     {
     }
+    /// <summary>
+    /// 别名表过滤筛选列
+    /// </summary>
+    /// <param name="executor"></param>
+    /// <param name="query"></param>
+    public DapperAliasTableSelect(IExecutor executor, AliasTableQuery<TTable> query)
+        : this(executor, query, new AliasTableFields<TTable>(query.Source))
+    {
+    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>

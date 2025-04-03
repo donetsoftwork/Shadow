@@ -26,9 +26,15 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
     where TFilter : ISqlLogic
 {
 
-    #region 配置    
-    private readonly TableAlias<LTable> _left = left;
-    private readonly TableAlias<RTable> _source = right;
+    #region 配置
+    /// <summary>
+    /// 左表
+    /// </summary>
+    protected readonly TableAlias<LTable> _left = left;
+    /// <summary>
+    /// 当前数据源(右表)
+    /// </summary>
+    protected readonly TableAlias<RTable> _source = right;
     /// <summary>
     /// 左表
     /// </summary>

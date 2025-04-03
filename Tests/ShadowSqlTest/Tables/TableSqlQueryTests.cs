@@ -98,26 +98,26 @@ public class TableSqlQueryTests
     [Fact]
     public void Logic()
     {
-        var query = new Users()
-            .ToSqlQuery()
-            .Where(_id.LessValue(100));
+        var users = new UserTable();
+        var query = users.ToSqlQuery()
+            .Where(users.Id.LessValue(100));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<100", sql);
     }
     [Fact]
     public void TableLogic()
     {
-        var query = new Users()
+        var query = new UserTable()
             .ToSqlQuery()
             .Where(user => user.Id.Less("LastId"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<@LastId", sql);
     }
 
-    class Users : Table
+    class UserTable : Table
     {
-        public Users()
-            : base(nameof(Users))
+        public UserTable()
+            : base("Users")
         {
             Id = DefineColumn(nameof(Id));
             Status = DefineColumn(nameof(Status));

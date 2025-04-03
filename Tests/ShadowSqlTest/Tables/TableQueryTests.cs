@@ -33,7 +33,53 @@ public class TableQueryTests
             .Or(_status.Equal("Status"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id OR [Status]=@Status", sql);
-    }    
+    }
+    [Fact]
+    public void Logic()
+    {
+        var users = new UserTable();
+        var query = users.ToQuery()
+            .And(users.Id.LessValue(100));
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<100", sql);
+    }
+    [Fact]
+    public void LogicAnd()
+    {
+        var users = new UserTable();
+        var query = users.ToQuery()
+            .And(users.Id.LessValue(100) & users.Status.EqualValue(true));
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<100 AND [Status]=1", sql);
+    }
+    [Fact]
+    public void LogicOr()
+    {
+        var users = new UserTable();
+        var query = users.ToQuery()
+            .And(users.Id.LessValue(100) | users.Status.EqualValue(true));
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<100 OR [Status]=1", sql);
+    }
+    [Fact]
+    public void TableLogic()
+    {
+        var query = new UserTable()
+            .ToQuery()
+            .And(user => user.Id.Less("LastId"));
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<@LastId", sql);
+    }
+    [Fact]
+    public void TableAndLogic()
+    {
+        var query = new UserTable()
+            .ToQuery()
+            .And(user => user.Id.Less("LastId"))
+            .And(user => user.Status.EqualValue(true));
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<@LastId AND [Status]=1", sql);
+    }
     [Fact]
     public void AndAtomicLogic()
     {
@@ -143,5 +189,18 @@ public class TableQueryTests
             .Or(complexOrLogic);
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id OR [Status]=@Status", sql);
+    }
+    class UserTable : Table
+    {
+        public UserTable()
+            : base("Users")
+        {
+            Id = DefineColumn(nameof(Id));
+            Status = DefineColumn(nameof(Status));
+        }
+        #region Columns
+        public IColumn Id { get; private set; }
+        public IColumn Status { get; private set; }
+        #endregion
     }
 }

@@ -2,6 +2,7 @@
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
+using ShadowSql.Simples;
 
 namespace ShadowSqlTest.Join;
 
@@ -67,16 +68,66 @@ public class JoinTableTests
     [Fact]
     public void SqlQuery()
     {
-        var employees = _db.From("Employees");
-        var departments = _db.From("Departments");
-
-        var departmentJoinOn = employees.SqlJoin(departments)
-            .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
-        var joinTable = departmentJoinOn.Root
-            .Where(q => q.And("Manager='CEO'"));
+        var joinOn = SimpleDB.From("Employees").SqlJoin(SimpleDB.From("Departments"))
+            .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")))
+            .WhereLeft(t1 => t1.Field("Age").GreaterValue(30))
+            .WhereRight(t2 => t2.Field("Manager").EqualValue("CEO"));
+        var sql = _engine.Sql(joinOn.Root);
+        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]>30 AND t2.[Manager]='CEO'", sql);
+    }
+    [Fact]
+    public void SqlQuery2()
+    {
+        var joinOn = SimpleDB.From("Employees").SqlJoin(SimpleDB.From("Departments"));
+        var (t1, t2) = (joinOn.Left, joinOn.Source);
+        joinOn.On(t1.Field("DepartmentId").Equal(t2.Field("Id")));
+        var joinTable = joinOn.Root
+            .Where(t1.Field("Age").GreaterValue(30))
+            .Where(t2.Field("Manager").EqualValue("CEO"));
 
         var sql = _engine.Sql(joinTable);
-        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE Manager='CEO'", sql);
+        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]>30 AND t2.[Manager]='CEO'", sql);
+    }
+    [Fact]
+    public void SqlQuery3()
+    {
+        var e = SimpleDB.From("Employees").As("e");
+        var d = SimpleDB.From("Departments").As("d");
+        var joinOn = e.SqlJoin(d)
+            .On(e.Field("DepartmentId").Equal(d.Field("Id")));
+        var joinTable = joinOn.Root
+            .Where(e.Field("Age").GreaterValue(30))
+            .Where(d.Field("Manager").EqualValue("CEO"));
+
+        var sql = _engine.Sql(joinTable);
+        Assert.Equal("[Employees] AS e INNER JOIN [Departments] AS d ON e.[DepartmentId]=d.[Id] WHERE e.[Age]>30 AND d.[Manager]='CEO'", sql);
+    }
+    [Fact]
+    public void Query()
+    {
+        var joinOn = SimpleDB.From("Employees").Join(SimpleDB.From("Departments"));
+        var (t1, t2) = (joinOn.Left, joinOn.Source);
+        joinOn.And(t1.Field("DepartmentId").Equal(t2.Field("Id")));
+        var joinTable = joinOn.Root
+            .And(t1.Field("Age").GreaterValue(30))
+            .And(t2.Field("Manager").EqualValue("CEO"));
+
+        var sql = _engine.Sql(joinTable);
+        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]>30 AND t2.[Manager]='CEO'", sql);
+    }
+    [Fact]
+    public void Query2()
+    {
+        var e = SimpleDB.From("Employees").As("e");
+        var d = SimpleDB.From("Departments").As("d");
+        var joinOn = e.Join(d)
+            .And(e.Field("DepartmentId").Equal(d.Field("Id")));
+        var joinTable = joinOn.Root
+            .And(e.Field("Age").GreaterValue(30))
+            .And(d.Field("Manager").EqualValue("CEO"));
+
+        var sql = _engine.Sql(joinTable);
+        Assert.Equal("[Employees] AS e INNER JOIN [Departments] AS d ON e.[DepartmentId]=d.[Id] WHERE e.[Age]>30 AND d.[Manager]='CEO'", sql);
     }
     [Fact]
     public void MultiTable()
@@ -95,6 +146,8 @@ public class JoinTableTests
         var sql = _engine.Sql(joinTable);
         Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]=40 AND t2.[Manager]='CEO'", sql);
     }
+
+
 
     [Fact]
     public void Table()

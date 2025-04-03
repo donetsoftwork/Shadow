@@ -58,6 +58,15 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
         : this(executor, query, new TableFields<TTable>(query.Source))
     {
     }
+    /// <summary>
+    /// 表筛选列
+    /// </summary>
+    /// <param name="executor"></param>
+    /// <param name="query"></param>
+    public DapperTableSelect(IExecutor executor, TableQuery<TTable> query)
+        : this(executor, query, new TableFields<TTable>(query.Source))
+    {
+    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>

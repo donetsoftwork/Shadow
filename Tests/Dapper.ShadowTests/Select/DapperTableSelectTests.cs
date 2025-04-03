@@ -138,8 +138,8 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
             .DefineColums("Age")
             .ToSqlQuery()
             .Where(student => student.Column("Age").EqualValue(10))
-            .ToSelect()
-            .Get<Student>(SqliteExecutor)
+            .ToDapperSelect(SqliteExecutor)
+            .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
     }
