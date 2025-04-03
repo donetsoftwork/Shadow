@@ -1,5 +1,7 @@
 ﻿using Dapper.Shadow;
+using Microsoft.Data.Sqlite;
 using ShadowSql;
+using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
 
 namespace Dapper.ShadowTests.Select;
@@ -69,6 +71,21 @@ public class DapperTableSelectByQueryTests : ExecuteTestBase, IDisposable
             .ToList();
         Assert.True(students.Count > 0);
     }
+
+    [Fact]
+    public void FieldContext()
+    {
+        var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
+        var excutor = new ParametricExecutor(new SqliteEngine(), connection);
+        var students = excutor.From("Students")
+            .ToQuery()
+            .And(table => table.Field("Age").EqualValue(10))
+            .ToDapperSelect()
+            .Get<Student>()
+            .ToList();
+        Assert.True(students.Count > 0);
+    }
+
 
 
     void IDisposable.Dispose()
