@@ -5,7 +5,8 @@
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>0.7.0</Version>
+    <Version>0.7.0-alpha</Version>
+    <PackageId>ShadowSql.DDL</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

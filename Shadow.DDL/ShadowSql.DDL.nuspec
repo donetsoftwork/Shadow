@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>ShadowSql.DDL</id>
+    <version>0.7.0-alpha</version>
+    <authors>jiangxiangji</authors>
+    <description>SqlBuilder,DDL,CreateTable</description>
+    <repository type="git" url="https://github.com/donetsoftwork/Shadow.git" commit="1d0288b524b84533aa0468d8c08e23472e3da7d6" />
+    <dependencies>
+      <PackageReference Include="ShadowSql" Version="0.7.0-alpha" />
+    </dependencies>
+  </metadata>
+</package>

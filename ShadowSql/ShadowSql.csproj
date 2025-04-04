@@ -5,7 +5,8 @@
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>0.7.0</Version>
+    <Version>0.7.0-alpha</Version>
+    <PackageId>ShadowSql</PackageId>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
