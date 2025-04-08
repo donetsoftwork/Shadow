@@ -188,12 +188,27 @@ public static partial class ShadowSqlServices
     /// <param name="multiTable"></param>
     /// <param name="table"></param>
     /// <returns></returns>
+    public static MultiTable AddMember<MultiTable, TTable>(this MultiTable multiTable, TTable table)
+        where MultiTable : MultiTableBase, IMultiTable
+        where TTable : ITable
+    {
+        multiTable.AddMemberCore(table.As(multiTable.CreateMemberName()));
+        return multiTable;
+    }
+    /// <summary>
+    /// 构造表成员
+    /// </summary>
+    /// <typeparam name="MultiTable"></typeparam>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="table"></param>
+    /// <returns></returns>
     public static TableAlias<TTable> CreateMember<MultiTable, TTable>(this MultiTable multiTable, TTable table)
-        where MultiTable : IMultiTable
+        where MultiTable : MultiTableBase, IMultiTable
         where TTable : ITable
     {
         var aliasTable = table.As(multiTable.CreateMemberName());
-        multiTable.AddMember(aliasTable);
+        multiTable.AddMemberCore(aliasTable);
         return aliasTable;
     }
 }

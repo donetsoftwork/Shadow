@@ -85,7 +85,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperAliasTableFetchSelect<TTable>(IExecutor executor, ICursor cursor, AliasTableFields<TTable> fields)
+public class DapperAliasTableCursorSelect<TTable>(IExecutor executor, ICursor cursor, AliasTableFields<TTable> fields)
     : SelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
     , IDapperSelect
     where TTable : ITable
@@ -95,7 +95,7 @@ public class DapperAliasTableFetchSelect<TTable>(IExecutor executor, ICursor cur
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperAliasTableFetchSelect(IExecutor executor, AliasTableCursor<TTable> cursor)
+    public DapperAliasTableCursorSelect(IExecutor executor, AliasTableCursor<TTable> cursor)
         : this(executor, cursor, new AliasTableFields<TTable>(cursor.Source))
     {
     }

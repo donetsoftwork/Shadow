@@ -1,6 +1,7 @@
 ﻿using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
+using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Dapper.Shadow;
 /// <param name="connection"></param>
 /// <param name="buffered"></param>
 /// <param name="capacity"></param>
-public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 32)
+public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 128)
     : IExecutor
 {
     #region 配置
@@ -87,93 +88,120 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     public void Rollback()
         => _transaction?.Rollback();
     #endregion
-    /// <summary>
-    /// 构造sql
-    /// </summary>
-    /// <param name="fragment"></param>
-    /// <returns></returns>
-    public string BuildSql(ISqlEntity fragment)
-        => _engine.Sql(fragment, _capacity);
-    #region ISqlFragment
+    ///// <summary>
+    ///// 构造sql
+    ///// </summary>
+    ///// <param name="entity"></param>
+    ///// <returns></returns>
+    //public string BuildSql(ISqlEntity entity)
+    //    => _engine.Sql(entity, _capacity);
+    ///// <summary>
+    ///// 构造计数sql
+    ///// </summary>
+    ///// <param name="view"></param>
+    ///// <returns></returns>
+    //public string BuildCountSql(ITableView view)
+    //    => _engine.CountSql(view, _capacity);
+    #region ISqlEntity
     #region Execute
     /// <summary>
     /// 执行
     /// </summary>
-    /// <param name="sql"></param>
+    /// <param name="entity"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public virtual int Execute(ISqlEntity sql, object? param = null)
-        => Execute(BuildSql(sql), param);
+    public virtual int Execute(ISqlEntity entity, object? param = null)
+        => Execute(_engine.Sql(entity, _capacity), param);
     #endregion
     #region ExecuteScalar
     /// <summary>
     /// 执行(返回一行一列)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="sql"></param>
+    /// <param name="entity"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public virtual T? ExecuteScalar<T>(ISqlEntity sql, object? param = null)
-        => ExecuteScalar<T>(BuildSql(sql), param);
+    public virtual T? ExecuteScalar<T>(ISqlEntity entity, object? param = null)
+        => ExecuteScalar<T>(_engine.Sql(entity, _capacity), param);
+    #endregion
+    #region Count
+    /// <summary>
+    /// 计数
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    public virtual T? Count<T>(ITableView view, object? param = null)
+        => ExecuteScalar<T>(_engine.CountSql(view, _capacity), param);
+    #endregion
+    #region CountAsync
+    /// <summary>
+    /// 异步计数
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    public virtual Task<T?> CountAsync<T>(ITableView view, object? param = null)
+        => ExecuteScalarAsync<T>(_engine.CountSql(view, _capacity), param);
     #endregion
     #region ExecuteAsync
     /// <summary>
     /// 异步执行
     /// </summary>
-    /// <param name="sql"></param>
+    /// <param name="entity"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public virtual Task<int> ExecuteAsync(ISqlEntity sql, object? param = null)
-        => ExecuteAsync(BuildSql(sql), param);
+    public virtual Task<int> ExecuteAsync(ISqlEntity entity, object? param = null)
+        => ExecuteAsync(_engine.Sql(entity, _capacity), param);
     #endregion
     #region ExecuteScalarAsync
     /// <summary>
     /// 异步执行(返回一行一列)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="sql"></param>
+    /// <param name="entity"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public virtual Task<T?> ExecuteScalarAsync<T>(ISqlEntity sql, object? param = null)
-        => ExecuteScalarAsync<T>(BuildSql(sql), param);
+    public virtual Task<T?> ExecuteScalarAsync<T>(ISqlEntity entity, object? param = null)
+        => ExecuteScalarAsync<T>(_engine.Sql(entity, _capacity), param);
     #endregion
     #region Query
     /// <summary>
     /// 获取列表
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="sql"></param>
+    /// <param name="entity"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public virtual IEnumerable<T> Query<T>(ISqlEntity sql, object? param = null)
-        => Query<T>(BuildSql(sql), param);
+    public virtual IEnumerable<T> Query<T>(ISqlEntity entity, object? param = null)
+        => Query<T>(_engine.Sql(entity, _capacity), param);
     /// <summary>
     /// 获取单条
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="sql"></param>
+    /// <param name="entity"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public virtual T? QueryFirstOrDefault<T>(ISqlEntity sql, object? param = null)
-        => QueryFirstOrDefault<T>(BuildSql(sql), param);
+    public virtual T? QueryFirstOrDefault<T>(ISqlEntity entity, object? param = null)
+        => QueryFirstOrDefault<T>(_engine.Sql(entity, _capacity), param);
     #endregion
     #region QueryAsync
     /// <summary>
     /// Execute a query asynchronously using Task.
     /// </summary>
     /// <typeparam name="T">The type of results to return.</typeparam>
-    /// <param name="sql">The SQL to execute for the query.</param>
+    /// <param name="entity">The SQL to execute for the query.</param>
     /// <param name="param">The parameters to pass, if any.</param>
-    public virtual Task<IEnumerable<T>> QueryAsync<T>(ISqlEntity sql, object? param = null)
-        => QueryAsync<T>(BuildSql(sql), param);
+    public virtual Task<IEnumerable<T>> QueryAsync<T>(ISqlEntity entity, object? param = null)
+        => QueryAsync<T>(_engine.Sql(entity, _capacity), param);
     /// <summary>
     /// Execute a single-row query asynchronously using Task.
     /// </summary>
     /// <typeparam name="T">The type of result to return.</typeparam>
-    /// <param name="sql">The SQL to execute for the query.</param>
+    /// <param name="entity">The SQL to execute for the query.</param>
     /// <param name="param">The parameters to pass, if any.</param>
-    public virtual Task<T?> QueryFirstOrDefaultAsync<T>(ISqlEntity sql, object? param = null)
-        => QueryFirstOrDefaultAsync<T>(BuildSql(sql), param);
+    public virtual Task<T?> QueryFirstOrDefaultAsync<T>(ISqlEntity entity, object? param = null)
+        => QueryFirstOrDefaultAsync<T>(_engine.Sql(entity, _capacity), param);
     #endregion
     #endregion
     #region Dapper

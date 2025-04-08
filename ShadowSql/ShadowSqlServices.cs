@@ -1,5 +1,6 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Fragments;
+using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,6 +39,22 @@ public static partial class ShadowSqlServices
         return builder.ToString();
     }
     /// <summary>
+    /// 拼写计数sql
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="view"></param>
+    /// <param name="capacity"></param>
+    /// <returns></returns>
+    public static string CountSql(this ISqlEngine engine, ITableView view, int capacity = 128)
+    {
+        var sql = new StringBuilder(capacity);
+        engine.SelectPrefix(sql);
+        engine.Count(sql);
+        sql.Append(" FROM ");
+        view.Write(engine, sql);
+        return sql.ToString();
+    }
+    /// <summary>
     /// 前缀拼接
     /// </summary>
     /// <param name="engine"></param>
@@ -47,15 +64,9 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static void ConcatPrefix(this ISqlEngine engine, ISqlEntity entity, StringBuilder builder, params IEnumerable<string> suffix)
     {
-        //var point = builder.Length;
         foreach (var item in suffix)
             builder.Append(item);
-        //if (fragment.Write(engine, builder))
-        //    return true;
         entity.Write(engine, builder);
-        //roll back
-        //builder.Length = point;
-        //return false;
     }
 
 #pragma warning disable 1573
@@ -90,4 +101,5 @@ public static partial class ShadowSqlServices
         => sql.Append(" HAVING ");
     #endregion
 #pragma warning restore 1573
+
 }

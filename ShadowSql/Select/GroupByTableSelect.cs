@@ -33,7 +33,7 @@ public class GroupByTableSelect<TTable>(IGroupByView groupBy, GroupByTableFields
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class GroupByTableFetchSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
+public class GroupByTableCursorSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
     : SelectBase<ICursor, GroupByTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -41,7 +41,7 @@ public class GroupByTableFetchSelect<TTable>(ICursor cursor, GroupByTableFields<
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public GroupByTableFetchSelect(GroupByTableCursor<TTable> cursor)
+    public GroupByTableCursorSelect(GroupByTableCursor<TTable> cursor)
         : this(cursor, new GroupByTableFields<TTable>(cursor))
     {
     }

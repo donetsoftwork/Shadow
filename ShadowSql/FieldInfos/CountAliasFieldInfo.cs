@@ -10,6 +10,10 @@ namespace ShadowSql.FieldInfos;
 /// </summary>
 public sealed class CountAliasFieldInfo : IdentifierBase, IFieldAlias
 {
+    /// <summary>
+    /// 计数字段别名信息
+    /// </summary>
+    /// <param name="alias"></param>
     private CountAliasFieldInfo(string alias)
         : base(alias)
     {
@@ -38,7 +42,7 @@ public sealed class CountAliasFieldInfo : IdentifierBase, IFieldAlias
     #region ISqlEntity
     internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
-        sql.Append(CountFieldInfo.Count);
+        engine.Count(sql);
         engine.ColumnAs(sql, _name);
     }
     #endregion

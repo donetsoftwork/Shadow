@@ -4,7 +4,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
 
-namespace ShadowSqlTest.Fetches;
+namespace ShadowSqlTest.Cursors;
 
 public class MultiTableCursorTests
 {
@@ -12,7 +12,7 @@ public class MultiTableCursorTests
     static readonly DB _db = DB.Use("MyDb");
 
     [Fact]
-    public void ToFetch()
+    public void ToCursor()
     {
         int limit = 10;
         int offset = 10;

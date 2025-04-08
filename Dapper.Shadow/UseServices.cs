@@ -25,7 +25,7 @@ public static partial class DapperShadowServices
     /// <param name="buffered"></param>
     /// <param name="capacity"></param>
     /// <returns></returns>
-    public static DapperExecutor Use(this ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 32)
+    public static DapperExecutor Use(this ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 128)
         => new(engine, connection, buffered, capacity);
     #region Queries
     /// <summary>

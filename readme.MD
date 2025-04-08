@@ -1,4 +1,4 @@
-# Shadow
+# ShadowSql
 >一个.net ORM工具
 
 ## 一、简介
@@ -28,7 +28,7 @@ var students = SqliteExecutor.From("Students")
 #### 3.1 原生sql查询
 ~~~csharp
 var students = SqliteExecutor.From("Students")
-    .ToQuery()
+    .ToSqlQuery()
     .Where("Age=10")
     .ToDapperSelect()
     .Get<Student>();
@@ -39,7 +39,7 @@ var students = SqliteExecutor.From("Students")
 var ageFilter = Column.Use("Age").EqualValue(10);
 var students = SqliteExecutor.From("Students")
     .ToQuery()
-    .Where(ageFilter)
+    .And(ageFilter)
     .ToDapperSelect()
     .Get<Student>();
 ~~~
@@ -47,7 +47,7 @@ var students = SqliteExecutor.From("Students")
 #### 3.3 Or查询
 ~~~csharp
 var students = SqliteExecutor.From("Students")
-    .ToQuery()
+    .ToSqlQuery()
     .ColumnValue("Age", 10)
     .ToOr()
     .ColumnLikeValue("Name", "张%")
@@ -64,7 +64,7 @@ var students = table.ToSelect(table.Age.EqualValue(10))
     .Get<Student>(SqliteExecutor);
 ~~~
 
-### 5、Fetch(分页及排序)
+### 5、Cursor(分页及排序)
 >* Skip和Take用于分页
 >* Desc、Asc及OrderBy用来排序
 
@@ -72,7 +72,7 @@ var students = table.ToSelect(table.Age.EqualValue(10))
 var table = new StudentTable("Students");
 var students = table.ToQuery()
     .Where(table.Age.GreaterEqualValue(9))
-    .ToFetch()
+    .ToCursor()
     .Desc(table.Id)
     .Skip(10)
     .Take(10)

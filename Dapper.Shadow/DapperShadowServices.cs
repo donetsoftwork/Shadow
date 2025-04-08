@@ -25,7 +25,7 @@ public static partial class DapperShadowServices
     /// <param name="buffered"></param>
     /// <param name="capacity"></param>
     /// <returns></returns>
-    public static DapperTable From(this IDbConnection connection, ISqlEngine engine, string tableName, bool buffered = true, int capacity = 32)
+    public static DapperTable From(this IDbConnection connection, ISqlEngine engine, string tableName, bool buffered = true, int capacity = 128)
         => new DapperExecutor(engine, connection, buffered, capacity)
             .From(tableName);
 }

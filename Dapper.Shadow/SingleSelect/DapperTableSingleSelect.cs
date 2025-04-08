@@ -115,7 +115,7 @@ public class DapperTableSingleSelect<TTable>(IExecutor executor, ITableView tabl
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class DapperTableFetchSingleSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor, TableFields<TTable> fields)
+public sealed class DapperTableCursorSingleSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor, TableFields<TTable> fields)
     : SingleSelectBase<ICursor, TableFields<TTable>>(cursor, fields)
     , IDapperSingleSelect
     where TTable : ITable
@@ -125,7 +125,7 @@ public sealed class DapperTableFetchSingleSelect<TTable>(IExecutor executor, Tab
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperTableFetchSingleSelect(IExecutor executor, TableCursor<TTable> cursor)
+    public DapperTableCursorSingleSelect(IExecutor executor, TableCursor<TTable> cursor)
         : this(executor, cursor, new TableFields<TTable>(cursor.Source))
     {
     }

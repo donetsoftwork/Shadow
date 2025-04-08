@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\package.props" />
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net8.0;net9.0;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <LangVersion>Latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>0.7.0-alpha</Version>
+    <Version>$(VersionBase).1-alpha</Version>
     <PackageId>ShadowSql</PackageId>
+    <Description>拼接sql工具</Description>
+    <PackageTags>sql;sql-builder;sql-query</PackageTags>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="readme.MD" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.MD" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="ShadowSqlTest" />

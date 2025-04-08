@@ -4,7 +4,6 @@ using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
-using ShadowSql.Update;
 using System;
 
 namespace Dapper.Shadow;

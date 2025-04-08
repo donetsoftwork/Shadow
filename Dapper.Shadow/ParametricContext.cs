@@ -57,7 +57,7 @@ public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameter
     /// <param name="fragment"></param>
     /// <param name="capacity"></param>
     /// <returns></returns>
-    public string BuildSql(ISqlFragment fragment, int capacity = 32)
+    public string BuildSql(ISqlFragment fragment, int capacity = 128)
         => this.Sql(fragment, capacity);
 
     ISqlValue ISqlValueComponent.SqlValue<T>(T value)
@@ -81,6 +81,8 @@ public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameter
         => _engine.InsertMultiPrefix(sql);
     bool ISqlEngine.InsertedIdentity(StringBuilder sql)
         => _engine.InsertedIdentity(sql);
+    void ISqlEngine.Count(StringBuilder sql)
+        => _engine.Count(sql);
     void ISqlEngine.LogicNot(StringBuilder sql)
         => _engine.LogicNot(sql);
     string ISqlEngine.Escape(string sqlValue)

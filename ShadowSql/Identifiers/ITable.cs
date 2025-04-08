@@ -65,12 +65,6 @@ public interface ITableView : ISqlEntity
     /// <returns></returns>
     ICompareField GetCompareField(string fieldName);
 }
-///// <summary>
-///// 多表(联表)查询
-///// </summary>
-//public interface IMultiTableQuery : IDataSqlQuery, IMultiTable
-//{
-//}
 /// <summary>
 /// 多表视图
 /// </summary>
@@ -92,16 +86,16 @@ public interface IMultiView : ITableView
 /// </summary>
 public interface IMultiTable : IMultiView
 {
-    /// <summary>
-    /// 构造新成员名
-    /// </summary>
-    /// <returns></returns>
-    string CreateMemberName();
-    /// <summary>
-    /// 添加表成员
-    /// </summary>
-    /// <param name="aliasTable"></param>
-    void AddMember(IAliasTable aliasTable);
+    ///// <summary>
+    ///// 构造新成员名
+    ///// </summary>
+    ///// <returns></returns>
+    //string CreateMemberName();
+    ///// <summary>
+    ///// 添加表成员
+    ///// </summary>
+    ///// <param name="aliasTable"></param>
+    //void AddMember(IAliasTable aliasTable);
 }
 
 /// <summary>

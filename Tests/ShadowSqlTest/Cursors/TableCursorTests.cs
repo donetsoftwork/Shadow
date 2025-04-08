@@ -4,7 +4,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
 
-namespace ShadowSqlTest.Fetches;
+namespace ShadowSqlTest.Cursors;
 
 public class TableCursorTests
 {
@@ -12,7 +12,7 @@ public class TableCursorTests
     static readonly IDB _db = SimpleDB.Use("MyDb");
 
     [Fact]
-    public void ToFetch()
+    public void ToCursor()
     {
         int limit = 10;
         int offset = 10;

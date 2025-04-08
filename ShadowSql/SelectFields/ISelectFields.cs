@@ -11,9 +11,14 @@ namespace ShadowSql.SelectFields;
 public interface ISelectFields
 {
     /// <summary>
-    /// 被筛选列
+    /// 被筛选字段
     /// </summary>
     IEnumerable<IFieldView> Selected { get; }
+    /// <summary>
+    /// 获取列
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<IColumn> ToColumns();
     /// <summary>
     /// 输出被筛选列
     /// </summary>
@@ -21,14 +26,4 @@ public interface ISelectFields
     /// <param name="sql"></param>
     /// <returns></returns>
     bool WriteSelected(ISqlEngine engine, StringBuilder sql);
-    ///// <summary>
-    ///// 筛选列
-    ///// </summary>
-    ///// <param name="fields"></param>
-    //void SelectCore(params IEnumerable<IFieldView> fields);
-    ///// <summary>
-    ///// 筛选列
-    ///// </summary>
-    ///// <param name="columns"></param>
-    //void SelectCore(params IEnumerable<string> columns);
 }

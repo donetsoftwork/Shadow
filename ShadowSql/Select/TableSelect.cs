@@ -73,7 +73,7 @@ public sealed class TableSelect<TTable>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class TableFetchSelect<TTable>(TableCursor<TTable> cursor, TableFields<TTable> fields)
+public sealed class TableCursorSelect<TTable>(TableCursor<TTable> cursor, TableFields<TTable> fields)
     : SelectBase<TableCursor<TTable>, TableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -81,7 +81,7 @@ public sealed class TableFetchSelect<TTable>(TableCursor<TTable> cursor, TableFi
     /// 表范围(分页)及列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public TableFetchSelect(TableCursor<TTable> cursor)
+    public TableCursorSelect(TableCursor<TTable> cursor)
         : this(cursor, new TableFields<TTable>(cursor.Source))
     {
     }

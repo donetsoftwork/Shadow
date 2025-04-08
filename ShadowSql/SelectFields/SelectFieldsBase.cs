@@ -40,6 +40,13 @@ public abstract class SelectFieldsBase<TSource>(TSource view)
     /// <returns></returns>
     public override IField Field(string fieldName)
         => _source.Field(fieldName);
+
+    #region ISelectFields
+    bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
+        => WriteSelectedCore(engine, sql, false);
+    IEnumerable<IColumn> ISelectFields.ToColumns()
+        => ToColumnsCore();
+    #endregion
 }
 /// <summary>
 /// 筛选字段基类
@@ -126,19 +133,30 @@ public abstract class SelectFieldsBase
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
+    /// <param name="appended"></param>
     /// <returns></returns>
-    public bool WriteSelected(ISqlEngine engine, StringBuilder sql)
+    protected virtual bool WriteSelectedCore(ISqlEngine engine, StringBuilder sql, bool appended)
     {
-        bool appended = false;
         foreach (var field in _selected)
         {
-            //var point = sql.Length;
             if (appended)
                 sql.Append(',');
             field.Write(engine, sql);
             appended = true;
         }
         return appended;
+    }
+    /// <summary>
+    /// 获取列
+    /// </summary>
+    /// <returns></returns>
+    protected virtual IEnumerable<IColumn> ToColumnsCore()
+    {
+        foreach (var field in _selected)
+        {
+            if (field is IColumn column)
+                yield return column;
+        }
     }
     #endregion
 }

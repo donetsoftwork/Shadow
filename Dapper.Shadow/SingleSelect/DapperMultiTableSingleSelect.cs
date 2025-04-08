@@ -42,7 +42,7 @@ public class DapperMultiTableSingleSelect(IExecutor executor, IMultiView multiTa
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableCursor cursor, MultiTableFields fields)
+public class DapperMultiTableCursorSingleSelect(IExecutor executor, MultiTableCursor cursor, MultiTableFields fields)
     : SingleSelectBase<MultiTableCursor, MultiTableFields>(cursor, fields)
     , IDapperSingleSelect
 {
@@ -51,7 +51,7 @@ public class DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableCur
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperMultiTableFetchSingleSelect(IExecutor executor, MultiTableCursor cursor)
+    public DapperMultiTableCursorSingleSelect(IExecutor executor, MultiTableCursor cursor)
         : this(executor, cursor, new MultiTableFields(cursor.Source))
     {
     }

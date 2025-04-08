@@ -1,6 +1,7 @@
 ﻿using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
+using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Dapper.Shadow;
 /// <param name="connection"></param>
 /// <param name="buffered"></param>
 /// <param name="capacity"></param>
-public class ParametricExecutor(ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 32)
+public class ParametricExecutor(ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 128)
     : DapperExecutor(engine, connection, buffered, capacity)
 {
     /// <summary>
@@ -50,6 +51,19 @@ public class ParametricExecutor(ISqlEngine engine, IDbConnection connection, boo
         return ExecuteScalar<T>(sql, context.Parameters);
     }
     /// <summary>
+    /// 计数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="view"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    public override T? Count<T>(ITableView view, object? param = null) where T : default
+    {
+        var context = CreateContext(param);
+        var sql = context.CountSql(view, _capacity);
+        return ExecuteScalar<T>(sql, context.Parameters);
+    }
+    /// <summary>
     /// 异步执行
     /// </summary>
     /// <param name="fragment"></param>
@@ -72,6 +86,19 @@ public class ParametricExecutor(ISqlEngine engine, IDbConnection connection, boo
     {
         var context = CreateContext(param);
         var sql = context.Sql(fragment, _capacity);
+        return ExecuteScalarAsync<T>(sql, context.Parameters);
+    }
+    /// <summary>
+    /// 异步计数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="view"></param>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    public override Task<T?> CountAsync<T>(ITableView view, object? param = null) where T : default
+    {
+        var context = CreateContext(param);
+        var sql = context.CountSql(view, _capacity);
         return ExecuteScalarAsync<T>(sql, context.Parameters);
     }
     /// <summary>

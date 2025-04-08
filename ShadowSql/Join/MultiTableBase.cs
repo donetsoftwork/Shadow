@@ -86,10 +86,10 @@ public abstract class MultiTableBase(IIdentifierGenerator aliasGenerator)
     /// <returns></returns>
     public IAliasTable? GetMember(string tableName)
         => _tables.FirstOrDefault(m => m.IsMatch(tableName));
-    string IMultiTable.CreateMemberName()
-        => CreateMemberName();
-    void IMultiTable.AddMember(IAliasTable aliasTable)
-        => AddMemberCore(aliasTable);
+    //string IMultiTable.CreateMemberName()
+    //    => CreateMemberName();
+    //void IMultiTable.AddMember(IAliasTable aliasTable)
+    //    => AddMemberCore(aliasTable);
     #endregion
     /// <summary>
     /// 获取列
@@ -105,14 +105,6 @@ public abstract class MultiTableBase(IIdentifierGenerator aliasGenerator)
         }
         return null;
     }
-    //#region FilterBase
-    ///// <summary>
-    ///// 过滤查询数据源
-    ///// </summary>
-    ///// <returns></returns>
-    //protected override ITableView GetFilterSource()
-    //    => this;
-    //#endregion
     #region IDataView
     /// <summary>
     /// 列

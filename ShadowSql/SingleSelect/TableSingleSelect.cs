@@ -52,33 +52,13 @@ public sealed class TableSingleSelect<TTable>(ITableView view, TableFields<TTabl
     {
     }
 }
-///// <summary>
-///// 表过滤筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="filter"></param>
-//public sealed class TableFilterSingleSelect<TTable>(TableFilter<TTable> filter)
-//    : SingleSelectBase<ITableView, TableFields<TTable>>(filter, new TableFields<TTable>(filter.Source))
-//    where TTable : ITable
-//{
-//}
-///// <summary>
-///// 表(及查询)筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="query"></param>
-//public sealed class TableQuerySingleSelect<TTable>(TableQuery<TTable> query)
-//    : SingleSelectBase<ITableView, TableFields<TTable>>(query, new TableFields<TTable>(query.Source))
-//    where TTable : ITable
-//{
-//}
 /// <summary>
 /// 表范围(分页)及单列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class TableFetchSingleSelect<TTable>(TableCursor<TTable> cursor, TableFields<TTable> fields)
+public sealed class TableCursorSingleSelect<TTable>(TableCursor<TTable> cursor, TableFields<TTable> fields)
     : SingleSelectBase<TableCursor<TTable>, TableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -86,7 +66,7 @@ public sealed class TableFetchSingleSelect<TTable>(TableCursor<TTable> cursor, T
     /// 表范围(分页)及单列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public TableFetchSingleSelect(TableCursor<TTable> cursor)
+    public TableCursorSingleSelect(TableCursor<TTable> cursor)
         : this(cursor, new TableFields<TTable>(cursor.Source))
     {
     }

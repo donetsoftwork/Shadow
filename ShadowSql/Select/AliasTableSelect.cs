@@ -60,7 +60,7 @@ public sealed class AliasTableSelect<TTable>(ITableView source, AliasTableFields
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class AliasTableFetchSelect<TTable>(ICursor cursor, AliasTableFields<TTable> fields)
+public sealed class AliasTableCursorSelect<TTable>(ICursor cursor, AliasTableFields<TTable> fields)
     : SelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -68,7 +68,7 @@ public sealed class AliasTableFetchSelect<TTable>(ICursor cursor, AliasTableFiel
     /// 别名表范围(分页)及列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public AliasTableFetchSelect(AliasTableCursor<TTable> cursor)
+    public AliasTableCursorSelect(AliasTableCursor<TTable> cursor)
         : this(cursor, new AliasTableFields<TTable>(cursor.Source))
     {
     }

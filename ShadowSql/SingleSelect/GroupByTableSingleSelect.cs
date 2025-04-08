@@ -32,7 +32,7 @@ public class GroupByTableSingleSelect<TTable>(IGroupByView groupBy, GroupByTable
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class GroupByTableFetchSingleSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
+public class GroupByTableCursorSingleSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
     : SingleSelectBase<ICursor, GroupByTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -40,7 +40,7 @@ public class GroupByTableFetchSingleSelect<TTable>(ICursor cursor, GroupByTableF
     /// GroupBy后再范围(分页)及单列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public GroupByTableFetchSingleSelect(GroupByTableCursor<TTable> cursor)
+    public GroupByTableCursorSingleSelect(GroupByTableCursor<TTable> cursor)
         : this(cursor, new GroupByTableFields<TTable>(cursor))
     {
     }

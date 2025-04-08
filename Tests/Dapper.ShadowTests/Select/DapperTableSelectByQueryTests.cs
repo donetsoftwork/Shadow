@@ -25,10 +25,12 @@ public class DapperTableSelectByQueryTests : ExecuteTestBase, IDisposable
     public void AtomicLogic()
     {
         var ageFilter = Column.Use("Age").EqualValue(10);
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToQuery()
-            .And(ageFilter)
-            .ToDapperSelect()
+            .And(ageFilter);
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -40,9 +42,11 @@ public class DapperTableSelectByQueryTests : ExecuteTestBase, IDisposable
     public void CustomizeTable()
     {
         var table = new StudentTable("Students");
-        var students = table.ToQuery()
-            .And(table.Age.EqualValue(10))
-            .ToSelect()
+        var query = table.ToQuery()
+            .And(table.Age.EqualValue(10));
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToSelect()
             .Get<Student>(SqliteExecutor)
             .ToList();
         Assert.True(students.Count > 0);
@@ -52,9 +56,11 @@ public class DapperTableSelectByQueryTests : ExecuteTestBase, IDisposable
     public void ToDapperSelect()
     {
         var table = new StudentTable("Students");
-        var students = table.ToQuery()
-            .And(table.Age.EqualValue(10))
-            .ToDapperSelect(SqliteExecutor)
+        var query = table.ToQuery()
+            .And(table.Age.EqualValue(10));
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect(SqliteExecutor)
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -63,10 +69,12 @@ public class DapperTableSelectByQueryTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Field()
     {
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToQuery()
-            .And(table => table.Field("Age").EqualValue(10))
-            .ToDapperSelect()
+            .And(student => student.Field("Age").EqualValue(10));
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -77,16 +85,16 @@ public class DapperTableSelectByQueryTests : ExecuteTestBase, IDisposable
     {
         var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
         var excutor = new ParametricExecutor(new SqliteEngine(), connection);
-        var students = excutor.From("Students")
+        var query = excutor.From("Students")
             .ToQuery()
-            .And(table => table.Field("Age").EqualValue(10))
-            .ToDapperSelect()
+            .And(student => student.Field("Age").EqualValue(10));
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
     }
-
-
 
     void IDisposable.Dispose()
         => DropStudentTable();

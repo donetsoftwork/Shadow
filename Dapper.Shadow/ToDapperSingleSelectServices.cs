@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow.Fetches;
+﻿using Dapper.Shadow.Cursors;
 using Dapper.Shadow.GroupBy;
 using Dapper.Shadow.Join;
 using Dapper.Shadow.Queries;
@@ -17,7 +17,8 @@ namespace Dapper.Shadow;
 /// </summary>
 public static partial class DapperShadowServices
 {
-    #region TableFields
+    #region IDapperTable
+    #region TTable
     /// <summary>
     /// 表筛选单列
     /// </summary>
@@ -61,11 +62,11 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperTableFetchSingleSelect<TTable> ToDapperSingle<TTable>(this TableCursor<TTable> cursor)
+    public static DapperTableCursorSingleSelect<TTable> ToDapperSingle<TTable>(this TableCursor<TTable> cursor)
         where TTable : IDapperTable
         => new(cursor.Source.Executor, cursor);
     #endregion
-    #region AliasTableFields
+    #region Alias
     /// <summary>
     /// 别名表筛选单列
     /// </summary>
@@ -109,11 +110,53 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperAliasTableFetchSingleSelect<TTable> ToDapperSingle<TTable>(this AliasTableCursor<TTable> cursor)
+    public static DapperAliasTableCursorSingleSelect<TTable> ToDapperSingle<TTable>(this AliasTableCursor<TTable> cursor)
         where TTable : IDapperTable
         => new(cursor.Table.Executor, cursor);
     #endregion
-    #region MultiTableFields
+    #region GroupByTable
+    /// <summary>
+    /// GroupBy后再筛选单列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static DapperGroupByTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByTableSqlQuery<TTable> source)
+        where TTable : IDapperTable
+        => new(source.Executor, source);
+    /// <summary>
+    /// GroupBy后再范围(分页)及单列筛选
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="cursor"></param>
+    /// <returns></returns>
+    public static DapperGroupByTableCursorSingleSelect<TTable> ToDapperSingle<TTable>(this GroupByTableCursor<TTable> cursor)
+        where TTable : IDapperTable
+        => new(cursor.Table.Executor, cursor);
+    #endregion
+    #region GroupByAliasTable
+    /// <summary>
+    /// GroupBy别名表后再筛选单列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public static DapperGroupByAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByAliasTableSqlQuery<TTable> source)
+        where TTable : IDapperTable
+        => new(source.Executor, source);
+    /// <summary>
+    /// GroupBy别名表后再范围(分页)及单列筛选
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="cursor"></param>
+    /// <returns></returns>
+    public static DapperGroupByAliasTableCursorSingleSelect<TTable> ToDapperSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor)
+        where TTable : IDapperTable
+        => new(cursor.Table.Executor, cursor);
+    #endregion
+    #endregion
+    #region Dapper
+    #region Multi
     /// <summary>
     /// 多表筛选列
     /// </summary>
@@ -133,50 +176,10 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperMultiTableFetchSingleSelect ToDapperSingle(this DapperMultiTableFetch cursor)
+    public static DapperMultiTableCursorSingleSelect ToDapperSingle(this DapperMultiTableCursor cursor)
         => new(cursor.Executor, cursor);
     #endregion
-    #region GroupByTableFields
-    /// <summary>
-    /// GroupBy后再筛选单列
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static DapperGroupByTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByTableSqlQuery<TTable> source)
-        where TTable : IDapperTable
-        => new(source.Executor, source);
-    /// <summary>
-    /// GroupBy后再范围(分页)及单列筛选
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <returns></returns>
-    public static DapperGroupByTableFetchSingleSelect<TTable> ToDapperSingle<TTable>(this GroupByTableCursor<TTable> cursor)
-        where TTable : IDapperTable
-        => new(cursor.Table.Executor, cursor);
-    #endregion
-    #region GroupByAliasTableFields
-    /// <summary>
-    /// GroupBy别名表后再筛选单列
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
-    /// <returns></returns>
-    public static DapperGroupByAliasTableSingleSelect<TTable> ToDapperSingle<TTable>(this DapperGroupByAliasTableSqlQuery<TTable> source)
-        where TTable : IDapperTable
-        => new(source.Executor, source);
-    /// <summary>
-    /// GroupBy别名表后再范围(分页)及单列筛选
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <returns></returns>
-    public static DapperGroupByAliasTableFetchSingleSelect<TTable> ToDapperSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor)
-        where TTable : IDapperTable
-        => new(cursor.Table.Executor, cursor);
-    #endregion
-    #region GroupByMultiFields
+    #region GroupByMulti
     /// <summary>
     /// GroupBy后再筛选单列
     /// </summary>
@@ -189,7 +192,8 @@ public static partial class DapperShadowServices
     /// </summary>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static DapperGroupByMultiFetchSingleSelect ToDapperSingle(this DapperGroupByMultiFetch cursor)
+    public static DapperGroupByMultiCursorSingleSelect ToDapperSingle(this DapperGroupByMultiCursor cursor)
         => new(cursor.Executor, cursor);
+    #endregion
     #endregion
 }

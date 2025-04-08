@@ -24,7 +24,7 @@ public class TableQuery<TTable>(TTable table, Logic filter)
         : this(source, new AndLogic())
     {
     }
-    #region 扩展查询功能
+    #region 扩展查询
     /// <summary>
     /// 与逻辑
     /// </summary>

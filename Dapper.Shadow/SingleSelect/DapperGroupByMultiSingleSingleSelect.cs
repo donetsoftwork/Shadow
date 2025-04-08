@@ -2,7 +2,6 @@
 using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.Select;
 using ShadowSql.SelectFields;
 using ShadowSql.SingleSelect;
 using System.Text;
@@ -44,7 +43,7 @@ public class DapperGroupByMultiSingleSelect(IExecutor executor, IGroupByView gro
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperGroupByMultiFetchSingleSelect(IExecutor executor, GroupByMultiCursor cursor, GroupByMultiFields fields)
+public class DapperGroupByMultiCursorSingleSelect(IExecutor executor, GroupByMultiCursor cursor, GroupByMultiFields fields)
     : SingleSelectBase<ICursor, GroupByMultiFields>(cursor, fields)
     , IDapperSingleSelect
 {
@@ -53,7 +52,7 @@ public class DapperGroupByMultiFetchSingleSelect(IExecutor executor, GroupByMult
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperGroupByMultiFetchSingleSelect(IExecutor executor, GroupByMultiCursor cursor)
+    public DapperGroupByMultiCursorSingleSelect(IExecutor executor, GroupByMultiCursor cursor)
         : this(executor, cursor, new GroupByMultiFields(cursor))
     {
     }

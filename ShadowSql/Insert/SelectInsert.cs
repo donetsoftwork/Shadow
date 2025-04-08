@@ -35,16 +35,17 @@ public class SelectInsert<TTable>(TTable table, ISelect select)
     private IEnumerable<IColumn> CheckColumns()
     {
         var count = _columns.Count;
-        var fields = _select.Selected.ToArray();
-        var fieldCount = fields.Length;
+
+        var selectColumns = _select.ToColumns().ToList();
+        var fieldCount = selectColumns.Count;
         if (count == fieldCount)
             return _columns;
         else if (count > fieldCount)
             return _columns.Take(fieldCount);
-        if (count == 0) 
-            return fields.Select(f => f.ToColumn());
+        if (count == 0)
+            return selectColumns;
         else
-            return _columns.Concat(fields.Select(f => f.ToColumn()).Skip(fieldCount).Take(fieldCount - count));
+            return _columns.Concat(selectColumns.Skip(fieldCount).Take(fieldCount - count));
     }
     #region Insert
     /// <summary>

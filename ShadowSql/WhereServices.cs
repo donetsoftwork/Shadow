@@ -12,7 +12,7 @@ namespace ShadowSql;
 /// </summary>
 public static partial class ShadowSqlServices
 {
-    #region 基础查询功能
+    #region 基础查询
     /// <summary>
     /// 按原始sql查询
     /// </summary>
@@ -39,6 +39,8 @@ public static partial class ShadowSqlServices
         query.Query.AddLogic(logic);
         return query;
     }
+    #endregion
+    #region ITableView
     /// <summary>
     /// 按逻辑查询
     /// </summary>
@@ -50,20 +52,6 @@ public static partial class ShadowSqlServices
         where Query : IDataSqlQuery, IWhere
     {
         query.Query.AddLogic(logic(query.Source));
-        return query;
-    }
-    /// <summary>
-    /// 按列查询
-    /// </summary>
-    /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="compare"></param>
-    /// <returns></returns>
-    public static Query Column<Query>(this Query query, string columnName, Func<ICompareField, AtomicLogic> compare)
-        where Query : IDataSqlQuery
-    {
-        query.Query.AddLogic(compare(query.GetCompareField(columnName)));
         return query;
     }
     #endregion

@@ -11,7 +11,23 @@ namespace ShadowSql;
 
 public static partial class ShadowSqlServices
 {
-    #region Column/ColumnValue
+    #region Column
+    /// <summary>
+    /// 按列查询
+    /// </summary>
+    /// <typeparam name="Query"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="columnName"></param>
+    /// <param name="compare"></param>
+    /// <returns></returns>
+    public static Query Column<Query>(this Query query, string columnName, Func<ICompareField, AtomicLogic> compare)
+        where Query : IDataSqlQuery
+    {
+        query.Query.AddLogic(compare(query.GetCompareField(columnName)));
+        return query;
+    }
+    #endregion
+    #region ColumnParameter/ColumnValue
     /// <summary>
     /// 对列进行参数化查询
     /// </summary>
@@ -621,7 +637,24 @@ public static partial class ShadowSqlServices
         return query;
     }
     #endregion
-    #region TableColumn/TableColumnValue
+    #region TableColumn
+    /// <summary>
+    /// 按列查询
+    /// </summary>
+    /// <typeparam name="Query"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="tableName"></param>
+    /// <param name="columnName"></param>
+    /// <param name="compare"></param>
+    /// <returns></returns>
+    public static Query TableColumn<Query>(this Query query, string tableName, string columnName, Func<ICompareField, AtomicLogic> compare)
+        where Query : MultiTableBase, IDataSqlQuery
+    {
+        query.Query.AddLogic(compare(query.From(tableName).GetCompareField(columnName)));
+        return query;
+    }
+    #endregion
+    #region TableColumnParameter/TableColumnValue
     /// <summary>
     /// 对列进行参数化查询
     /// </summary>

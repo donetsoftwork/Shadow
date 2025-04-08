@@ -4,7 +4,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
 
-namespace ShadowSqlTest.Fetches;
+namespace ShadowSqlTest.Cursors;
 
 public class AliasTableCursorTests
 {

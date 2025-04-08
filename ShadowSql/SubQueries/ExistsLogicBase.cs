@@ -45,6 +45,9 @@ public abstract class ExistsLogicBase(ITableView source, CompareSymbol op)
         sql.Append('*');
         return true;
     }
+
+    IEnumerable<IColumn> ISelectFields.ToColumns()
+        => _source.Columns;
     IEnumerable<IFieldView> ISelectFields.Selected
         => [];
     #endregion

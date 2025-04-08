@@ -101,6 +101,11 @@ public interface ISqlEngine : ISqlValueComponent
     /// <returns>是否支持</returns>
     bool InsertedIdentity(StringBuilder sql);
     /// <summary>
+    /// 计数sql
+    /// </summary>
+    /// <param name="sql"></param>
+    void Count(StringBuilder sql);
+    /// <summary>
     /// 否定sql条件
     /// </summary>
     /// <param name="sql"></param>

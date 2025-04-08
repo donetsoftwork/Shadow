@@ -21,9 +21,11 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Get()
     {
-        var students = SqliteExecutor.From("Students")
-            .ToDapperSelect()
-            .Get<Student>()
+        var select = SqliteExecutor.From("Students")
+            .ToDapperSelect();
+        var count = select.Count();
+        Assert.True(count > 0);
+        var students = select.Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
     }
@@ -33,10 +35,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Where()
     {
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .Where("Age=10")
-            .ToDapperSelect()
+            .Where("Age=10");
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -48,10 +52,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void AtomicLogic()
     {
         var ageFilter = Column.Use("Age").EqualValue(10);
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .Where(ageFilter)
-            .ToDapperSelect()
+            .Where(ageFilter);
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -62,12 +68,14 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Or()
     {
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .ColumnValue("Age", 10)
+            .Where("Age=10")
             .ToOr()
-            .ColumnLikeValue("Name", "张%")
-            .ToDapperSelect()
+            .Where("Name like '张%'");
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -79,10 +87,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void ColumnValue()
     {
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .ColumnValue("Age", 10)
-            .ToDapperSelect()
+            .Where("Age=10");
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -94,10 +104,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void CustomizeColumn()
     {
         var age = Column.Use("Age");
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .Where(age.EqualValue(10))
-            .ToDapperSelect()
+            .Where(age.EqualValue(10));
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -109,9 +121,11 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void CustomizeTable()
     {
         var table = new StudentTable("Students");
-        var students = table.ToSqlQuery()
-            .Where(table.Age.EqualValue(10))
-            .ToSelect()
+        var query = table.ToSqlQuery()
+            .Where(table.Age.EqualValue(10));
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToSelect()
             .Get<Student>(SqliteExecutor)
             .ToList();
         Assert.True(students.Count > 0);
@@ -122,10 +136,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Func()
     {
-        var students = new StudentTable("Students")
+        var query = new StudentTable("Students")
             .ToSqlQuery()
-            .Where(table => table.Age.EqualValue(10))
-            .ToSelect()
+            .Where(table => table.Age.EqualValue(10));
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToSelect()
             .Get<Student>(SqliteExecutor)
             .ToList();
         Assert.True(students.Count > 0);
@@ -136,11 +152,13 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void DefineColums()
     {
-        var students = new Table("Students")
+        var query = new Table("Students")
             .DefineColums("Age")
             .ToSqlQuery()
-            .Where(student => student.Column("Age").EqualValue(10))
-            .ToDapperSelect(SqliteExecutor)
+            .Where(student => student.Column("Age").EqualValue(10));
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect(SqliteExecutor)
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -152,10 +170,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Field()
     {
-        var students = SqliteExecutor.From("Students")
+        var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .Where(student => student.Field("Age").EqualValue(10))
-            .ToDapperSelect()
+            .Where(student => student.Field("Age").EqualValue(10));
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -165,10 +185,12 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     {
         var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
         var excutor = new ParametricExecutor(new SqliteEngine(), connection);
-        var students = excutor.From("Students")
+        var query = excutor.From("Students")
             .ToSqlQuery()
-            .Where(table => table.Field("Age").EqualValue(10))
-            .ToDapperSelect()
+            .Where(table => table.Field("Age").EqualValue(10));
+        int count = query.Count();
+        Assert.True(count > 0);
+        var students = query.ToDapperSelect()
             .Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
@@ -180,9 +202,11 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void FilterColumn()
     {
         var age = Column.Use("Age");
-        var students = SqliteExecutor.From("Students")
-            .ToDapperSelect(age.EqualValue(10))
-            .Get<Student>()
+        var select = SqliteExecutor.From("Students")
+            .ToDapperSelect(age.EqualValue(10));
+        var count = select.Count();
+        Assert.True(count > 0);
+        var students = select.Get<Student>()
             .ToList();
         Assert.True(students.Count > 0);
     }
@@ -193,21 +217,25 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     public void FilterTable()
     {
         var table = new StudentTable("Students");
-        var students = table.ToSelect(table.Age.EqualValue(10))
-            .Get<Student>(SqliteExecutor)
+        var select = table.ToSelect(table.Age.EqualValue(10));
+        var count = select.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = select.Get<Student>(SqliteExecutor)
             .ToList();
         Assert.True(students.Count > 0);
     }
     /// <summary>
-    /// Fetch(分页及排序)
+    /// Cursor(分页及排序)
     /// </summary>
     [Fact]
-    public void Fetch()
+    public void Cursor()
     {
         var table = new StudentTable("Students");
-        var students = table.ToSqlQuery()
-            .Where(table.Age.GreaterEqualValue(9))
-            .ToCursor()
+        var query = table.ToSqlQuery()
+            .Where(table.Age.GreaterEqualValue(9));
+        var count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var students = query.ToCursor()
             .Desc(table.Id)
             .Skip(1)
             .Take(10)

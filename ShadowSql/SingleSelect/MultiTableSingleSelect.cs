@@ -31,14 +31,14 @@ public class MultiTableSingleSelect<TSource>(IMultiView multiTable, MultiTableFi
 /// <typeparam name="TSource"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class MultiTableFetchSingleSelect<TSource>(MultiTableCursor cursor, MultiTableFields fields)
+public class MultiTableCursorSingleSelect<TSource>(MultiTableCursor cursor, MultiTableFields fields)
     : SingleSelectBase<ICursor, MultiTableFields>(cursor, fields)
 {
     /// <summary>
     /// 多表视图范围(分页)及单列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public MultiTableFetchSingleSelect(MultiTableCursor cursor)
+    public MultiTableCursorSingleSelect(MultiTableCursor cursor)
         : this(cursor, new MultiTableFields(cursor.Source))
     {
     }

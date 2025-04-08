@@ -1,7 +1,7 @@
 ﻿using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 
-namespace Dapper.Shadow.Fetches;
+namespace Dapper.Shadow.Cursors;
 
 /// <summary>
 /// 多(联)表分组后范围筛选
@@ -10,7 +10,7 @@ namespace Dapper.Shadow.Fetches;
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class DapperGroupByMultiFetch(IExecutor executor, GroupByMultiSqlQuery source, int limit, int offset)
+public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery source, int limit, int offset)
     : GroupByMultiCursor(source, limit, offset)
 {
     #region 配置

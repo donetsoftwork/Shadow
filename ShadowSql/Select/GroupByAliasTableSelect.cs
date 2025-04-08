@@ -33,7 +33,7 @@ public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, GroupB
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class GroupByAliasTableFetchSelect<TTable>(ICursor cursor, GroupByAliasTableFields<TTable> fields)
+public sealed class GroupByAliasTableCursorSelect<TTable>(ICursor cursor, GroupByAliasTableFields<TTable> fields)
     : SelectBase<ICursor, GroupByAliasTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -41,7 +41,7 @@ public sealed class GroupByAliasTableFetchSelect<TTable>(ICursor cursor, GroupBy
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public GroupByAliasTableFetchSelect(GroupByAliasTableCursor<TTable> cursor)
+    public GroupByAliasTableCursorSelect(GroupByAliasTableCursor<TTable> cursor)
         : this(cursor, new GroupByAliasTableFields<TTable>(cursor))
     {
     }

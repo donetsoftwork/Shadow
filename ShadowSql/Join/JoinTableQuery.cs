@@ -1,7 +1,6 @@
 ﻿using ShadowSql.Generators;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using System;
 
 namespace ShadowSql.Join;
 

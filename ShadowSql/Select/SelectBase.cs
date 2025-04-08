@@ -64,6 +64,9 @@ public abstract class SelectBase<TSource, TFields>(TSource source, TFields field
     /// <param name="sql"></param>
     public virtual bool WriteSelected(ISqlEngine engine, StringBuilder sql)
         => _fields.WriteSelected(engine, sql);
+
+    IEnumerable<IColumn> ISelectFields.ToColumns()
+        => _fields.ToColumns();
     #endregion
 
     #region ISelect

@@ -47,4 +47,21 @@ public class JoinTableSelectTests
         //Console.WriteLine(sql);
         Assert.Equal("SELECT c.`Id`,c.`Content` FROM `Comments` AS c INNER JOIN `Posts` AS p ON c.`PostId`=p.`Id` WHERE c.`Pick`=@Pick AND p.`Author`=@Author ORDER BY c.`Id` DESC", sql);
     }
+
+    [Fact]
+    public void SelectTable()
+    {
+        var joinOn = c.Join(p)
+            .And(c.PostId.Equal(p.Id));
+        var query = joinOn.Root
+            .And(c.Pick.Equal())
+            .And(p.Author.Equal())
+            .ToCursor()
+            .Desc(c.Id)
+            .ToSelect();
+        query.Fields.SelectTable(c);
+        var sql = _engine.Sql(query);
+        //Console.WriteLine(sql);
+        Assert.Equal("SELECT c.* FROM `Comments` AS c INNER JOIN `Posts` AS p ON c.`PostId`=p.`Id` WHERE c.`Pick`=@Pick AND p.`Author`=@Author ORDER BY c.`Id` DESC", sql);
+    }
 }

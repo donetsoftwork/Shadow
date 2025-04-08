@@ -1,5 +1,4 @@
-﻿using ShadowSql.Fragments;
-using ShadowSql.Identifiers;
+﻿using ShadowSql.Identifiers;
 using ShadowSql.Select;
 
 namespace ShadowSql.SingleSelect;
@@ -9,10 +8,6 @@ namespace ShadowSql.SingleSelect;
 /// </summary>
 public interface ISingleSelect : ISelect
 {
-    ///// <summary>
-    ///// 数据源表(视图)
-    ///// </summary>
-    //ITableView Source { get; }
     /// <summary>
     /// 单列
     /// </summary>

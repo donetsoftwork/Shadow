@@ -55,7 +55,7 @@ public class DapperGroupByTableSelect<TTable>(IExecutor executor, IGroupByView g
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperGroupByTableFetchSelect<TTable>(IExecutor executor, ICursor cursor, GroupByTableFields<TTable> fields)
+public class DapperGroupByTableCursorSelect<TTable>(IExecutor executor, ICursor cursor, GroupByTableFields<TTable> fields)
     : SelectBase<ICursor, GroupByTableFields<TTable>>(cursor, fields)
     , IDapperSelect
     where TTable : ITable
@@ -65,7 +65,7 @@ public class DapperGroupByTableFetchSelect<TTable>(IExecutor executor, ICursor c
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperGroupByTableFetchSelect(IExecutor executor, GroupByTableCursor<TTable> cursor)
+    public DapperGroupByTableCursorSelect(IExecutor executor, GroupByTableCursor<TTable> cursor)
         : this(executor, cursor, new GroupByTableFields<TTable>(cursor))
     {
     }

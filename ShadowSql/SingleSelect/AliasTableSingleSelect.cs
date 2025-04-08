@@ -80,7 +80,7 @@ public class AliasTableSingleSelect<TTable>(ITableView source, AliasTableFields<
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class AliasTableFetchSingleSelect<TTable>(ICursor cursor, AliasTableFields<TTable> fields)
+public class AliasTableCursorSingleSelect<TTable>(ICursor cursor, AliasTableFields<TTable> fields)
     : SingleSelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
     where TTable : ITable
 {
@@ -88,7 +88,7 @@ public class AliasTableFetchSingleSelect<TTable>(ICursor cursor, AliasTableField
     /// 别名表范围(分页)及列筛选单列
     /// </summary>
     /// <param name="cursor"></param>
-    public AliasTableFetchSingleSelect(AliasTableCursor<TTable> cursor)
+    public AliasTableCursorSingleSelect(AliasTableCursor<TTable> cursor)
         : this(cursor, new AliasTableFields<TTable>(cursor.Source))
     {
     }

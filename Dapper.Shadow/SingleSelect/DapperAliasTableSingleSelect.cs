@@ -118,7 +118,7 @@ public class DapperAliasTableSingleSelect<TTable>(IExecutor executor, ITableView
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperAliasTableFetchSingleSelect<TTable>(IExecutor executor, ICursor cursor, AliasTableFields<TTable> fields)
+public class DapperAliasTableCursorSingleSelect<TTable>(IExecutor executor, ICursor cursor, AliasTableFields<TTable> fields)
     : SingleSelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
     , IDapperSingleSelect
     where TTable : ITable
@@ -128,7 +128,7 @@ public class DapperAliasTableFetchSingleSelect<TTable>(IExecutor executor, ICurs
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperAliasTableFetchSingleSelect(IExecutor executor, AliasTableCursor<TTable> cursor)
+    public DapperAliasTableCursorSingleSelect(IExecutor executor, AliasTableCursor<TTable> cursor)
         : this(executor, cursor, new AliasTableFields<TTable>(cursor.Source))
     {
     }

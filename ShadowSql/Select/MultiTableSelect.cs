@@ -28,14 +28,14 @@ public class MultiTableSelect(IMultiView multiTable, MultiTableFields fields)
 /// </summary>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class MultiTableFetchSelect(MultiTableCursor cursor, MultiTableFields fields)
+public class MultiTableCursorSelect(MultiTableCursor cursor, MultiTableFields fields)
     : SelectBase<ICursor, MultiTableFields>(cursor, fields)
 {
     /// <summary>
     /// 多表视图范围(分页)及列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public MultiTableFetchSelect(MultiTableCursor cursor)
+    public MultiTableCursorSelect(MultiTableCursor cursor)
         : this(cursor, new MultiTableFields(cursor.Source))
     {
     }

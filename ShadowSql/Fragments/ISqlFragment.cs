@@ -11,7 +11,7 @@ public interface ISqlFragment
     /// <summary>
     /// sql拼接
     /// </summary>
-    /// <param name="engine">数据库引擎</param>
+    /// <param name="engine">数据库</param>
     /// <param name="sql">sql</param>
     /// <returns></returns>
     bool TryWrite(ISqlEngine engine, StringBuilder sql);
@@ -32,7 +32,7 @@ public interface ISqlEntity
     /// <summary>
     /// sql拼接
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库</param>
+    /// <param name="sql">sql</param>
     void Write(ISqlEngine engine, StringBuilder sql);
 }

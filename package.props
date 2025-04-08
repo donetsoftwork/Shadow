@@ -1,0 +1,19 @@
+<Project>
+
+  <PropertyGroup>
+    <VersionBase>0.7.0</VersionBase>
+    <TargetFrameworks>net7.0;net8.0;net9.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <LangVersion>Latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>    
+    <Authors>jiangxiangji</Authors>
+    <Company>ShadowSql</Company>
+    <Copyright>Copyright (c) ShadowSql All Rights Reserved</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/donetsoftwork/Shadow</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/donetsoftwork/Shadow</PackageProjectUrl>
+    <!-- SourceLink settings -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+</Project>

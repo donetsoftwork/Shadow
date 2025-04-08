@@ -29,17 +29,6 @@ public class MultiTableUpdate(IMultiView multiTable, IAliasTable target)
     public IMultiView MultiTable 
         => _multiTable;
     #endregion
-    /// <summary>
-    /// 指定被修改的表
-    /// </summary>
-    /// <param name="tableName"></param>
-    /// <returns></returns>
-    public MultiTableUpdate Update(string tableName)
-    {
-        if (_multiTable.GetMember(tableName) is IAliasTable table)
-            _source = table;
-        return this;
-    }
     #region ISqlEntity
     /// <summary>
     /// 拼写Update子句

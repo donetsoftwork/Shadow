@@ -51,7 +51,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static TableFetchSingleSelect<TTable> ToSingle<TTable>(this TableCursor<TTable> cursor)
+    public static TableCursorSingleSelect<TTable> ToSingle<TTable>(this TableCursor<TTable> cursor)
         where TTable : ITable
         => new(cursor);
     #endregion
@@ -90,7 +90,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static AliasTableFetchSingleSelect<TTable> ToSingle<TTable>(this AliasTableCursor<TTable> cursor)
+    public static AliasTableCursorSingleSelect<TTable> ToSingle<TTable>(this AliasTableCursor<TTable> cursor)
         where TTable : ITable
         => new(cursor);
     #endregion
@@ -107,7 +107,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static MultiTableFetchSelect ToSingle(this MultiTableCursor cursor)
+    public static MultiTableCursorSelect ToSingle(this MultiTableCursor cursor)
         => new(cursor);
     #endregion
     #region GroupByTableFields
@@ -126,7 +126,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static GroupByTableFetchSingleSelect<TTable> ToSingle<TTable>(this GroupByTableCursor<TTable> cursor)
+    public static GroupByTableCursorSingleSelect<TTable> ToSingle<TTable>(this GroupByTableCursor<TTable> cursor)
         where TTable : ITable
         => new(cursor);
     #endregion
@@ -147,7 +147,7 @@ public static partial class ShadowSqlServices
     /// <param name="cursor"></param>
     /// <returns></returns>
 
-    public static GroupByAliasTableFetchSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor)
+    public static GroupByAliasTableCursorSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor)
         where TTable : ITable
         => new(cursor);
     #endregion
@@ -164,7 +164,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <param name="cursor"></param>
     /// <returns></returns>
-    public static GroupByMultiFetchSelect ToSingle(this GroupByMultiCursor cursor)
+    public static GroupByMultiCursorSelect ToSingle(this GroupByMultiCursor cursor)
         => new(cursor);
     #endregion
 }

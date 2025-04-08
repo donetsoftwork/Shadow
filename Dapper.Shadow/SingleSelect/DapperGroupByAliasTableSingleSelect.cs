@@ -47,7 +47,7 @@ public class DapperGroupByAliasTableSingleSelect<TTable>(IExecutor executor, IGr
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperGroupByAliasTableFetchSingleSelect<TTable>(IExecutor executor, ICursor cursor, GroupByAliasTableFields<TTable> fields)
+public class DapperGroupByAliasTableCursorSingleSelect<TTable>(IExecutor executor, ICursor cursor, GroupByAliasTableFields<TTable> fields)
     : SingleSelectBase<ICursor, GroupByAliasTableFields<TTable>>(cursor, fields)
     , IDapperSingleSelect
     where TTable : ITable
@@ -57,7 +57,7 @@ public class DapperGroupByAliasTableFetchSingleSelect<TTable>(IExecutor executor
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperGroupByAliasTableFetchSingleSelect(IExecutor executor, GroupByAliasTableCursor<TTable> cursor)
+    public DapperGroupByAliasTableCursorSingleSelect(IExecutor executor, GroupByAliasTableCursor<TTable> cursor)
         : this(executor, cursor, new GroupByAliasTableFields<TTable>(cursor))
     {
     }

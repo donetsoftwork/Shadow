@@ -21,17 +21,17 @@ public class DapperMultiTableSelectTests : ExecuteTestBase, IDisposable
         SqliteExecutor.Execute(studentInsert, new Student(2, "李四", 11, 1));
     }
     
-    /// <summary>
-    /// 
-    /// </summary>
     [Fact]
     public void Join()
     {
         var s = new StudentAliasTable("s");
         var c = new SchoolClassAliaTable("c");
-        var select = s.Join(c)
+        var query = s.Join(c)
             .And(s.ClassId.Equal(c.Id))
-            .Root.ToSelect();
+            .Root;
+        int count = query.Count(SqliteExecutor);
+        Assert.True(count > 0);
+        var select = query.ToSelect();
         select.Fields.Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
 
         var students = select.Get<StudentView>(SqliteExecutor)
@@ -41,6 +41,9 @@ public class DapperMultiTableSelectTests : ExecuteTestBase, IDisposable
 
 
     void IDisposable.Dispose()
-    => DropStudentTable();
+    {
+        DropStudentTable();
+        DropSchoolClassTable();
+    }
 }
 

@@ -142,6 +142,12 @@ public abstract class EngineBase(ISelectComponent select, ISqlValueComponent sql
     /// <returns></returns>
     public abstract bool InsertedIdentity(StringBuilder sql);
     /// <summary>
+    /// 计数sql
+    /// </summary>
+    /// <param name="sql"></param>
+    public virtual void Count(StringBuilder sql)
+        => sql.Append("COUNT(*)");
+    /// <summary>
     /// 删除前缀
     /// </summary>
     /// <param name="sql"></param>

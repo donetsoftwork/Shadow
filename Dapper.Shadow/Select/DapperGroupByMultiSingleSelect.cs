@@ -52,7 +52,7 @@ public class DapperGroupByMultiSelect(IExecutor executor, IGroupByView groupBy, 
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public class DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiCursor cursor, GroupByMultiFields fields)
+public class DapperGroupByMultiCursorSelect(IExecutor executor, GroupByMultiCursor cursor, GroupByMultiFields fields)
     : SelectBase<ICursor, GroupByMultiFields>(cursor, fields)
     , IDapperSelect
 {
@@ -61,7 +61,7 @@ public class DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiCurso
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperGroupByMultiFetchSelect(IExecutor executor, GroupByMultiCursor cursor)
+    public DapperGroupByMultiCursorSelect(IExecutor executor, GroupByMultiCursor cursor)
         : this(executor, cursor, new GroupByMultiFields(cursor))
     {
     }

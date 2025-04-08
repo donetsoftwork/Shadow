@@ -21,7 +21,7 @@ public abstract class UpdateBase<TSource>(TSource source)
     /// <summary>
     /// 源表
     /// </summary>
-    protected TSource _source = source;
+    internal TSource _source = source;
     /// <summary>
     /// 源表
     /// </summary>

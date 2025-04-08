@@ -10,6 +10,9 @@ namespace ShadowSql.FieldInfos;
 /// </summary>
 public sealed class CountFieldInfo : ICompareView
 {
+    /// <summary>
+    /// 计数字段信息
+    /// </summary>
     private CountFieldInfo()
     {
     }
@@ -17,13 +20,6 @@ public sealed class CountFieldInfo : ICompareView
     /// 单例
     /// </summary>
     public readonly static CountFieldInfo Instance = new();
-    /// <summary>
-    /// Count表达式
-    /// </summary>
-    public const string Count = "COUNT(*)";
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
-    {
-        sql.Append(Count);
-    }
-
+         => engine.Count(sql);
 }

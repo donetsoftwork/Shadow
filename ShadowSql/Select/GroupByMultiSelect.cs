@@ -30,14 +30,14 @@ public sealed class GroupByMultiSelect(IGroupByView groupBy, GroupByMultiFields 
 /// </summary>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class GroupByMultiFetchSelect(ICursor cursor, GroupByMultiFields fields)
+public sealed class GroupByMultiCursorSelect(ICursor cursor, GroupByMultiFields fields)
     : SelectBase<ICursor, GroupByMultiFields>(cursor, fields)
 {
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <param name="cursor"></param>
-    public GroupByMultiFetchSelect(GroupByMultiCursor cursor)
+    public GroupByMultiCursorSelect(GroupByMultiCursor cursor)
         : this(cursor, new GroupByMultiFields(cursor))
     {
     }

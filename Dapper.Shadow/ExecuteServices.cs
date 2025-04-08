@@ -30,8 +30,6 @@ public static partial class DapperShadowServices
         => sql.Executor.ExecuteAsync(sql, param);
     #endregion
     #endregion
-    #region IDapperExecute
-    #endregion
     #region IExecuteSql
     #region Execute
     /// <summary>

@@ -76,46 +76,6 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
         => _executor;
     #endregion
 }
-///// <summary>
-///// 表过滤筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="executor"></param>
-///// <param name="filter"></param>
-//public sealed class DapperTableFilterSelect<TTable>(IExecutor executor, TableFilter<TTable> filter)
-//    : SelectBase<ITableView, TableFields<TTable>>(filter, new TableFields<TTable>(filter.Source))
-//    , IDapperSelect
-//    where TTable : ITable
-//{
-//    #region 配置
-//    private readonly IExecutor _executor = executor;
-//    /// <summary>
-//    /// 执行器
-//    /// </summary>
-//    public IExecutor Executor
-//        => _executor;
-//    #endregion
-//}
-///// <summary>
-///// 表(及查询)筛选列
-///// </summary>
-///// <typeparam name="TTable"></typeparam>
-///// <param name="executor"></param>
-///// <param name="query"></param>
-//public sealed class DapperTableQuerySelect<TTable>(IExecutor executor, TableQuery<TTable> query)
-//    : SelectBase<ITableView, TableFields<TTable>>(query, new TableFields<TTable>(query.Source))
-//    , IDapperSelect
-//    where TTable : ITable
-//{
-//    #region 配置
-//    private readonly IExecutor _executor = executor;
-//    /// <summary>
-//    /// 执行器
-//    /// </summary>
-//    public IExecutor Executor
-//        => _executor;
-//    #endregion
-//}
 /// <summary>
 /// 表范围(分页)及列筛选
 /// </summary>
@@ -123,7 +83,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 /// <param name="fields"></param>
-public sealed class DapperTableFetchSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor, TableFields<TTable> fields)
+public sealed class DapperTableCursorSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor, TableFields<TTable> fields)
     : SelectBase<ICursor, TableFields<TTable>>(cursor, fields)
     , IDapperSelect
     where TTable : ITable
@@ -133,7 +93,7 @@ public sealed class DapperTableFetchSelect<TTable>(IExecutor executor, TableCurs
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="cursor"></param>
-    public DapperTableFetchSelect(IExecutor executor, TableCursor<TTable> cursor)
+    public DapperTableCursorSelect(IExecutor executor, TableCursor<TTable> cursor)
         : this(executor, cursor, new TableFields<TTable>(cursor.Source))
     {
     }

@@ -1,13 +1,6 @@
 ﻿# ShadowSql
 >* 使用StringBuilder拼写sql语句
 >* 支持主流数据库
->* ShadowSql
->* SqlPrompt
->* SqlBuildPrompt(提示)
->* SqlMirror(镜像)
->* Snapshot(快照)
->* DatabaseShadow(影子、投影)
->* ShadowSql
 
 ## 一、StringBuilder拼接所有对象
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成

@@ -1,7 +1,7 @@
 ﻿using ShadowSql.Cursors;
 using ShadowSql.Identifiers;
 
-namespace Dapper.Shadow.Fetches;
+namespace Dapper.Shadow.Cursors;
 
 /// <summary>
 /// 多联表范围筛选
@@ -10,7 +10,7 @@ namespace Dapper.Shadow.Fetches;
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class DapperMultiTableFetch(IExecutor executor, IMultiView source, int limit, int offset)
+public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int limit, int offset)
     : MultiTableCursor(source, limit, offset)
 {
     #region 配置
