@@ -39,15 +39,7 @@ public sealed class TableSelect<TTable>
     /// <param name="table"></param>
     /// <param name="where"></param>
     public TableSelect(TTable table, ISqlLogic where)
-        : this(new TableFilter<TTable>(table, where), new TableFields<TTable>(table))
-    {
-    }
-    /// <summary>
-    /// 表筛选列
-    /// </summary>
-    /// <param name="filter"></param>
-    public TableSelect(TableFilter<TTable> filter)
-        : this(filter, new TableFields<TTable>(filter.Source))
+        : this(new TableFilter(table, where), new TableFields<TTable>(table))
     {
     }
     /// <summary>

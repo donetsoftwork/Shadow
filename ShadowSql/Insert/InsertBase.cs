@@ -9,7 +9,7 @@ namespace ShadowSql.Insert;
 /// <typeparam name="TTable"></typeparam>
 /// <param name="table"></param>
 public abstract class InsertBase<TTable>(TTable table)
-    : Identifier(table.Name), IInsert, IInsertTable
+    : InsertBase(table.Name, [.. table.InsertColumns]), IInsert, IInsertTable
     where TTable : ITable
 {
     #region 配置
@@ -18,10 +18,6 @@ public abstract class InsertBase<TTable>(TTable table)
     /// </summary>
     protected readonly TTable _table = table;
     /// <summary>
-    /// 可插入的列
-    /// </summary>
-    protected readonly IColumn[] _insertColumns = [.. table.InsertColumns];
-    /// <summary>
     /// 源表
     /// </summary>
     public TTable Table
@@ -29,6 +25,22 @@ public abstract class InsertBase<TTable>(TTable table)
     #endregion
     IInsertTable IInsert.Table
         => this;
-    IEnumerable<IColumn> IInsertTable.InsertColumns
-        => _insertColumns;    
+}
+/// <summary>
+/// 插入数据基类
+/// </summary>
+/// <param name="name"></param>
+/// <param name="columns"></param>
+public abstract class InsertBase(string name, IColumn[] columns)
+    : Identifier(name)
+{
+    /// <summary>
+    /// 可插入的列
+    /// </summary>
+    protected readonly IColumn[] _insertColumns = columns;
+    /// <summary>
+    /// 可插入的列
+    /// </summary>
+    public IEnumerable<IColumn> InsertColumns
+        => _insertColumns;
 }

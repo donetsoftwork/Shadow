@@ -1,9 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
+using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
 using ShadowSql.Identifiers;
+using ShadowSql.Select;
+using ShadowSql.Tables;
 using SqlKata;
 using SqlKata.Compilers;
 
@@ -15,6 +18,7 @@ public class CursorBench
 {
     private static ISqlEngine _engine = new MySqlEngine();
     private static DB _db = DB.Use("ShadowSql");
+    private static Table _table = _db.From("Posts");
     private static Compiler _compiler = new MySqlCompiler();
     private static IColumn Id = ShadowSql.Identifiers.Column.Use("Id");
     private static IColumn Title = ShadowSql.Identifiers.Column.Use("Title");
@@ -60,25 +64,26 @@ public class CursorBench
     [Benchmark]
     public string ShadowSqlByParametricLogic()
     {
-        var query = _db.From("Posts")
-            .ToCursor(Category.EqualValue("csharp") & Pick.EqualValue(true), 10, 10)
-            .Desc(Id)
-            .ToSelect()
-            .Select(select => select.Fields.Select(Id, Title));
+        var filter = new TableFilter(_table, Category.EqualValue("csharp") & Pick.EqualValue(true));
+        var cursor = new TableCursor(filter, 10, 10)
+            .Desc(Id);
+        var select = new TableSelect(cursor)
+            .Select(Id, Title);
         ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
+        var sql = context.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }
     [Benchmark]
     public string ShadowSqlByLogic()
     {
-        var query = _db.From("Posts")
-            .ToCursor(Category.Equal().And(Pick.Equal()), 10, 10)
-            .Desc(Id)
-            .ToSelect();
-        query.Fields.Select(Id, Title);
-        var sql = _engine.Sql(query);
+        var filter = new TableFilter(_table, Category.Equal().And(Pick.Equal()));
+        var cursor = new TableCursor(filter, 10, 10)
+            .Desc(Id);
+        var select = new TableSelect(cursor)
+            .Select(Id, Title);
+        ParametricContext context = new(_engine);
+        var sql = context.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }

@@ -6,7 +6,9 @@
         {
           "src": "../",
           "files": [
+            "ShadowSql.Core/ShadowSql.Core.csproj",
             "ShadowSql/ShadowSql.csproj",
+            "Dapper.Shadow.Core/Dapper.Shadow.Core.csproj",
             "Dapper.Shadow/Dapper.Shadow.csproj",
             "Shadow.DDL/Shadow.DDL.csproj"
           ]

@@ -1,4 +1,5 @@
-﻿using Dapper.Shadow;
+﻿using ShadowSql;
+using Dapper.Shadow;
 using Shadow.DDL;
 
 namespace Shadow.DDLTests;
@@ -11,6 +12,13 @@ public class DropTableTests : ExecuteTestBase, IDisposable
     }
     [Fact]
     public void Drop()
+    {
+        var drop = new DropTable("Students");
+        var sql = SqliteExecutor.Engine.Sql(drop);
+        Assert.Equal("DROP TABLE \"Students\"", sql);
+    }
+    [Fact]
+    public void Execute()
     {
         var result = new StudentTable()
             .ToDrop()

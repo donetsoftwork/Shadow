@@ -2,16 +2,18 @@
 using ShadowSql.Logics;
 using ShadowSql.Queries;
 using ShadowSql.Variants;
-using System;
 
 namespace ShadowSql.Join;
 
 /// <summary>
 /// 联表俩俩关联查询
 /// </summary>
-/// <remarks>
-/// 联表俩俩关联查询
-/// </remarks>
+/// <typeparam name="LTable"></typeparam>
+/// <typeparam name="RTable"></typeparam>
+/// <param name="root"></param>
+/// <param name="left"></param>
+/// <param name="right"></param>
+/// <param name="onQuery"></param>
 public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable> left, TableAlias<RTable> right, Logic onQuery)
     : JoinOnBase<LTable, RTable, Logic>(root, left, right, onQuery), IDataQuery
     where LTable : ITable

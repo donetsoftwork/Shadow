@@ -32,15 +32,7 @@ public sealed class TableSingleSelect<TTable>(ITableView view, TableFields<TTabl
     /// <param name="table"></param>
     /// <param name="where"></param>
     public TableSingleSelect(TTable table, ISqlLogic where)
-        : this(new TableFilter<TTable>(table, where), new TableFields<TTable>(table))
-    {
-    }
-    /// <summary>
-    /// 表筛选单列
-    /// </summary>
-    /// <param name="filter"></param>
-    public TableSingleSelect(TableFilter<TTable> filter)
-        : this(filter, new TableFields<TTable>(filter.Source))
+        : this(new TableFilter(table, where), new TableFields<TTable>(table))
     {
     }
     /// <summary>

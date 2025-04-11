@@ -1,9 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
+using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
 using ShadowSql.Identifiers;
+using ShadowSql.Join;
+using ShadowSql.Select;
 using ShadowSql.Variants;
 using SqlKata;
 using SqlKata.Compilers;
@@ -64,33 +67,39 @@ public class JoinBench
     [Benchmark]
     public string ShadowSqlByParametricLogic()
     {
-        var joinOn = c.Join(p)
+        JoinTableQuery joinTable = new();
+        joinTable.AddMember(p)
+            .AddMember(c);
+        var joinOn = new JoinOnQuery(joinTable, c, p)
             .And(c.PostId.Equal(p.Id));
-        var query = joinOn.Root
-            .And(c.Pick.EqualValue(true))
-            .And(p.Author.EqualValue("jxj"))
-            .ToCursor()
-            .Desc(c.Id)
-            .ToSelect();
-        query.Fields.Select(c.Id, c.Content);
+        joinTable.AddJoinOn(joinOn);
+        var query = joinTable.And(c.Pick.EqualValue(true))
+            .And(p.Author.EqualValue("jxj"));
+        var cursor = new TableCursor(query)
+            .Desc(c.Id);
+        var select = new TableSelect(cursor)
+            .Select(c.Id, c.Content);
         ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
+        var sql = context.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }
     [Benchmark]
     public string ShadowSqlByLogic()
     {
-        var joinOn = c.Join(p)
+        JoinTableQuery joinTable = new();
+        joinTable.AddMember(p)
+            .AddMember(c);
+        var joinOn = new JoinOnQuery(joinTable, c, p)
             .And(c.PostId.Equal(p.Id));
-        var query = joinOn.Root
-            .And(c.Pick.Equal())
-            .And(p.Author.Equal())
-            .ToCursor()
-            .Desc(c.Id)
-            .ToSelect();
-        query.Fields.Select(c.Id, c.Content);
-        var sql = _engine.Sql(query);
+        joinTable.AddJoinOn(joinOn);
+        var query = joinTable.And(c.Pick.Equal())
+            .And(p.Author.Equal());
+        var cursor = new TableCursor(query)
+            .Desc(c.Id);
+        var select = new TableSelect(cursor)
+            .Select(c.Id, c.Content);
+        var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }

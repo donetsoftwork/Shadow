@@ -27,28 +27,6 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperExecutor Use(this ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 128)
         => new(engine, connection, buffered, capacity);
-    #region Queries
-    /// <summary>
-    /// 封装执行器
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
-    /// <returns></returns>
-    public static DapperFilter<TTable> Use<TTable>(this TableSqlQuery<TTable> query, IExecutor executor)
-        where TTable : ITable
-        => new(executor, query.Source, ((IDataFilter)query).Filter);
-    /// <summary>
-    /// 封装执行器
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
-    /// <returns></returns>
-    public static DapperFilter<IAliasTable> Use<TTable>(this AliasTableSqlQuery<TTable> query, IExecutor executor)
-        where TTable : ITable
-        => new(executor, query.Source, ((IDataFilter)query).Filter);
-    #endregion
     #region Select
     /// <summary>
     /// 封装执行器

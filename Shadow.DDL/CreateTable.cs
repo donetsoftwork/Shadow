@@ -17,6 +17,14 @@ namespace Shadow.DDL;
 public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     : IExecuteSql
 {
+    /// <summary>
+    /// 建表
+    /// </summary>
+    /// <param name="table"></param>
+    public CreateTable(TableSchema table)
+        : this(table, table.Columns)
+    {
+    }
     #region 配置
     private readonly ITable _table = table;
     private readonly IEnumerable<ColumnSchema> _columns = columns;

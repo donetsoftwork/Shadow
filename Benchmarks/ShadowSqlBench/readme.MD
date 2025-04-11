@@ -8,13 +8,13 @@
 >* ByLogic性能最好,直接拼接参数,SqlKata耗时是他的25倍
 >* 内存消耗也是差不多比例
 
-| Method                     | Mean       | Error     | StdDev    | Median     | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
-|--------------------------- |-----------:|----------:|----------:|-----------:|------:|--------:|-------:|----------:|------------:|
-| ShadowSqlBySqlQuery        |   561.5 ns |  10.31 ns |  16.64 ns |   560.8 ns |  0.13 |    0.01 |      - |    1680 B |        0.13 |
-| ShadowSqlByQuery           |   445.1 ns |   6.88 ns |  12.04 ns |   443.1 ns |  0.10 |    0.01 |      - |    1488 B |        0.12 |
-| ShadowSqlByParametricLogic |   330.2 ns |   6.25 ns |  11.10 ns |   328.6 ns |  0.07 |    0.01 |      - |    1112 B |        0.09 |
-| ShadowSqlByLogic           |   190.1 ns |   3.54 ns |   5.92 ns |   188.1 ns |  0.04 |    0.00 |      - |     608 B |        0.05 |
-| SqlKataBench               | 4,519.9 ns | 216.02 ns | 383.98 ns | 4,347.3 ns |  1.01 |    0.11 | 0.7000 |   12712 B |        1.00 |
+| Method                     | Mean       | Error     | StdDev    | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
+|--------------------------- |-----------:|----------:|----------:|------:|--------:|-------:|----------:|------------:|
+| ShadowSqlBySqlQuery        |   557.9 ns |  12.16 ns |  19.98 ns |  0.12 |    0.01 |      - |    1680 B |        0.13 |
+| ShadowSqlByQuery           |   434.7 ns |   5.88 ns |   9.99 ns |  0.10 |    0.01 |      - |    1488 B |        0.12 |
+| ShadowSqlByParametricLogic |   299.1 ns |   6.10 ns |  10.52 ns |  0.07 |    0.00 |      - |    1080 B |        0.08 |
+| ShadowSqlByLogic           |   167.4 ns |   2.05 ns |   3.37 ns |  0.04 |    0.00 |      - |     576 B |        0.05 |
+| SqlKataBench               | 4,480.0 ns | 162.01 ns | 283.74 ns |  1.00 |    0.09 | 0.7000 |   12712 B |        1.00 |
 
 ## 2、CursorBench
 >* 单表排序筛选游标对比
@@ -24,13 +24,13 @@
 >* ByLogic性能最好,直接拼接参数,SqlKata耗时是他的12倍
 >* 内存消耗也是差不多比例
 
-| Method                     | Mean       | Error    | StdDev   | Ratio | Gen0   | Allocated | Alloc Ratio |
-|--------------------------- |-----------:|---------:|---------:|------:|-------:|----------:|------------:|
-| ShadowSqlBySqlQuery        | 1,811.3 ns | 18.38 ns | 30.20 ns |  0.21 | 0.1000 |   2.45 KB |        0.13 |
-| ShadowSqlByQuery           | 1,019.3 ns | 15.56 ns | 26.42 ns |  0.12 | 0.1000 |   2.28 KB |        0.12 |
-| ShadowSqlByParametricLogic |   898.6 ns | 10.40 ns | 17.38 ns |  0.11 | 0.1000 |   1.99 KB |        0.10 |
-| ShadowSqlByLogic           |   678.9 ns |  9.44 ns | 16.29 ns |  0.08 |      - |   1.38 KB |        0.07 |
-| SqlKataBench               | 8,518.7 ns | 47.80 ns | 84.97 ns |  1.00 | 1.1000 |  19.08 KB |        1.00 |
+| Method                     | Mean       | Error    | StdDev    | Ratio | Gen0   | Allocated | Alloc Ratio |
+|--------------------------- |-----------:|---------:|----------:|------:|-------:|----------:|------------:|
+| ShadowSqlBySqlQuery        | 1,803.9 ns | 67.71 ns | 111.25 ns |  0.21 | 0.1000 |   2.45 KB |        0.13 |
+| ShadowSqlByQuery           | 1,007.3 ns | 12.03 ns |  20.10 ns |  0.12 | 0.1000 |   2.28 KB |        0.12 |
+| ShadowSqlByParametricLogic |   833.5 ns |  9.53 ns |  15.65 ns |  0.10 | 0.1000 |   1.96 KB |        0.10 |
+| ShadowSqlByLogic           |   708.5 ns | 10.08 ns |  17.91 ns |  0.08 |      - |   1.54 KB |        0.08 |
+| SqlKataBench               | 8,549.1 ns | 36.10 ns |  64.16 ns |  1.00 | 1.1000 |  19.08 KB |        1.00 |
 
 ## 3、GroupByBench
 >* 分组查询对比
@@ -40,13 +40,13 @@
 >* ByLogic性能最好,直接拼接参数,SqlKata耗时是他的25倍
 >* 内存消耗也是差不多比例
 
-| Method                     | Mean        | Error     | StdDev    | Median      | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
-|--------------------------- |------------:|----------:|----------:|------------:|------:|--------:|-------:|----------:|------------:|
-| ShadowSqlBySqlQuery        |  2,120.3 ns | 400.23 ns | 700.96 ns |  2,461.4 ns |  0.09 |    0.03 | 0.2000 |   4.05 KB |        0.06 |
-| ShadowSqlByQuery           |  2,023.2 ns |  79.49 ns | 128.36 ns |  2,005.2 ns |  0.09 |    0.01 | 0.2000 |   3.63 KB |        0.06 |
-| ShadowSqlByParametricLogic |  1,180.7 ns |  16.53 ns |  26.69 ns |  1,176.2 ns |  0.05 |    0.00 | 0.1000 |   2.96 KB |        0.05 |
-| ShadowSqlByLogic           |    895.2 ns |   9.10 ns |  14.95 ns |    895.8 ns |  0.04 |    0.00 | 0.1000 |   2.18 KB |        0.03 |
-| SqlKataBench               | 23,059.5 ns | 151.11 ns | 264.66 ns | 23,003.6 ns |  1.00 |    0.02 | 3.7000 |  63.46 KB |        1.00 |
+| Method                     | Mean      | Error     | StdDev    | Median    | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
+|--------------------------- |----------:|----------:|----------:|----------:|------:|--------:|-------:|----------:|------------:|
+| ShadowSqlBySqlQuery        |  1.978 us | 0.4583 us | 0.8027 us |  2.451 us |  0.09 |    0.03 | 0.2000 |   4.04 KB |        0.06 |
+| ShadowSqlByQuery           |  2.023 us | 0.0646 us | 0.1044 us |  1.998 us |  0.09 |    0.00 | 0.2000 |   3.63 KB |        0.06 |
+| ShadowSqlByParametricLogic |  1.558 us | 0.0887 us | 0.1457 us |  1.620 us |  0.07 |    0.01 | 0.1000 |   3.13 KB |        0.05 |
+| ShadowSqlByLogic           |  1.060 us | 0.0123 us | 0.0208 us |  1.055 us |  0.05 |    0.00 | 0.1000 |   2.39 KB |        0.04 |
+| SqlKataBench               | 23.174 us | 0.1320 us | 0.2346 us | 23.140 us |  1.00 |    0.01 | 3.7000 |  63.46 KB |        1.00 |
 
 ## 4、JoinBench
 >* 联表查询对比
@@ -57,9 +57,9 @@
 
 | Method                     | Mean      | Error     | StdDev    | Median    | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
 |--------------------------- |----------:|----------:|----------:|----------:|------:|--------:|-------:|----------:|------------:|
-| ShadowSqlBySqlQuery        |  2.652 us | 0.3705 us | 0.6391 us |  2.380 us |  0.23 |    0.05 | 0.3000 |    5.3 KB |        0.20 |
-| ShadowSqlByQuery           |  2.509 us | 0.0911 us | 0.1522 us |  2.430 us |  0.21 |    0.01 | 0.3000 |    5.3 KB |        0.20 |
-| ShadowSqlByParametricLogic |  1.996 us | 0.3583 us | 0.6369 us |  2.417 us |  0.17 |    0.05 | 0.2000 |   3.38 KB |        0.13 |
-| ShadowSqlByLogic           |  1.896 us | 0.2773 us | 0.4634 us |  2.116 us |  0.16 |    0.04 | 0.1000 |   2.75 KB |        0.11 |
-| SqlKataBench               | 11.701 us | 0.0515 us | 0.0902 us | 11.704 us |  1.00 |    0.01 | 1.5000 |  25.89 KB |        1.00 |
+| ShadowSqlBySqlQuery        |  2.377 us | 0.0193 us | 0.0317 us |  2.387 us |  0.20 |    0.00 | 0.3000 |   5.35 KB |        0.21 |
+| ShadowSqlByQuery           |  2.346 us | 0.0198 us | 0.0325 us |  2.355 us |  0.20 |    0.00 | 0.3000 |   5.35 KB |        0.21 |
+| ShadowSqlByParametricLogic |  1.901 us | 0.4974 us | 0.8842 us |  2.413 us |  0.16 |    0.07 | 0.1000 |   3.34 KB |        0.13 |
+| ShadowSqlByLogic           |  1.874 us | 0.3258 us | 0.5443 us |  2.112 us |  0.16 |    0.05 | 0.1000 |   2.71 KB |        0.10 |
+| SqlKataBench               | 11.733 us | 0.0606 us | 0.1061 us | 11.750 us |  1.00 |    0.01 | 1.5000 |  25.89 KB |        1.00 |
 

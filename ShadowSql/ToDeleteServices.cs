@@ -48,12 +48,4 @@ public static partial class ShadowSqlServices
     public static MultiTableDelete ToDelete(this IMultiView view)
         => new(view);
     #endregion
-    #region TruncateTable
-    /// <summary>
-    /// 清空表
-    /// </summary>
-    /// <param name="table"></param>
-    public static TruncateTable ToTruncate(this ITable table)
-        => new(table);
-    #endregion
 }

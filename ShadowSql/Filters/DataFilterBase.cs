@@ -1,7 +1,6 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -34,35 +33,11 @@ public abstract class DataFilterBase<TSource, TFilter>(TSource source, TFilter f
     /// </summary>
     internal TFilter _filter = filter;
     #endregion
-    //#region ApplyFilter
-    ///// <summary>
-    ///// 应用过滤
-    ///// </summary>
-    ///// <param name="filter"></param>
-    //internal void ApplyFilter(Func<TFilter, TFilter> filter)
-    //    => _filter = filter(_filter);
-    ///// <summary>
-    ///// 应用过滤
-    ///// </summary>
-    ///// <param name="filter"></param>
-    //internal void ApplyFilter(Func<TSource, TFilter, TFilter> filter)
-    //     => _filter = filter(_source, _filter);
-    //#endregion
     #region IDataFilter
-    ///// <summary>
-    ///// 过滤查询数据源
-    ///// </summary>
-    ///// <returns></returns>
-    //protected override ITableView GetFilterSource()
-    //    => _source;
     ITableView IDataFilter.Source
         => _source;
     ISqlLogic IDataFilter.Filter
         => _filter;
-    //void IDataFilter.AddLogic(AtomicLogic condition)
-    //    => AddLogic(condition);
-    //ICompareField IDataFilter.GetCompareField(string fieldName)
-    //    => GetCompareField(fieldName);
     #endregion
     #region ITableView
     /// <summary>

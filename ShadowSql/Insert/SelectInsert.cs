@@ -1,9 +1,9 @@
 ﻿using ShadowSql.Engines;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace ShadowSql.Insert;
@@ -13,108 +13,43 @@ namespace ShadowSql.Insert;
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="table"></param>
+/// <param name="columns"></param>
 /// <param name="select"></param>
-public class SelectInsert<TTable>(TTable table, ISelect select)
-    : InsertBase<TTable>(table), ISelectInsert
-    where TTable : ITable
+public class SelectInsert<TTable>(TTable table, List<IColumn> columns, ISelect select)
+    : SelectInsertBase(columns, select), ISelectInsert
+    where TTable : IInsertTable
 {
+    /// <summary>
+    /// 插入Select子查询
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="select"></param>
+    public SelectInsert(TTable table, ISelect select)
+        : this(table, [], select)
+    {
+    }
     #region 配置
-    private readonly ISelect _select = select;
-    private readonly List<IColumn> _columns = [];
     /// <summary>
-    /// Select子查询
+    /// 源表
     /// </summary>
-    public ISelect Select
-        => _select;
+    protected readonly TTable _table = table;
     /// <summary>
-    /// 插入的列
+    /// 源表
     /// </summary>
-    public IColumn[] Columns
-        => [.. CheckColumns()];
+    public TTable Table
+        => _table;
+    IInsertTable IInsert.Table
+        => _table;
     #endregion
-    private IEnumerable<IColumn> CheckColumns()
-    {
-        var count = _columns.Count;
-
-        var selectColumns = _select.ToColumns().ToList();
-        var fieldCount = selectColumns.Count;
-        if (count == fieldCount)
-            return _columns;
-        else if (count > fieldCount)
-            return _columns.Take(fieldCount);
-        if (count == 0)
-            return selectColumns;
-        else
-            return _columns.Concat(selectColumns.Skip(fieldCount).Take(fieldCount - count));
-    }
-    #region Insert
     /// <summary>
     /// 设置需要插入的列
     /// </summary>
     /// <returns></returns>
-    public SelectInsert<TTable> Insert(IColumn column)
+    public SelectInsert<TTable> Insert(Func<TTable, IColumn> select)
     {
-        _columns.Add(column);
+        Add(select(_table));
         return this;
     }
-    /// <summary>
-    /// 设置需要插入的列
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
-    public SelectInsert<TTable> Insert(string columnName)
-    {
-        var column = _insertColumns.FirstOrDefault(c=> c.IsMatch(columnName));
-        if (column != null)
-            _columns.Add(column);
-        return this;
-    }
-    #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    internal override void Write(ISqlEngine engine, StringBuilder sql)
-    {        
-        engine.InsertPrefix(sql);
-        _table.Write(engine, sql);
-        var appended = false;
-        sql.Append('(');
-        var columns = Columns;
-        foreach (var column in columns)
-        {
-            if (appended)
-                sql.Append(',');
-            engine.Identifier(sql, column.ViewName);
-            // 避免出现列名前缀可能导致错误
-            //if (column.Write(engine, sql))
-            appended = true;
-        }
-        sql.Append(')');
-        if (!appended)
-            throw new InvalidOperationException("Insert columns is empty.");
-        _select.Write(engine, sql);
-        //if (_table.Write(engine, sql))
-        //{
-        //    var appended = false;
-        //    sql.Append('(');
-        //    var columns = Columns;
-        //    foreach (var column in columns)
-        //    {
-        //        if (appended)
-        //            sql.Append(',');
-        //        engine.Identifier(sql, column.ViewName);
-        //        // 避免出现列名前缀可能导致错误
-        //        //if (column.Write(engine, sql))
-        //        appended = true;
-        //    }
-        //    sql.Append(')');
-        //    if (!appended)
-        //        return false;
-        //    return _select.Write(engine, sql);
-        //}
-        //return false;
-    }
+    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
+        => WriteInsert(_table, engine, sql);
 }

@@ -15,8 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
     <ProjectReference Include="..\..\Dapper.Shadow\Dapper.Shadow.csproj" />
-    <ProjectReference Include="..\..\ShadowSql\ShadowSql.csproj" />
+    <ProjectReference Include="..\..\ShadowSql.Core\ShadowSql.Core.csproj" />
   </ItemGroup>
 
 </Project>

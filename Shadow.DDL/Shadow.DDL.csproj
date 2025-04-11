@@ -7,11 +7,10 @@
     <PackageTags>sql-builder,ddl,createtable</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="readme.MD" />
+    <Content Include="readme.md" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\ShadowSql\ShadowSql.csproj" />
+    <ProjectReference Include="..\ShadowSql.Core\ShadowSql.Core.csproj" />
   </ItemGroup>
 
 </Project>

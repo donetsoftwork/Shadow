@@ -31,12 +31,6 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     {
     }
     #region 配置
-    //private readonly TTable _table = source.Target;
-    ///// <summary>
-    ///// 原始表
-    ///// </summary>
-    //public TTable Table
-    //    => _table;
     private readonly ISqlLogic _where = where;
     /// <summary>
     /// where查询条件

@@ -13,9 +13,12 @@
     <None Remove="readme.MD" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="readme.MD" />
+    <Content Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="ShadowSqlTest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
 using ShadowSql.Identifiers;
+using ShadowSql.Select;
+using ShadowSql.Tables;
 using SqlKata;
 using SqlKata.Compilers;
 
@@ -15,6 +17,7 @@ public class WhereBench
 {
     private static ISqlEngine _engine = new MySqlEngine();
     private static DB _db = DB.Use("ShadowSql");
+    private static Table _table = _db.From("Posts");
     private static Compiler _compiler = new MySqlCompiler();
     private static IColumn Id = ShadowSql.Identifiers.Column.Use("Id");
 
@@ -47,10 +50,10 @@ public class WhereBench
     [Benchmark]
     public string ShadowSqlByParametricLogic()
     {
-        var query = _db.From("Posts")
-            .ToSelect(Id.EqualValue(10));
+        var filter = new TableFilter(_table, Id.EqualValue(10));
+        var select = new TableSelect(filter);
         ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
+        var sql = context.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }
@@ -58,9 +61,9 @@ public class WhereBench
     [Benchmark]
     public string ShadowSqlByLogic()
     {
-        var query = _db.From("Posts")
-            .ToSelect(Id.Equal());
-        var sql = _engine.Sql(query);
+        var filter = new TableFilter(_table, Id.Equal());
+        var select = new TableSelect(filter);
+        var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }

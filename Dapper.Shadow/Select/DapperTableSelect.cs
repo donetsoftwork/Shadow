@@ -37,16 +37,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
     /// <param name="table"></param>
     /// <param name="where"></param>
     public DapperTableSelect(IExecutor executor, TTable table, ISqlLogic where)
-        : this(executor, new TableFilter<TTable>(table, where), new TableFields<TTable>(table))
-    {
-    }
-    /// <summary>
-    /// 表筛选列
-    /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="filter"></param>
-    public DapperTableSelect(IExecutor executor, TableFilter<TTable> filter)
-        : this(executor, filter, new TableFields<TTable>(filter.Source))
+        : this(executor, new TableFilter(table, where), new TableFields<TTable>(table))
     {
     }
     /// <summary>

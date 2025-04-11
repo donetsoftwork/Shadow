@@ -8,14 +8,11 @@
     <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="readme.MD" />
+    <Content Include="readme.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.66" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
     <ProjectReference Include="..\ShadowSql\ShadowSql.csproj" />
   </ItemGroup>
 

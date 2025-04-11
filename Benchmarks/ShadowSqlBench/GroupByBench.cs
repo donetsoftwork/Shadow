@@ -1,9 +1,13 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
+using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
+using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
+using ShadowSql.Select;
+using ShadowSql.Tables;
 using SqlKata;
 using SqlKata.Compilers;
 
@@ -65,31 +69,31 @@ public class GroupByBench
     [Benchmark]
     public string ShadowSqlByParametricLogic()
     {
-        var query = Comments
-            .GroupBy(Category.EqualValue("csharp") & Pick.EqualValue(true), [PostId])
-            .And(Hits.Sum().GreaterEqualValue(100))
-            .ToCursor()
-            .Desc(PostId)
-            .ToSelect();
-        query.Fields.Select(PostId)
+        var filter = new TableFilter(Comments, Category.EqualValue("csharp") & Pick.EqualValue(true));
+        var groupBy = new GroupByQuery(filter, PostId)
+            .And(Hits.Sum().GreaterEqualValue(100));
+        var cursor = new TableCursor(groupBy)
+            .Desc(PostId);
+        var select = new TableSelect(cursor)
+            .Select("PostId")
             .SelectCount("Count");
         ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
+        var sql = context.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }
     [Benchmark]
     public string ShadowSqlByLogic()
     {
-        var query = Comments
-            .GroupBy(Category.Equal().And(Pick.Equal()), [PostId])
-            .And(Hits.Sum().GreaterEqual("Hits"))
-            .ToCursor()
-            .Desc(PostId)
-            .ToSelect();
-        query.Fields.Select(PostId)
+        var filter = new TableFilter(Comments, Category.Equal().And(Pick.Equal()));
+        var groupBy = new GroupByQuery(filter, PostId)
+            .And(Hits.Sum().GreaterEqualValue(100));
+        var cursor = new TableCursor(groupBy)
+            .Desc(PostId);
+        var select = new TableSelect(cursor)
+            .Select("PostId")
             .SelectCount("Count");
-        var sql = _engine.Sql(query);
+        var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }

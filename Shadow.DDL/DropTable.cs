@@ -1,6 +1,7 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
+using ShadowSql.Simples;
 using System.Text;
 
 namespace Shadow.DDL;
@@ -12,6 +13,14 @@ namespace Shadow.DDL;
 public class DropTable(ITable table)
     : IExecuteSql
 {
+    /// <summary>
+    /// 删表
+    /// </summary>
+    /// <param name="tableName"></param>
+    public DropTable(string tableName)
+        : this(SimpleDB.From(tableName))
+    {
+    }
     #region 配置
     private readonly ITable _table = table;
     /// <summary>

@@ -29,10 +29,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableQuery<TTable> ToQuery<TTable>(this TTable table)
         where TTable : ITable
-    {
-        TableQuery<TTable> tableQuery = new(table);
-        return tableQuery;
-    }
+        => new(table);
     /// <summary>
     /// Or查询
     /// </summary>
@@ -40,10 +37,23 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableQuery<TTable> ToOrQuery<TTable>(this TTable table)
         where TTable : ITable
-    {
-        TableQuery<TTable> query = new(table, new OrLogic());
-        return query;
-    }
+        => new(table, new OrLogic());
+    #endregion
+    #region SlimQuery
+    /// <summary>
+    /// And查询
+    /// </summary>
+    /// <param name="table">表对象</param>
+    /// <returns></returns>
+    public static TableQuery ToSlimQuery(this ITable table)
+        => new(table);
+    /// <summary>
+    /// Or查询
+    /// </summary>
+    /// <param name="table">表对象</param>
+    /// <returns></returns>
+    public static TableQuery ToSlimOrQuery(this ITable table)
+        => new(table, new OrLogic());
     #endregion
     #region TableSqlQuery
     /// <summary>
@@ -53,11 +63,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSqlQuery<TTable> ToSqlQuery<TTable>(this TTable table)
         where TTable : ITable
-    {
-        SqlQuery sqlQuery = SqlQuery.CreateAndQuery();
-        TableSqlQuery<TTable> tableQuery = new(table, sqlQuery);
-        return tableQuery;
-    }
+        => new(table, SqlQuery.CreateAndQuery());
     /// <summary>
     /// Or查询
     /// </summary>
@@ -65,11 +71,23 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSqlQuery<TTable> ToSqlOrQuery<TTable>(this TTable table)
         where TTable : ITable
-    {
-        SqlQuery sqlQuery = SqlQuery.CreateOrQuery();
-        TableSqlQuery<TTable> query = new(table, sqlQuery);
-        return query;
-    }
+        => new(table, SqlQuery.CreateOrQuery());
+    #endregion
+    #region SlimSqlQuery
+    /// <summary>
+    /// And查询
+    /// </summary>
+    /// <param name="table">表对象</param>
+    /// <returns></returns>
+    public static TableSqlQuery ToSlimSqlQuery(this ITable table)
+        => new(table, SqlQuery.CreateAndQuery());
+    /// <summary>
+    /// Or查询
+    /// </summary>
+    /// <param name="table">表对象</param>
+    /// <returns></returns>
+    public static TableSqlQuery ToSlimSqlOrQuery(this ITable table)
+        => new(table, SqlQuery.CreateOrQuery());
     #endregion
     #endregion
     #region AliasTableQuery

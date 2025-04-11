@@ -34,15 +34,7 @@ public class AliasTableSingleSelect<TTable>(ITableView source, AliasTableFields<
     /// <param name="source"></param>
     /// <param name="where"></param>
     public AliasTableSingleSelect(TableAlias<TTable> source, ISqlLogic where)
-        : this(new TableFilter<TableAlias<TTable>>(source, where), new AliasTableFields<TTable>(source))
-    {
-    }
-    /// <summary>
-    /// 别名表筛选单列
-    /// </summary>
-    /// <param name="filter"></param>
-    public AliasTableSingleSelect(TableFilter<TableAlias<TTable>> filter)
-        : this(filter, new AliasTableFields<TTable>(filter.Source))
+        : this(new TableFilter(source, where), new AliasTableFields<TTable>(source))
     {
     }
     /// <summary>

@@ -39,16 +39,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <param name="source"></param>
     /// <param name="where"></param>
     public DapperAliasTableSelect(IExecutor executor, TableAlias<TTable> source, ISqlLogic where)
-        : this(executor, new TableFilter<TableAlias<TTable>>(source, where), new AliasTableFields<TTable>(source))
-    {
-    }
-    /// <summary>
-    /// 别名表过滤筛选列
-    /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="filter"></param>
-    public DapperAliasTableSelect(IExecutor executor, TableFilter<TableAlias<TTable>> filter)
-        : this(executor, filter, new AliasTableFields<TTable>(filter.Source))
+        : this(executor, new TableFilter(source, where), new AliasTableFields<TTable>(source))
     {
     }
     /// <summary>

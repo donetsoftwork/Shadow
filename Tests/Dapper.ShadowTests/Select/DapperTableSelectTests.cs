@@ -230,13 +230,13 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Cursor()
     {
-        var table = new StudentTable("Students");
-        var query = table.ToSqlQuery()
-            .Where(table.Age.GreaterEqualValue(9));
+        var query = new StudentTable("Students")
+            .ToSqlQuery()
+            .Where(table => table.Age.GreaterEqualValue(9));
         var count = query.Count(SqliteExecutor);
         Assert.True(count > 0);
         var students = query.ToCursor()
-            .Desc(table.Id)
+            .Desc(table => table.Id)
             .Skip(1)
             .Take(10)
             .ToSelect()

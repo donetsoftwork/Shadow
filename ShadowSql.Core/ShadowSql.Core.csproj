@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\package.props" />
+  <PropertyGroup>
+    <Version>$(VersionBase).1-alpha</Version>
+    <PackageId>ShadowSql.Core</PackageId>
+    <Description>拼接sql工具</Description>
+    <PackageTags>sql;sql-builder;sql-query</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>ShadowSql</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="ShadowSql" />
+    <InternalsVisibleTo Include="ShadowSqlCoreTest" />
+    <InternalsVisibleTo Include="ShadowSqlTest" />
+  </ItemGroup>
+</Project>

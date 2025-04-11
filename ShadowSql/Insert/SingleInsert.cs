@@ -1,4 +1,5 @@
 ﻿using ShadowSql.Engines;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System;
 using System.Collections.Generic;
@@ -11,28 +12,32 @@ namespace ShadowSql.Insert;
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="table"></param>
-public class SingleInsert<TTable>(TTable table)
-    : InsertBase<TTable>(table), ISingleInsert
-    where TTable : ITable
+/// <param name="items"></param>
+public class SingleInsert<TTable>(TTable table, List<IInsertValue> items)
+    : SingleInsertBase(items), ISingleInsert
+    where TTable : IInsertTable
 {
-    #region 配置
-    private readonly List<IInsertValue> _items = [];
-
     /// <summary>
-    /// 插入单值列表
+    /// 插入单条
     /// </summary>
-    public IEnumerable<IInsertValue> Items
-        => _items;
-    #endregion
-    #region Insert
-    void ISingleInsert.InsertCore(IInsertValue value)
+    /// <param name="table"></param>
+    public SingleInsert(TTable table)
+        : this(table, [])
     {
-        _items.Add(value);
     }
-    //void ISingleInsert.InsertCore(Func<ITable, IInsertValue> select)
-    //{
-    //    _items.Add(select(_table));
-    //}
+    #region 配置
+    /// <summary>
+    /// 源表
+    /// </summary>
+    protected readonly TTable _table = table;
+    /// <summary>
+    /// 源表
+    /// </summary>
+    public TTable Table
+        => _table;
+    IInsertTable IInsert.Table
+        => _table;
+    #endregion
     /// <summary>
     /// 增加插入值
     /// </summary>
@@ -40,73 +45,9 @@ public class SingleInsert<TTable>(TTable table)
     /// <returns></returns>
     public SingleInsert<TTable> Insert(Func<TTable, IInsertValue> select)
     {
-        _items.Add(select(_table));
+        Add(select(_table));
         return this;
     }
-    #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    internal override void Write(ISqlEngine engine, StringBuilder sql)
-    {
-        engine.InsertPrefix(sql);
-        _table.Write(engine, sql);
-        var appended = false;
-        sql.Append('(');
-        foreach (var item in _items)
-        {
-            if (appended)
-                sql.Append(',');
-            engine.Identifier(sql, item.Column.ViewName);
-            // 避免出现列名前缀可能导致错误
-            //if (item.Column.Write(engine, sql))
-            appended = true;
-        }
-        if (!appended)
-            throw new InvalidOperationException("未找到插入列");
-        sql.Append(")VALUES(");
-
-        appended = false;
-        foreach (var item in _items)
-        {
-            if (appended)
-                sql.Append(',');
-            item.Value.Write(engine, sql);
-            appended = true;
-        }
-        sql.Append(')');
-
-        //if (_table.Write(engine, sql))
-        //{
-        //    var appended = false;
-        //    sql.Append('(');
-        //    foreach (var item in _items)
-        //    {
-        //        if (appended)
-        //            sql.Append(',');
-        //        engine.Identifier(sql, item.Column.ViewName);
-        //        // 避免出现列名前缀可能导致错误
-        //        //if (item.Column.Write(engine, sql))
-        //        appended = true;
-        //    }
-        //    if (!appended)
-        //        return false;
-        //    sql.Append(")VALUES(");
-        //    appended = false;
-        //    foreach (var item in _items)
-        //    {
-        //        if (appended)
-        //            sql.Append(',');
-        //        if (item.Value.Write(engine, sql))
-        //            appended = true;
-        //    }
-        //    sql.Append(')');
-
-        //    return true;
-        //}
-        //return false;
-    }    
+    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
+        => WriteInsert(_table, engine, sql);
 }

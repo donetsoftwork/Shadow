@@ -6,7 +6,6 @@ using ShadowSql.Logics;
 using ShadowSql.Select;
 using ShadowSql.Tables;
 using ShadowSql.Variants;
-using System;
 
 namespace ShadowSql;
 
