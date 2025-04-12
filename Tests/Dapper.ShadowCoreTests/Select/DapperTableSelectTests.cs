@@ -4,6 +4,7 @@ using ShadowSql;
 using ShadowSql.Cursors;
 using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
+using ShadowSql.Insert;
 using ShadowSql.Select;
 using ShadowSql.Simples;
 using ShadowSql.Tables;
@@ -15,11 +16,11 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
 
     public DapperTableSelectTests()
     {
-        var studentInsert = CreateStudentTable()
-            .ToInsert()
+        var table = CreateStudentTable();
+        var insert = new SingleInsert(table)
             .InsertSelfColumns();
-        SqliteExecutor.Execute(studentInsert, new Student(1, "张三", 10, 1));
-        SqliteExecutor.Execute(studentInsert, new Student(2, "李四", 11, 1));
+        insert.Execute(SqliteExecutor, new Student(1, "张三", 10, 1));
+        insert.Execute(SqliteExecutor, new Student(2, "李四", 11, 1));
     }
 
     [Fact]
