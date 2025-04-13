@@ -29,7 +29,12 @@ public abstract class DataFilterBase<TFilter>(ITableView source, TFilter filter)
     /// <summary>
     /// 过滤条件
     /// </summary>
-    internal TFilter _filter = filter;
+    protected TFilter _filter = filter;
+    /// <summary>
+    /// 过滤条件
+    /// </summary>
+    public TFilter Filter
+        => _filter;
     #endregion
     #region IDataFilter
     ITableView IDataFilter.Source

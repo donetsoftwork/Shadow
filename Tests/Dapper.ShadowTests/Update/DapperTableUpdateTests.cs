@@ -21,4 +21,16 @@ public class DapperTableUpdateTests : ExecuteTestBase
             .Execute();
         Assert.Equal(0, result);
     }
+
+    [Fact]
+    public void TableUpdate()
+    {
+        var result = new StudentTable()
+            .ToSqlQuery()
+            .Where(table => table.Age.LessValue(7))
+            .ToUpdate()
+            .Set(table => table.ClassId.EqualToValue(1))
+            .Execute(SqliteExecutor);
+        Assert.Equal(0, result);
+    }
 }

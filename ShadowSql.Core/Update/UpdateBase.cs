@@ -1,5 +1,6 @@
 ﻿using ShadowSql.Assigns;
 using ShadowSql.Engines;
+using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System;
@@ -89,19 +90,20 @@ public abstract class UpdateBase : ISqlEntity
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public abstract IColumn? GetColumn(string columName);
+    protected abstract IColumn? GetColumn(string columName);
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public abstract IField Field(string fieldName);
+    protected virtual IField Field(string fieldName)
+        => FieldInfo.Use(fieldName);
     /// <summary>
     /// 获取赋值字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public IAssignView GetAssignField(string fieldName)
+    internal IAssignView GetAssignField(string fieldName)
     {
         if (GetColumn(fieldName) is IAssignView assignField)
             return assignField;

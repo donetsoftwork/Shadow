@@ -1,6 +1,7 @@
 ﻿using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
+using ShadowSql.Simples;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +23,14 @@ public class SingleInsert(IInsertTable table, List<IInsertValue> items)
     public SingleInsert(IInsertTable table)
         : this(table, [])
     { 
+    }
+    /// <summary>
+    /// 插入单条
+    /// </summary>
+    /// <param name="tableName"></param>
+    public SingleInsert(string tableName)
+    : this(SimpleTable.Use(tableName), [])
+    {
     }
     #region 配置
     /// <summary>

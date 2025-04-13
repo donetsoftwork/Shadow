@@ -1,14 +1,16 @@
 ﻿using ShadowSql;
 using ShadowSql.Assigns;
+using ShadowSql.Delete;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
-using static ShadowSqlTest.Delete.TableDeleteTests;
+using ShadowSql.Tables;
+using ShadowSql.Update;
 
-namespace ShadowSqlTest.Update;
+namespace ShadowSqlCoreTest.Update;
 
-public class TableUpdateTests
+public class TableUpdateTests 
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
     static readonly IDB _db = DB.Use("MyDB");
@@ -18,8 +20,8 @@ public class TableUpdateTests
     [Fact]
     public void Filter()
     {
-        var update = _db.From("Students")
-            .ToUpdate(_score.LessValue(60))
+        var table = _db.From("Students");
+        var update = new TableUpdate(table, _score.LessValue(60))
             .Set(_score.EqualToValue(60));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]=60 WHERE [Score]<60", sql);
@@ -29,8 +31,7 @@ public class TableUpdateTests
     {
         var query = SqlQuery.CreateAndQuery()
             .And("Score<60");
-        var update = _db.From("Students")
-            .ToUpdate(query)
+        var update = new TableUpdate("Students", query)
             .SetValue("Score", 60);
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]=60 WHERE Score<60", sql);
@@ -38,22 +39,12 @@ public class TableUpdateTests
     [Fact]
     public void Query()
     {
-        var update = new StudentTable()
-            .ToUpdate(table => table.Score.LessValue(60))
-            .SetValue("Score", AssignSymbol.Add, 10);
+        var table = new UserTable();
+        var query = new TableSqlQuery(table)
+            .Where(table.Id.Equal());
+        var update = new TableUpdate(table, query.Filter)
+            .Set(table.Status.EqualToValue(false));
         var sql = _engine.Sql(update);
-        Assert.Equal("UPDATE [Students] SET [Score]+=10 WHERE [Score]<60", sql);
-    }
-
-    [Fact]
-    public void TableQuery()
-    {
-        var update = new StudentTable()
-            .ToSqlQuery()
-            .Where(table => table.Score.LessValue(60))
-            .ToUpdate()
-            .Set(table => table.Score.AddValue(10));
-        var sql = _engine.Sql(update);
-        Assert.Equal("UPDATE [Students] SET [Score]+=10 WHERE [Score]<60", sql);
+        Assert.Equal("UPDATE [Users] SET [Status]=0 WHERE [Id]=@Id", sql);
     }
 }

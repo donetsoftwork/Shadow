@@ -26,3 +26,32 @@
     var students = select.Get<Student>(Executor);
 ~~~
 
+## 3. 删除
+~~~csharp
+    var table = new StudentTable();
+    var query = new TableSqlQuery(table)
+        .Where(table.Age.LessValue(7));
+    var delete = new TableDelete(table, query.Filter);
+    var result = Executor.Execute(delete);
+~~~
+
+## 4. 更新
+~~~csharp
+    var table = new StudentTable();
+    var query = new TableSqlQuery(table)
+        .Where(table.Age.LessValue(7));
+    var update = new TableUpdate(table, query.Filter)
+        .Set(table.ClassId.EqualToValue(1));
+    var result = SqliteExecutor.Execute(update);
+~~~
+
+## 5. 插入
+~~~csharp
+    var table = _db.From("Students")
+        .AddColums(_name, _age);
+    var insert = new SingleInsert(table)
+        .Insert(_name.InsertValue("张三"))
+        .Insert(_age.InsertValue(11));
+    var result = insert.Execute(Executor);
+~~~
+>

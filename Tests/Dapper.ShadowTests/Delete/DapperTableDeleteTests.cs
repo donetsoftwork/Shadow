@@ -3,7 +3,7 @@ using ShadowSql;
 
 namespace Dapper.ShadowTests.Delete;
 
-public class DapperTableDeleteTests : ExecuteTestBase
+public class DapperTableDeleteTests : ExecuteTestBase, IDisposable
 {
     public DapperTableDeleteTests()
     {
@@ -19,4 +19,18 @@ public class DapperTableDeleteTests : ExecuteTestBase
             .Execute();
         Assert.Equal(0, result);
     }
+
+    [Fact]
+    public void TableDelete()
+    {
+        var result = new StudentTable()
+            .ToSqlQuery()
+            .Where(table => table.Age.LessValue(7))
+            .ToDelete()
+            .Execute(SqliteExecutor);
+        Assert.Equal(0, result);
+    }
+
+    void IDisposable.Dispose()
+        => DropStudentTable();
 }

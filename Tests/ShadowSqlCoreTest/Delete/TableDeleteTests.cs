@@ -1,10 +1,12 @@
 ﻿using ShadowSql;
+using ShadowSql.Delete;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
+using ShadowSql.Tables;
 
-namespace ShadowSqlTest.Delete;
+namespace ShadowSqlCoreTest.Delete;
 
 public class TableDeleteTests
 {
@@ -16,8 +18,7 @@ public class TableDeleteTests
     [Fact]
     public void Filter()
     {
-        var delete = _db.From("Students")
-            .ToDelete(_score.LessValue(60));
+        var delete = new TableDelete("Students", _score.LessValue(60));
         var sql = _engine.Sql(delete);
         Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
     }
@@ -26,41 +27,26 @@ public class TableDeleteTests
     {
         var query = SqlQuery.CreateAndQuery()
             .And("Score<60");
-        var delete = _db.From("Students")
-            .ToDelete(query);
+        var delete = new TableDelete("Students", query);
         var sql = _engine.Sql(delete);
         Assert.Equal("DELETE FROM [Students] WHERE Score<60", sql);
     }
     [Fact]
     public void Query()
     {
-        var delete = new StudentTable()
-            .ToSqlQuery()
-            .Where(table => table.Score.LessValue(60))
-            .ToDelete();
+        var table = new StudentTable();
+        var delete = new TableDelete(table, table.Score.LessValue(60));
         var sql = _engine.Sql(delete);
         Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
     }
     [Fact]
-    public void TableQuery()
+    public void QuerySql()
     {
-        var delete = _db.From("Students")
-            .ToSqlQuery()
-            .Where(table => table.Field("Score").LessValue(60))
-            .ToDelete();
+        var table = _db.From("Students");
+        var query = new TableSqlQuery(table)
+            .Where(table.Field("Score").LessValue(60));
+        var delete = new TableDelete(table, query.Filter);
         var sql = _engine.Sql(delete);
         Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
-    }
-
-    public class StudentTable : Table
-    {
-        public StudentTable()
-            :base("Students")
-        {
-            Name = DefineColumn(nameof(Name));
-            Score = DefineColumn(nameof(Score));
-        }
-        public readonly IColumn Score;
-        new public readonly IColumn Name;
     }
 }

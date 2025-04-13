@@ -1,5 +1,4 @@
-﻿using ShadowSql.Assigns;
-using ShadowSql.Engines;
+﻿using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -39,21 +38,16 @@ public abstract class UpdateBase<TSource>(TSource source)
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
+    protected override IColumn? GetColumn(string columName)
         => _source.GetColumn(columName);
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public override IField Field(string fieldName)
+    protected override IField Field(string fieldName)
         => _source.Field(fieldName);
     #region IUpdate
-    IUpdate IUpdate.Set(IAssignOperation operation)
-    {
-        SetCore(operation);
-        return this;
-    }
     ITableView IUpdate.Table
         => _source;
     #endregion

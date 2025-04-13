@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+    <Version>$(VersionBase).3-alpha</Version>
     <PackageId>ShadowSql.DDL</PackageId>
     <Description>ShadowSql的DDL组件</Description>
     <PackageTags>sql-builder,ddl,createtable</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="readme.md" />
+    <Content Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShadowSql.Core\ShadowSql.Core.csproj" />

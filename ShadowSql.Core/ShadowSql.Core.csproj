@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+    <Version>$(VersionBase).3-alpha</Version>
     <PackageId>ShadowSql.Core</PackageId>
     <Description>拼接sql工具</Description>
     <PackageTags>sql;sql-builder;sql-query</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>ShadowSql</RootNamespace>
@@ -13,8 +14,12 @@
     <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
     <InternalsVisibleTo Include="ShadowSql" />
     <InternalsVisibleTo Include="ShadowSqlCoreTest" />
     <InternalsVisibleTo Include="ShadowSqlTest" />
   </ItemGroup>
+
 </Project>

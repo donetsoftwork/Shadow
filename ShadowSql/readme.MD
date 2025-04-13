@@ -68,3 +68,36 @@ var joinTable = joinOn.Root
 ~~~
 >
 >SELECT * FROM [Employees] AS e INNER JOIN [Departments] AS d ON e.[DepartmentId]=d.[Id] WHERE e.[Age]>30 AND d.[Manager]='CEO'
+
+## 7. 删除
+~~~csharp
+var delete = new StudentTable()
+    .ToSqlQuery()
+    .Where(table => table.Score.LessValue(60))
+    .ToDelete();
+~~~
+>
+>DELETE FROM [Students] WHERE [Score]<60
+
+## 8. 更新
+~~~csharp
+var update = new StudentTable()
+    .ToSqlQuery()
+    .Where(table => table.Score.LessValue(60))
+    .ToUpdate()
+    .Set(table => table.Score.AddValue(10));
+~~~
+>
+>UPDATE [Students] SET [Score]+=10 WHERE [Score]<60
+
+## 9. 插入
+~~~csharp
+var insert = new StudentTable()
+    .ToInsert()
+    .Insert(student => student.Name.Insert("StudentName"))
+    .Insert(student => student.Score.InsertValue(90));
+~~~
+>
+~~~sql
+INSERT INTO [Students]([Name],[Score])VALUES(@StudentName,90)
+~~~

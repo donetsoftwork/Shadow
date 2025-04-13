@@ -25,3 +25,32 @@
         .ToSelect()
         .Get<Student>(Executor);
 ~~~
+
+## 3. 删除
+~~~csharp
+    var result = new StudentTable()
+        .ToSqlQuery()
+        .Where(table => table.Age.LessValue(7))
+        .ToDelete()
+        .Execute(Executor);
+~~~
+
+## 4. 更新
+~~~csharp
+    var result = new StudentTable()
+        .ToSqlQuery()
+        .Where(table => table.Age.LessValue(7))
+        .ToUpdate()
+        .Set(table => table.ClassId.EqualToValue(1))
+        .Execute(Executor);
+~~~
+
+## 5. 插入
+~~~csharp
+    var insert = new StudentTable()
+        .ToInsert()
+        .Insert(student => student.Name.Insert())
+        .Insert(student => student.Age.InsertValue(11));
+    var result = insert.Execute(Executor, new { Name = "张三" });
+~~~
+>

@@ -1,6 +1,8 @@
-﻿using ShadowSql.Engines;
+﻿using ShadowSql.Assigns;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using System;
 using System.Text;
 
 namespace ShadowSql.Update;
@@ -25,6 +27,16 @@ public class TableUpdate<TTable>(TTable table, ISqlLogic filter)
     public ISqlLogic Filter
         => _filter;
     #endregion
+    /// <summary>
+    /// 添加修改信息
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    public TableUpdate<TTable> Set(Func<TTable, IAssignOperation> operation)
+    {
+        SetCore(operation(table));
+        return this;
+    }
     #region ISqlEntity
     /// <summary>
     /// 拼写sql

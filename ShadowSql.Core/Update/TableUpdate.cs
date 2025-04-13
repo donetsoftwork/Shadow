@@ -5,22 +5,22 @@ using ShadowSql.Logics;
 using ShadowSql.Simples;
 using System.Text;
 
-namespace ShadowSql.Delete;
+namespace ShadowSql.Update;
 
 /// <summary>
-/// 表数据删除
+/// 修改表
 /// </summary>
 /// <param name="table"></param>
 /// <param name="filter"></param>
-public class TableDelete(ITable table, ISqlLogic filter)
-    : IDelete
+public class TableUpdate(ITable table, ISqlLogic filter)
+    : UpdateBase, IUpdate
 {
     /// <summary>
     /// 查询表
     /// </summary>
     /// <param name="tableName"></param>
     /// <param name="filter"></param>
-    public TableDelete(string tableName, ISqlLogic filter)
+    public TableUpdate(string tableName, ISqlLogic filter)
         : this(SimpleTable.Use(tableName), filter)
     {
     }
@@ -28,12 +28,12 @@ public class TableDelete(ITable table, ISqlLogic filter)
     /// <summary>
     /// 源表
     /// </summary>
-    protected ITable _source = table;
+    protected ITable _table = table;
     /// <summary>
     /// 源表
     /// </summary>
-    public ITable Source
-        => _source;
+    public ITable Table
+        => _table;
     /// <summary>
     /// 过滤条件
     /// </summary>
@@ -44,6 +44,24 @@ public class TableDelete(ITable table, ISqlLogic filter)
     public ISqlLogic Filter
         => _filter;
     #endregion
+    #region UpdateBase
+    /// <summary>
+    /// 拼写数据源sql
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
+        => _table.Write(engine, sql);
+    /// <summary>
+    /// 获取列
+    /// </summary>
+    /// <param name="columName"></param>
+    /// <returns></returns>
+    protected override IColumn? GetColumn(string columName)
+        => _table.GetColumn(columName);
+    #endregion
+    ITableView IUpdate.Table
+        => _table;
     #region ISqlEntity
     /// <summary>
     /// 拼写sql
@@ -53,9 +71,9 @@ public class TableDelete(ITable table, ISqlLogic filter)
     /// <returns></returns>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
-        engine.DeletePrefix(sql);
-        sql.Append("FROM ");
-        _source.Write(engine, sql);
+        WriteUpdate(engine, sql);
+        WriteSource(engine, sql);
+        WriteSet(engine, sql);
         var point = sql.Length;
         engine.WherePrefix(sql);
         if (!_filter.TryWrite(engine, sql))
@@ -64,9 +82,5 @@ public class TableDelete(ITable table, ISqlLogic filter)
             sql.Length = point;
         }
     }
-    #endregion
-    #region IDelete
-    ITableView IDelete.Source
-        => _source;
     #endregion
 }

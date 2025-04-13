@@ -1,16 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+    <Version>$(VersionBase).3-alpha</Version>
     <PackageId>ShadowSql.Dapper.Core</PackageId>
     <Description>ShadowSql.Core的Dapper扩展</Description>
     <PackageTags>sql;sql-builder;sql-query;dapper;orm</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Dapper.Shadow</RootNamespace>
   </PropertyGroup>
-  
+  <ItemGroup>
+    <Content Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
   </ItemGroup>

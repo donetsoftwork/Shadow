@@ -22,9 +22,9 @@ public static partial class ShadowSqlCoreServices
     /// <param name="parameterName"></param>
     /// <returns></returns>
     public static TUpdate Set<TUpdate>(this TUpdate update, string columnName, AssignSymbol assign, string parameterName = "")
-        where TUpdate : IUpdate
+        where TUpdate : UpdateBase, IUpdate
     {
-        update.Set(new AssignOperation(update.GetAssignField(columnName), assign, Parameter.Use(parameterName, columnName)));
+        update.SetCore(new AssignOperation(update.GetAssignField(columnName), assign, Parameter.Use(parameterName, columnName)));
         return update;
     }
     /// <summary>
@@ -36,7 +36,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="parameterName"></param>
     /// <returns></returns>
     public static TUpdate Set<TUpdate>(this TUpdate update, string columnName, string parameterName = "")
-        where TUpdate : IUpdate
+        where TUpdate : UpdateBase, IUpdate
         => Set(update, columnName, AssignSymbol.EqualTo, parameterName);
     /// <summary>
     /// 赋参数
@@ -46,7 +46,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="columnNames"></param>
     /// <returns></returns>
     public static TUpdate Set<TUpdate>(this TUpdate update, params IEnumerable<string> columnNames)
-        where TUpdate : IUpdate
+        where TUpdate : UpdateBase, IUpdate
     {
         foreach (var columnName in columnNames)
             Set(update, columnName);
@@ -65,7 +65,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="value"></param>
     /// <returns></returns>
     public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, AssignSymbol assign, TValue value)
-        where TUpdate : IUpdate
+        where TUpdate : UpdateBase, IUpdate
     {
         update.Set(new AssignOperation(update.GetAssignField(columnName), assign, SqlValue.From(value)));
         return update;
@@ -80,7 +80,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="value"></param>
     /// <returns></returns>
     public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
-        where TUpdate : IUpdate
+        where TUpdate : UpdateBase, IUpdate
         => SetValue(update, columnName, AssignSymbol.EqualTo, value);
     #endregion
     #region 赋值操作

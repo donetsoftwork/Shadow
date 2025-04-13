@@ -2,6 +2,7 @@
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
+using ShadowSql.Simples;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,6 +24,15 @@ public class SelectInsert(ITable table, List<IColumn> columns, ISelect select)
     /// <param name="select"></param>
     public SelectInsert(ITable table, ISelect select)
         : this(table, [], select)
+    {
+    }
+    /// <summary>
+    /// 插入多条
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    public SelectInsert(string tableName, ISelect select)
+        : this(SimpleTable.Use(tableName), select)
     {
     }
     #region 配置
