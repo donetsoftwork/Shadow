@@ -1,8 +1,9 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.Tables;
@@ -22,38 +23,25 @@ public class WhereBench
     private static IColumn Id = ShadowSql.Identifiers.Column.Use("Id");
 
     [Benchmark]
-    public string ShadowSqlBySqlQuery()
+    public string ShadowSqlByTableName()
     {
-        var query = new Table("Posts")
+        var select = new Table("Posts")
             .ToSqlQuery()
-            .ColumnEqualValue("Id", 10)
+            .FieldEqualValue("Id", 10)
             .ToSelect();
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-
-    [Benchmark]
-    public string ShadowSqlByQuery()
-    {
-        var query = new Table("Posts")
-            .ToQuery()
-            .And(Id.EqualValue(10))
-            .ToSelect();
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-
-    [Benchmark]
-    public string ShadowSqlByParametricLogic()
-    {
-        var filter = new TableFilter(_table, Id.EqualValue(10));
-        var select = new TableSelect(filter);
         ParametricContext context = new(_engine);
         var sql = context.Sql(select);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+
+    [Benchmark]
+    public string ShadowSqlBySqlQuery()
+    {
+        var select = _table.ToSqlQuery()
+            .Where(Id.EqualValue(10))
+            .ToSelect();
+        var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }

@@ -1,4 +1,5 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Aggregates;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Services;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ShadowSql.FieldInfos;
 /// <summary>
 /// 计数字段别名信息
 /// </summary>
-public sealed class CountAliasFieldInfo : IdentifierBase, IFieldAlias
+public sealed class CountAliasFieldInfo : IdentifierBase, IAggregateFieldAlias
 {
     /// <summary>
     /// 计数字段别名信息
@@ -28,7 +29,7 @@ public sealed class CountAliasFieldInfo : IdentifierBase, IFieldAlias
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<CountAliasFieldInfo> _cacher = new(alias => new CountAliasFieldInfo(alias));
+    private static readonly CacheService<CountAliasFieldInfo> _cacher = new(static alias => new CountAliasFieldInfo(alias));
     #region IFieldAlias
     IColumn IFieldView.ToColumn()
         => Column.Use(_name);
@@ -38,6 +39,8 @@ public sealed class CountAliasFieldInfo : IdentifierBase, IFieldAlias
         => _name;
     string IView.ViewName 
         => _name;
+    string IAggregate.Aggregate
+        => AggregateConstants.Count;
     #endregion
     #region ISqlEntity
     internal override void Write(ISqlEngine engine, StringBuilder sql)

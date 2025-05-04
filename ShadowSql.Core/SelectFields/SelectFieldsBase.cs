@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
@@ -9,13 +9,13 @@ namespace ShadowSql.SelectFields;
 /// <summary>
 /// 筛选字段基类
 /// </summary>
-public abstract class SelectFieldsBase
+public abstract class SelectFieldsBase : ISelectFields
 {
     #region 配置
     /// <summary>
     /// 字段信息
     /// </summary>
-    protected readonly List<IFieldView> _selected = [];
+    private readonly List<IFieldView> _selected = [];
     /// <summary>
     /// 字段信息
     /// </summary>
@@ -65,13 +65,13 @@ public abstract class SelectFieldsBase
     /// </summary>
     /// <param name="columnName"></param>
     /// <returns></returns>
-    public abstract IColumn? GetColumn(string columnName);
+    protected abstract IColumn? GetColumn(string columnName);
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public abstract IField Field(string fieldName);
+    protected abstract IField Field(string fieldName);
     /// <summary>
     /// 构建列信息
     /// </summary>
@@ -84,16 +84,30 @@ public abstract class SelectFieldsBase
     }
     #endregion
     #region ISelectFields
+    bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
+        => WriteSelectedCore(engine, sql, false);
+    IEnumerable<IColumn> ISelectFields.ToColumns()
+        => ToColumnsCore();
     /// <summary>
-    /// 拼写字段
+    /// 拼写筛选字段列表
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <param name="appended"></param>
     /// <returns></returns>
     protected virtual bool WriteSelectedCore(ISqlEngine engine, StringBuilder sql, bool appended)
+        => WriteSelectFields(engine, sql, _selected, appended);
+    /// <summary>
+    /// 拼写筛选字段列表
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    /// <param name="fields"></param>
+    /// <param name="appended"></param>
+    /// <returns></returns>
+    protected static bool WriteSelectFields(ISqlEngine engine, StringBuilder sql, IEnumerable<IFieldView> fields, bool appended)
     {
-        foreach (var field in _selected)
+        foreach (var field in fields)
         {
             if (appended)
                 sql.Append(',');

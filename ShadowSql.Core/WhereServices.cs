@@ -1,4 +1,4 @@
-﻿using ShadowSql.Filters;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
@@ -56,18 +56,5 @@ public static partial class ShadowSqlCoreServices
     }
     #endregion
     #region SqlQuery
-    /// <summary>
-    /// Where
-    /// </summary>
-    /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="where"></param>
-    /// <returns></returns>
-    public static Query Where<Query>(this Query query, Func<SqlQuery, SqlQuery> where)
-        where Query : IDataSqlQuery, IWhere
-    {
-        query.Query = where(query.Query);
-        return query;
-    }
     #endregion
 }

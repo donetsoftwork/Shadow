@@ -1,8 +1,9 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Join;
+using ShadowSql.Simples;
+using TestSupports;
 
 namespace ShadowSqlTest.Join;
 
@@ -12,49 +13,83 @@ public class JoinOnQueryTests
     static readonly DB _db = DB.Use("MyDb");
 
     [Fact]
-    public void On()
+    public void Apply()
     {
-        var join = CreateJoin();
-        join.On("t1.DepartmentId=t2.Id");
-        var sql = _engine.Sql(join.Root);
-        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.DepartmentId=t2.Id", sql);
+        var query = new CommentTable()
+            .Join(new PostTable())
+            .Apply(
+                c => c.PostId,
+                p => p.Id,
+                (q, PostId, Id) => q.And(PostId.Equal(Id))
+            );
+        var sql = _engine.Sql(query.Root);
+        Assert.Equal("[Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id]", sql);
     }
 
     [Fact]
-    public void Source()
+    public void LeftTableJoin()
     {
-        var join = CreateJoin()
-            .AsLeftJoin()
-            .On((t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")))
-            //多表同名字段,优先本次被联接的表
-            .On(view => view.Column("Id").IsNull());
-        var sql = _engine.Sql(join.Root);
-        Assert.Equal("[Employees] AS t1 LEFT JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] AND t2.[Id] IS NULL", sql);
+        var query = new CommentTable()
+            .Join(new PostTable())
+            .Apply(
+                c => c.PostId,
+                p => p.Id,
+                (q, PostId, Id) => q.And(PostId.Equal(Id))
+            )
+            .LeftTableJoin(new UserTable())
+            .Apply(
+                c => c.UserId,
+                u => u.Id,
+                (q, UserId, Id) => q.And(UserId.Equal(Id))
+            );
+        var sql = _engine.Sql(query.Root);
+        Assert.Equal("[Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] INNER JOIN [Users] AS t3 ON t1.[UserId]=t3.[Id]", sql);
     }
-
     [Fact]
-    public void TableLogicInfo()
+    public void RightTableJoin()
     {
-        var join = CreateJoin();
-        var left = join.Left;
-        var right = join.Source;
-
-        var departmentId = left.Field("DepartmentId");
-        var id = right.Field("Id");
-        join.On(departmentId.Equal(id));
-        var sql = _engine.Sql(join.Root);
-        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id]", sql);
+        var query = new PostTable()
+            .Join(new CommentTable())
+            .Apply(
+                p => p.Id,
+                c => c.PostId,
+                (q, Id, PostId) => q.And(Id.Equal(PostId))
+            )
+            .RightTableJoin(new UserTable())
+            .Apply(
+                c => c.UserId,
+                u => u.Id,
+                (q, UserId, Id) => q.And(UserId.Equal(Id))
+            );
+        var sql = _engine.Sql(query.Root);
+        Assert.Equal("[Posts] AS t1 INNER JOIN [Comments] AS t2 ON t1.[Id]=t2.[PostId] INNER JOIN [Users] AS t3 ON t2.[UserId]=t3.[Id]", sql);
     }
-
-
-
-    private static JoinOnSqlQuery<Table, Table> CreateJoin()
+    [Fact]
+    public void ApplyLeft()
     {
-        var employees = _db.From("Employees")
-            .DefineColums("Id", "Name", "DepartmentId");
-        var departments = _db.From("Departments")
-            .DefineColums("Id", "Name", "Manager", "ParentId", "RootId");
-
-        return employees.SqlJoin(departments);
+        var query = new CommentTable()
+            .Join(new PostTable())
+            .Apply(
+                c => c.PostId,
+                p => p.Id,
+                (q, PostId, Id) => q.And(PostId.Equal(Id))
+            )
+            .ApplyLeft(c => c.Pick, (q, Pick) => q.And(Pick.EqualValue(true)));
+        var sql = _engine.Sql(query.Root);
+        Assert.Equal("[Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t1.[Pick]=1", sql);
+    }
+    [Fact]
+    public void ApplyRight()
+    {
+        var query = new PostTable()
+            .Join(new CommentTable())
+            .Apply(
+                p => p.Id,
+                c => c.PostId,
+                (q, Id, PostId) => q.And(Id.Equal(PostId))
+            )
+            .ApplyRight(c => c.Pick, (q, Pick) => q.And(Pick.EqualValue(true)));
+        var sql = _engine.Sql(query.Root);
+        Assert.Equal("[Posts] AS t1 INNER JOIN [Comments] AS t2 ON t1.[Id]=t2.[PostId] WHERE t2.[Pick]=1", sql);
     }
 }

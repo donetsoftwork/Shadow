@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -60,6 +60,14 @@ public class TableUpdate(ITable table, ISqlLogic filter)
     protected override IColumn? GetColumn(string columName)
         => _table.GetColumn(columName);
     #endregion
+    /// <summary>
+    /// 按表名修改
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public static TableUpdate Create(string tableName, ISqlLogic filter)
+        => new(SimpleTable.Use(tableName), filter);
     ITableView IUpdate.Table
         => _table;
     #region ISqlEntity

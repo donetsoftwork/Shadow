@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace ShadowSql.Variants;
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 public class TableAlias<TTable>
-    : SqlAlias<TTable>, IAliasTable
+    : SqlAlias<TTable>, IAliasTable<TTable>
     where TTable : ITable
 {
     /// <summary>
@@ -109,7 +109,7 @@ public class TableAlias<TTable>
     /// <returns></returns>
     public IField Field(string fieldName)
         => new AliasTableFieldInfo(this, fieldName);
-    ITableView IAliasTable.Target
+    ITable IAliasTable.Target
         => _target;
     #region ITableView
     IEnumerable<IColumn> ITableView.Columns

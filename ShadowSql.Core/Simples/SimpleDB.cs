@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Services;
 using System;
 
@@ -13,7 +13,7 @@ public sealed class SimpleDB : Identifier, IDB
         : base(name)
     {
     }
-    private static readonly CacheService<SimpleDB> _cacher = new(name => new SimpleDB(name));
+    private static readonly CacheService<SimpleDB> _cacher = new(static name => new SimpleDB(name));
     /// <summary>
     /// 默认表对象
     /// </summary>

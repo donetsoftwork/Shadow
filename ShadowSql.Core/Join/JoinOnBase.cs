@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
@@ -9,16 +9,10 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表俩俩关联基类
 /// </summary>
-public abstract class JoinOnBase(IJoinTable root)
+public abstract class JoinOnBase
     : FilterBase, IMultiView
 {
     #region 配置
-    private readonly IJoinTable _root = root;
-    /// <summary>
-    /// 联表
-    /// </summary>
-    public IJoinTable Root
-        => _root;
     private string _joinType = " INNER JOIN ";
     /// <summary>
     /// 联表类型

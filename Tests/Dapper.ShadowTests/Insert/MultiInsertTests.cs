@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using ShadowSql;
 
 namespace Dapper.ShadowTests.Insert;
@@ -26,10 +26,9 @@ public class MultiInsertTests : ExecuteTestBase, IDisposable
             .ToMultiInsert()
             .Insert(student => student.Name.InsertValues("张三", "李四", "王二"))
             //以第一个值数量为准,多余的忽略
-            .Insert(student => student.Age.InsertValues(9, 11, 10, 12))
-            .Use(SqliteExecutor);
+            .Insert(student => student.Age.InsertValues(9, 11, 10, 12));
 
-        var result = insert.Execute();
+        var result = insert.Execute(SqliteExecutor);
         Assert.Equal(3, result);
     }
 

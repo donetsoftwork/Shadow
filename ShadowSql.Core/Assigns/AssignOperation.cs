@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.SqlVales;
 using System.Text;
@@ -42,25 +42,15 @@ public class AssignOperation(IAssignView column, AssignSymbol assign, ISqlValue 
     public void Write(ISqlEngine engine, StringBuilder sql)
     {
         _column.Write(engine, sql);
+        // { += | -= | *= | /= | %= | &= } | ^= | |=
+        // 复合赋值运算符：
+        // += 相加并赋值
+        // -= 相减并赋值
+        // *= 相乘并赋值
+        // /= 相除并赋值
+        // %= 取模并赋值
         _assign.Write(engine, sql);
-        _value.Write(engine, sql);
-        //if(_column.Write(engine, sql))
-        //{
-        //    // { += | -= | *= | /= | %= | &= } | ^= | |=
-        //    // 复合赋值运算符：
-        //    // += 相加并赋值
-        //    // -= 相减并赋值
-        //    // *= 相乘并赋值
-        //    // /= 相除并赋值
-        //    // %= 取模并赋值
-        //    // &= “位与”并赋值
-        //    // ^=“位异或”并赋值
-        //    // |=“位或”并赋值
-        //    _assign.Write(engine, sql);
-        //    if (_value.Write(engine, sql))
-        //        return true;
-        //}
-        //return false;
+        _value.Write(engine, sql);        
     }
     #endregion
 }

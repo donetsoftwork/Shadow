@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Identifiers;
 using ShadowSql.Services;
 
@@ -90,7 +90,7 @@ public sealed class FieldInfo : FieldInfoBase, IField, ICompareField
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<FieldInfo> _cacher = new(name => new FieldInfo(name));
+    private static readonly CacheService<FieldInfo> _cacher = new(static name => new FieldInfo(name));
 
     string IView.ViewName
         => _name;

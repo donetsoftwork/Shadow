@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
@@ -19,7 +19,7 @@ public class TableCursor : CursorBase, ICursor
     /// <param name="offset"></param>
     /// <param name="source"></param>
     internal TableCursor(int limit, int offset, ITableView source)
-        : base(offset, limit)
+        : base(limit, offset)
     {
         _source = source;
     }

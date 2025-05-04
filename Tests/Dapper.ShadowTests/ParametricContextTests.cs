@@ -2,6 +2,7 @@ using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
 
@@ -17,8 +18,8 @@ public class ParametricContextTests
     {
         var query = _db.From("Users")
             .ToSqlQuery()
-            .ColumnValue("Id", 100, "<")
-            .ColumnValue("Status", true);
+            .FieldValue("Id", 100, "<")
+            .FieldValue("Status", true);
         ParametricContext context = new(_engine);
         var sql = context.Sql(query);
         
@@ -31,8 +32,8 @@ public class ParametricContextTests
     {
         var query = _db.From("Users")
             .ToSqlQuery()
-            .ColumnInValue("Id", 1, 2, 3)
-            .ColumnValue("Status", true);
+            .FieldInValue("Id", 1, 2, 3)
+            .FieldValue("Status", true);
         ParametricContext context = new(_engine);
         var sql = context.Sql(query);
 
@@ -44,7 +45,7 @@ public class ParametricContextTests
     {
         var query = new Table("Posts")
             .ToSqlQuery()
-            .ColumnEqualValue("Id", 10)
+            .FieldEqualValue("Id", 10)
             .ToSelect();
         ParametricContext context = new(_engine);
         var sql = context.Sql(query);

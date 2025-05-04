@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
@@ -20,8 +20,8 @@ public class SelectInsertTests : ExecuteTestBase, IDisposable
     [Fact]
     public void ToInsert()
     {
-        var select = _students.ToSelect();
-        select.Fields.Select(_name, _age);
+        var select = _students.ToSelect()
+            .Select(_name, _age);
         var insert = SqliteExecutor.From("Backup2025")
             .AddColums(_name, _age)
             .ToDapperInsert(select);
@@ -35,7 +35,7 @@ public class SelectInsertTests : ExecuteTestBase, IDisposable
         var backup = _db.From("Backup2025")
             .AddColums(_name, _age);
         var insert = _students.ToSelect()
-            .Select(select => select.Fields.Select(_name, _age))
+            .Select(_name, _age)
             .InsertTo(backup);
         var result = insert.Execute(SqliteExecutor);
         Assert.Equal(0, result);

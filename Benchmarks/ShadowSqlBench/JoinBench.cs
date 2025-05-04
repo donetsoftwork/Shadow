@@ -1,9 +1,10 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Select;
@@ -25,75 +26,47 @@ public class JoinBench
     private static PostTable p = new("p");
 
     [Benchmark]
-    public string ShadowSqlBySqlQuery()
+    public string ShadowSqlByTableName()
     {
-        var joinOn = new Table("Comments").As("c")
+        var select = new Table("Comments").As("c")
             .SqlJoin(new Table("Posts").As("p"))
-            .OnColumn("PostId", "Id");
-
-        var query = joinOn.Root
-            .TableColumnEqualValue("c", "Pick", true)
-            .TableColumnEqualValue("p", "Author", "jxj")
+            .OnColumn("PostId", "Id")
+            .Root
+            .TableFieldEqualValue("c", "Pick", true)
+            .TableFieldEqualValue("p", "Author", "jxj")
             .ToCursor()
-             .Desc("c", c => c.Field("Id"))
-             .ToSelect();
-        query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
+            .Desc<IAliasTable>("c", c => c.Field("Id"))
+            .ToSelect()
+            .Select<IAliasTable>("c", c => [c.Field("Id"), c.Field("Content")]);
 
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-    [Benchmark]
-    public string ShadowSqlByQuery()
-    {
-        var joinOn = new Table("Comments").As("c")
-            .SqlJoin(new Table("Posts").As("p"))
-            .OnColumn("PostId", "Id");
-
-        var query = joinOn.Root
-            .TableColumnEqualValue("c", "Pick", true)
-            .TableColumnEqualValue("p", "Author", "jxj")
-            .ToCursor()
-             .Desc("c", c => c.Field("Id"))
-             .ToSelect();
-        query.Fields.Select("c", c => [c.Field("Id"), c.Field("Content")]);
-
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-    [Benchmark]
-    public string ShadowSqlByParametricLogic()
-    {
-        JoinTableQuery joinTable = new();
-        joinTable.AddMember(p)
-            .AddMember(c);
-        var joinOn = new JoinOnQuery(joinTable, c, p)
-            .And(c.PostId.Equal(p.Id));
-        joinTable.AddJoinOn(joinOn);
-        var query = joinTable.And(c.Pick.EqualValue(true))
-            .And(p.Author.EqualValue("jxj"));
-        var cursor = new TableCursor(query)
-            .Desc(c.Id);
-        var select = new TableSelect(cursor)
-            .Select(c.Id, c.Content);
         ParametricContext context = new(_engine);
         var sql = context.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }
     [Benchmark]
+    public string ShadowSqlBySqlQuery()
+    {
+        var select = c.SqlJoin(p)
+            .On(c.PostId, p.Id)
+            .Root
+            .Where(c.Pick.Equal())
+            .Where(p.Author.Equal())
+            .ToCursor()
+            .Desc(c.Id)
+            .ToSelect()
+            .Select(c.Id, c.Content);
+
+        var sql = _engine.Sql(select);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+    [Benchmark]
     public string ShadowSqlByLogic()
     {
-        JoinTableQuery joinTable = new();
-        joinTable.AddMember(p)
-            .AddMember(c);
-        var joinOn = new JoinOnQuery(joinTable, c, p)
+        var joinOn = JoinOnQuery.Create(c, p)
             .And(c.PostId.Equal(p.Id));
-        joinTable.AddJoinOn(joinOn);
-        var query = joinTable.And(c.Pick.Equal())
+        var query = joinOn.Root.And(c.Pick.Equal())
             .And(p.Author.Equal());
         var cursor = new TableCursor(query)
             .Desc(c.Id);

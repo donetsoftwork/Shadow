@@ -23,7 +23,7 @@
         .ToCreate()
         .Execute(Executor);
 ~~~
-## 3. TruncateTable
+## 3. DropTable
 ~~~csharp
 var drop = new DropTable("Students");
 ~~~

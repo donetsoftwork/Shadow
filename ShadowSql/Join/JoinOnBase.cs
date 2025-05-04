@@ -1,8 +1,7 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Variants;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +11,9 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表俩俩关联基类
 /// </summary>
+/// <typeparam name="TJoinTable"></typeparam>
+/// <typeparam name="TLeft"></typeparam>
+/// <typeparam name="TRight"></typeparam>
 /// <typeparam name="LTable"></typeparam>
 /// <typeparam name="RTable"></typeparam>
 /// <typeparam name="TFilter"></typeparam>
@@ -19,8 +21,11 @@ namespace ShadowSql.Join;
 /// <param name="left"></param>
 /// <param name="right"></param>
 /// <param name="filter"></param>
-public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, TableAlias<LTable> left, TableAlias<RTable> right, TFilter filter)
-    : JoinOnBase(root), IJoinOn, IMultiView, IDataFilter
+public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFilter>(TJoinTable root, TLeft left, TRight right, TFilter filter)
+    : JoinOnBase, IJoinOn, IMultiView, IDataFilter
+    where TJoinTable : IJoinTable
+    where TLeft : IAliasTable<LTable>
+    where TRight : IAliasTable<RTable>
     where LTable : ITable
     where RTable : ITable
     where TFilter : ISqlLogic
@@ -28,22 +33,31 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
 
     #region 配置
     /// <summary>
+    /// 联表
+    /// </summary>
+    protected readonly TJoinTable _root = root;
+    /// <summary>
+    /// 联表
+    /// </summary>
+    public TJoinTable Root
+        => _root;
+    /// <summary>
     /// 左表
     /// </summary>
-    protected readonly TableAlias<LTable> _left = left;
+    protected readonly TLeft _left = left;
     /// <summary>
     /// 当前数据源(右表)
     /// </summary>
-    protected readonly TableAlias<RTable> _source = right;
+    protected readonly TRight _source = right;
     /// <summary>
     /// 左表
     /// </summary>
-    public TableAlias<LTable> Left
+    public TLeft Left
         => _left;
     /// <summary>
     /// 当前数据源(右表)
     /// </summary>
-    public TableAlias<RTable> Source
+    public TRight Source
         => _source;
     /// <summary>
     /// 表前缀包装列
@@ -92,6 +106,8 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
         => _source.Field(fieldName);
     #endregion
     #region IJoinOn
+    IJoinTable IJoinOn.Root
+        => _root;
     IAliasTable IJoinOn.Left
         => _left;
     IAliasTable IJoinOn.JoinSource
@@ -121,12 +137,6 @@ public abstract class JoinOnBase<LTable, RTable, TFilter>(IJoinTable root, Table
     /// <param name="filter"></param>
     internal void ApplyFilter(Func<TFilter, TFilter> filter)
         => _filter = filter(_filter);
-    ///// <summary>
-    ///// 过滤查询数据源
-    ///// </summary>
-    ///// <returns></returns>
-    //protected override ITableView GetFilterSource()
-    //    => this;
     #endregion
     #region IDataFilter
     ITableView IDataFilter.Source

@@ -1,6 +1,5 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Variants;
 
 namespace ShadowSql;
 
@@ -9,8 +8,7 @@ namespace ShadowSql;
 /// </summary>
 public static partial class ShadowSqlServices
 {
-    #region Join
-    #region JoinTableQuery
+    #region IDataQuery
     /// <summary>
     /// 联表(创建新联表)
     /// </summary>
@@ -29,25 +27,6 @@ public static partial class ShadowSqlServices
         return joinOn;
     }
     /// <summary>
-    /// 联表(创建新联表)
-    /// </summary>
-    /// <typeparam name="LTable"></typeparam>
-    /// <typeparam name="RTable"></typeparam>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
-    public static JoinOnQuery<LTable, RTable> Join<LTable, RTable>(this TableAlias<LTable> left, TableAlias<RTable> right)
-        where LTable : ITable
-        where RTable : ITable
-    {
-        JoinTableQuery joinTable = new();
-        joinTable.AddMember(left);
-        joinTable.AddMember(right);
-        JoinOnQuery<LTable, RTable> joinOn = new(joinTable, left, right);
-        joinTable.AddJoinOn(joinOn);
-        return joinOn;
-    }
-    /// <summary>
     /// 用左表联新表
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
@@ -56,7 +35,7 @@ public static partial class ShadowSqlServices
     /// <param name="joinOn"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static JoinOnQuery<LTable, TTable> JoinLeftTable<LTable, RTable, TTable>(this JoinOnQuery<LTable, RTable> joinOn, TTable table)
+    public static JoinOnQuery<LTable, TTable> LeftTableJoin<LTable, RTable, TTable>(this JoinOnQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
         where RTable : ITable
         where TTable : ITable
@@ -67,6 +46,7 @@ public static partial class ShadowSqlServices
         root.AddJoinOn(joinOnNew);
         return joinOnNew;
     }
+
     /// <summary>
     /// 用右表联新表
     /// </summary>
@@ -76,7 +56,7 @@ public static partial class ShadowSqlServices
     /// <param name="joinOn"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static JoinOnQuery<RTable, TTable> JoinRightTable<LTable, RTable, TTable>(this JoinOnQuery<LTable, RTable> joinOn, TTable table)
+    public static JoinOnQuery<RTable, TTable> RightTableJoin<LTable, RTable, TTable>(this JoinOnQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
         where RTable : ITable
         where TTable : ITable
@@ -87,10 +67,36 @@ public static partial class ShadowSqlServices
         root.AddJoinOn(joinOnNew);
         return joinOnNew;
     }
+    #region Multi
+    /// <summary>
+    /// 多表(创建新多表)
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public static MultiTableQuery Multi(this IAliasTable table, IAliasTable other)
+    {
+        var multiTable = new MultiTableQuery();
+        multiTable.AddMemberCore(table);
+        multiTable.AddMemberCore(other);
+        return multiTable;
+    }
+    /// <summary>
+    /// 多表(创建新多表)
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public static MultiTableQuery Multi(this ITable table, ITable other)
+    {
+        var multiTable = new MultiTableQuery();
+        multiTable.CreateMember(table);
+        multiTable.CreateMember(other);
+        return multiTable;
+    }
     #endregion
     #endregion
-    #region SqlJoin
-    #region JoinTableSqlQuery
+    #region IDataSqlQuery
     /// <summary>
     /// 联表(创建新联表)
     /// </summary>
@@ -108,25 +114,34 @@ public static partial class ShadowSqlServices
         joinTable.AddJoinOn(joinOn);
         return joinOn;
     }
+    #region SqlMulti
     /// <summary>
-    /// 联表(创建新联表)
+    /// 多表(创建新多表)
     /// </summary>
-    /// <typeparam name="LTable"></typeparam>
-    /// <typeparam name="RTable"></typeparam>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="table"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    public static JoinOnSqlQuery<LTable, RTable> SqlJoin<LTable, RTable>(this TableAlias<LTable> left, TableAlias<RTable> right)
-        where LTable : ITable
-        where RTable : ITable
+    public static MultiTableSqlQuery SqlMulti(this IAliasTable table, IAliasTable other)
     {
-        JoinTableSqlQuery joinTable = new();
-        joinTable.AddMember(left);
-        joinTable.AddMember(right);
-        JoinOnSqlQuery<LTable, RTable> joinOn = new(joinTable, left, right);
-        joinTable.AddJoinOn(joinOn);
-        return joinOn;
+        var multiTable = new MultiTableSqlQuery();
+        multiTable.AddMemberCore(table);
+        multiTable.AddMemberCore(other);
+        return multiTable;
     }
+    /// <summary>
+    /// 多表(创建新多表)
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public static MultiTableSqlQuery SqlMulti(this ITable table, ITable other)
+    {
+        var multiTable = new MultiTableSqlQuery();
+        multiTable.CreateMember(table);
+        multiTable.CreateMember(other);
+        return multiTable;
+    }
+    #endregion
     /// <summary>
     /// 用左表联新表
     /// </summary>
@@ -136,7 +151,7 @@ public static partial class ShadowSqlServices
     /// <param name="joinOn"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static JoinOnSqlQuery<LTable, TTable> JoinLeftTable<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
+    public static JoinOnSqlQuery<LTable, TTable> LeftTableJoin<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
         where RTable : ITable
         where TTable : ITable
@@ -147,6 +162,7 @@ public static partial class ShadowSqlServices
         root.AddJoinOn(joinOnNew);
         return joinOnNew;
     }
+
     /// <summary>
     /// 用右表联新表
     /// </summary>
@@ -156,7 +172,7 @@ public static partial class ShadowSqlServices
     /// <param name="joinOn"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static JoinOnSqlQuery<RTable, TTable> JoinRightTable<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
+    public static JoinOnSqlQuery<RTable, TTable> RightTableJoin<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
         where RTable : ITable
         where TTable : ITable
@@ -166,7 +182,6 @@ public static partial class ShadowSqlServices
         var joinOnNew = new JoinOnSqlQuery<RTable, TTable>(root, joinOn.Source, rightNew);
         root.AddJoinOn(joinOnNew);
         return joinOnNew;
-    }
-    #endregion
-    #endregion    
+    }    
+    #endregion  
 }

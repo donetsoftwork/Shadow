@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -47,7 +47,8 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     /// <returns></returns>
     public GroupByAliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        _filter = _filter.And(query(_source.Aggregate(select, aggregate)));
+        
+        _filter = _filter.And(query(aggregate(_source.Prefix(select(_source.Target)))));
         return this;
     }
     /// <summary>
@@ -59,7 +60,7 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     /// <returns></returns>
     public GroupByAliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        _filter = _filter.Or(query(_source.Aggregate(select, aggregate)));
+        _filter = _filter.Or(query(aggregate(_source.Prefix(select(_source.Target)))));
         return this;
     }
     #region ISqlEntity

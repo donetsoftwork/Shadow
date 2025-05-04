@@ -1,10 +1,10 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.SqlVales;
 
 namespace ShadowSql.Insert;
 
 /// <summary>
-/// 插入单值
+/// 被插入单值
 /// </summary>
 /// <param name="column"></param>
 /// <param name="value"></param>

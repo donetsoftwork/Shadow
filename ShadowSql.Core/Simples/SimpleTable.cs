@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public class SimpleTable : TableBase
         : base(name)
     {
     }
-    private static readonly CacheService<SimpleTable> _cacher = new(name => new SimpleTable(name));
+    private static readonly CacheService<SimpleTable> _cacher = new(static name => new SimpleTable(name));
     /// <summary>
     /// 默认表对象
     /// </summary>

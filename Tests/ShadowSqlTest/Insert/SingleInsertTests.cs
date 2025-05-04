@@ -1,7 +1,8 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
+using System;
 using static ShadowSqlTest.Delete.TableDeleteTests;
 
 namespace ShadowSqlTest.Insert;
@@ -23,6 +24,17 @@ public class SingleInsertTests
             .Insert(_score.InsertValue(90));
         var sql = _engine.Sql(insert);
         Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@Name,90)", sql);
+    }
+
+    [Fact]
+    public void Insert2()
+    {
+        var table = new StudentTable();
+        var insert = table.ToInsert()
+            .Insert(table.Name.Insert("StudentName"))
+            .Insert(table.Score.InsertValue(90));
+        var sql = _engine.Sql(insert);
+        Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@StudentName,90)", sql);
     }
 
     [Fact]

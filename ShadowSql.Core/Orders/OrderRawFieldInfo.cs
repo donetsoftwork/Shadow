@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Services;
 using System.Text;
@@ -24,7 +24,7 @@ public sealed class OrderRawFieldInfo : Identifier, IOrderView
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<OrderRawFieldInfo> _cacher = new(statement => new OrderRawFieldInfo(statement));
+    private static readonly CacheService<OrderRawFieldInfo> _cacher = new(static statement => new OrderRawFieldInfo(statement));
 
     /// <summary>
     /// 拼写sql

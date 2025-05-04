@@ -1,8 +1,9 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
+using TestSupports;
 
 namespace ShadowSqlCoreTest.Insert;
 
@@ -33,5 +34,34 @@ public class SingleInsertTests
             .Insert(table.Score.InsertValue(90));
         var sql = _engine.Sql(insert);
         Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@StudentName,90)", sql);
+    }
+    [Fact]
+    public void InsertColumn()
+    {
+        var table = new StudentTable();
+        var insert = new SingleInsert(table)
+            .InsertColumn(table.Name)
+            .InsertColumn(table.Score);
+        var sql = _engine.Sql(insert);
+        Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@Name,@Score)", sql);
+    }
+
+    [Fact]
+    public void InsertColumns()
+    {
+        var table = new StudentTable();
+        var insert = new SingleInsert(table)
+            .InsertColumns(table.Name, table.Score);
+        var sql = _engine.Sql(insert);
+        Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@Name,@Score)", sql);
+    }
+    [Fact]
+    public void InsertSelfColumns()
+    {
+        var table = new StudentTable();
+        var insert = new SingleInsert(table)
+            .InsertSelfColumns();
+        var sql = _engine.Sql(insert);
+        Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@Name,@Score)", sql);
     }
 }

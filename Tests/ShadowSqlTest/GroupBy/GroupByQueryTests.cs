@@ -1,8 +1,9 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
+using TestSupports;
 
 namespace ShadowSqlTest.GroupBy;
 
@@ -78,5 +79,14 @@ public class GroupByQueryTests
             .And(Level.Max().GreaterValue(9));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9", sql);
+    }
+    [Fact]
+    public void Apply()
+    {
+        var groupBy = new CommentTable()
+            .GroupBy(static table => [table.PostId])
+            .Apply(static table => table.Pick.Sum(), static (q, Pick) => q.And(Pick.GreaterValue(100)));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
     }
 }

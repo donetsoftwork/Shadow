@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using System;
 using System.Text;
@@ -24,6 +24,11 @@ public class AssignSymbol : ISqlEntity
     public virtual void Write(ISqlEngine engine, StringBuilder sql)
         => sql.Append('=');
     #region Manager
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual string Operation
+        => "=";
 
     private static readonly AssignSymbol _equalTo = new();
     /// <summary>
@@ -76,26 +81,33 @@ public class AssignSymbol : ISqlEntity
     {
         //  += | -= | *= | /= | %= | &= | |= | ^=
         return new AssignManager(_equalTo
-            , new ComplexSymbol('+')
-            , new ComplexSymbol('-')
-            , new ComplexSymbol('*')
-            , new ComplexSymbol('/')
-            , new ComplexSymbol('%')
-            , new ComplexSymbol('&')
-            , new ComplexSymbol('|')
-            , new ComplexSymbol('^')
+            , new ComplexSymbol("+=")
+            , new ComplexSymbol("-=")
+            , new ComplexSymbol("*=")
+            , new ComplexSymbol("/=")
+            , new ComplexSymbol("%=")
+            , new ComplexSymbol("&=")
+            , new ComplexSymbol("|=")
+            , new ComplexSymbol("^=")
             );
     }
+    /// <summary>
+    /// 获取操作符
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    public static AssignSymbol Get(string operation)
+        => _manager.Value.Get(operation);
     #endregion
 
-    class ComplexSymbol(char symbol) : AssignSymbol
+    class ComplexSymbol(string operation) : AssignSymbol
     {
-        private readonly char _symbol = symbol;
+        private readonly string _operation = operation;
         /// <summary>
         /// 符号
         /// </summary>
-        public char Symbol
-            => _symbol;
+        public override string Operation
+            => _operation;
         /// <summary>
         /// 拼写sql
         /// </summary>
@@ -103,8 +115,7 @@ public class AssignSymbol : ISqlEntity
         /// <param name="sql"></param>
         public override void Write(ISqlEngine engine, StringBuilder sql)
         {
-            sql.Append(_symbol)
-                .Append('=');
+            sql.Append(_operation);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Services;
 using ShadowSql.SqlVales;
@@ -99,7 +99,7 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// <returns></returns>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
         => engine.Parameter(sql, _name);
-    private static readonly CacheService<Parameter> _cacher = new(name => new Parameter(name));
+    private static readonly CacheService<Parameter> _cacher = new(static name => new Parameter(name));
 
     string IView.ViewName
         => _name;

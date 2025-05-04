@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
@@ -8,7 +8,7 @@ using System.Text;
 namespace ShadowSql.Select;
 
 /// <summary>
-/// 表视图筛选列
+/// 获取表视图数据
 /// </summary>
 /// <param name="table"></param>
 public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
@@ -27,17 +27,16 @@ public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
     /// </summary>
     /// <param name="columnName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columnName)
+    protected override IColumn? GetColumn(string columnName)
         => _source.GetColumn(columnName);
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public override IField Field(string fieldName)
+    protected override IField Field(string fieldName)
         => _source.Field(fieldName);
     #endregion
-
     #region ISelect
     IEnumerable<IColumn> ISelectFields.ToColumns()
         => ToColumnsCore();

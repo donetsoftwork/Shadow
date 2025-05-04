@@ -1,8 +1,9 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
+using TestSupports;
 
 namespace ShadowSqlCoreTest.Insert;
 

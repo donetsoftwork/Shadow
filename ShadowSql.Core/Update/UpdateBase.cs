@@ -1,4 +1,4 @@
-﻿using ShadowSql.Assigns;
+using ShadowSql.Assigns;
 using ShadowSql.Engines;
 using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
@@ -18,11 +18,11 @@ public abstract class UpdateBase : ISqlEntity
     /// <summary>
     /// 修改操作
     /// </summary>
-    protected readonly List<IAssignOperation> _assignInfos = [];
+    protected readonly List<IAssignInfo> _assignInfos = [];
     /// <summary>
     /// 赋值操作
     /// </summary>
-    public IEnumerable<IAssignOperation> AssignInfos
+    public IEnumerable<IAssignInfo> AssignInfos
         => _assignInfos;
     #endregion
     #region Set
@@ -30,7 +30,7 @@ public abstract class UpdateBase : ISqlEntity
     /// 添加修改信息
     /// </summary>
     /// <param name="operation"></param>
-    internal void SetCore(IAssignOperation operation)
+    internal void SetCore(IAssignInfo operation)
     {
         _assignInfos.Add(operation);
     }

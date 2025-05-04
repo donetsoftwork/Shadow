@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using ShadowSql.Queries;
 
 namespace ShadowSql;
@@ -223,8 +223,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="source"></param>
     /// <param name="and"></param>
     /// <returns></returns>
-    internal static TComplexAndLogic MergeToAnd<TComplexAndLogic>(this OrLogic source, TComplexAndLogic and)
-        where TComplexAndLogic : ComplexLogicBase, IAndLogic
+    internal static ComplexAndLogic MergeToAnd(this OrLogic source, ComplexAndLogic and)
     {
         return source.LogicCount switch
         {

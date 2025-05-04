@@ -1,9 +1,11 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Simples;
+using ShadowSql.Tables;
+using TestSupports;
 
 namespace ShadowSqlTest.Tables;
 
@@ -14,6 +16,15 @@ public class TableQueryTests
     static readonly IColumn _id = ShadowSql.Identifiers.Column.Use("Id");
     static readonly IColumn _status = ShadowSql.Identifiers.Column.Use("Status");
 
+    [Fact]
+    public void Field()
+    {
+        var query = new TableSqlQuery("Users")
+            .Where(u=> u.Field("Id").Less("LastId"))
+            .Where(u => u.Field("Status").EqualValue(true));
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<@LastId AND [Status]=1", sql);
+    }
     [Fact]
     public void AndQuery()
     {
@@ -189,18 +200,5 @@ public class TableQueryTests
             .Or(complexOrLogic);
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id OR [Status]=@Status", sql);
-    }
-    class UserTable : Table
-    {
-        public UserTable()
-            : base("Users")
-        {
-            Id = DefineColumn(nameof(Id));
-            Status = DefineColumn(nameof(Status));
-        }
-        #region Columns
-        public IColumn Id { get; private set; }
-        public IColumn Status { get; private set; }
-        #endregion
     }
 }

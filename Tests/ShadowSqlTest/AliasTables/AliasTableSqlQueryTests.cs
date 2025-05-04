@@ -1,8 +1,11 @@
-﻿using ShadowSql;
+using ShadowSql;
+using ShadowSql.ColumnQueries;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
+using TestSupports;
 
 namespace ShadowSqlTest.AliasTables;
 
@@ -106,7 +109,7 @@ public class AliasTableSqlQueryTests
         var query = _db.From("Users")
             .As("u")
             .ToSqlQuery()
-            .Where(q => q
+            .Apply(q => q
                 .And("Id=@Id")
                 .And("Status=@Status")
             );
@@ -121,7 +124,7 @@ public class AliasTableSqlQueryTests
         var query = _db.From("Users")
             .As("u")
             .ToSqlQuery()
-            .Where(q => q
+            .Apply(q => q
                 .And("Id=:Id")
                 .And("Status=:Status")
             );
@@ -139,7 +142,7 @@ public class AliasTableSqlQueryTests
         var query = _db.From("Users")
             .As("u")
             .ToSqlOrQuery()
-            .Where(q => q
+            .Apply(q => q
                 .Or("Id=@Id")
                 .Or("Status=@Status")
             );
@@ -154,7 +157,7 @@ public class AliasTableSqlQueryTests
         var query = _db.From("Users")
             .As("u")
             .ToSqlOrQuery()
-            .Where(q => q
+            .Apply(q => q
                 .Or("Id=:Id")
                 .Or("Status=:Status")
             );
@@ -173,8 +176,8 @@ public class AliasTableSqlQueryTests
         var query = _db.From("Users")
             .As("u")
             .ToSqlQuery()
-            .ColumnParameter("Id", "<", "LastId")
-            .ColumnParameter("Status", "=", "state");
+            .FieldParameter("Id", "<", "LastId")
+            .FieldParameter("Status", "=", "state");
         var sql = engine.Sql(query);
         Assert.Equal(expected, sql);
     }
@@ -192,8 +195,8 @@ public class AliasTableSqlQueryTests
             .As("u")
             .ToSqlQuery()
             .ToOr()
-            .ColumnValue("Id", 100, "<")
-            .ColumnValue("Status", true);
+            .FieldValue("Id", 100, "<")
+            .FieldValue("Status", true);
         var sql = engine.Sql(query);
         Assert.Equal(expected, sql);
     }
@@ -222,7 +225,7 @@ public class AliasTableSqlQueryTests
     public void Logic(SqlEngineNames engineName, string expected)
     {
         ISqlEngine engine = SqlEngines.Get(engineName);
-        var query = new Users()
+        var query = new UserTable()
             .As("u")
             .ToSqlQuery()
             //_id是游离状态,不属于别名表,拼接sql时没有表前缀
@@ -239,7 +242,7 @@ public class AliasTableSqlQueryTests
     public void Table(SqlEngineNames engineName, string expected)
     {
         ISqlEngine engine = SqlEngines.Get(engineName);
-        var query = new Users()
+        var query = new UserTable()
             .As("u")
             .ToSqlQuery()
             .Where(user => user.Id, Id => Id.Greater("LastId"));
@@ -255,7 +258,7 @@ public class AliasTableSqlQueryTests
     public void TableLogic(SqlEngineNames engineName, string expected)
     {
         ISqlEngine engine = SqlEngines.Get(engineName);
-        var query = new Users()
+        var query = new UserTable()
             .As("u")
             .ToSqlQuery()
             .Where(user => user.Column("Id").Less("LastId"));

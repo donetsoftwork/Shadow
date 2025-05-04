@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -17,7 +17,7 @@ public class AliasTableSelectTests
         var select = _db.From("Users")
             .As("u")
             .ToSelect();
-        select.Fields.Select("Id", "Name");
+        select.Select("Id", "Name");
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT u.[Id],u.[Name] FROM [Users] AS u", sql);
     }
@@ -44,7 +44,7 @@ public class AliasTableSelectTests
             .Desc(u => u.Field("Age"))
             .Asc(u => u.Field("Id"))
             .ToSelect();
-        select.Fields.Select("Id", "Name");
+        select.Select("Id", "Name");
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT u.[Id],u.[Name] FROM [Users] AS u ORDER BY u.[Age] DESC,u.[Id]", sql);
     }

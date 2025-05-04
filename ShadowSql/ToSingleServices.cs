@@ -1,13 +1,11 @@
-﻿using ShadowSql.AliasTables;
+using ShadowSql.Aggregates;
+using ShadowSql.AliasTables;
 using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.Join;
-using ShadowSql.Logics;
-using ShadowSql.Select;
 using ShadowSql.SingleSelect;
 using ShadowSql.Tables;
-using ShadowSql.Variants;
+using System;
 
 namespace ShadowSql;
 
@@ -16,99 +14,79 @@ namespace ShadowSql;
 /// </summary>
 public static partial class ShadowSqlServices
 {
-    #region TableFields
-    /// <summary>
-    /// 表筛选单列
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static TableSingleSelect<TTable> ToSingle<TTable>(this TTable table)
-        where TTable : ITable
-        => new(table);
-    /// <summary>
-    /// 表过滤筛选单列
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    /// <returns></returns>
-    public static TableSingleSelect<TTable> ToSingle<TTable>(this TTable table, ISqlLogic filter)
-        where TTable : ITable
-        => new(table, filter);
+    #region Table
     /// <summary>
     /// 表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static TableSingleSelect<TTable> ToSingle<TTable>(this TableSqlQuery<TTable> query)
+    public static TableSingleSelect ToSingle<TTable>(this TableSqlQuery<TTable> query, Func<TTable, IFieldView> select)
         where TTable : ITable
-        => new(query);
+        => new(query, select(query.Source));
+    /// <summary>
+    /// 表筛选单列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    public static TableSingleSelect ToSingle<TTable>(this TableQuery<TTable> query, Func<TTable, IFieldView> select)
+    where TTable : ITable
+        => new(query, select(query.Source));
     /// <summary>
     /// 表范围筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static TableCursorSingleSelect<TTable> ToSingle<TTable>(this TableCursor<TTable> cursor)
+    public static CursorSingleSelect ToSingle<TTable>(this TableCursor<TTable> cursor, Func<TTable, IFieldView> select)
         where TTable : ITable
-        => new(cursor);
+        => new(cursor, select(cursor.Source));
     #endregion
-    #region AliasTableFields
-    /// <summary>
-    /// 别名表筛选单列
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static AliasTableSingleSelect<TTable> ToSingle<TTable>(this TableAlias<TTable> table)
-        where TTable : ITable
-        => new(table);
-    /// <summary>
-    /// 别名表过滤筛选单列
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    /// <returns></returns>
-    public static AliasTableSingleSelect<TTable> ToSingle<TTable>(this TableAlias<TTable> table, ISqlLogic filter)
-        where TTable : ITable
-        => new(table, filter);
+    #region AliasTable    
     /// <summary>
     /// 别名表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static AliasTableSingleSelect<TTable> ToSingle<TTable>(this AliasTableSqlQuery<TTable> query)
+    public static TableSingleSelect ToSingle<TTable>(this AliasTableSqlQuery<TTable> query, Func<TTable, IColumn> select)
         where TTable : ITable
-        => new(query);
+        => new(query, query.Source.Prefix(select(query.Source.Target)));
+    /// <summary>
+    /// 别名表筛选单列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    public static TableSingleSelect ToSingle<TTable>(this AliasTableQuery<TTable> query, Func<TTable, IColumn> select)
+        where TTable : ITable
+    => new(query, query.Source.Prefix(select(query.Source.Target)));
     /// <summary>
     /// 别名表范围筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static AliasTableCursorSingleSelect<TTable> ToSingle<TTable>(this AliasTableCursor<TTable> cursor)
+    public static CursorSingleSelect ToSingle<TTable>(this AliasTableCursor<TTable> cursor, Func<TTable, IColumn> select)
         where TTable : ITable
-        => new(cursor);
+        => new(cursor, cursor.Source.Prefix(select(cursor.Source.Target)));
     #endregion
     #region MultiTableFields
     /// <summary>
     /// 多(联)表筛选单列
     /// </summary>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static MultiTableSelect ToSingle(this IMultiView table)
-        => new(table);
-    /// <summary>
-    /// 多(联)表筛选单列
-    /// </summary>
     /// <param name="cursor"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static MultiTableCursorSelect ToSingle(this MultiTableCursor cursor)
-        => new(cursor);
+    public static CursorSingleSelect ToSingle(this MultiTableCursor cursor, Func<IMultiView, IFieldView> select)
+        => new(cursor, select(cursor.Source));
     #endregion
     #region GroupByTableFields
     /// <summary>
@@ -116,19 +94,31 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="source"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByTableSingleSelect<TTable> ToSingle<TTable>(this GroupByTableSqlQuery<TTable> source)
+    public static TableSingleSelect ToSingle<TTable>(this GroupByTableSqlQuery<TTable> source, Func<TTable, IAggregateFieldAlias> select)
         where TTable : ITable
-        => new(source);
+        => new(source, select(source.Source));
+    /// <summary>
+    /// GroupBy后再筛选单列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="source"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    public static TableSingleSelect ToSingle<TTable>(this GroupByTableQuery<TTable> source, Func<TTable, IAggregateFieldAlias> select)
+        where TTable : ITable
+        => new(source, select(source.Source));
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByTableCursorSingleSelect<TTable> ToSingle<TTable>(this GroupByTableCursor<TTable> cursor)
+    public static CursorSingleSelect ToSingle<TTable>(this GroupByTableCursor<TTable> cursor, Func<TTable, IAggregateFieldAlias> select)
         where TTable : ITable
-        => new(cursor);
+        => new(cursor, select(cursor.Table));
     #endregion
     #region GroupByAliasTableFields
     /// <summary>
@@ -136,35 +126,34 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="source"></param>
+    /// <param name="select"></param>
+    /// <param name="aggregate"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableSqlQuery<TTable> source)
+    public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableSqlQuery<TTable> source, Func<TTable, IColumn> select, Func<IColumn, IAggregateFieldAlias> aggregate)
         where TTable : ITable
-        => new(source);
+        => new(source, aggregate(source.Source.Prefix(select(source.Source.Target))));
+    /// <summary>
+    /// GroupBy别名表后再筛选单列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="source"></param>
+    /// <param name="select"></param>
+    /// <param name="aggregate"></param>
+    /// <returns></returns>
+    public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableQuery<TTable> source, Func<TTable, IColumn> select, Func<IColumn, IAggregateFieldAlias> aggregate)
+        where TTable : ITable
+        => new(source, aggregate(source.Source.Prefix(select(source.Source.Target))));
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="cursor"></param>
+    /// <param name="select"></param>
+    /// <param name="aggregate"></param>
     /// <returns></returns>
 
-    public static GroupByAliasTableCursorSingleSelect<TTable> ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor)
+    public static CursorSingleSelect ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor, Func<TTable, IColumn> select, Func<IColumn, IAggregateFieldAlias> aggregate)
         where TTable : ITable
-        => new(cursor);
-    #endregion
-    #region GroupByMultiFields
-    /// <summary>
-    /// GroupBy后再筛选单列
-    /// </summary>
-    /// <param name="groupBy"></param>
-    /// <returns></returns>
-    public static GroupByMultiSelect ToSingle(this GroupByMultiSqlQuery groupBy)
-        => new(groupBy);
-    /// <summary>
-    /// GroupBy后再范围(分页)及列筛选单列
-    /// </summary>
-    /// <param name="cursor"></param>
-    /// <returns></returns>
-    public static GroupByMultiCursorSelect ToSingle(this GroupByMultiCursor cursor)
-        => new(cursor);
+        => new(cursor, aggregate(cursor.AliasTable.Prefix(select(cursor.Table))));
     #endregion
 }

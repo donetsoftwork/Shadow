@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using System;
@@ -9,7 +9,7 @@ namespace ShadowSql.Cursors;
 /// 表分组后范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-public class GroupByTableCursor<TTable> : CursorBase<IGroupByView>
+public class GroupByTableCursor<TTable> : GroupByCursorBase
     where TTable : ITable
 {
     /// <summary>
@@ -46,49 +46,25 @@ public class GroupByTableCursor<TTable> : CursorBase<IGroupByView>
         => _table;
     #endregion    
     #region 功能
-    #region GroupBy的列
-    /// <summary>
-    /// 正序
-    /// </summary>
-    /// <param name="select"></param>
-    /// <returns></returns>
-    public GroupByTableCursor<TTable> Asc(Func<IGroupByView, IOrderView> select)
-    {
-        AscCore(select(_source));
-        return this;
-    }
-    /// <summary>
-    /// 倒序
-    /// </summary>
-    /// <param name="select"></param>
-    /// <returns></returns>
-    public GroupByTableCursor<TTable> Desc(Func<IGroupByView, IOrderAsc> select)
-    {
-        DescCore(select(_source));
-        return this;
-    }
-    #endregion
     #region Aggregate
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByTableCursor<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByTableCursor<TTable> AggregateAsc(Func<TTable, IAggregateField> aggregate)
     {
-        AscCore(aggregate(select(_table)));
+        AscCore(aggregate(_table));
         return this;
     }
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByTableCursor<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByTableCursor<TTable> AggregateDesc(Func<TTable, IAggregateField> aggregate)
     {
-        DescCore(aggregate(select(_table)));
+        DescCore(aggregate(_table));
         return this;
     }
     #endregion    

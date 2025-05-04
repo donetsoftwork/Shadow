@@ -1,13 +1,10 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
-using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
-using ShadowSql.GroupBy;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
-using ShadowSql.Select;
-using ShadowSql.Tables;
 using SqlKata;
 using SqlKata.Compilers;
 
@@ -29,53 +26,18 @@ public class GroupByBench
         .AddColums(PostId, Category, Pick);
 
     [Benchmark]
-    public string ShadowSqlBySqlQuery()
+    public string ShadowSqlByTableName()
     {
-        var query = new Table("Comments")
+        var select = new Table("Comments")
             .ToSqlQuery()
-            .ColumnEqualValue("Category", "csharp")
-            .ColumnEqualValue("Pick", true)
-            .GroupBy("PostId")
+            .FieldEqualValue("Category", "csharp")
+            .FieldEqualValue("Pick", true)
+            .SqlGroupBy("PostId")
             .HavingAggregate("SUM", "Hits", hits => hits.GreaterEqualValue(100))
             .ToCursor()
-            .Desc(PostId)
-            .ToSelect();
-        query.Fields.Select("PostId")
-            .SelectCount("Count");
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-    [Benchmark]
-    public string ShadowSqlByQuery()
-    {
-        var query = new Table("Comments")
-            .ToQuery()
-            .And(Category.EqualValue("csharp"))
-            .And(Pick.EqualValue(true))
-            .GroupBy("PostId")
-            .And(Hits.Sum().GreaterEqualValue(100))
-            .ToCursor()
-            .Desc(PostId)
-            .ToSelect();
-        query.Fields.Select("PostId")
-            .SelectCount("Count");
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-    [Benchmark]
-    public string ShadowSqlByParametricLogic()
-    {
-        var filter = new TableFilter(Comments, Category.EqualValue("csharp") & Pick.EqualValue(true));
-        var groupBy = new GroupByQuery(filter, PostId)
-            .And(Hits.Sum().GreaterEqualValue(100));
-        var cursor = new TableCursor(groupBy)
-            .Desc(PostId);
-        var select = new TableSelect(cursor)
-            .Select("PostId")
+            .CountDesc()
+            .ToSelect()
+            .SelectGroupBy()
             .SelectCount("Count");
         ParametricContext context = new(_engine);
         var sql = context.Sql(select);
@@ -83,15 +45,31 @@ public class GroupByBench
         return sql;
     }
     [Benchmark]
+    public string ShadowSqlBySqlQuery()
+    {
+        var select = Comments.ToSqlQuery()
+            .Where(Category.EqualValue("csharp"))
+            .Where(Pick.EqualValue(true))
+            .SqlGroupBy(PostId)
+            .Having(Hits.Sum().GreaterEqualValue(100))
+            .ToCursor()
+            .CountDesc()
+            .ToSelect()
+            .SelectGroupBy()
+            .SelectCount("Count");
+        var sql = _engine.Sql(select);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+    [Benchmark]
     public string ShadowSqlByLogic()
     {
-        var filter = new TableFilter(Comments, Category.Equal().And(Pick.Equal()));
-        var groupBy = new GroupByQuery(filter, PostId)
-            .And(Hits.Sum().GreaterEqualValue(100));
-        var cursor = new TableCursor(groupBy)
-            .Desc(PostId);
-        var select = new TableSelect(cursor)
-            .Select("PostId")
+        var select = Comments.GroupBy(Category.Equal().And(Pick.Equal()), PostId)
+            .And(Hits.Sum().GreaterEqualValue(100))
+            .ToCursor()
+            .CountDesc()
+            .ToSelect()
+            .SelectGroupBy()
             .SelectCount("Count");
         var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
@@ -108,7 +86,7 @@ public class GroupByBench
             .Select("PostId")
             .SelectRaw("COUNT(1) as Count")
             .HavingRaw("SUM(Hits) >= 100")
-            .OrderByDesc("PostId");
+            .OrderByDesc("COUNT(1)");
         var result = _compiler.Compile(query);
         var sql = result.Sql;
         //Console.WriteLine(sql);

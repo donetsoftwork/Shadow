@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Services;
 using ShadowSql.SqlVales;
@@ -25,7 +25,7 @@ public sealed class CompareRawFieldInfo : IdentifierBase, ISqlValue
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<CompareRawFieldInfo> _cacher = new(statement => new CompareRawFieldInfo(statement));
+    private static readonly CacheService<CompareRawFieldInfo> _cacher = new(static statement => new CompareRawFieldInfo(statement));
     #region ISqlEntity
     /// <summary>
     /// 拼写sql

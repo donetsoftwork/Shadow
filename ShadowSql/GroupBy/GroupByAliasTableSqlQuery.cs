@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -17,8 +17,8 @@ namespace ShadowSql.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class GroupByAliasTableSqlQuery<TTable>(TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, SqlQuery having)
-    : GroupBySqlQueryBase<TableAlias<TTable>>(source, fields, having)
+public class GroupByAliasTableSqlQuery<TTable>(IAliasTable<TTable> source, ISqlLogic where, IFieldView[] fields, SqlQuery having)
+    : GroupBySqlQueryBase<IAliasTable<TTable>>(source, fields, having)
     where TTable : ITable
 {
     /// <summary>
@@ -27,7 +27,7 @@ public class GroupByAliasTableSqlQuery<TTable>(TableAlias<TTable> source, ISqlLo
     /// <param name="table"></param>
     /// <param name="where"></param>
     /// <param name="fields"></param>
-    public GroupByAliasTableSqlQuery(TableAlias<TTable> table, ISqlLogic where, IFieldView[] fields)
+    public GroupByAliasTableSqlQuery(IAliasTable<TTable> table, ISqlLogic where, IFieldView[] fields)
         : this(table, where, fields, SqlQuery.CreateAndQuery())
     {
     }
@@ -55,7 +55,7 @@ public class GroupByAliasTableSqlQuery<TTable>(TableAlias<TTable> source, ISqlLo
     /// <returns></returns>
     public GroupByAliasTableSqlQuery<TTable> HavingAggregate(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        _filter.AddLogic(query(_source.Aggregate(select, aggregate)));
+        _filter.AddLogic(query(aggregate(_source.Prefix(select(_source.Target)))));
         return this;
     }
     #endregion

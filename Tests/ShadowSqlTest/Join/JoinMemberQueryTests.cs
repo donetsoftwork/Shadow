@@ -1,8 +1,8 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Join;
+using ShadowSql.ColumnQueries;
 
 namespace ShadowSqlTest.Join;
 

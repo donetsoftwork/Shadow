@@ -1,4 +1,4 @@
-﻿using ShadowSql.Services;
+using ShadowSql.Services;
 
 namespace ShadowSql.Identifiers;
 
@@ -29,9 +29,9 @@ public sealed class DB(string name)
     /// <summary>
     /// 数据表
     /// </summary>
-    private readonly CacheService<Table> _tables = new(name => new Table(name));
+    private readonly CacheService<Table> _tables = new(static name => new Table(name));
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<DB> _cacher = new(name => new DB(name));
+    private static readonly CacheService<DB> _cacher = new(static name => new DB(name));
 }

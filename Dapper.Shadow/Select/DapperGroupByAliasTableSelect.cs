@@ -1,9 +1,11 @@
-﻿using ShadowSql.Cursors;
+using ShadowSql.Cursors;
+using ShadowSql.CursorSelect;
 using ShadowSql.Engines;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
+using ShadowSql.Variants;
 using System.Text;
 
 namespace Dapper.Shadow.Select;
@@ -14,9 +16,9 @@ namespace Dapper.Shadow.Select;
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
 /// <param name="groupBy"></param>
-/// <param name="fields"></param>
-public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByView groupBy, GroupByAliasTableFields<TTable> fields)
-    : SelectBase<IGroupByView, GroupByAliasTableFields<TTable>>(groupBy, fields)
+/// <param name="target"></param>
+public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByView groupBy, IAliasTable<TTable> target)
+    : GroupBySelectBase<IGroupByView, IAliasTable<TTable>>(groupBy, groupBy, target)
     , IDapperSelect
     where TTable : ITable
 {
@@ -26,7 +28,7 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
     public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableSqlQuery<TTable> groupBy)
-        : this(executor, groupBy, new GroupByAliasTableFields<TTable>(groupBy))
+        : this(executor, groupBy, groupBy.Source)
     {
     }
     /// <summary>
@@ -35,7 +37,7 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
     public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableQuery<TTable> groupBy)
-        : this(executor, groupBy, new GroupByAliasTableFields<TTable>(groupBy))
+        : this(executor, groupBy, groupBy.Source)
     {
     }
     #region 配置
@@ -54,21 +56,11 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
-/// <param name="fields"></param>
-public class DapperGroupByAliasTableCursorSelect<TTable>(IExecutor executor, ICursor cursor, GroupByAliasTableFields<TTable> fields)
-    : SelectBase<ICursor, GroupByAliasTableFields<TTable>>(cursor, fields)
+public class DapperGroupByAliasTableCursorSelect<TTable>(IExecutor executor, GroupByAliasTableCursor<TTable> cursor)
+    : GroupCursorBySelectBase<IAliasTable<TTable>>(cursor, cursor.Source, cursor.AliasTable)
     , IDapperSelect
     where TTable : ITable
 {
-    /// <summary>
-    /// GroupBy别名表后再范围(分页)及列筛选
-    /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="cursor"></param>
-    public DapperGroupByAliasTableCursorSelect(IExecutor executor, GroupByAliasTableCursor<TTable> cursor)
-        : this(executor, cursor, new GroupByAliasTableFields<TTable>(cursor))
-    {
-    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>
@@ -77,12 +69,4 @@ public class DapperGroupByAliasTableCursorSelect<TTable>(IExecutor executor, ICu
     public IExecutor Executor
         => _executor;
     #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-        => engine.SelectCursor(sql, this, _source);
 }

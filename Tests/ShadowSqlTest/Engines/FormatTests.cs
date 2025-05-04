@@ -1,5 +1,6 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
+using TestSupports;
 
 namespace ShadowSqlTest.Engines;
 

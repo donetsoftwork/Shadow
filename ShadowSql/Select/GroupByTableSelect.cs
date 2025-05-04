@@ -1,9 +1,7 @@
-﻿using ShadowSql.Cursors;
-using ShadowSql.Engines;
+using ShadowSql.Aggregates;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.SelectFields;
-using System.Text;
+using System;
 
 namespace ShadowSql.Select;
 
@@ -11,46 +9,37 @@ namespace ShadowSql.Select;
 /// GroupBy后再筛选列
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="groupBy"></param>
-/// <param name="fields"></param>
-public class GroupByTableSelect<TTable>(IGroupByView groupBy, GroupByTableFields<TTable> fields)
-    : SelectBase<IGroupByView, GroupByTableFields<TTable>>(groupBy, fields)
+public class GroupByTableSelect<TTable> : GroupBySelectBase<IGroupByView, TTable>
     where TTable : ITable
 {
+    internal GroupByTableSelect(IGroupByView groupBy, TTable target)
+        : base(groupBy, groupBy, target)
+    {
+    }
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByTableSelect(GroupByTableSqlQuery<TTable> groupBy)
-        : this(groupBy, new GroupByTableFields<TTable>(groupBy))
-    {
-    }
-}
-
-/// <summary>
-/// GroupBy后再范围(分页)及列筛选
-/// </summary>
-/// <typeparam name="TTable"></typeparam>
-/// <param name="cursor"></param>
-/// <param name="fields"></param>
-public class GroupByTableCursorSelect<TTable>(ICursor cursor, GroupByTableFields<TTable> fields)
-    : SelectBase<ICursor, GroupByTableFields<TTable>>(cursor, fields)
-    where TTable : ITable
-{
-    /// <summary>
-    /// GroupBy后再范围(分页)及列筛选
-    /// </summary>
-    /// <param name="cursor"></param>
-    public GroupByTableCursorSelect(GroupByTableCursor<TTable> cursor)
-        : this(cursor, new GroupByTableFields<TTable>(cursor))
+        : this(groupBy, groupBy.Source)
     {
     }
     /// <summary>
-    /// 拼写sql
+    /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="groupBy"></param>
+    public GroupByTableSelect(GroupByTableQuery<TTable> groupBy)
+        : this(groupBy, groupBy.Source)
+    {
+    }
+    /// <summary>
+    /// 聚合筛选
+    /// </summary>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-        => engine.SelectCursor(sql, this, _source);
+    public GroupByTableSelect<TTable> SelectAggregate(Func<TTable, IAggregateFieldAlias> select)
+    {
+        SelectCore(select(_groupSource));
+        return this;
+    }
 }

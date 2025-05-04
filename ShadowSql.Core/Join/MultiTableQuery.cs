@@ -1,20 +1,21 @@
-﻿using ShadowSql.Generators;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
+using System;
 
 namespace ShadowSql.Join;
 
 /// <summary>
 /// 多表查询
 /// </summary>
-public class MultiTableQuery(IIdentifierGenerator aliasGenerator, Logic query)
-    : MultiTableBase<Logic>(aliasGenerator, query), IDataQuery
+public class MultiTableQuery(Logic logic)
+    : MultiTableBase<Logic>(logic), IDataQuery
 {
     /// <summary>
-    /// 多表视图
+    /// 多表查询
     /// </summary>
     public MultiTableQuery()
-        : this(new IdIncrementGenerator("t"), new AndLogic())
+        : this(new AndLogic())
     {
     }
     #region IDataQuery

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Generators;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -11,10 +11,9 @@ namespace ShadowSql.Join;
 /// 联表基类
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="aliasGenerator"></param>
 /// <param name="filter"></param>
-public abstract class JoinTableBase<TFilter>(IIdentifierGenerator aliasGenerator, TFilter filter)
-    : MultiTableBase<TFilter>(aliasGenerator, filter), IJoinTable
+public abstract class JoinTableBase<TFilter>(TFilter filter)
+    : MultiTableBase<TFilter>(filter), IJoinTable
     where TFilter : ISqlLogic
 {
     #region 配置
@@ -36,10 +35,6 @@ public abstract class JoinTableBase<TFilter>(IIdentifierGenerator aliasGenerator
     /// <param name="joinOn"></param>
     public void AddJoinOn(IJoinOn joinOn)
         => _joinOns.Add(joinOn);
-    //#region IJoinTable
-    //void IJoinTable.AddJoinOn(IJoinOn joinOn)
-    //    => AddJoinOn(joinOn);
-    //#endregion
     #region ISqlEntity
     /// <summary>
     /// 拼写联表数据源sql

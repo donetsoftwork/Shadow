@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Services;
 using System;
 using System.Text;
@@ -73,7 +73,7 @@ public class NotStatementLogic : AtomicLogic
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<AtomicLogic> _cacher = new(statement => new NotStatementLogic(statement));
+    private static readonly CacheService<AtomicLogic> _cacher = new(static statement => new NotStatementLogic(statement));
 
     #region AtomicLogic
     /// <summary>

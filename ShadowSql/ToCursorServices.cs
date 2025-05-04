@@ -1,7 +1,8 @@
-﻿using ShadowSql.AliasTables;
+using ShadowSql.AliasTables;
 using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
+using ShadowSql.Join;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
 using ShadowSql.Variants;
@@ -51,6 +52,15 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 表查询范围筛选
     /// </summary>
+    /// <param name="query"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static TableCursor<ITable> ToCursor(this TableQuery query, int limit = 0, int offset = 0)
+        => new((ITable)query.Source, query._filter, limit, offset);
+    /// <summary>
+    /// 表查询范围筛选
+    /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="query"></param>
     /// <param name="limit"></param>
@@ -59,6 +69,15 @@ public static partial class ShadowSqlServices
     public static TableCursor<TTable> ToCursor<TTable>(this TableSqlQuery<TTable> query, int limit = 0, int offset = 0)
         where TTable : ITable
         => new(query.Source, query._filter, limit, offset);
+    /// <summary>
+    /// 表查询范围筛选
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static TableCursor<ITable> ToCursor(this TableSqlQuery query, int limit = 0, int offset = 0)
+        => new((ITable)query.Source, query._filter, limit, offset);
     #endregion
     #region AliasTableCursor
     /// <summary>
@@ -115,7 +134,7 @@ public static partial class ShadowSqlServices
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public static MultiTableCursor ToCursor(this IMultiView query, int limit = 0, int offset = 0)
+    public static MultiTableCursor ToCursor(this MultiTableBase query, int limit = 0, int offset = 0)
         => new(query, limit, offset);
     #endregion
     #region GroupByTableCursor

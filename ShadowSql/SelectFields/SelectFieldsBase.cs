@@ -1,6 +1,6 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.FieldInfos;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,38 +9,37 @@ namespace ShadowSql.SelectFields;
 /// <summary>
 /// 筛选字段基类
 /// </summary>
-/// <typeparam name="TSource"></typeparam>
-/// <param name="view"></param>
-public abstract class SelectFieldsBase<TSource>(TSource view)
+/// <typeparam name="TTarget"></typeparam>
+/// <param name="target"></param>
+public abstract class SelectFieldsBase<TTarget>(TTarget target)
     : SelectFieldsBase, ISelectFields
-    where TSource : ITableView
+    where TTarget : ITableView
 {
     #region 配置
     /// <summary>
-    /// 表视图
+    /// 筛选对象
     /// </summary>
-    protected readonly TSource _source = view;
+    internal readonly TTarget _target = target;
     /// <summary>
-    /// 表视图
+    /// 筛选对象
     /// </summary>
-    public TSource View
-        => _source;
+    public TTarget Target
+        => _target;
     #endregion
     /// <summary>
     /// 获取列
     /// </summary>
     /// <param name="columnName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columnName)
-        => _source.GetColumn(columnName);
+    protected override IColumn? GetColumn(string columnName)
+        => _target.GetColumn(columnName);
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public override IField Field(string fieldName)
-        => _source.Field(fieldName);
-
+    protected override IField Field(string fieldName)
+        => _target.Field(fieldName);
     #region ISelectFields
     bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
         => WriteSelectedCore(engine, sql, false);

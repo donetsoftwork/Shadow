@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Services;
 using System.Text;
@@ -37,7 +37,7 @@ internal class OrderByDescField : Identifier, IOrderField
     public static OrderByDescField Use(string name)
         => _cacher.Get(name);
 
-    private static readonly CacheService<OrderByDescField> _cacher = new(name => new OrderByDescField(name));
+    private static readonly CacheService<OrderByDescField> _cacher = new(static name => new OrderByDescField(name));
 
     string IView.ViewName
         => _name;

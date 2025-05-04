@@ -1,4 +1,4 @@
-﻿using ShadowSql.GroupBy;
+using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
 
@@ -15,7 +15,6 @@ public class DapperGroupByMultiSqlQuery(IExecutor executor, IMultiView multiTabl
     : GroupByMultiSqlQuery(multiTable, fields, filter)
     , IDapperSource
 {
-
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>

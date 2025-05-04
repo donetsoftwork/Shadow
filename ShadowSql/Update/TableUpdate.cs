@@ -1,4 +1,4 @@
-﻿using ShadowSql.Assigns;
+using ShadowSql.Assigns;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -32,9 +32,9 @@ public class TableUpdate<TTable>(TTable table, ISqlLogic filter)
     /// </summary>
     /// <param name="operation"></param>
     /// <returns></returns>
-    public TableUpdate<TTable> Set(Func<TTable, IAssignOperation> operation)
+    public TableUpdate<TTable> Set(Func<TTable, IAssignInfo> operation)
     {
-        SetCore(operation(table));
+        SetCore(operation(_source));
         return this;
     }
     #region ISqlEntity

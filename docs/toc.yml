@@ -1,8 +1,16 @@
-- name: Introduction
-  href: introduction.md
-- name: Getting Started
+- name: Start
   href: getting-started.md
-- name: API Documentation
+- name: ShadowSql.Core
+  href: shadowcore/
+- name: ShadowSql
+  href: shadow/
+- name: Dapper.Shadow.Core
+  href: dappercore/
+- name: Dapper.Shadow
+  href: dapper/
+- name: Shadow.DDL
+  href: ddl/
+- name: API
   href: api/
 - name: Github
   href: https://github.com/donetsoftwork/Shadow

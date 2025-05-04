@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -27,9 +27,10 @@ public class TableQueryTests
     [Fact]
     public void OrQuery()
     {
-        var query = new TableQuery("Users")
-             .Or(_id.Equal())
-            .Or(_status.Equal("Status"));
+        var users = new UserTable();
+        var query = new TableQuery("Users", new OrLogic())
+             .Or(users.Id.Equal())
+             .Or(users.Status.Equal("Status"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id OR [Status]=@Status", sql);
     }
@@ -55,8 +56,8 @@ public class TableQueryTests
     public void LogicOr()
     {
         var users = new UserTable();
-        var query = new TableQuery(users)
-            .And(users.Id.LessValue(100) | users.Status.EqualValue(true));
+        var query = new TableQuery(users, new OrLogic())
+            .Or(users.Id.LessValue(100) | users.Status.EqualValue(true));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<100 OR [Status]=1", sql);
     }
@@ -72,8 +73,9 @@ public class TableQueryTests
     [Fact]
     public void AndAndLogic()
     {
-        AndLogic andLogic = _id.Equal() & _status.Equal("Status");
-        var query = new TableQuery("Users")
+        var users = new UserTable();
+        AndLogic andLogic = users.Id.Equal() & users.Status.Equal("Status");
+        var query = new TableQuery(users)
             .And(andLogic);
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id AND [Status]=@Status", sql);
@@ -159,6 +161,28 @@ public class TableQueryTests
             .Or(complexOrLogic);
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]=@Id OR [Status]=@Status", sql);
+    }
+    [Fact]
+    public void Apply()
+    {
+        var query = new TableQuery("Users")
+            .Apply(static (q, u) => q
+                .And(u.Field("Id").Equal())
+                .And(u.Field("Status").EqualValue(true))
+            );
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]=@Id AND [Status]=1", sql);
+    }
+    [Fact]
+    public void Apply2()
+    {
+        var query = new TableQuery("Users")
+            .Apply(static q => q
+                .And(_id.Equal())
+                .And(_status.Equal("Status"))
+            );
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]=@Id AND [Status]=@Status", sql);
     }
     class UserTable : Table
     {

@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Tables;
@@ -14,7 +14,17 @@ public class TableUpdateTests : ExecuteTestBase
     }
 
     [Fact]
-    public void ToDapperUpdate()
+    public void Filter()
+    {
+        var table = new StudentTable();
+        var update = new TableUpdate(table, table.Age.LessValue(7))
+            .Set(table.ClassId.EqualToValue(1));
+        var result = SqliteExecutor.Execute(update);
+        Assert.Equal(0, result);
+    }
+
+    [Fact]
+    public void SqlQuery()
     {
         var table = new StudentTable();
         var query = new TableSqlQuery(table)

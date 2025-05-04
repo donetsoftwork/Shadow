@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using ShadowSql;
 
 namespace Dapper.ShadowTests.Update;

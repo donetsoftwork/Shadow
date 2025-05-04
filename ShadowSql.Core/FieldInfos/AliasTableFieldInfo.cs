@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 
 namespace ShadowSql.FieldInfos;
 
@@ -8,7 +8,7 @@ namespace ShadowSql.FieldInfos;
 /// <param name="aliasTable"></param>
 /// <param name="name"></param>
 public class AliasTableFieldInfo(IAliasTable aliasTable, string name)
-    : TableFieldInfo(aliasTable.Alias, name), IFieldView
+    : TableFieldInfo(aliasTable.Alias, name), IFieldView, IPrefixField
 {
     #region 配置
     private readonly IAliasTable _aliasTable = aliasTable;

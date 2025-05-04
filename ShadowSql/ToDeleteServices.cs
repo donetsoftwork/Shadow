@@ -1,8 +1,7 @@
-﻿using ShadowSql.Delete;
+using ShadowSql.AliasTables;
+using ShadowSql.Delete;
 using ShadowSql.Identifiers;
-using ShadowSql.Logics;
 using ShadowSql.Tables;
-using System;
 
 namespace ShadowSql;
 
@@ -15,37 +14,52 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <returns></returns>
-    public static TableDelete ToDelete(this ITable table, ISqlLogic where)
-        => new(table, where);
-    /// <summary>
-    /// 删除
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <typeparam name="TSource"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static TableDelete ToDelete<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
-        where TTable : ITable
-        => new(table, query(table));
-    /// <summary>
-    /// 删除
-    /// </summary>
-    /// <param name="tableQuery"></param>
-    /// <returns></returns>
-    public static TableDelete ToDelete<TSource>(this TableSqlQuery<TSource> tableQuery)
+    public static TableDelete ToDelete<TSource>(this TableSqlQuery<TSource> query)
         where TSource : ITable
-        => new(tableQuery.Source, tableQuery._filter);
-    #endregion
-    #region MultiTableDelete
+        => new(query.Source, query._filter);
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="view"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static MultiTableDelete ToDelete(this IMultiView view)
-        => new(view);
+    public static TableDelete ToDelete(this TableSqlQuery query)
+        => new((ITable)query.Source, query._filter);
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <typeparam name="TSource"></typeparam>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TableDelete ToDelete<TSource>(this TableQuery<TSource> query)
+        where TSource : ITable
+        => new(query.Source, query._filter);
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TableDelete ToDelete(this TableQuery query)
+        => new((ITable)query.Source, query._filter);
+    #endregion
+    #region AliasTableDelete
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static AliasTableDelete ToDelete<TSource>(this AliasTableSqlQuery<TSource> query)
+        where TSource : ITable
+        => new(query.Source, query._filter);
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static AliasTableDelete ToDelete<TSource>(this AliasTableQuery<TSource> query)
+        where TSource : ITable
+        => new(query.Source, query._filter);
     #endregion
 }

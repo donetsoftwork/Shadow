@@ -1,9 +1,11 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldInfos;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
+using TestSupports;
 
 namespace ShadowSqlTest.GroupBy;
 
@@ -13,12 +15,123 @@ public class GroupBySqlQueryTests
     static readonly IDB _db = SimpleDB.Use("MyDb");
 
     [Fact]
-    public void Table()
+    public void SqlGroupBy()
     {
-        var table = _db.From("Users");
-        var groupBy = table.SqlGroupBy("City");
+        var groupBy = _db.From("Comments")
+            .SqlGroupBy("PostId");
         var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] GROUP BY [City]", sql);
+        Assert.Equal("[Comments] GROUP BY [PostId]", sql);
+    }
+    [Fact]
+    public void SqlGroupBy2()
+    {
+        var table = new CommentTable();
+        var groupBy = table.SqlGroupBy(table.PostId);
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] GROUP BY [PostId]", sql);
+    }
+    [Fact]
+    public void HavingSum()
+    {
+        var groupBy = _db.From("Comments")
+            .SqlGroupBy("PostId")
+            .Having(g => g.Sum("Pick").GreaterValue(100));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
+    }
+    [Fact]
+    public void HavingSum2()
+    {
+        var table = new CommentTable();
+        var groupBy = table.SqlGroupBy(table.PostId)
+            .Having(table.Pick.Sum().GreaterValue(100));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
+    }
+    [Fact]
+    public void HavingSum3()
+    {
+        var groupBy = _db.From("Comments")
+            .ToSqlQuery()
+            .FieldGreaterEqualValue("Pick", 10)
+            .SqlGroupBy("PostId")
+            .Having(g => g.Sum("Pick").GreaterValue(100));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [Pick]>=10 GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
+    }
+    [Fact]
+    public void HavingSum4()
+    {
+        var table = new CommentTable();
+        var groupBy = table.ToSqlQuery()
+            .Where(table.Pick.GreaterEqualValue(10))
+            .SqlGroupBy(table.PostId)
+            .Having(table.Pick.Sum().GreaterValue(100));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [Pick]>=10 GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
+    }
+    [Fact]
+    public void SqlGroupBy3()
+    {
+        var groupBy = new CommentTable()
+            .SqlGroupBy(table => [table.PostId]);
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] GROUP BY [PostId]", sql);
+    }
+    [Fact]
+    public void SqlGroupByWhere()
+    {
+        IColumn age = Column.Use("Age");
+        var groupBy = _db.From("Users")
+            .SqlGroupBy(age.GreaterValue(30), "City");
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Users] WHERE [Age]>30 GROUP BY [City]", sql);
+    }
+    [Fact]
+    public void SqlGroupByWhere2()
+    {
+        var table = new CommentTable();
+        var groupBy = table.SqlGroupBy(table.UserId.InValue(1, 2, 3), table.PostId);
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [UserId] IN (1,2,3) GROUP BY [PostId]", sql);
+    }
+    [Fact]
+    public void SqlGroupByWhere3()
+    {
+        var groupBy = new CommentTable()
+            .SqlGroupBy(table => table.UserId.LessValue(100), table => [table.PostId]);
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [UserId]<100 GROUP BY [PostId]", sql);
+    }
+    [Fact]
+    public void SqlGroupByQuery()
+    {
+        var groupBy = _db.From("Users")
+            .ToSqlQuery()
+            .Where("Age>30")
+            .SqlGroupBy("City");
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Users] WHERE Age>30 GROUP BY [City]", sql);
+    }
+    [Fact]
+    public void SqlGroupByQuery2()
+    {
+        var table = new CommentTable();
+        var groupBy = table.ToSqlQuery()
+            .Where(table.UserId.InValue(1, 2, 3))
+            .SqlGroupBy(table.PostId);
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [UserId] IN (1,2,3) GROUP BY [PostId]", sql);
+    }
+    [Fact]
+    public void SqlGroupByQuery3()
+    {
+        var groupBy = new CommentTable()
+            .ToSqlQuery()
+            .Where(table => table.UserId.LessValue(100))
+            .SqlGroupBy(table => [table.PostId]);
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [UserId]<100 GROUP BY [PostId]", sql);
     }
 
     [Fact]
@@ -26,23 +139,22 @@ public class GroupBySqlQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToSqlQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("City");
+            .FieldEqualValue("Age", 20);
+        var groupBy = query.SqlGroupBy("City");
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [City]", sql);
     }
 
     [Fact]
-    public void HavingFunc()
+    public void Apply()
     {
         var table = _db.From("Users");
         var query = table.ToSqlQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("City");
-        groupBy.Having(q => q
+            .FieldEqualValue("Age", 20);
+        var groupBy = query.SqlGroupBy("City");
+        groupBy.Apply(q => q
                 .And("Count(City)>100")
             );
-
 
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [City] HAVING Count(City)>100", sql);
@@ -52,10 +164,10 @@ public class GroupBySqlQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToSqlQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("CityId")
-            .ColumnInValue("City", "北京", "上海")
-            .ColumnBetweenValue("CityId", 1, 11);
+            .FieldEqualValue("Age", 20);
+        var groupBy = query.SqlGroupBy("CityId")
+            .FieldInValue("City", "北京", "上海")
+            .FieldBetweenValue("CityId", 1, 11);
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海') AND [CityId] BETWEEN 1 AND 11", sql);
     }
@@ -91,8 +203,8 @@ public class GroupBySqlQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToSqlQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("CityId")
+            .FieldEqualValue("Age", 20);
+        var groupBy = query.SqlGroupBy("CityId")
             .Having(source => source.Field("City").InValue("北京", "上海"));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海')", sql);
@@ -102,21 +214,30 @@ public class GroupBySqlQueryTests
     {
         var table = _db.From("Users");
         var query = table.ToSqlQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("CityId")
+            .FieldEqualValue("Age", 20);
+        var groupBy = query.SqlGroupBy("CityId")
             .Having(g => g.Aggregate("MAX", "Level").GreaterValue(9));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9", sql);
     }
     [Fact]
-    public void SourceCount()
+    public void Max()
     {
         var table = _db.From("Users");
         var query = table.ToSqlQuery()
-            .ColumnEqualValue("Age", 20);
-        var groupBy = query.GroupBy("CityId")
-            .Having(source => source.Max("Level").GreaterValue(9));
+            .FieldEqualValue("Age", 20);
+        var groupBy = query.SqlGroupBy("CityId")
+            .Having(g => g.Max("Level").GreaterValue(9));
         var sql = _engine.Sql(groupBy);
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9", sql);
+    }
+    [Fact]
+    public void HavingAggregate()
+    {
+        var groupBy = new CommentTable()
+            .SqlGroupBy(table => [table.PostId])
+            .HavingAggregate(table => table.Pick.Sum(), Pick => Pick.GreaterValue(100));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
     }
 }

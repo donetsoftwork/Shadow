@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -38,25 +38,14 @@ public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IFieldView
     #endregion
     #region 查询扩展
     /// <summary>
-    /// 逻辑与
+    /// 按逻辑查询
     /// </summary>
     /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByTableQuery<TTable> And(Func<TTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
+    public GroupByTableQuery<TTable> Apply(Func<TTable, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
     {
-        _filter = _filter.And(query(aggregate(_source)));
-        return this;
-    }
-    /// <summary>
-    /// 逻辑或
-    /// </summary>
-    /// <param name="aggregate"></param>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public GroupByTableQuery<TTable> Or(Func<TTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
-    {
-        _filter = _filter.Or(query(aggregate(_source)));
+        _filter = query(_filter, aggregate(_source));
         return this;
     }
     #endregion

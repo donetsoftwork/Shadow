@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Generators;
@@ -18,7 +18,8 @@ public class MemberQueryTests
     {
         var employees = _db.From("Employees")
             .DefineColums("Id", "Name", "DepartmentId");
-        var multiTable = new MultiTableSqlQuery(new CharIncrementGenerator('a'), SqlQuery.CreateAndQuery());
+        var multiTable = new MultiTableSqlQuery(SqlQuery.CreateAndQuery());
+        multiTable.AliasGenerator = new CharIncrementGenerator('a');
         var member = multiTable.CreateMember(employees);
         var column = member.GetPrefixColumn("Id");
         Assert.NotNull(column);

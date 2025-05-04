@@ -1,4 +1,4 @@
-﻿using ShadowSql.Filters;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
@@ -11,6 +11,7 @@ namespace ShadowSql;
 /// </summary>
 public static partial class ShadowSqlCoreServices
 {
+    #region IDataSqlQuery
     #region ToAnd
     /// <summary>
     /// 切换为And
@@ -39,6 +40,36 @@ public static partial class ShadowSqlCoreServices
         return query;
     }
     #endregion
+    #region Apply
+    /// <summary>
+    /// 应用sql查询
+    /// </summary>
+    /// <typeparam name="Query"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="where"></param>
+    /// <returns></returns>
+    public static Query Apply<Query>(this Query query, Func<SqlQuery, SqlQuery> where)
+        where Query : IDataSqlQuery
+    {
+        query.Query = where(query.Query);
+        return query;
+    }
+    /// <summary>
+    /// 应用sql查询
+    /// </summary>
+    /// <typeparam name="Query"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="where"></param>
+    /// <returns></returns>
+    public static Query Apply<Query>(this Query query, Func<SqlQuery, ITableView, SqlQuery> where)
+        where Query : IDataSqlQuery
+    {
+        query.Query = where(query.Query, query.Source);
+        return query;
+    }
+    #endregion
+    #endregion
+    #region IDataQuery
     #region 基础查询
     #region 与运算
     /// <summary>
@@ -247,8 +278,34 @@ public static partial class ShadowSqlCoreServices
         return query;
     }
     #endregion
-    #region TableQuery
-
+    #region Apply
+    /// <summary>
+    /// 应用逻辑
+    /// </summary>
+    /// <typeparam name="Query"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="logic"></param>
+    /// <returns></returns>
+    public static Query Apply<Query>(this Query query, Func<Logic, Logic> logic)
+        where Query : FilterBase, IDataQuery
+    {
+        query.Logic = logic(query.Logic);
+        return query;
+    }
+    /// <summary>
+    /// 应用逻辑
+    /// </summary>
+    /// <typeparam name="Query"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="logic"></param>
+    /// <returns></returns>
+    public static Query Apply<Query>(this Query query, Func<Logic, ITableView,  Logic> logic)
+        where Query : FilterBase, IDataQuery
+    {
+        query.Logic = logic(query.Logic, query.Source);
+        return query;
+    }
+    #endregion
     #endregion
     #endregion
 }

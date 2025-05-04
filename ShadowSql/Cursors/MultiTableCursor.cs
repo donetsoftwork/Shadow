@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using System;
 
 namespace ShadowSql.Cursors;
@@ -10,38 +10,20 @@ namespace ShadowSql.Cursors;
 /// <param name="limit"></param>
 /// <param name="offset"></param>
 public class MultiTableCursor(IMultiView source, int limit, int offset)
-    : CursorBase<IMultiView>(source, offset, limit)
+    : CursorBase<IMultiView>(source, limit, offset)
 {
     #region 功能
-    /// <summary>
-    /// 正序
-    /// </summary>
-    /// <param name="select"></param>
-    /// <returns></returns>
-    public MultiTableCursor Asc(Func<IMultiView, IOrderView> select)
-    {
-        AscCore(select(_source));
-        return this;
-    }
-    /// <summary>
-    /// 倒序
-    /// </summary>
-    /// <param name="select"></param>
-    /// <returns></returns>
-    public MultiTableCursor Desc(Func<IMultiView, IOrderAsc> select)
-    {
-        DescCore(select(_source));
-        return this;
-    }
+    #region TAliasTable
     /// <summary>
     /// 正序
     /// </summary>
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableCursor Asc(string tableName, Func<IAliasTable, IOrderView> select)
+    public MultiTableCursor Asc<TAliasTable>(string tableName, Func<TAliasTable, IOrderView> select)
+        where TAliasTable : IAliasTable
     {
-        var member = _source.From(tableName);
+        var member = _source.From<TAliasTable>(tableName);
         AscCore(select(member));
         return this;
     }
@@ -51,12 +33,15 @@ public class MultiTableCursor(IMultiView source, int limit, int offset)
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public MultiTableCursor Desc(string tableName, Func<IAliasTable, IOrderAsc> select)
+    public MultiTableCursor Desc<TAliasTable>(string tableName, Func<TAliasTable, IOrderAsc> select)
+        where TAliasTable : IAliasTable
     {
-        var member = _source.From(tableName);
+        var member = _source.From<TAliasTable>(tableName);
         DescCore(select(member));
         return this;
     }
+    #endregion
+    #region TTable
     /// <summary>
     /// 正序
     /// </summary>
@@ -67,7 +52,7 @@ public class MultiTableCursor(IMultiView source, int limit, int offset)
     public MultiTableCursor Asc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
     {
-        var member = _source.Table<TTable>(tableName);
+        var member = _source.Alias<TTable>(tableName);
         //增加前缀
         var prefixColumn = member.GetPrefixColumn(select(member.Target));
         if (prefixColumn is not null)
@@ -84,12 +69,13 @@ public class MultiTableCursor(IMultiView source, int limit, int offset)
     public MultiTableCursor Desc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
     {
-        var member = _source.Table<TTable>(tableName);
+        var member = _source.Alias<TTable>(tableName);
         //增加前缀
         var prefixColumn = member.GetPrefixColumn(select(member.Target));
         if (prefixColumn is not null)
             DescCore(prefixColumn);
         return this;
-    }    
+    }
+    #endregion
     #endregion
 }

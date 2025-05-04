@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
+    <ProjectReference Include="..\TestSupports\TestSupports.csproj" />
   </ItemGroup>
 
   <ItemGroup>

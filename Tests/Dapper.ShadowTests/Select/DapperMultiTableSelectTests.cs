@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Identifiers;
 
@@ -31,8 +31,8 @@ public class DapperMultiTableSelectTests : ExecuteTestBase, IDisposable
             .Root;
         int count = query.Count(SqliteExecutor);
         Assert.True(count > 0);
-        var select = query.ToSelect();
-        select.Fields.Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
+        var select = query.ToSelect()
+            .Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
 
         var students = select.Get<StudentView>(SqliteExecutor)
             .ToList();

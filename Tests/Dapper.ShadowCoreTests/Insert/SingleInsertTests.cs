@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Identifiers;
@@ -30,22 +30,21 @@ public class SingleInsertTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Table()
     {
-        var insert = new StudentTable()
-            .ToInsert()
-            .Insert(student => student.Name.Insert("StudentName"))
-            .Insert(student => student.Age.InsertValue(11))
-            .Use(SqliteExecutor);
+        var table = new StudentTable();
+        var insert = new  SingleInsert(table)
+            .Insert(table.Name.Insert("StudentName"))
+            .Insert(table.Age.InsertValue(11));
 
-        var result = insert.Execute(new { StudentName = "张三" });
+        var result = insert.Execute(SqliteExecutor, new { StudentName = "张三" });
         Assert.Equal(1, result);
     }
     [Fact]
     public void Execute()
     {
-        var insert = new StudentTable()
-            .ToInsert()
-            .Insert(student => student.Name.Insert())
-            .Insert(student => student.Age.InsertValue(11));
+        var table = new StudentTable();
+        var insert = new SingleInsert(table)
+            .Insert(table.Name.Insert())
+            .Insert(table.Age.InsertValue(11));
 
         var result = insert.Execute(SqliteExecutor, new { Name = "张三" });
         Assert.Equal(1, result);

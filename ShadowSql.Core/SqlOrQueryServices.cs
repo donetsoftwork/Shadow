@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using ShadowSql.Queries;
 
 namespace ShadowSql;
@@ -14,7 +14,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <param name="and"></param>
     /// <returns></returns>
-    public static SqlOrQuery Not(this SqlAndQuery and)
+    internal static SqlOrQuery Not(this SqlAndQuery and)
     {
         var or = new SqlOrQuery();
         var conditions = and.Conditions;
@@ -102,5 +102,29 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     internal static SqlAndQuery MergeToAnd(this SqlOrQuery source, AndLogic and)
         => new(and.MergeTo(source.MergeToAnd(new ComplexAndLogic())));
+    #endregion
+    #region 或运算嵌套与逻辑
+    /// <summary>
+    /// 或运算嵌套与逻辑
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="logic"></param>
+    /// <returns></returns>
+    public static SqlOrQuery And(this SqlOrQuery query, AndLogic logic)
+    {
+        logic.MergeToOr(query.Complex);
+        return query;
+    }
+    /// <summary>
+    /// 或运算嵌套与逻辑
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="logic"></param>
+    /// <returns></returns>
+    public static SqlOrQuery And(this SqlOrQuery query, ComplexAndLogic logic)
+    {
+        logic.MergeToOr(query.Complex);
+        return query;
+    }
     #endregion
 }

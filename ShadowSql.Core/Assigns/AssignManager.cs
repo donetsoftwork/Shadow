@@ -1,18 +1,25 @@
-﻿namespace ShadowSql.Assigns;
+using System.Collections.Generic;
+
+namespace ShadowSql.Assigns;
 
 /// <summary>
 /// 赋值运算符管理
 /// </summary>
-/// <param name="equal"></param>
-/// <param name="add"></param>
-/// <param name="sub"></param>
-/// <param name="mul"></param>
-/// <param name="div"></param>
-/// <param name="mod"></param>
-/// <param name="and"></param>
-/// <param name="or"></param>
-/// <param name="xor"></param>
-public class AssignManager(
+public class AssignManager
+{
+    /// <summary>
+    /// 赋值运算符管理
+    /// </summary>
+    /// <param name="equal"></param>
+    /// <param name="add"></param>
+    /// <param name="sub"></param>
+    /// <param name="mul"></param>
+    /// <param name="div"></param>
+    /// <param name="mod"></param>
+    /// <param name="and"></param>
+    /// <param name="or"></param>
+    /// <param name="xor"></param>
+    internal AssignManager(
     AssignSymbol equal
     , AssignSymbol add
     , AssignSymbol sub
@@ -23,16 +30,27 @@ public class AssignManager(
     , AssignSymbol or
     , AssignSymbol xor
     )
-{
-    private readonly AssignSymbol _equal = equal;
-    private readonly AssignSymbol _add = add;
-    private readonly AssignSymbol _sub = sub;
-    private readonly AssignSymbol _mul = mul;
-    private readonly AssignSymbol _div = div;
-    private readonly AssignSymbol _mod = mod;
-    private readonly AssignSymbol _and = and;
-    private readonly AssignSymbol _or = or;
-    private readonly AssignSymbol _xor = xor;
+    {
+        _equal = TryAdd(equal);
+        _add = TryAdd(add);
+        _sub = TryAdd(sub);
+        _mul = TryAdd(mul);
+        _div = TryAdd(div);
+        _mod = TryAdd(mod);
+        _and = TryAdd(and);
+        _or = TryAdd(or);
+        _xor = TryAdd(xor);
+
+    }
+    private readonly AssignSymbol _equal;
+    private readonly AssignSymbol _add;
+    private readonly AssignSymbol _sub;
+    private readonly AssignSymbol _mul;
+    private readonly AssignSymbol _div;
+    private readonly AssignSymbol _mod;
+    private readonly AssignSymbol _and;
+    private readonly AssignSymbol _or;
+    private readonly AssignSymbol _xor;
     /// <summary>
     /// 赋值
     /// </summary>
@@ -69,4 +87,31 @@ public class AssignManager(
     /// “位异或”并赋值
     /// </summary>
     public AssignSymbol Xor => _xor;
+
+    private readonly Dictionary<string, AssignSymbol> _operations = [];
+    private AssignSymbol TryAdd(AssignSymbol compare)
+    {
+        TryAdd(compare.Operation, compare);
+        return compare;
+    }
+    /// <summary>
+    /// 添加
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <param name="compare"></param>
+    private void TryAdd(string operation, AssignSymbol compare)
+    {
+        if (_operations.ContainsKey(operation))
+            return;
+        _operations.Add(operation, compare);
+    }
+    /// <summary>
+    /// 获取
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    public AssignSymbol Get(string operation)
+    {
+        return _operations[operation];
+    }
 }

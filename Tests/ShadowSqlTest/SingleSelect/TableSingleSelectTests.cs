@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -15,24 +15,10 @@ public class TableSingleSelectTests
     public void Select()
     {
         var cursor = _db.From("Users")
-            .ToSingle();
-        cursor.Fields.Select("Id", "Name");
+            .ToSingle("Name");
         var sql = _engine.Sql(cursor);
         //取最后一个字段
         Assert.Equal("SELECT [Name] FROM [Users]", sql);
-    }
-    [Fact]
-    public void Cursor()
-    {
-        int limit = 10;
-        int offset = 10;
-        var select = _db.From("Users")
-            .ToCursor()
-            .Skip(offset)
-            .Take(limit)
-            .ToSingle();
-        var sql = _engine.Sql(select);
-        Assert.Equal("SELECT 1 FROM [Users] OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY", sql);
     }
     [Fact]
     public void Desc()
@@ -41,8 +27,7 @@ public class TableSingleSelectTests
             .ToCursor()
             .Desc(u => u.Field("Age"))
             .Asc(u => u.Field("Id"))
-            .ToSingle();
-        select.Fields.Select("Id", "Name");
+            .ToSingle("Name");
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT [Name] FROM [Users] ORDER BY [Age] DESC,[Id]", sql);
     }

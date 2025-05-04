@@ -1,5 +1,6 @@
-﻿using ShadowSql.AliasTables;
+using ShadowSql.AliasTables;
 using ShadowSql.Cursors;
+using ShadowSql.CursorSelect;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -17,9 +18,9 @@ namespace Dapper.Shadow.Select;
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
 /// <param name="source"></param>
-/// <param name="fields"></param>
-public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView source, AliasTableFields<TTable> fields)
-    : SelectBase<ITableView, AliasTableFields<TTable>>(source, fields)
+/// <param name="target"></param>
+public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView source, TableAlias<TTable> target)
+    : SelectBase<ITableView, TableAlias<TTable>>(source, target)
     , IDapperSelect
     where TTable : ITable
 {
@@ -29,7 +30,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <param name="executor"></param>
     /// <param name="source"></param>
     public DapperAliasTableSelect(IExecutor executor, TableAlias<TTable> source)
-        : this(executor, source, new AliasTableFields<TTable>(source))
+        : this(executor, source, source)
     {
     }
     /// <summary>
@@ -39,7 +40,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <param name="source"></param>
     /// <param name="where"></param>
     public DapperAliasTableSelect(IExecutor executor, TableAlias<TTable> source, ISqlLogic where)
-        : this(executor, new TableFilter(source, where), new AliasTableFields<TTable>(source))
+        : this(executor, new TableFilter(source, where), source)
     {
     }
     /// <summary>
@@ -48,7 +49,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <param name="executor"></param>
     /// <param name="query"></param>
     public DapperAliasTableSelect(IExecutor executor, AliasTableSqlQuery<TTable> query)
-        : this(executor, query, new AliasTableFields<TTable>(query.Source))
+        : this(executor, query, query.Source)
     {
     }
     /// <summary>
@@ -57,7 +58,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <param name="executor"></param>
     /// <param name="query"></param>
     public DapperAliasTableSelect(IExecutor executor, AliasTableQuery<TTable> query)
-        : this(executor, query, new AliasTableFields<TTable>(query.Source))
+        : this(executor, query, query.Source)
     {
     }
     #region 配置
@@ -75,21 +76,11 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
-/// <param name="fields"></param>
-public class DapperAliasTableCursorSelect<TTable>(IExecutor executor, ICursor cursor, AliasTableFields<TTable> fields)
-    : SelectBase<ICursor, AliasTableFields<TTable>>(cursor, fields)
+public class DapperAliasTableCursorSelect<TTable>(IExecutor executor, AliasTableCursor<TTable> cursor)
+    : CursorSelectBase<TableAlias<TTable>>(cursor, cursor.Source)
     , IDapperSelect
     where TTable : ITable
 {
-    /// <summary>
-    /// 别名表范围(分页)及列筛选
-    /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="cursor"></param>
-    public DapperAliasTableCursorSelect(IExecutor executor, AliasTableCursor<TTable> cursor)
-        : this(executor, cursor, new AliasTableFields<TTable>(cursor.Source))
-    {
-    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>
@@ -98,12 +89,4 @@ public class DapperAliasTableCursorSelect<TTable>(IExecutor executor, ICursor cu
     public IExecutor Executor
         => _executor;
     #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-        => engine.SelectCursor(sql, this, _source);
 }

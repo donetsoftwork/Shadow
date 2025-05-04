@@ -1,4 +1,4 @@
-﻿using ShadowSql.Filters;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
 using ShadowSql.Simples;
@@ -30,25 +30,6 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// <param name="table"></param>
     public TableSqlQuery(ITable table)
         : this(SqlQuery.CreateAndQuery(), table)
-    {
-    }
-    #endregion
-    #region IAliasTable
-    /// <summary>
-    /// 查询别名表
-    /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
-    public TableSqlQuery(IAliasTable table, SqlQuery query)
-        : this(query, table)
-    {
-    }
-    /// <summary>
-    /// 查询别名表
-    /// </summary>
-    /// <param name="source"></param>
-    public TableSqlQuery(IAliasTable source)
-        : this(SqlQuery.CreateAndQuery(), source)
     {
     }
     #endregion

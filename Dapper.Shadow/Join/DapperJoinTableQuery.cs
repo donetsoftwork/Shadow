@@ -1,4 +1,3 @@
-﻿using ShadowSql.Generators;
 using ShadowSql.Join;
 using ShadowSql.Logics;
 
@@ -8,10 +7,9 @@ namespace Dapper.Shadow.Join;
 /// Dapper联表查询
 /// </summary>
 /// <param name="executor"></param>
-/// <param name="aliasGenerator"></param>
 /// <param name="filter"></param>
-public class DapperJoinTableQuery(IExecutor executor, IIdentifierGenerator aliasGenerator, Logic filter)
-    : JoinTableQuery(aliasGenerator, filter), IDapperSource
+public class DapperJoinTableQuery(IExecutor executor, Logic filter)
+    : JoinTableQuery(filter), IDapperSource
 {
     #region 配置
     private readonly IExecutor _executor = executor;

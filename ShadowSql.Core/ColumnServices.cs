@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Assigns;
 using ShadowSql.CompareLogics;
 using ShadowSql.Compares;
@@ -6,6 +6,7 @@ using ShadowSql.FieldInfos;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
+using ShadowSql.Join;
 using ShadowSql.Logics;
 using ShadowSql.Orders;
 using ShadowSql.SingleSelect;
@@ -40,14 +41,14 @@ public static partial class ShadowSqlCoreServices
     public static ICompareField Compare(this IDataFilter filter, string fieldName)
         => filter.GetCompareField(fieldName);
     /// <summary>
-    /// 
+    /// 获取比较字段
     /// </summary>
     /// <param name="table"></param>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public static ICompareField GetCompareField(this ITableView table,  string fieldName)
+    public static ICompareField GetCompareField(this ITableView table, string fieldName)
     {
-        if(table.GetColumn(fieldName) is IColumn column)
+        if (table.GetColumn(fieldName) is IColumn column)
             return column;
         return table.Field(fieldName);
     }
@@ -65,6 +66,7 @@ public static partial class ShadowSqlCoreServices
             return prefixColumn;
         return member.Field(fieldName);
     }
+    #region Prefix
     /// <summary>
     /// 定位到前缀列
     /// </summary>
@@ -85,24 +87,40 @@ public static partial class ShadowSqlCoreServices
     public static IPrefixColumn Prefix(this IAliasTable table, IColumn column)
         => table.GetPrefixColumn(column)
         ?? throw new ArgumentException("列不存在", nameof(column));
-    #region Count
     /// <summary>
-    /// 计数
+    /// 增加前缀
     /// </summary>
-    /// <param name="view"></param>
+    /// <param name="join"></param>
+    /// <param name="column"></param>
     /// <returns></returns>
-    public static CountFieldInfo Count(this ITableView view)
-        => CountFieldInfo.Instance;
-    #endregion
-    #region CountAs
+    /// <exception cref="ArgumentException"></exception>
+    public static IPrefixColumn Prefix(this IJoinOn join, IColumn column)
+    {
+        if(column is IPrefixColumn prefixColumn)
+            return prefixColumn;
+        var left = join.Left;
+        var right = join.JoinSource;
+        foreach (var c in right.Target.Columns)
+            if (c == column)
+                return right.Prefix(c);
+        foreach (var c in left.Target.Columns)
+            if (c == column)
+                return left.Prefix(c);
+        return right.GetPrefixColumn(column)
+            ?? left.GetPrefixColumn(column)
+            ?? throw new ArgumentException("列不存在", nameof(column));
+    }
     /// <summary>
-    /// 计数别名
+    /// 增加前缀
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="alias"></param>
+    /// <param name="join"></param>
+    /// <param name="columnName"></param>
     /// <returns></returns>
-    public static CountAliasFieldInfo CountAs(this ITableView view, string alias = "Count")
-        => CountAliasFieldInfo.Use(alias);
+    /// <exception cref="ArgumentException"></exception>
+    public static IPrefixColumn PrefixColumn(this IJoinOn join, string columnName)
+        => join.GetRightColumn(columnName)
+        ?? join.GetLeftColumn(columnName)
+        ?? throw new ArgumentException("列不存在", nameof(columnName));
     #endregion
     #region DistinctCount
     /// <summary>
@@ -642,7 +660,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation EqualTo(this IColumn column, ISqlValue right)
+    public static AssignOperation EqualTo(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.EqualTo, right);
     /// <summary>
     /// 加上
@@ -650,7 +668,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Add(this IColumn column, ISqlValue right)
+    public static AssignOperation Add(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Add, right);
     /// <summary>
     /// 减去
@@ -658,7 +676,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Sub(this IColumn column, ISqlValue right)
+    public static AssignOperation Sub(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Sub, right);
     /// <summary>
     /// 乘上
@@ -666,7 +684,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Mul(this IColumn column, ISqlValue right)
+    public static AssignOperation Mul(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Mul, right);
     /// <summary>
     /// 除去
@@ -674,7 +692,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Div(this IColumn column, ISqlValue right)
+    public static AssignOperation Div(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Div, right);
     /// <summary>
     /// 取模
@@ -682,7 +700,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Mod(this IColumn column, ISqlValue right)
+    public static AssignOperation Mod(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Mod, right);
     /// <summary>
     /// 位与
@@ -690,7 +708,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation And(this IColumn column, ISqlValue right)
+    public static AssignOperation And(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.And, right);
     /// <summary>
     /// 位或
@@ -698,7 +716,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Or(this IColumn column, ISqlValue right)
+    public static AssignOperation Or(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Or, right);
     /// <summary>
     /// 位异或
@@ -706,7 +724,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AssignOperation Xor(this IColumn column, ISqlValue right)
+    public static AssignOperation Xor(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Xor, right);
     /// <summary>
     /// 等于
@@ -714,7 +732,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation EqualToValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation EqualToValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.EqualTo, SqlValue.From(value));
     /// <summary>
     /// 加上
@@ -722,7 +740,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation AddValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation AddValue<TValue>(this IAssignView column, TValue value)
     => new(column, AssignSymbol.Add, SqlValue.From(value));
     /// <summary>
     /// 减去
@@ -730,7 +748,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation SubValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation SubValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Sub, SqlValue.From(value));
     /// <summary>
     /// 乘上
@@ -738,7 +756,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation MulValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation MulValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Mul, SqlValue.From(value));
     /// <summary>
     /// 除去
@@ -746,7 +764,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation DivValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation DivValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Div, SqlValue.From(value));
     /// <summary>
     /// 取模
@@ -754,7 +772,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation ModValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation ModValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Mod, SqlValue.From(value));
     /// <summary>
     /// 位与
@@ -762,7 +780,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation AndValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation AndValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.And, SqlValue.From(value));
     /// <summary>
     /// 位或
@@ -770,7 +788,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation OrValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation OrValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Or, SqlValue.From(value));
     /// <summary>
     /// 位异或
@@ -778,7 +796,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static AssignOperation XorValue<TValue>(this IColumn column, TValue value)
+    public static AssignOperation XorValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Xor, SqlValue.From(value));
     #endregion
     #region 插入
@@ -816,66 +834,8 @@ public static partial class ShadowSqlCoreServices
     #endregion
     #region 聚合
     #region IAggregateField
-    /// <summary>
-    /// 计数聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateField Count(this ICompareField field)
-        => field.AggregateTo(AggregateConstants.Count);
-    /// <summary>
-    /// 最大值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateField Sum(this ICompareField field)
-        => field.AggregateTo(AggregateConstants.Sum);
-    /// <summary>
-    /// 均值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateField Avg(this ICompareField field)
-        => field.AggregateTo(AggregateConstants.Avg);
-    /// <summary>
-    /// 最大值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateField Max(this ICompareField field)
-        => field.AggregateTo(AggregateConstants.Max);
-    /// <summary>
-    /// 最小值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateField Min(this ICompareField field)
-        => field.AggregateTo(AggregateConstants.Min);
-    /// <summary>
-    /// 计数聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateFieldAlias CountAs(this ICompareField field, string alias = "")
-        => field.AggregateAs(AggregateConstants.Count, alias);
-    /// <summary>
-    /// 最大值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateFieldAlias SumAs(this ICompareField field, string alias = "")
-        => field.AggregateAs(AggregateConstants.Sum, alias);
-    /// <summary>
-    /// 均值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateFieldAlias AvgAs(this ICompareField field, string alias = "")
-        => field.AggregateAs(AggregateConstants.Avg, alias);
-    /// <summary>
-    /// 最大值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateFieldAlias MaxAs(this ICompareField field, string alias = "")
-        => field.AggregateAs(AggregateConstants.Max, alias);
-    /// <summary>
-    /// 最小值聚合
-    /// </summary>
-    /// <returns></returns>
-    public static IAggregateFieldAlias MinAs(this ICompareField field, string alias = "")
-        => field.AggregateAs(AggregateConstants.Min, alias);
+
+   
     #endregion
     #endregion
     #region 排序

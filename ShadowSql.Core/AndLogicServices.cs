@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using ShadowSql.Queries;
 using System.Linq;
 
@@ -42,8 +42,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="logic"></param>
     /// <param name="other"></param>
     /// <returns></returns>
-    internal static TComplexAndLogic AndCore<TComplexAndLogic>(this AndLogic logic, TComplexAndLogic other)
-        where TComplexAndLogic : ComplexLogicBase, IAndLogic
+    internal static ComplexAndLogic AndCore(this AndLogic logic, ComplexAndLogic other)
         => logic.MergeTo(other);
     #endregion
     #region OrLogic
@@ -229,8 +228,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="source"></param>
     /// <param name="or"></param>
     /// <returns></returns>
-    internal static TComplexOrLogic MergeToOr<TComplexOrLogic>(this AndLogic source, TComplexOrLogic or)
-        where TComplexOrLogic : ComplexLogicBase, IOrLogic
+    internal static ComplexOrLogic MergeToOr(this AndLogic source, ComplexOrLogic or)
     {
         var preview = source.Preview();
         if (preview.IsEmpty)

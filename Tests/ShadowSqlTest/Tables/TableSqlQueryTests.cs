@@ -1,8 +1,10 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
+using TestSupports;
 
 namespace ShadowSqlTest.Tables;
 
@@ -44,7 +46,7 @@ public class TableSqlQueryTests
     {
         var query = _db.From("Users")
             .ToSqlQuery()
-            .Where(q => q
+            .Apply(q => q
                 .And("Id=@Id")
                 .And("Status=@Status")
             );
@@ -56,7 +58,7 @@ public class TableSqlQueryTests
     {
         var query = _db.From("Users")
             .ToSqlOrQuery()
-            .Where(q => q
+            .Apply(q => q
                 .Or("Id=@Id")
                 .Or("Status=@Status")
             );
@@ -64,36 +66,13 @@ public class TableSqlQueryTests
         Assert.Equal("[Users] WHERE Id=@Id OR Status=@Status", sql);
     }
     [Fact]
-    public void Column()
-    {
-        var query = _db.From("Users")
-            .ToSqlQuery()
-            .ColumnParameter("Id", "<", "LastId")
-            .ColumnParameter("Status", "=", "state");
-        var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<@LastId AND [Status]=@state", sql);
-    }
-
-    [Fact]
-    public void ColumnValue()
-    {
-        var query = _db.From("Users")
-            .ToSqlQuery()
-            .ToOr()
-            .ColumnValue("Id", 100, "<")
-            .ColumnValue("Status", true);
-        var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<100 OR [Status]=1", sql);
-    }
-
-    [Fact]
     public void FieldCompare()
     {
         var query = _db.From("Users")
             .ToSqlQuery()
-            .Where(q => q.Field("Id").Less("LastId"));
+            .FieldEqualValue("Id", 100);
         var sql = _engine.Sql(query);
-        Assert.Equal("[Users] WHERE [Id]<@LastId", sql);
+        Assert.Equal("[Users] WHERE [Id]=100", sql);
     }
     [Fact]
     public void Logic()
@@ -113,18 +92,16 @@ public class TableSqlQueryTests
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<@LastId", sql);
     }
-
-    class UserTable : Table
+    [Fact]
+    public void Apply()
     {
-        public UserTable()
-            : base("Users")
-        {
-            Id = DefineColumn(nameof(Id));
-            Status = DefineColumn(nameof(Status));
-        }
-        #region Columns
-        public IColumn Id { get; private set; }
-        public IColumn Status { get; private set; }
-        #endregion
+        var query = new UserTable()
+            .ToSqlQuery()
+            .Apply(static (q, u) => q
+                .And(u.Id.Less("LastId"))
+                .And(u.Status.EqualValue(true))
+            );
+        var sql = _engine.Sql(query);
+        Assert.Equal("[Users] WHERE [Id]<@LastId AND [Status]=1", sql);
     }
 }

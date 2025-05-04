@@ -1,52 +1,86 @@
-﻿using ShadowSql.Cursors;
-using ShadowSql.Engines;
+using ShadowSql.Aggregates;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.SelectFields;
-using System.Text;
+using System;
+using System.Collections.Generic;
 
 namespace ShadowSql.Select;
 
 /// <summary>
-/// GroupBy后再筛选列
+/// 联表分组后再筛选列
 /// </summary>
-/// <param name="groupBy"></param>
-/// <param name="fields"></param>
-public sealed class GroupByMultiSelect(IGroupByView groupBy, GroupByMultiFields fields)
-    : SelectBase<IGroupByView, GroupByMultiFields>(groupBy, fields)
+public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
 {
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
     /// <param name="groupBy"></param>
+    /// <param name="target"></param>
+    internal GroupByMultiSelect(IGroupByView groupBy, IMultiView target)
+        : base(groupBy, groupBy, target)
+    {
+    }
+    /// <summary>
+    /// GroupBy后再筛选列
+    /// </summary>
+    /// <param name="groupBy"></param>
     public GroupByMultiSelect(GroupByMultiSqlQuery groupBy)
-        : this(groupBy, new GroupByMultiFields(groupBy))
-    {
-    }
-}
-
-/// <summary>
-/// GroupBy后再范围(分页)及列筛选
-/// </summary>
-/// <param name="cursor"></param>
-/// <param name="fields"></param>
-public sealed class GroupByMultiCursorSelect(ICursor cursor, GroupByMultiFields fields)
-    : SelectBase<ICursor, GroupByMultiFields>(cursor, fields)
-{
-    /// <summary>
-    /// GroupBy后再范围(分页)及列筛选
-    /// </summary>
-    /// <param name="cursor"></param>
-    public GroupByMultiCursorSelect(GroupByMultiCursor cursor)
-        : this(cursor, new GroupByMultiFields(cursor))
+        : this(groupBy, groupBy.Source)
     {
     }
     /// <summary>
-    /// 拼写sql
+    /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="groupBy"></param>
+    public GroupByMultiSelect(GroupByMultiQuery groupBy)
+        : this(groupBy, groupBy.Source)
+    {
+    }
+    #region SelectAggregate
+    #region TAliasTable
+    /// <summary>
+    /// 聚合筛选
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-        => engine.SelectCursor(sql, this, _source);
+    public GroupByMultiSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IAggregateFieldAlias> select)
+        where TAliasTable : IAliasTable
+    {
+        SelectCore(select(_groupSource.From< TAliasTable>(tableName)));
+        return this;
+    }
+    /// <summary>
+    /// 聚合筛选
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    public GroupByMultiSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IEnumerable<IAggregateFieldAlias>> select)
+        where TAliasTable : IAliasTable
+    {
+        SelectCore(select(_groupSource.From<TAliasTable>(tableName)));
+        return this;
+    }
+    #endregion
+    #region TTable
+    /// <summary>
+    /// 聚合筛选(先定位再聚合)
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <param name="aggregate"></param>
+    /// <returns></returns>
+    public GroupByMultiSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixColumn, IAggregateFieldAlias> aggregate)
+        where TTable : ITable
+    {
+        var member = _groupSource.Alias<TTable>(tableName);
+        SelectCore(aggregate(member.Prefix(select(member.Target))));
+        return this;
+    }
+    #endregion
+    #endregion
 }

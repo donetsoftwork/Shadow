@@ -1,5 +1,6 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using ShadowSql.Queries;
+using System;
 
 namespace ShadowSql;
 
@@ -14,7 +15,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <param name="or"></param>
     /// <returns></returns>
-    public static SqlAndQuery Not(this SqlOrQuery or)
+    internal static SqlAndQuery Not(this SqlOrQuery or)
     {
         var and = new SqlAndQuery();
         var conditions = or.Conditions;
@@ -75,8 +76,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="source"></param>
     /// <param name="or"></param>
     /// <returns></returns>
-    internal static TComplexOrLogic MergeToOr<TComplexOrLogic>(this SqlAndQuery source, TComplexOrLogic or)
-        where TComplexOrLogic : ComplexLogicBase, IOrLogic
+    internal static ComplexOrLogic MergeToOr(this SqlAndQuery source, ComplexOrLogic or)
     {
         var preview = source.Preview();
         if (preview.IsEmpty)
@@ -103,5 +103,29 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     internal static SqlOrQuery MergeToOr(this SqlAndQuery source, OrLogic or)
         => new(or.MergeTo(source.MergeToOr(new ComplexOrLogic())), new SqlConditionLogic(LogicSeparator.Or));
+    #endregion
+    #region 与运算嵌套或逻辑
+    /// <summary>
+    /// 与运算嵌套或逻辑
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="logic"></param>
+    /// <returns></returns>
+    public static SqlAndQuery And(this SqlAndQuery query, OrLogic logic)
+    {
+        logic.MergeToAnd(query.Complex);
+        return query;
+    }
+    /// <summary>
+    /// 与运算嵌套或逻辑
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="logic"></param>
+    /// <returns></returns>
+    public static SqlAndQuery And(this SqlAndQuery query, ComplexOrLogic logic)
+    {
+        logic.MergeToAnd(query.Complex);
+        return query;
+    }
     #endregion
 }

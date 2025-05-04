@@ -1,10 +1,10 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.SqlVales;
 
 namespace ShadowSql.Insert;
 
 /// <summary>
-/// 插入单值
+/// 被插入单值
 /// </summary>
 public interface IInsertValue
 {
@@ -19,7 +19,7 @@ public interface IInsertValue
 }
 
 /// <summary>
-/// 插入多值
+/// 被插入多值
 /// </summary>
 public interface IInsertValues
 {

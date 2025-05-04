@@ -1,11 +1,9 @@
-﻿using ShadowSql.Cursors;
-using ShadowSql.Engines;
+using ShadowSql.Cursors;
+using ShadowSql.CursorSelect;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Select;
-using ShadowSql.SelectFields;
 using ShadowSql.Tables;
-using System.Text;
 
 namespace Dapper.Shadow.Select;
 
@@ -14,10 +12,10 @@ namespace Dapper.Shadow.Select;
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
-/// <param name="table"></param>
-/// <param name="fields"></param>
-public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, TableFields<TTable> fields)
-    : SelectBase<ITableView, TableFields<TTable>>(table, fields)
+/// <param name="source"></param>
+/// <param name="target"></param>
+public class DapperTableSelect<TTable>(IExecutor executor, ITableView source, TTable target)
+    : SelectBase<ITableView, TTable>(source, target)
     , IDapperSelect
     where TTable : ITable
 {
@@ -27,7 +25,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
     /// <param name="executor"></param>
     /// <param name="table"></param>
     public DapperTableSelect(IExecutor executor, TTable table)
-        : this(executor, table, new TableFields<TTable>(table))
+        : this(executor, table, table)
     {
     }
     /// <summary>
@@ -37,7 +35,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
     /// <param name="table"></param>
     /// <param name="where"></param>
     public DapperTableSelect(IExecutor executor, TTable table, ISqlLogic where)
-        : this(executor, new TableFilter(table, where), new TableFields<TTable>(table))
+        : this(executor, new TableFilter(table, where), table)
     {
     }
     /// <summary>
@@ -46,7 +44,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
     /// <param name="executor"></param>
     /// <param name="query"></param>
     public DapperTableSelect(IExecutor executor, TableSqlQuery<TTable> query)
-        : this(executor, query, new TableFields<TTable>(query.Source))
+        : this(executor, query, query.Source)
     {
     }
     /// <summary>
@@ -55,7 +53,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
     /// <param name="executor"></param>
     /// <param name="query"></param>
     public DapperTableSelect(IExecutor executor, TableQuery<TTable> query)
-        : this(executor, query, new TableFields<TTable>(query.Source))
+        : this(executor, query, query.Source)
     {
     }
     #region 配置
@@ -73,21 +71,11 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView table, Tab
 /// <typeparam name="TTable"></typeparam>
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
-/// <param name="fields"></param>
-public sealed class DapperTableCursorSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor, TableFields<TTable> fields)
-    : SelectBase<ICursor, TableFields<TTable>>(cursor, fields)
+public sealed class DapperTableCursorSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor)
+    : CursorSelectBase<TTable>(cursor, cursor.Source)
     , IDapperSelect
     where TTable : ITable
 {
-    /// <summary>
-    /// 表范围(分页)及列筛选
-    /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="cursor"></param>
-    public DapperTableCursorSelect(IExecutor executor, TableCursor<TTable> cursor)
-        : this(executor, cursor, new TableFields<TTable>(cursor.Source))
-    {
-    }
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>
@@ -96,12 +84,4 @@ public sealed class DapperTableCursorSelect<TTable>(IExecutor executor, TableCur
     public IExecutor Executor
         => _executor;
     #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-        => engine.SelectCursor(sql, this, _source);
 }

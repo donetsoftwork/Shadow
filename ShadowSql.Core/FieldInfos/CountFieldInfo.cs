@@ -1,6 +1,6 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Aggregates;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
-using ShadowSql.Identifiers;
 using System.Text;
 
 namespace ShadowSql.FieldInfos;
@@ -8,7 +8,7 @@ namespace ShadowSql.FieldInfos;
 /// <summary>
 /// 计数字段信息
 /// </summary>
-public sealed class CountFieldInfo : ICompareView
+public sealed class CountFieldInfo : IAggregateField
 {
     /// <summary>
     /// 计数字段信息
@@ -20,6 +20,12 @@ public sealed class CountFieldInfo : ICompareView
     /// 单例
     /// </summary>
     public readonly static CountFieldInfo Instance = new();
+
+    string IAggregateField.TargetName
+        => "*";
+    string IAggregate.Aggregate 
+        => AggregateConstants.Count;
+
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
          => engine.Count(sql);
 }

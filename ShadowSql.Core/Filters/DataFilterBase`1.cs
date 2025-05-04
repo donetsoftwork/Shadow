@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ public abstract class DataFilterBase<TFilter>(ITableView source, TFilter filter)
     /// <summary>
     /// 过滤条件
     /// </summary>
-    protected TFilter _filter = filter;
+    internal TFilter _filter = filter;
     /// <summary>
     /// 过滤条件
     /// </summary>

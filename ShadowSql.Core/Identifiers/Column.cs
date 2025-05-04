@@ -1,4 +1,4 @@
-﻿using ShadowSql.Services;
+using ShadowSql.Services;
 using ShadowSql.Variants;
 
 namespace ShadowSql.Identifiers;
@@ -35,7 +35,7 @@ public class Column : ColumnBase, IColumn
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<Column> _cacher = new(name => new Column(name));
+    private static readonly CacheService<Column> _cacher = new(static name => new Column(name));
 
     string IView.ViewName
         => _name;

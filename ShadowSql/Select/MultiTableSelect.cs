@@ -1,50 +1,76 @@
-﻿using ShadowSql.Cursors;
-using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.SelectFields;
-using System.Text;
+using System.Collections.Generic;
+using System;
 
 namespace ShadowSql.Select;
 
 /// <summary>
-/// 多表视图筛选列
+/// 多联表视图筛选列
 /// </summary>
+/// <param name="source"></param>
 /// <param name="multiTable"></param>
-/// <param name="fields"></param>
-public class MultiTableSelect(IMultiView multiTable, MultiTableFields fields)
-    : SelectBase<IMultiView, MultiTableFields>(multiTable, fields)
+public class MultiTableSelect(ITableView source, IMultiView multiTable)
+    : MultiSelectBase<ITableView>(source, multiTable)
 {
     /// <summary>
-    /// 多表视图筛选列
+    /// 多联表视图筛选列
     /// </summary>
-    /// <param name="multiTable"></param>
-    public MultiTableSelect(IMultiView multiTable)
-        : this(multiTable, new MultiTableFields(multiTable))
+    /// <param name="source"></param>
+    public MultiTableSelect(IMultiView source)
+        : this(source, source)
     {
     }
-}
-/// <summary>
-/// 多表视图范围(分页)及列筛选
-/// </summary>
-/// <param name="cursor"></param>
-/// <param name="fields"></param>
-public class MultiTableCursorSelect(MultiTableCursor cursor, MultiTableFields fields)
-    : SelectBase<ICursor, MultiTableFields>(cursor, fields)
-{
+    #region IColumn
     /// <summary>
-    /// 多表视图范围(分页)及列筛选
+    /// 筛选列
     /// </summary>
-    /// <param name="cursor"></param>
-    public MultiTableCursorSelect(MultiTableCursor cursor)
-        : this(cursor, new MultiTableFields(cursor.Source))
-    {
-    }
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
     /// <returns></returns>
-    public override void Write(ISqlEngine engine, StringBuilder sql)
-        => engine.SelectCursor(sql, this, _source);
+    public MultiTableSelect Select<TTable>(string tableName, Func<TTable, IColumn> select)
+        where TTable : ITable
+    {
+        SelectCore(tableName, select);
+        return this;
+    }
+    /// <summary>
+    /// 筛选多列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    public MultiTableSelect Select<TTable>(string tableName, Func<TTable, IEnumerable<IColumn>> select)
+        where TTable : ITable
+    {
+        SelectCore(tableName, select);
+        return this;
+    }
+    #endregion
+    #region IFieldView
+    /// <summary>
+    /// 筛选列
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    public MultiTableSelect Select<TAliasTable>(string tableName, Func<TAliasTable, IFieldView> select)
+        where TAliasTable : IAliasTable
+    {
+        SelectCore(select(_target.From<TAliasTable>(tableName)));
+        return this;
+    }
+    /// <summary>
+    /// 筛选多列
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    public MultiTableSelect Select<TAliasTable>(string tableName, Func<TAliasTable, IEnumerable<IFieldView>> select)
+        where TAliasTable : IAliasTable
+    {
+        SelectCore(select(_target.From<TAliasTable>(tableName)));
+        return this;
+    }
+    #endregion
 }

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ShadowSql\ShadowSql.csproj" />
+    <ProjectReference Include="..\TestSupports\TestSupports.csproj" />
   </ItemGroup>
 
   <ItemGroup>

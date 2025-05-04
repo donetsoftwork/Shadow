@@ -1,8 +1,10 @@
-﻿using ShadowSql;
+using ShadowSql;
+using ShadowSql.ColumnQueries;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
+using TestSupports;
 
 namespace ShadowSqlTest.AliasTables;
 
@@ -38,7 +40,7 @@ public class AliasTableQueryTests
     public void Logic(SqlEngineNames engineName, string expected)
     {
         ISqlEngine engine = SqlEngines.Get(engineName);
-        var query = new Users()
+        var query = new UserTable()
             .As("u")
             .ToSqlQuery()
             //_id是游离状态,不属于别名表,拼接sql时没有表前缀
@@ -55,7 +57,7 @@ public class AliasTableQueryTests
     public void Table(SqlEngineNames engineName, string expected)
     {
         ISqlEngine engine = SqlEngines.Get(engineName);
-        var query = new Users()
+        var query = new UserTable()
             .As("u")
             .ToSqlQuery()
             .Where(user => user.Id, Id => Id.Greater("LastId"));
@@ -71,7 +73,7 @@ public class AliasTableQueryTests
     public void TableLogic(SqlEngineNames engineName, string expected)
     {
         ISqlEngine engine = SqlEngines.Get(engineName);
-        var query = new Users()
+        var query = new UserTable()
             .As("u")
             .ToSqlQuery()
             .Where(user => user.Column("Id").Less("LastId"));

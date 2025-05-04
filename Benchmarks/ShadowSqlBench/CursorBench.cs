@@ -1,9 +1,10 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
+using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.Tables;
@@ -26,51 +27,34 @@ public class CursorBench
     private static IColumn Pick = ShadowSql.Identifiers.Column.Use("Pick");
 
     [Benchmark]
-    public string ShadowSqlBySqlQuery()
+    public string ShadowSqlByTableName()
     {
-        var query = new Table("Posts")
+        var select = new Table("Posts")
             .ToSqlQuery()
-            .ColumnEqualValue("Category", "csharp")
-            .ColumnEqualValue("Pick", true)
+            .FieldEqualValue("Category", "csharp")
+            .FieldEqualValue("Pick", true)
             .ToCursor()
             .Skip(10)
             .Take(10)
             .Desc(Id)
-            .ToSelect();
-        query.Fields.Select("Id", "Title");
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-    [Benchmark]
-    public string ShadowSqlByQuery()
-    {
-        var query = new Table("Posts")
-            .ToQuery()
-            .And(Category.EqualValue("csharp"))
-            .And(Pick.EqualValue(true))
-            .ToCursor()
-            .Skip(10)
-            .Take(10)
-            .Desc(Id)
-            .ToSelect();
-        query.Fields.Select("Id", "Title");
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(query);
-        //Console.WriteLine(sql);
-        return sql;
-    }
-    [Benchmark]
-    public string ShadowSqlByParametricLogic()
-    {
-        var filter = new TableFilter(_table, Category.EqualValue("csharp") & Pick.EqualValue(true));
-        var cursor = new TableCursor(filter, 10, 10)
-            .Desc(Id);
-        var select = new TableSelect(cursor)
-            .Select(Id, Title);
+            .ToSelect()
+            .Select("Id", "Title");
         ParametricContext context = new(_engine);
         var sql = context.Sql(select);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+    [Benchmark]
+    public string ShadowSqlBySqlQuery()
+    {
+        var select = _table.ToSqlQuery()
+            .Where(Category.EqualValue("csharp"))
+            .Where(Pick.EqualValue(true))
+            .ToCursor(10, 10)
+            .Desc(Id)
+            .ToSelect()
+            .Select(Id, Title);
+        var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }
@@ -82,8 +66,7 @@ public class CursorBench
             .Desc(Id);
         var select = new TableSelect(cursor)
             .Select(Id, Title);
-        ParametricContext context = new(_engine);
-        var sql = context.Sql(select);
+        var sql = _engine.Sql(select);
         //Console.WriteLine(sql);
         return sql;
     }

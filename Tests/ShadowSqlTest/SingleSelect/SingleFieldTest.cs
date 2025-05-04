@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -19,13 +19,12 @@ public class SingleFieldTest
         var count = _db.From("Orders")
             .ToSqlQuery()
             .Where("UserId=u.Id")
-            .GroupBy("UserId")
-            .ToSingle();
-        count.Fields.Select(order => order.CountAs("Count"));
+            .SqlGroupBy("UserId")
+            .ToSingle(order => order.CountAs("Count"));
 
-        var cursor = u.ToSelect();
-        cursor.Fields.Select("Id", "Name");
-        cursor.Fields.Select(count);
+        var cursor = u.ToSelect()
+            .Select("Id", "Name")
+            .Select(count);
         var sql = _engine.Sql(cursor);
         //取最后一个字段
         Assert.Equal("SELECT u.[Id],u.[Name],(SELECT COUNT(*) AS Count FROM [Orders] WHERE UserId=u.Id GROUP BY [UserId]) FROM [Users] AS u", sql);
@@ -39,13 +38,12 @@ public class SingleFieldTest
         var count = _db.From("Orders")
             .ToSqlQuery()
             .Where("UserId=u.Id")
-            .GroupBy("UserId")
-            .ToSingle();
-        count.Fields.Select(order => order.CountAs("Id", "Count"));
+            .SqlGroupBy("UserId")
+            .ToSingle(order => order.DistinctCountAs("Id", "Count"));
 
-        var cursor = u.ToSelect();
-        cursor.Fields.Select("Id", "Name");
-        cursor.Fields.Select(count, "OrderCount");
+        var cursor = u.ToSelect()
+            .Select("Id", "Name")
+            .Alias(count, "OrderCount");
         var sql = _engine.Sql(cursor);
         //取最后一个字段
         Assert.Equal("SELECT u.[Id],u.[Name],(SELECT COUNT(DISTINCT [Id]) AS Count FROM [Orders] WHERE UserId=u.Id GROUP BY [UserId]) AS OrderCount FROM [Users] AS u", sql);

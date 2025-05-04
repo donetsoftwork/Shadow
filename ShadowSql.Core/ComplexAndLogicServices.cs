@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using ShadowSql.Queries;
 
 namespace ShadowSql;
@@ -147,9 +147,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="logic"></param>
     /// <param name="other"></param>
     /// <returns></returns>
-    internal static TComplexAndLogic AddOtherCore<TComplexAndLogic, TComplexOrLogic>(this TComplexAndLogic logic, TComplexOrLogic other)
-        where TComplexAndLogic : ComplexLogicBase, IAndLogic
-        where TComplexOrLogic : ComplexLogicBase, IOrLogic
+    internal static ComplexAndLogic AddOtherCore(this ComplexAndLogic logic, ComplexOrLogic other)
     {
         logic.AddOther(other);
         return logic;
@@ -159,9 +157,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <param name="and"></param>
     /// <param name="or"></param>
-    internal static void NotOthers<TComplexAndLogic, TComplexOrLogic>(this TComplexAndLogic and, TComplexOrLogic or)
-        where TComplexAndLogic : ComplexLogicBase, IAndLogic
-        where TComplexOrLogic : ComplexLogicBase, IOrLogic
+    internal static void NotOthers(this ComplexAndLogic and, ComplexOrLogic or)
     {
         foreach (var other in or._others)
         {
@@ -176,8 +172,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <param name="source"></param>
     /// <param name="destination"></param>
-    internal static void CopyTo<TComplexAndLogic>(this ComplexAndLogic source, TComplexAndLogic destination)
-        where TComplexAndLogic : ComplexLogicBase, IAndLogic
+    internal static void CopyTo(this ComplexAndLogic source, ComplexAndLogic destination)
     {
         destination.AddLogics(source._logics);
         foreach (var other in source._others)
@@ -191,8 +186,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="source"></param>
     /// <param name="and"></param>
     /// <returns></returns>
-    internal static TComplexAndLogic MergeTo<TComplexAndLogic>(this ComplexAndLogic source, TComplexAndLogic and)
-        where TComplexAndLogic : ComplexLogicBase, IAndLogic
+    internal static ComplexAndLogic MergeTo(this ComplexAndLogic source, ComplexAndLogic and)
     {
         source.CopyTo(and);
         return and;
@@ -228,8 +222,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="source"></param>
     /// <param name="or"></param>
     /// <returns></returns>
-    internal static TComplexOrLogic MergeToOr<TComplexOrLogic>(this ComplexAndLogic source, TComplexOrLogic or)
-        where TComplexOrLogic : ComplexLogicBase, IOrLogic
+    internal static ComplexOrLogic MergeToOr(this ComplexAndLogic source, ComplexOrLogic or)
     {
         var preview = source.Preview();
         if (preview.IsEmpty)

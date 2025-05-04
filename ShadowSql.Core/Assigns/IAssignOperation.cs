@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.SqlVales;
 
@@ -7,7 +7,7 @@ namespace ShadowSql.Assigns;
 /// <summary>
 /// 赋值操作
 /// </summary>
-public interface IAssignOperation : ISqlEntity
+public interface IAssignOperation : IAssignInfo, ISqlEntity
 {
     /// <summary>
     /// 左边列

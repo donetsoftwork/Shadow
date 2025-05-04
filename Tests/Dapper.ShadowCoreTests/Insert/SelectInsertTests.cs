@@ -1,9 +1,11 @@
-﻿using Dapper;
+using Dapper;
 using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
+using ShadowSql.Insert;
+using ShadowSql.Select;
 namespace Dapper.ShadowCoreTests.Insert;
 
 public class SelectInsertTests : ExecuteTestBase, IDisposable
@@ -19,25 +21,13 @@ public class SelectInsertTests : ExecuteTestBase, IDisposable
     static readonly Table _students = _db.From("Students");
 
     [Fact]
-    public void ToInsert()
+    public void SelectInsert()
     {
-        var select = _students.ToSelect();
-        select.Fields.Select(_name, _age);
-        var insert = SqliteExecutor.From("Backup2025")
-            .AddColums(_name, _age)
-            .ToDapperInsert(select);
-        var result = insert.Execute();
-        Assert.Equal(0, result);
-    }
-
-    [Fact]
-    public void InsertTo()
-    {
+        var select = new TableSelect( _students);
+        select.Select(_name, _age);
         var backup = _db.From("Backup2025")
             .AddColums(_name, _age);
-        var insert = _students.ToSelect()
-            .Select(select => select.Fields.Select(_name, _age))
-            .InsertTo(backup);
+        var insert = new SelectInsert(backup, select);
         var result = insert.Execute(SqliteExecutor);
         Assert.Equal(0, result);
     }

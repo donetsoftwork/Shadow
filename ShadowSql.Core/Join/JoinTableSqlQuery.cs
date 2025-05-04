@@ -1,4 +1,5 @@
-﻿using ShadowSql.Generators;
+using ShadowSql.Filters;
+using ShadowSql.Generators;
 using ShadowSql.Queries;
 
 namespace ShadowSql.Join;
@@ -6,16 +7,15 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表查询
 /// </summary>
-/// <param name="aliasGenerator"></param>
 /// <param name="filter"></param>
-public class JoinTableSqlQuery(IIdentifierGenerator aliasGenerator, SqlQuery filter)
-    : JoinTableBase<SqlQuery>(aliasGenerator, filter), IDataSqlQuery
+public class JoinTableSqlQuery(SqlQuery filter)
+    : JoinTableBase<SqlQuery>(filter), IDataSqlQuery, IWhere
 {
     /// <summary>
     /// 联表查询
     /// </summary>
     public JoinTableSqlQuery()
-        : this(new IdIncrementGenerator("t"), SqlQuery.CreateAndQuery())
+        : this(SqlQuery.CreateAndQuery())
     {
     }
     #region IDataQuery

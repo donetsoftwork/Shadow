@@ -1,8 +1,7 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,17 +10,25 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表俩俩关联基类
 /// </summary>
+/// <typeparam name="TJoinTable"></typeparam>
 /// <typeparam name="TFilter"></typeparam>
 /// <param name="root"></param>
 /// <param name="left"></param>
 /// <param name="right"></param>
 /// <param name="filter"></param>
-public abstract class JoinOnCoreBase<TFilter>(IJoinTable root, IAliasTable left, IAliasTable right, TFilter filter)
-    : JoinOnBase(root), IJoinOn, IMultiView, IDataFilter
+public abstract class JoinOnCoreBase<TJoinTable, TFilter>(TJoinTable root, IAliasTable left, IAliasTable right, TFilter filter)
+    : JoinOnBase, IJoinOn, IMultiView, IDataFilter
+    where TJoinTable : IJoinTable
     where TFilter : ISqlLogic
 {
 
     #region 配置
+    private readonly TJoinTable _root = root;
+    /// <summary>
+    /// 联表
+    /// </summary>
+    public TJoinTable Root
+        => _root;
     /// <summary>
     /// 左表
     /// </summary>
@@ -109,14 +116,8 @@ public abstract class JoinOnCoreBase<TFilter>(IJoinTable root, IAliasTable left,
         return null;
     }
     #endregion
-    #region FilterBase
-    /// <summary>
-    /// 应用过滤
-    /// </summary>
-    /// <param name="filter"></param>
-    internal void ApplyFilter(Func<TFilter, TFilter> filter)
-        => _filter = filter(_filter);
-    #endregion
+    IJoinTable IJoinOn.Root
+        => _root;
     #region IDataFilter
     ITableView IDataFilter.Source
         => this;

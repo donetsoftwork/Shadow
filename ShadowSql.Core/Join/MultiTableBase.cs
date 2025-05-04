@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Generators;
 using ShadowSql.Identifiers;
@@ -14,10 +14,9 @@ namespace ShadowSql.Join;
 /// 多(联)表基类
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="aliasGenerator"></param>
 /// <param name="filter"></param>
-public abstract class MultiTableBase<TFilter>(IIdentifierGenerator aliasGenerator, TFilter filter)
-    : MultiTableBase(aliasGenerator), IDataFilter, ITableView, IWhere
+public abstract class MultiTableBase<TFilter>(TFilter filter)
+    : MultiTableBase, IDataFilter, ITableView
     where TFilter : ISqlLogic
 {
     #region 配置
@@ -46,14 +45,21 @@ public abstract class MultiTableBase<TFilter>(IIdentifierGenerator aliasGenerato
 /// <summary>
 /// 多(联)表基类
 /// </summary>
-public abstract class MultiTableBase(IIdentifierGenerator aliasGenerator)
-    : FilterBase, IMultiTable, ITableView
+public abstract class MultiTableBase
+    : FilterBase, IMultiView, ITableView
 {
     #region 配置
     /// <summary>
     /// 别名生成器
     /// </summary>
-    protected readonly IIdentifierGenerator _aliasGenerator = aliasGenerator;
+    private IIdentifierGenerator? _aliasGenerator;
+    /// <summary>
+    /// 别名生成器
+    /// </summary>
+    public IIdentifierGenerator AliasGenerator
+    {
+        set => _aliasGenerator = value;
+    }
     /// <summary>
     /// 成员表
     /// </summary>
@@ -66,11 +72,22 @@ public abstract class MultiTableBase(IIdentifierGenerator aliasGenerator)
     #endregion
     #region AddMember
     /// <summary>
+    /// 检查别名生成器
+    /// </summary>
+    /// <returns></returns>
+    private IIdentifierGenerator CheckGenerator()
+    {
+        if (_aliasGenerator != null)
+            return _aliasGenerator;
+        return _aliasGenerator = new IdIncrementGenerator("t");
+    }
+    /// <summary>
     /// 构造新成员名
     /// </summary>
     /// <returns></returns>
     internal string CreateMemberName()
-        => _aliasGenerator.NewName();
+        => CheckGenerator()
+            .NewName();
     /// <summary>
     /// 添加表成员
     /// </summary>

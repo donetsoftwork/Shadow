@@ -1,6 +1,7 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
+using ShadowSql.Simples;
 
 namespace ShadowSql;
 
@@ -52,5 +53,13 @@ public static partial class ShadowSqlServices
     public static SelectInsert<TTable> InsertTo<TTable>(this ISelect select, TTable table)
       where TTable : ITable
       => new(table, select);
+    /// <summary>
+    /// 插入Select
+    /// </summary>
+    /// <param name="select"></param>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
+    public static SelectInsert<SimpleTable> InsertTo(this ISelect select, string tableName)
+      => new(SimpleTable.Use(tableName), select);
     #endregion
 }

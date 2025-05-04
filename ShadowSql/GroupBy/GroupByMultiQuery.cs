@@ -1,5 +1,7 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Aggregates;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using System;
 
 namespace ShadowSql.GroupBy;
 
@@ -20,5 +22,35 @@ public class GroupByMultiQuery(IMultiView multiTable, IFieldView[] fields, Logic
     public GroupByMultiQuery(IMultiView multiTable, IFieldView[] fields)
         : this(multiTable, fields, new AndLogic())
     {
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="aggregate"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public GroupByMultiQuery Apply<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
+         where TAliasTable : IAliasTable
+    {
+        _filter = query(_filter, aggregate(_source.From<TAliasTable>(tableName)));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <param name="aggregate"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public GroupByMultiQuery Apply<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
+        where TTable : ITable
+    {
+        var table = _source.Alias<TTable>(tableName);
+        _filter = query(_filter, aggregate(table.Prefix(select(table.Target))));
+        return this;
     }
 }

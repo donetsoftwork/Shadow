@@ -1,6 +1,8 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Join;
+using ShadowSql.Simples;
 using ShadowSql.Variants;
+using System.Collections.Generic;
 
 namespace ShadowSql;
 
@@ -14,27 +16,45 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="MultiTable"></typeparam>
     /// <param name="multiTable"></param>
-    /// <param name="aliasTable"></param>
+    /// <param name="aliasTables"></param>
     /// <returns></returns>
-    public static MultiTable AddMember<MultiTable>(this MultiTable multiTable, IAliasTable aliasTable)
+    public static MultiTable AddMembers<MultiTable>(this MultiTable multiTable, params IEnumerable<IAliasTable> aliasTables)
         where MultiTable : MultiTableBase
     {
-        multiTable.AddMemberCore(aliasTable);
+        foreach (var aliasTable in aliasTables)
+            multiTable.AddMemberCore(aliasTable);
         return multiTable;
     }
     /// <summary>
-    /// 构造表成员
+    /// 添加表成员
     /// </summary>
     /// <typeparam name="MultiTable"></typeparam>
-    /// <typeparam name="TTable"></typeparam>
     /// <param name="multiTable"></param>
-    /// <param name="table"></param>
+    /// <param name="tables"></param>
     /// <returns></returns>
-    public static MultiTable AddMember<MultiTable, TTable>(this MultiTable multiTable, TTable table)
-        where MultiTable : MultiTableBase, IMultiTable
-        where TTable : ITable
+    public static MultiTable AddMembers<MultiTable>(this MultiTable multiTable, params IEnumerable<ITable> tables)
+        where MultiTable : MultiTableBase, IMultiView
     {
-        multiTable.AddMemberCore(table.As(multiTable.CreateMemberName()));
+        foreach (var table in tables)
+            multiTable.AddMemberCore(table.As(multiTable.CreateMemberName()));
+        return multiTable;
+    }
+    /// <summary>
+    /// 添加表成员
+    /// </summary>
+    /// <typeparam name="MultiTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="tableNames"></param>
+    /// <returns></returns>
+    public static MultiTable AddMembers<MultiTable>(this MultiTable multiTable, params IEnumerable<string> tableNames)
+        where MultiTable : MultiTableBase, IMultiView
+    {
+        foreach (var tableName in tableNames)
+        {
+            var member = SimpleDB.From(tableName)
+                .As(multiTable.CreateMemberName());
+            multiTable.AddMemberCore(member);
+        }
         return multiTable;
     }
     /// <summary>
@@ -46,11 +66,11 @@ public static partial class ShadowSqlCoreServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static TableAlias<TTable> CreateMember<MultiTable, TTable>(this MultiTable multiTable, TTable table)
-        where MultiTable : MultiTableBase, IMultiTable
+        where MultiTable : MultiTableBase, IMultiView
         where TTable : ITable
     {
-        var aliasTable = table.As(multiTable.CreateMemberName());
-        multiTable.AddMemberCore(aliasTable);
-        return aliasTable;
+        var member = table.As(multiTable.CreateMemberName());
+        multiTable.AddMemberCore(member);
+        return member;
     }
 }

@@ -1,8 +1,10 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
 using ShadowSql.Simples;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ShadowSql.GroupBy;
@@ -111,6 +113,80 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// </summary>
     public ITableView Source
         => _source;
+    #endregion
+    #region Create
+    #region ITable
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(ITable table, params IFieldView[] fields)
+        => new(table, fields);
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="columnNames"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(ITable table, params IEnumerable<string> columnNames)
+        => new(table, [.. table.SelectFields(columnNames)]);
+    #endregion
+    #region IAliasTable
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(IAliasTable table, params IFieldView[] fields)
+        => new(table, fields);
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="columnNames"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(IAliasTable table, params IEnumerable<string> columnNames)
+        => new(table, [.. table.SelectFields(columnNames)]);
+    #endregion
+    #region tableName
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(string tableName, params IFieldView[] fields)
+        => new(tableName, fields);
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="columnNames"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(string tableName, params IEnumerable<string> columnNames)
+        => new(tableName, [.. columnNames.Select(Column.Use)]);
+    #endregion
+    #region IDataFilter
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(IDataFilter filter, params IFieldView[] fields)
+        => new(filter, fields);
+    /// <summary>
+    /// 创建分组查询
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="columnNames"></param>
+    /// <returns></returns>
+    public static GroupBySqlQuery Create(IDataFilter filter, params IEnumerable<string> columnNames)
+        => new(filter, [.. filter.Source.SelectFields(columnNames)]);
+    #endregion
     #endregion
     #region ISqlEntity
     /// <summary>

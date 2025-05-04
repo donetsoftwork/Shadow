@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Services;
 
 namespace ShadowSql.Orders;
@@ -20,7 +20,7 @@ internal class OrderByField : Identifier, IOrderField
     public static OrderByField Use(string name)
         => _cacher.Get(name);
 
-    private static readonly CacheService<OrderByField> _cacher = new(name => new OrderByField(name));
+    private static readonly CacheService<OrderByField> _cacher = new(static name => new OrderByField(name));
 
     string IView.ViewName
         => _name;

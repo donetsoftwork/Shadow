@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="value"></param>
     /// <returns></returns>
     public static TInsert Insert<TInsert>(this TInsert insert, IInsertValue value)
-        where TInsert : SingleInsertBase
+        where TInsert : SingleInsertBase, ISingleInsert
     {
         insert.Add(value);
         return insert;
@@ -32,7 +32,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <returns></returns>
     public static TInsert InsertColumn<TInsert>(this TInsert insert, IColumn column)
-        where TInsert : SingleInsertBase
+        where TInsert : SingleInsertBase, ISingleInsert
         => insert.Insert(column.Insert());
     /// <summary>
     /// 按指定列插入
@@ -42,7 +42,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="columns"></param>
     /// <returns></returns>
     public static TInsert InsertColumns<TInsert>(this TInsert insert, params IEnumerable<IColumn> columns)
-        where TInsert : SingleInsertBase
+        where TInsert : SingleInsertBase, ISingleInsert
     {
         foreach (var column in columns)
             insert.InsertColumn(column);
@@ -67,7 +67,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="value"></param>
     /// <returns></returns>
     public static TInsert Insert<TInsert>(this TInsert insert, IInsertValues value)
-        where TInsert : MultiInsertBase
+        where TInsert : MultiInsertBase, IMultiInsert
     {
         insert.Add(value);
         return insert;
@@ -79,12 +79,13 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="column"></param>
+    /// <param name="columns"></param>
     /// <returns></returns>
-    public static TInsert Insert<TInsert>(this TInsert insert, IColumn column)
-        where TInsert : SelectInsertBase
+    public static TInsert Insert<TInsert>(this TInsert insert, params IEnumerable<IColumn> columns)
+        where TInsert : SelectInsertBase, ISelectInsert
     {
-        insert.Add(column);
+        foreach (var column in columns)
+            insert.Add(column);
         return insert;
     }
     /// <summary>
@@ -92,13 +93,18 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="columnName"></param>
+    /// <param name="columnNames"></param>
     /// <returns></returns>
-    public static TInsert Insert<TInsert>(this TInsert insert, string columnName)
+    public static TInsert Insert<TInsert>(this TInsert insert, params IEnumerable<string> columnNames)
         where TInsert : SelectInsertBase, ISelectInsert
     {
-        if (insert.Table.InsertColumns.FirstOrDefault(c => c.IsMatch(columnName)) is IColumn column)
+        var columns = insert.Table.InsertColumns;
+        foreach (var columnName in columnNames)
+        {
+            var column = columns.FirstOrDefault(c => c.IsMatch(columnName))
+                ?? Identifiers.Column.Use(columnName);
             insert.Add(column);
+        }
         return insert;
     }
     #endregion

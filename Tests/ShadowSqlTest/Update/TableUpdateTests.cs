@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Assigns;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
@@ -40,7 +40,7 @@ public class TableUpdateTests
     {
         var update = new StudentTable()
             .ToUpdate(table => table.Score.LessValue(60))
-            .SetValue("Score", AssignSymbol.Add, 10);
+            .SetValue("Score", 10, "+=");
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]+=10 WHERE [Score]<60", sql);
     }

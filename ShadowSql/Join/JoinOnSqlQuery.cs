@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
 using ShadowSql.Variants;
@@ -16,7 +16,7 @@ namespace ShadowSql.Join;
 /// <param name="right"></param>
 /// <param name="onQuery"></param>
 public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<LTable> left, TableAlias<RTable> right, SqlQuery onQuery)
-    : JoinOnBase<LTable, RTable, SqlQuery>(root, left, right, onQuery), IDataSqlQuery
+    : JoinOnBase<JoinTableSqlQuery, TableAlias<LTable>, TableAlias<RTable>, LTable, RTable, SqlQuery>(root, left, right, onQuery), IDataSqlQuery
     where LTable : ITable
     where RTable : ITable
 {
@@ -30,14 +30,6 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
         : this(root, left, right, SqlQuery.CreateAndQuery())
     { 
     }
-    #region 配置
-    private readonly JoinTableSqlQuery _root = root;
-    /// <summary>
-    /// 联表
-    /// </summary>
-    public new JoinTableSqlQuery Root
-        => _root;
-    #endregion
     #region IDataQuery
     SqlQuery IDataSqlQuery.Query
     {
@@ -46,16 +38,6 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     }
     #endregion
     #region On
-    /// <summary>
-    /// 按逻辑查询
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<IAliasTable, AtomicLogic> query)
-    {
-        _filter.AddLogic(query(_left));
-        return this;
-    }
     /// <summary>
     /// 按逻辑查询
     /// </summary>
@@ -70,36 +52,17 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> OnRight(Func<IAliasTable, AtomicLogic> query)
-    {
-        _filter.AddLogic(query(_source));
-        return this;
-    }
-    /// <summary>
-    /// 按逻辑查询
-    /// </summary>
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> OnRight(Func<RTable, IColumn> select, Func<IColumn, AtomicLogic> query)
     {
-        _filter.AddLogic(query(_left.Prefix(select(_source.Target))));
+        _filter.AddLogic(query(_source.Prefix(select(_source.Target))));
         return this;
     }
     #endregion
     #region Where
-    /// <summary>
-    /// 按逻辑查询
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<IAliasTable, AtomicLogic> query)
-    {
-        root.Where(query(_left));
-        return this;
-    }
+    #region WhereLeft
     /// <summary>
     /// 按逻辑查询
     /// </summary>
@@ -108,19 +71,11 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<LTable, IColumn> select, Func<IColumn, AtomicLogic> query)
     {
-        root.Where(query(_left.Prefix(select(_left.Target))));
+        _root.Where(query(_left.Prefix(select(_left.Target))));
         return this;
     }
-    /// <summary>
-    /// 按逻辑查询
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<IAliasTable, AtomicLogic> query)
-    {
-        root.Where(query(_source));
-        return this;
-    }
+    #endregion
+    #region WhereRight
     /// <summary>
     /// 按逻辑查询
     /// </summary>
@@ -129,8 +84,9 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<RTable, IColumn> select, Func<IColumn, AtomicLogic> query)
     {
-        root.Where(query(_left.Prefix(select(_source.Target))));
+        _root.Where(query(_source.Prefix(select(_source.Target))));
         return this;
     }
+    #endregion
     #endregion
 }

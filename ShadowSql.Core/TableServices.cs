@@ -1,4 +1,3 @@
-﻿using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
 using ShadowSql.Variants;
 using System;
@@ -22,20 +21,31 @@ public static partial class ShadowSqlCoreServices
         => multiTable.GetMember(tableName)
         ?? throw new ArgumentException(tableName + "表不存在", nameof(tableName));
     /// <summary>
-    /// 定位到表
+    /// 定位到别名表
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="multiTable"></param>
     /// <param name="tableName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static TableAlias<TTable> Table<TTable>(this IMultiView multiTable, string tableName)
+    public static IAliasTable<TTable> Alias<TTable>(this IMultiView multiTable, string tableName)
         where TTable : ITable
+        => multiTable.From<TableAlias<TTable>>(tableName);
+    /// <summary>
+    /// 定位到成员别名表
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static TAliasTable From<TAliasTable>(this IMultiView multiTable, string tableName)
+        where TAliasTable : IAliasTable
     {
         foreach (var table in multiTable.Tables)
         {
-            if (table.IsMatch(tableName) && table is TableAlias<TTable> tableAlias)
-                return tableAlias;
+            if (table.IsMatch(tableName) && table is TAliasTable member)
+                return member;
         }
         throw new ArgumentException(tableName + "表不存在", nameof(tableName));
     }
@@ -105,7 +115,18 @@ public static partial class ShadowSqlCoreServices
             table.AddUpdateIgnore(column);
         return table;
     }
-
+    /// <summary>
+    /// 选择列
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="columnName"></param>
+    /// <returns></returns>
+    public static IFieldView SelectField(this ITableView table, string columnName)
+    {
+        if (table.GetColumn(columnName) is IColumn column)
+            return column;
+        return table.Field(columnName);
+    }
     /// <summary>
     /// 选择列
     /// </summary>
@@ -115,12 +136,7 @@ public static partial class ShadowSqlCoreServices
     public static IEnumerable<IFieldView> SelectFields(this ITableView table, params IEnumerable<string> columnNames)
     {
         foreach (var name in columnNames)
-        {
-            if (table.GetColumn(name) is IColumn column)
-                yield return column;
-            else
-                yield return FieldInfo.Use(name);
-        }
+            yield return table.SelectField(name);
     }
     /// <summary>
     /// 选择列

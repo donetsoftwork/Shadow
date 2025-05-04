@@ -1,8 +1,9 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
+using ShadowSql.ColumnQueries;
 
 namespace ShadowSqlTest.Join;
 
@@ -69,9 +70,9 @@ public class JoinTableTests
     public void SqlQuery()
     {
         var joinOn = SimpleDB.From("Employees").SqlJoin(SimpleDB.From("Departments"))
-            .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")))
-            .WhereLeft(t1 => t1.Field("Age").GreaterValue(30))
-            .WhereRight(t2 => t2.Field("Manager").EqualValue("CEO"));
+            .OnColumn("DepartmentId", "Id")
+            .WhereLeft("Age", Age => Age.GreaterValue(30))
+            .WhereRight("Manager", Manager => Manager.EqualValue("CEO"));
         var sql = _engine.Sql(joinOn.Root);
         Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]>30 AND t2.[Manager]='CEO'", sql);
     }
@@ -130,7 +131,7 @@ public class JoinTableTests
         Assert.Equal("[Employees] AS e INNER JOIN [Departments] AS d ON e.[DepartmentId]=d.[Id] WHERE e.[Age]>30 AND d.[Manager]='CEO'", sql);
     }
     [Fact]
-    public void MultiTable()
+    public void ApplyTable()
     {
         var employees = _db.From("Employees");
         var departments = _db.From("Departments");
@@ -138,27 +139,7 @@ public class JoinTableTests
         var departmentJoinOn = employees.SqlJoin(departments)
             .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = departmentJoinOn.Root
-            .Where((join, query) => query
-                .And(join.From("Employees").Field("Age").EqualValue(40))
-                .And(join.From("t2").Field("Manager").EqualValue("CEO"))
-            );
-
-        var sql = _engine.Sql(joinTable);
-        Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]=40 AND t2.[Manager]='CEO'", sql);
-    }
-
-
-
-    [Fact]
-    public void Table()
-    {
-        var employees = _db.From("Employees");
-        var departments = _db.From("Departments");
-
-        var departmentJoinOn = employees.SqlJoin(departments)
-            .On(static (t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")));
-        var joinTable = departmentJoinOn.Root
-            .Where("t1", (employee, query) => query.And(employee.Field("Age").GreaterEqualValue(40)));
+            .Apply("t1", (query, employee) => query.And(employee.Field("Age").GreaterEqualValue(40)));
 
         var sql = _engine.Sql(joinTable);
         Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] WHERE t1.[Age]>=40", sql);

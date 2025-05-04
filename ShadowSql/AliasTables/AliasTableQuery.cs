@@ -1,4 +1,4 @@
-﻿using ShadowSql.Filters;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
@@ -14,7 +14,7 @@ namespace ShadowSql.AliasTables;
 /// <param name="table"></param>
 /// <param name="filter"></param>
 public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
-    : DataFilterBase<TableAlias<TTable>, Logic>(table, filter), IDataQuery, IWhere
+    : DataFilterBase<TableAlias<TTable>, Logic>(table, filter), IDataQuery
     where TTable : ITable
 {
     /// <summary>

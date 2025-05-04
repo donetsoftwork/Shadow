@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -10,7 +10,7 @@ namespace ShadowSql.FieldInfos;
 /// <param name="tableName"></param>
 /// <param name="name"></param>
 public class TableFieldInfo(string tableName, string name)
-    : FieldInfoBase(name), IField, ICompareField
+    : FieldInfoBase(name), IField, ICompareField, IPrefixField
 {
     #region 配置
     private readonly string _tableName = tableName;
