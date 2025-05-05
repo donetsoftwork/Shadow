@@ -5,14 +5,14 @@
 >* 通过扩展对本组件增强功能、增加易用性
 
 ## 1. 接口
->* [IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)
->* [IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
+>* [IMultiView](xref:ShadowSql.Identifiers.IMultiView)
+>* [IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
 
 ## 2. 基类
->[MultiTableBase](/api/ShadowSql.Join.MultiTableBase.html)
+>[MultiTableBase](xref:ShadowSql.Join.MultiTableBase)
 
 ## 3. 类
->[MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)
+>[MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)
 
 
 ## 4. SqlMulti
@@ -56,6 +56,6 @@ var query = new CommentAliasTable("c")
 
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)的方法和扩展方法部分
+>* 参看[MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)的方法和扩展方法部分
 >* 参看[sql查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/sqlquery/multi.md)

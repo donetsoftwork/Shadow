@@ -4,27 +4,27 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ICursor](/api/ShadowSql.Cursors.ICursor.html)
+>[ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->* [CursorBase](/api/ShadowSql.Cursors.CursorBase.html)
->* [GroupByCursorBase](/api/ShadowSql.Cursors.GroupByCursorBase.html)
+>* [CursorBase](xref:ShadowSql.Cursors.CursorBase)
+>* [GroupByCursorBase](xref:ShadowSql.Cursors.GroupByCursorBase)
 
 ## 3. 功能类
 ### 3.1 TableCursor
->* [TableCursor\<TTable\>](/api/ShadowSql.Cursors.TableCursor-1.html)
+>* [TableCursor\<TTable\>](xref:ShadowSql.Cursors.TableCursor%601)
 >* [表游标](./table.md)
 
 ### 3.2 MultiTableCursor
->* [MultiTableCursor](/api/ShadowSql.Cursors.MultiTableCursor.html)
+>* [MultiTableCursor](xref:ShadowSql.Cursors.MultiTableCursor)
 >* [联表游标](./join.md)
 
 ### 3.3 GroupByTableCursor
->* [GroupByTableCursor\<TTable\>](/api/ShadowSql.Cursors.GroupByTableCursor-1.html)
+>* [GroupByTableCursor\<TTable\>](xref:ShadowSql.Cursors.GroupByTableCursor%601)
 >* [分组游标](./groupby.md)
 
 ### 3.4 GroupByMultiCursor
->* [GroupByMultiCursor](/api/ShadowSql.Cursors.GroupByMultiCursor.html)
+>* [GroupByMultiCursor](xref:ShadowSql.Cursors.GroupByMultiCursor)
 >* [联表分组游标](./groupbyjoin.md)
 
 ## 4. 排序方法

@@ -4,16 +4,16 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[IGroupByView](/api/ShadowSql.Identifiers.IGroupByView.html)
+>[IGroupByView](xref:ShadowSql.Identifiers.IGroupByView)
 
 ## 2. 基类
->[GroupByBase](/api/ShadowSql.GroupBy.GroupByBase.html)
+>[GroupByBase](xref:ShadowSql.GroupBy.GroupByBase)
 
 ## 3. 类
->[GroupByMultiQuery](/api/ShadowSql.GroupBy.GroupByMultiQuery.html)
+>[GroupByMultiQuery](xref:ShadowSql.GroupBy.GroupByMultiQuery)
 
 ## 4. GroupBy
->从多、联表创建[GroupByMultiQuery](/api/ShadowSql.GroupBy.GroupByMultiQuery.html)
+>从多、联表创建[GroupByMultiQuery](xref:ShadowSql.GroupBy.GroupByMultiQuery)
 ### 4.1 GroupBy扩展方法
 ```csharp
 GroupByMultiQuery GroupBy(this JoinTableQuery multiTable, params IFieldView[] fields);
@@ -119,7 +119,7 @@ var query = new CommentTable()
 
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[GroupByMultiQuery](/api/ShadowSql.GroupBy.GroupByMultiQuery.html)的方法和扩展方法部分
+>* 参看[GroupByMultiQuery](xref:ShadowSql.GroupBy.GroupByMultiQuery)的方法和扩展方法部分
 >* 参看[聚合](../../shadowcore/aggregate.md)
 >* 参看[sql查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/query/groupby.md)

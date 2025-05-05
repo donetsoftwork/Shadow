@@ -5,15 +5,15 @@
 >* 借助两两关联泛型扩展,联表的每个表查询都可以使用自定义类型
 
 ## 1. 接口
->* [IJoinTable](/api/ShadowSql.Identifiers.IJoinTable.html)
->* [IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)
->* [IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
+>* [IJoinTable](xref:ShadowSql.Identifiers.IJoinTable)
+>* [IMultiView](xref:ShadowSql.Identifiers.IMultiView)
+>* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 基类
->[MultiTableBase](/api/ShadowSql.Join.MultiTableBase.html)
+>[MultiTableBase](xref:ShadowSql.Join.MultiTableBase)
 
 ## 3. 类
->[JoinTableQuery](/api/ShadowSql.Join.JoinTableQuery.html)
+>[JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)
 
 ## 4. Apply扩展方法
 ```csharp
@@ -133,7 +133,7 @@ var query = c.Join(p)
 
 ## 10. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[JoinTableQuery](/api/ShadowSql.Join.JoinTableQuery.html)的方法和扩展方法部分
+>* 参看[JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)的方法和扩展方法部分
 >* 参看[别名表关联](./aliasjoinon.md)
 >* 参看[表关联](./joinon.md)
 >* 参看[sql查询简介](./index.md)

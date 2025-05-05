@@ -4,14 +4,14 @@
 >* 使用On关键字查询
 
 ## 1. 接口
->* [IJoinOn](/api/ShadowSql.Join.IJoinOn.html)
->* [IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
+>* [IJoinOn](xref:ShadowSql.Join.IJoinOn)
+>* [IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
 
 ## 2. 基类
->[JoinOnBase](/api/ShadowSql.Join.JoinOnBase.html)
+>[JoinOnBase](xref:ShadowSql.Join.JoinOnBase)
 
 ## 3. 类
->[JoinOnSqlQuery](/api/ShadowSql.Join.JoinOnSqlQuery.html)
+>[JoinOnSqlQuery](xref:ShadowSql.Join.JoinOnSqlQuery)
 
 ## 4. 方法
 ### 4.1 Create

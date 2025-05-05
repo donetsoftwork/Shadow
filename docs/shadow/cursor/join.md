@@ -4,20 +4,20 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ICursor](/api/ShadowSql.Cursors.ICursor.html)
+>[ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->[CursorBase](/api/ShadowSql.Cursors.CursorBase.html)
+>[CursorBase](xref:ShadowSql.Cursors.CursorBase)
 
 ## 3. 类
->[MultiTableCursor](/api/ShadowSql.Cursors.MultiTableCursor.html)
+>[MultiTableCursor](xref:ShadowSql.Cursors.MultiTableCursor)
 
 ## 4. ToCursor扩展方法
->* 把[IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)转换为联表游标,IMultiView的4个实现类可用在这里
->* [JoinTableSqlQuery](/api/ShadowSql.Join.JoinTableSqlQuery.html)
->* [JoinTableQuery](/api/ShadowSql.Join.JoinTableQuery.html)
->* [MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)
->* [MultiTableQuery](/api/ShadowSql.Join.MultiTableQuery.html)
+>* 把[IMultiView](xref:ShadowSql.Identifiers.IMultiView)转换为联表游标,IMultiView的4个实现类可用在这里
+>* [JoinTableSqlQuery](xref:ShadowSql.Join.JoinTableSqlQuery)
+>* [JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)
+>* [MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)
+>* [MultiTableQuery](xref:ShadowSql.Join.MultiTableQuery)
 ~~~csharp
 MultiTableCursor ToCursor(this MultiTableBase query, int limit = 0, int offset = 0);
 ~~~
@@ -119,6 +119,6 @@ var cursor = new CommentAliasTable("c")
 
 ## 7. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[MultiTableCursor](/api/ShadowSql.Cursors.MultiTableCursor.html)的方法和扩展方法部分
+>* 参看[MultiTableCursor](xref:ShadowSql.Cursors.MultiTableCursor)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/cursor/index.md)

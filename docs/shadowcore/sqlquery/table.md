@@ -2,11 +2,11 @@
 >从表中按sql查询数据
 
 ## 1. 接口
->* [IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
->* [IWhere](/api/ShadowSql.Filters.IWhere.html)
+>* [IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
+>* [IWhere](xref:ShadowSql.Filters.IWhere)
 
 ## 2. 类
->[TableSqlQuery](/api/ShadowSql.Tables.TableSqlQuery.html)
+>[TableSqlQuery](xref:ShadowSql.Tables.TableSqlQuery)
 
 ## 3. 构造函数
 ### 3.1 使用table

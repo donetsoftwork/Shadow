@@ -4,8 +4,8 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->* [IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
->* [IWhere](/api/ShadowSql.Filters.IWhere.html)
+>* [IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
+>* [IWhere](xref:ShadowSql.Filters.IWhere)
 
 ## 2. 类
 >[TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)

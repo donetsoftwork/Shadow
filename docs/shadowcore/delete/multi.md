@@ -2,10 +2,10 @@
 >从联表中某个表删除数据
 
 ## 1. 接口
->[IDelete](/api/ShadowSql.Delete.IDelete.html)
+>[IDelete](xref:ShadowSql.Delete.IDelete)
 
 ## 2. 类
->[MultiTableDelete](/api/ShadowSql.Delete.MultiTableDelete.html)
+>[MultiTableDelete](xref:ShadowSql.Delete.MultiTableDelete)
 
 ## 3. 相关方法
 ### 3.1 ToDelete扩展方法

@@ -6,14 +6,14 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->* [IJoinOn](/api/ShadowSql.Join.IJoinOn.html)
->* [IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
+>* [IJoinOn](xref:ShadowSql.Join.IJoinOn)
+>* [IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
 
 ## 2. 基类
->[JoinOnBase](/api/ShadowSql.Join.JoinOnBase.html)
+>[JoinOnBase](xref:ShadowSql.Join.JoinOnBase)
 
 ## 3. 类
->* [AliasJoinOnSqlQuery\<TLeft, TRight\>](/api/ShadowSql.Join.AliasJoinOnSqlQuery-2.html)
+>* [AliasJoinOnSqlQuery\<TLeft, TRight\>](xref:ShadowSql.Join.AliasJoinOnSqlQuery%602)
 
 ## 4. SqlJoin扩展方法
 ```csharp
@@ -149,6 +149,6 @@ var query = new CommentAliasTable("c")
 
 ## 11. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[AliasJoinOnSqlQuery\<TLeft, TRight\>](/api/ShadowSql.Join.AliasJoinOnSqlQuery-2.html)的方法和扩展方法部分
+>* 参看[AliasJoinOnSqlQuery\<TLeft, TRight\>](xref:ShadowSql.Join.AliasJoinOnSqlQuery%602)的方法和扩展方法部分
 >* 参看[sql查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/sqlquery/joinon.md)

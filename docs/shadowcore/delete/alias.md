@@ -2,10 +2,10 @@
 >从别名表中删除数据
 
 ## 1. 接口
->[IDelete](/api/ShadowSql.Delete.IDelete.html)
+>[IDelete](xref:ShadowSql.Delete.IDelete)
 
 ## 2. 类
->[AliasTableDelete](/api/ShadowSql.Delete.AliasTableDelete.html)
+>[AliasTableDelete](xref:ShadowSql.Delete.AliasTableDelete)
 
 ## 3. 相关方法
 ### 3.1 ToDelete扩展方法

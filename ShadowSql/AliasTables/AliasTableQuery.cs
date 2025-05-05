@@ -33,7 +33,6 @@ public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
     public TTable Table
         => _table;
     #endregion
-
     #region 查询扩展
     /// <summary>
     /// 与逻辑
@@ -57,14 +56,14 @@ public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
         _filter = _filter.Or(query(Prefix(select)));
         return this;
     }
+    #endregion
     /// <summary>
     /// 增加前缀
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    private IPrefixColumn Prefix(Func<TTable, IColumn> select)
+    protected IPrefixColumn Prefix(Func<TTable, IColumn> select)
         => _source.Prefix(select(_table));
-    #endregion
     #region IDataQuery
     Logic IDataQuery.Logic
     {

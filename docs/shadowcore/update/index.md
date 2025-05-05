@@ -6,10 +6,10 @@
 >* 实现了[单表更新](./table.md)和[联表更新](./multi.md)
 
 ## 1. 接口
->[IUpdate](/api/ShadowSql.Update.IUpdate.html)
+>[IUpdate](xref:ShadowSql.Update.IUpdate)
 
 ## 2. 基类
->[UpdateBase](/api/ShadowSql.Update.UpdateBase.html)
+>[UpdateBase](xref:ShadowSql.Update.UpdateBase)
 
 ## 3. 方法
 ### 3.1 Set扩展方法

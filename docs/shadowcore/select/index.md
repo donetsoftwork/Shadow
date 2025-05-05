@@ -3,7 +3,7 @@
 >* 本组件用来组装sql的SELECT语句
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 筛选列方法
 ### 2.1 Select

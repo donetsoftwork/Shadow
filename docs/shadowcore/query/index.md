@@ -1,9 +1,9 @@
 # 逻辑查询简介
->* 基于[Logic](/api/ShadowSql.Logics.Logic.html)的实现类AndLogic、OrLogic、ComplexAndLogic及ComplexOrLogic等
->* [AndLogic](/api/ShadowSql.Logics.AndLogic.html)实现AND连接逻辑
->* [OrLogic](/api/ShadowSql.Logics.OrLogic.html)实现OR连接逻辑
->* [ComplexAndLogic](/api/ShadowSql.Logics.ComplexAndLogic.html)实现AND连接并支持嵌套OR查询
->* [ComplexOrLogic](/api/ShadowSql.Logics.ComplexOrLogic.html)实现OR连接并支持嵌套AND查询
+>* 基于[Logic](xref:ShadowSql.Logics.Logic)的实现类AndLogic、OrLogic、ComplexAndLogic及ComplexOrLogic等
+>* [AndLogic](xref:ShadowSql.Logics.AndLogic)实现AND连接逻辑
+>* [OrLogic](xref:ShadowSql.Logics.OrLogic)实现OR连接逻辑
+>* [ComplexAndLogic](xref:ShadowSql.Logics.ComplexAndLogic)实现AND连接并支持嵌套OR查询
+>* [ComplexOrLogic](xref:ShadowSql.Logics.ComplexOrLogic)实现OR连接并支持嵌套AND查询
 >* 按And、Or来操作
 
 ## 1. 接口

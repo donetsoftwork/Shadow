@@ -4,14 +4,14 @@
 >* 多表由多个别名表组成
 
 ## 1. 接口
->* [IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)
->* [IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
+>* [IMultiView](xref:ShadowSql.Identifiers.IMultiView)
+>* [IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
 
 ## 2. 基类
->[MultiTableBase](/api/ShadowSql.Join.MultiTableBase.html)
+>[MultiTableBase](xref:ShadowSql.Join.MultiTableBase)
 
 ## 3. 类
->[MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)
+>[MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)
 
 ## 4. 方法
 ### 4.1 CreateMember扩展方法

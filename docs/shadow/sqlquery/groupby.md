@@ -4,18 +4,18 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[IGroupByView](/api/ShadowSql.Identifiers.IGroupByView.html)
+>[IGroupByView](xref:ShadowSql.Identifiers.IGroupByView)
 
 ## 2. 基类
->[GroupByBase](/api/ShadowSql.GroupBy.GroupByBase.html)
+>[GroupByBase](xref:ShadowSql.GroupBy.GroupByBase)
 
 ## 3. 类
->[GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)
+>[GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)
 
 ## 4. SqlGroupBy
->创建[GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)
+>创建[GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)
 ### 4.1 SqlGroupBy扩展方法
->* 从表创建[GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)
+>* 从表创建[GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)
 ```csharp
 GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, params IFieldView[] fields)
         where TTable : ITable;
@@ -41,7 +41,7 @@ var groupBy = new CommentTable()
 ```
 
 ### 4.2 SqlGroupBy重载扩展方法
->* 从表和查询条件创建[GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)
+>* 从表和查询条件创建[GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)
 ```csharp
 GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, ISqlLogic where, params IFieldView[] fields)
         where TTable : ITable;
@@ -69,7 +69,7 @@ var groupBy = new CommentTable()
 ```
 
 ### 4.3 SqlGroupBy重载扩展方法
->* 从[TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)创建[GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)
+>* 从[TableSqlQuery\<TTable\>](xref:ShadowSql.Tables.TableSqlQuery%601)创建[GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)
 ```csharp
 GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, params IFieldView[] fields)
         where TTable : ITable;
@@ -114,7 +114,7 @@ var groupBy = new CommentTable()
 
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)的方法和扩展方法部分
+>* 参看[GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)的方法和扩展方法部分
 >* 参看[聚合](../../shadowcore/aggregate.md)
 >* 参看[sql查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/sqlquery/groupby.md)

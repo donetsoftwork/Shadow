@@ -1,10 +1,10 @@
 # 删表
 
 ## 1. 接口
->[IExecuteSql](/api/ShadowSql.Fragments.IExecuteSql.html)
+>[IExecuteSql](xref:ShadowSql.Fragments.IExecuteSql)
 
 ## 2. 类
->[DropTable](/api/Shadow.DDL.DropTable.html)
+>[DropTable](xref:Shadow.DDL.DropTable)
 
 
 ## 3. DropTable

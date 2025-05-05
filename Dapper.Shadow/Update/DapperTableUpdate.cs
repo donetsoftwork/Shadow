@@ -1,6 +1,8 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Assigns;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Update;
+using System;
 
 namespace Dapper.Shadow.Update;
 
@@ -22,4 +24,14 @@ public class DapperTableUpdate<TTable>(IExecutor executor, TTable table, ISqlLog
     public IExecutor Executor
         => _executor;
     #endregion
+    /// <summary>
+    /// 添加修改信息
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    new public DapperTableUpdate<TTable> Set(Func<TTable, IAssignInfo> operation)
+    {
+        SetCore(operation(_source));
+        return this;
+    }
 }

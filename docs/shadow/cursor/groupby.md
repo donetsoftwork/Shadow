@@ -4,13 +4,13 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ICursor](/api/ShadowSql.Cursors.ICursor.html)
+>[ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->[CursorBase](/api/ShadowSql.Cursors.CursorBase.html)
+>[CursorBase](xref:ShadowSql.Cursors.CursorBase)
 
 ## 3. 类
->[GroupByTableCursor\<TTable\>](/api/ShadowSql.Cursors.GroupByTableCursor-1.html)
+>[GroupByTableCursor\<TTable\>](xref:ShadowSql.Cursors.GroupByTableCursor%601)
 ~~~csharp
 class GroupByTableCursor<TTable>
     where TTable : ITable;

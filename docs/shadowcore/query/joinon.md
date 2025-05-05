@@ -4,14 +4,14 @@
 >* 使用And和Or查询
 
 ## 1. 接口
->* [IJoinOn](/api/ShadowSql.Join.IJoinOn.html)
->* [IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
+>* [IJoinOn](xref:ShadowSql.Join.IJoinOn)
+>* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 基类
->[JoinOnBase](/api/ShadowSql.Join.JoinOnBase.html)
+>[JoinOnBase](xref:ShadowSql.Join.JoinOnBase)
 
 ## 3. 类
->[JoinOnQuery](/api/ShadowSql.Join.JoinOnQuery.html)
+>[JoinOnQuery](xref:ShadowSql.Join.JoinOnQuery)
 
 ## 4. 方法
 ### 4.1 Create

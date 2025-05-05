@@ -1,6 +1,9 @@
-﻿using ShadowSql.GroupBy;
+using ShadowSql;
+using ShadowSql.Aggregates;
+using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using System;
 
 namespace Dapper.Shadow.GroupBy;
 
@@ -15,7 +18,6 @@ public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, 
     : GroupByMultiQuery(multiTable, fields, filter)
     , IDapperSource
 {
-
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>
@@ -24,4 +26,34 @@ public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, 
     public IExecutor Executor
         => _executor;
     #endregion
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="aggregate"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    new public DapperGroupByMultiQuery Apply<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
+         where TAliasTable : IAliasTable
+    {
+        _filter = query(_filter, aggregate(_source.From<TAliasTable>(tableName)));
+        return this;
+    }
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <param name="aggregate"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    new public DapperGroupByMultiQuery Apply<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
+        where TTable : ITable
+    {
+        var table = _source.Alias<TTable>(tableName);
+        _filter = query(_filter, aggregate(table.Prefix(select(table.Target))));
+        return this;
+    }
 }

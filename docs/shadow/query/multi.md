@@ -4,14 +4,14 @@
 >* 多表由多个别名表组成
 
 ## 1. 接口
->* [IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)
->* [IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
+>* [IMultiView](xref:ShadowSql.Identifiers.IMultiView)
+>* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 基类
->[MultiTableBase](/api/ShadowSql.Join.MultiTableBase.html)
+>[MultiTableBase](xref:ShadowSql.Join.MultiTableBase)
 
 ## 3. 类
->[MultiTableQuery](/api/ShadowSql.Join.MultiTableQuery.html)
+>[MultiTableQuery](xref:ShadowSql.Join.MultiTableQuery)
 
 ## 4. Multi
 ### 4.1 Multi扩展方法
@@ -54,6 +54,6 @@ var query = c.Multi(p)
 
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[MultiTableQuery](/api/ShadowSql.Join.MultiTableQuery.html)的方法和扩展方法部分
+>* 参看[MultiTableQuery](xref:ShadowSql.Join.MultiTableQuery)的方法和扩展方法部分
 >* 参看[查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/Query/multi.md)

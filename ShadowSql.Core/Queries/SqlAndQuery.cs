@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using System.Collections.Generic;
 
 namespace ShadowSql.Queries;
@@ -20,7 +20,7 @@ public class SqlAndQuery : SqlQuery, ISqlLogic
     /// And查询
     /// </summary>
     /// <param name="complex"></param>
-    internal SqlAndQuery(ComplexLogicBase complex)
+    internal SqlAndQuery(ComplexAndLogic complex)
         : base(complex, new SqlConditionLogic(LogicSeparator.And))
     {
     }
@@ -29,7 +29,7 @@ public class SqlAndQuery : SqlQuery, ISqlLogic
     /// </summary>
     /// <param name="complex"></param>
     /// <param name="conditions"></param>
-    internal SqlAndQuery(ComplexLogicBase complex, SqlConditionLogic conditions)
+    internal SqlAndQuery(ComplexAndLogic complex, SqlConditionLogic conditions)
         : base(complex, conditions)
     {
     }

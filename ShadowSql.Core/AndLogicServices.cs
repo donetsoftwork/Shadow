@@ -1,6 +1,5 @@
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using System.Linq;
 
 namespace ShadowSql;
 

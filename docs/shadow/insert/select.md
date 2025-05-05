@@ -4,13 +4,13 @@
 >* 支持对表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->* [ISelectInsert](/api/ShadowSql.Insert.ISelectInsert.html)
+>* [ISelectInsert](xref:ShadowSql.Insert.ISelectInsert)
 
 ## 2. 基类
->* [SelectInsertBase](/api/ShadowSql.Insert.SelectInsertBase.html)
+>* [SelectInsertBase](xref:ShadowSql.Insert.SelectInsertBase)
 
 ## 3. 类型
->* [SelectInsert<TTable>](/api/ShadowSql.Insert.SelectInsert-1.html)
+>* [SelectInsert<TTable>](xref:ShadowSql.Insert.SelectInsert%601)
 
 ## 4 方法
 ### 4.1 ToInsert扩展方法
@@ -62,6 +62,6 @@ var insert = _db.From("Students")
 
 ## 5. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[SelectInsert<TTable>](/api/ShadowSql.Insert.SelectInsert-1.html)的方法和扩展方法部分
+>* 参看[SelectInsert<TTable>](xref:ShadowSql.Insert.SelectInsert%601)的方法和扩展方法部分
 >* 参看[select](../select/index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/insert/select.md)

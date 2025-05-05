@@ -14,6 +14,7 @@
     <Content Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="Dapper.Shadow" />
     <InternalsVisibleTo Include="ShadowSqlTest" />
   </ItemGroup>
   <ItemGroup>

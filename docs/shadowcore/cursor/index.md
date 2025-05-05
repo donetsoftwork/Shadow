@@ -7,10 +7,10 @@
 >* 本组件是[游标获取](../select/cursor.md)的依赖组件,不单独使用
 
 ## 1. 接口
->[ICursor](/api/ShadowSql.Cursors.ICursor.html)
+>[ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->[CursorBase](/api/ShadowSql.Cursors.CursorBase.html)
+>[CursorBase](xref:ShadowSql.Cursors.CursorBase)
 
 ## 3. 排序方法
 >* 多次调用排序方法会叠加,都会拼接到ORDER BY子句中

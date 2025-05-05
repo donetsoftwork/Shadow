@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 using System.Collections.Generic;
 
 namespace ShadowSql.Queries;
@@ -20,7 +20,7 @@ public class SqlOrQuery : SqlQuery, ISqlLogic
     /// Or查询
     /// </summary>
     /// <param name="complex"></param>
-    internal SqlOrQuery(ComplexLogicBase complex)
+    internal SqlOrQuery(ComplexOrLogic complex)
         : base(complex, new SqlConditionLogic(LogicSeparator.Or))
     {
     }
@@ -29,7 +29,7 @@ public class SqlOrQuery : SqlQuery, ISqlLogic
     /// </summary>
     /// <param name="complex"></param>
     /// <param name="conditions"></param>
-    internal SqlOrQuery(ComplexLogicBase complex, SqlConditionLogic conditions)
+    internal SqlOrQuery(ComplexOrLogic complex, SqlConditionLogic conditions)
         : base(complex, conditions)
     {
     }

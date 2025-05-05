@@ -1,6 +1,6 @@
-# µ¥±í²éÑ¯
+# å•è¡¨æŸ¥è¯¢
 
-## 1¡¢Ô­Éúsql²éÑ¯
+## 1ã€åŸç”ŸsqlæŸ¥è¯¢
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToQuery()
@@ -9,7 +9,7 @@ var students = SqliteExecutor.From("Students")
     .Get<Student>();
 ~~~
 
-## 2¡¢°´ÁĞÃû²éÑ¯
+## 2ã€æŒ‰åˆ—åæŸ¥è¯¢
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToQuery()
@@ -18,7 +18,7 @@ var students = SqliteExecutor.From("Students")
     .Get<Student>();
 ~~~
 
-## 3¡¢×Ô¶¨ÒåÁĞ²éÑ¯
+## 3ã€è‡ªå®šä¹‰åˆ—æŸ¥è¯¢
 ~~~csharp
 var age = Column.Use("Age");
 var students = SqliteExecutor.From("Students")
@@ -28,8 +28,8 @@ var students = SqliteExecutor.From("Students")
     .Get<Student>();
 ~~~
 
-## 4¡¢×Ô¶¨Òå±í²éÑ¯
->×Ô¶¨Òå±í·½±ãµ÷ÓÃ×Ô¼ºµÄÁĞ
+## 4ã€è‡ªå®šä¹‰è¡¨æŸ¥è¯¢
+>è‡ªå®šä¹‰è¡¨æ–¹ä¾¿è°ƒç”¨è‡ªå·±çš„åˆ—
 ~~~csharp
 var table = new StudentTable("Students");
 var students = table.ToQuery()
@@ -38,7 +38,7 @@ var students = table.ToQuery()
     .Get<Student>(SqliteExecutor);
 ~~~
 
-## 5¡¢Î¯ÍĞ²éÑ¯
+## 5ã€å§”æ‰˜æŸ¥è¯¢
 ~~~csharp
 var students = new StudentTable("Students")
     .ToQuery()
@@ -47,8 +47,8 @@ var students = new StudentTable("Students")
     .Get<Student>(SqliteExecutor);
 ~~~
 
-## 6¡¢±í¶¨ÒåÁĞ²éÑ¯
->±íÖĞ²»´æÔÚµÄÁĞ,Ê¹ÓÃColumnÒıÓÃÅ×Òì³£
+## 6ã€è¡¨å®šä¹‰åˆ—æŸ¥è¯¢
+>è¡¨ä¸­ä¸å­˜åœ¨çš„åˆ—,ä½¿ç”¨Columnå¼•ç”¨æŠ›å¼‚å¸¸
 ~~~csharp
 var students = new Table("Students")
     .DefineColums("Age")
@@ -58,8 +58,8 @@ var students = new Table("Students")
     .Get<Student>(SqliteExecutor);
 ~~~
 
-## 7¡¢ĞéÄâ×Ö¶Î²éÑ¯
->Field²»¼ì²é±í½á¹¹ÊÇ·ñº¬¸Ã×Ö¶Î
+## 7ã€è™šæ‹Ÿå­—æ®µæŸ¥è¯¢
+>Fieldä¸æ£€æŸ¥è¡¨ç»“æ„æ˜¯å¦å«è¯¥å­—æ®µ
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToQuery()

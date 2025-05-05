@@ -3,7 +3,7 @@
 >* 本组件用来处理sql的SELECT分页语句
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 使用方法
 ### 2.1 从表获取

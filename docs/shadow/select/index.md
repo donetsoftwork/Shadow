@@ -5,48 +5,48 @@
 >* 支持对各查询和数据类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
->* [SelectBase\<TTable\>](/api/ShadowSql.Select.SelectBase-1.html)
->* [MultiSelectBase](/api/ShadowSql.Select.MultiSelectBase.html)
->* [GroupBySelectBase](/api/ShadowSql.Select.GroupBySelectBase.html)
->* [CursorSelectBase\<TTarget\>](/api/ShadowSql.CursorSelect.CursorSelectBase-1.html)
->* [MultiCursorSelectBase](/api/ShadowSql.CursorSelect.MultiCursorSelectBase.html)
->* [GroupCursorBySelectBase](/api/ShadowSql.CursorSelect.GroupCursorBySelectBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
+>* [SelectBase\<TTable\>](xref:ShadowSql.Select.SelectBase%601)
+>* [MultiSelectBase](xref:ShadowSql.Select.MultiSelectBase)
+>* [GroupBySelectBase](xref:ShadowSql.Select.GroupBySelectBase)
+>* [CursorSelectBase\<TTarget\>](xref:ShadowSql.CursorSelect.CursorSelectBase%601)
+>* [MultiCursorSelectBase](xref:ShadowSql.CursorSelect.MultiCursorSelectBase)
+>* [GroupCursorBySelectBase](xref:ShadowSql.CursorSelect.GroupCursorBySelectBase)
 
 ## 3. 功能类
 ### 3.1 TableSelect
->* [TableSelect\<TTable\>](/api/ShadowSql.Select.TableSelect-1.html)
+>* [TableSelect\<TTable\>](xref:ShadowSql.Select.TableSelect%601)
 >* [获取表](./table.md)
 
 ### 3.2 TableCursorSelect
->* [TableCursorSelect\<TTable\>](/api/ShadowSql.CursorSelect.TableCursorSelect-1.html)
+>* [TableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.TableCursorSelect%601)
 >* [分页获取表](./tablecursor.md)
 
 ### 3.3 MultiTableSelect
->* [MultiTableSelect](/api/ShadowSql.Select.MultiTableSelect.html)
+>* [MultiTableSelect](xref:ShadowSql.Select.MultiTableSelect)
 >* [获取联表](./join.md)
 
 ### 3.4 MultiTableSelect
->* [MultiTableCursorSelect](/api/ShadowSql.CursorSelect.MultiTableCursorSelect.html)
+>* [MultiTableCursorSelect](xref:ShadowSql.CursorSelect.MultiTableCursorSelect)
 >* [分页获取联表](./joincursor.md)
 
 ### 3.5 GroupByTableSelect
->* [GroupByTableSelect\<TTable\>](/api/ShadowSql.Select.GroupByTableSelect-1.html)
+>* [GroupByTableSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableSelect%601)
 >* [获取分组](./groupby.md)
 
 ### 3.6 GroupByTableCursorSelect
->* [GroupByTableCursorSelect\<TTable\>](/api/ShadowSql.CursorSelect.GroupByTableCursorSelect-1.html)
+>* [GroupByTableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.GroupByTableCursorSelect%601)
 >* [分页获取分组](./groupbycursor.md)
 
 ### 3.7 GroupByMultiSelect
->* [GroupByMultiSelect](/api/ShadowSql.Select.GroupByMultiSelect.html)
+>* [GroupByMultiSelect](/api/ShadowSql.Select.GroupByMultiSelect)
 >* [获取联表分组](./groupbyjoin.md)
 
 ### 3.8 GroupByMultiCursorSelect
->* [GroupByMultiCursorSelect](/api/ShadowSql.CursorSelect.GroupByMultiCursorSelect.html)
+>* [GroupByMultiCursorSelect](xref:ShadowSql.CursorSelect.GroupByMultiCursorSelect)
 >* [分页获取联表分组](./groupbyjoincursor.md)
 
 ## 4. ToSelect扩展方法
@@ -76,11 +76,11 @@ TableCursorSelect<TTable> ToSelect<TTable>(this TableCursor<TTable> cursor)
 #### 4.1.3 导航到MultiTableSelect
 >* 获取联表查询
 >* MultiTableSelect的ToSelect虽然只有一个,但可以处理多表、联表的sql及逻辑查询4种情况
->* [MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)
->* [MultiTableQuery](/api/ShadowSql.Join.MultiTableQuery.html)
->* [JoinTableSqlQuery](/api/ShadowSql.Join.JoinTableSqlQuery.html)
->* [JoinTableQuery](/api/ShadowSql.Join.JoinTableQuery.html)
->* 4种情况都继承了[IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)接口
+>* [MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)
+>* [MultiTableQuery](xref:ShadowSql.Join.MultiTableQuery)
+>* [JoinTableSqlQuery](xref:ShadowSql.Join.JoinTableSqlQuery)
+>* [JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)
+>* 4种情况都继承了[IMultiView](xref:ShadowSql.Identifiers.IMultiView)接口
 ```csharp
 MultiTableSelect ToSelect(this IMultiView table);
 ```

@@ -1,5 +1,9 @@
-﻿using ShadowSql.Cursors;
+using ShadowSql;
+using ShadowSql.Aggregates;
+using ShadowSql.Cursors;
 using ShadowSql.GroupBy;
+using ShadowSql.Identifiers;
+using System;
 
 namespace Dapper.Shadow.Cursors;
 
@@ -20,5 +24,71 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery s
     /// </summary>
     public IExecutor Executor
         => _executor;
+    #endregion
+    #region 聚合排序
+    #region TAliasTable
+    /// <summary>
+    /// 正序
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    new public DapperGroupByMultiCursor AggregateAsc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
+        where TAliasTable : IAliasTable
+    {
+        var member = _multiTable.From<TAliasTable>(tableName);
+        AscCore(select(member));
+        return this;
+    }
+    /// <summary>
+    /// 倒序
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="select"></param>
+    /// <returns></returns>
+    new public DapperGroupByMultiCursor AggregateDesc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
+        where TAliasTable : IAliasTable
+    {
+        DescCore(select(_multiTable.From<TAliasTable>(tableName)));
+        return this;
+    }
+    #endregion
+    #region TTable
+    /// <summary>
+    /// 正序
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="tableName">选择表</param>
+    /// <param name="select">定位列</param>
+    /// <param name="aggregate">聚合</param>
+    /// <returns></returns>
+    new public DapperGroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+        where TTable : ITable
+    {
+        var member = _multiTable.Alias<TTable>(tableName);
+        //增加前缀
+        if (member.GetPrefixColumn(select(member.Target)) is IPrefixColumn prefixColumn)
+            AscCore(aggregate(prefixColumn));
+        return this;
+    }
+    /// <summary>
+    /// 倒序
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="tableName">选择表</param>
+    /// <param name="select">定位列</param>
+    /// <param name="aggregate">聚合</param>
+    /// <returns></returns>
+    new public DapperGroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+        where TTable : ITable
+    {
+        var member = _multiTable.Alias<TTable>(tableName);
+        //增加前缀
+        var prefixColumn = member.GetPrefixColumn(select(member.Target));
+        if (prefixColumn is not null)
+            DescCore(aggregate(prefixColumn));
+        return this;
+    }
+    #endregion    
     #endregion
 }

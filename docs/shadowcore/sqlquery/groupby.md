@@ -4,13 +4,13 @@
 >* 使用关键字Having查询
 
 ## 1. 接口
->[IGroupByView](/api/ShadowSql.Identifiers.IGroupByView.html)
+>[IGroupByView](xref:ShadowSql.Identifiers.IGroupByView)
 
 ## 2. 基类
->[GroupByBase](/api/ShadowSql.GroupBy.GroupByBase.html)
+>[GroupByBase](xref:ShadowSql.GroupBy.GroupByBase)
 
 ## 3. 类
->[GroupBySqlQuery](/api//api/ShadowSql.GroupBy.GroupBySqlQuery.html)
+>[GroupBySqlQuery](/api/xref:ShadowSql.GroupBy.GroupBySqlQuery)
 
 ## 4. 方法
 ### 4.1 Create静态方法

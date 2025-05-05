@@ -6,16 +6,16 @@
 >* 本组件通过[联表游标](../cursor/join.md)来分页
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[MultiTableCursorSelect](/api/ShadowSql.CursorSelect.MultiTableCursorSelect.html)
+>[MultiTableCursorSelect](xref:ShadowSql.CursorSelect.MultiTableCursorSelect)
 
 ## 4. ToSelect扩展方法
->* 从联表游标创建[MultiTableCursorSelect](/api/ShadowSql.CursorSelect.MultiTableCursorSelect.html)
+>* 从联表游标创建[MultiTableCursorSelect](xref:ShadowSql.CursorSelect.MultiTableCursorSelect)
 ~~~csharp
 MultiTableSelect ToSelect(this IMultiView table);
 ~~~

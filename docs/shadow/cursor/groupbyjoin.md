@@ -4,13 +4,13 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ICursor](/api/ShadowSql.Cursors.ICursor.html)
+>[ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->[CursorBase](/api/ShadowSql.Cursors.CursorBase.html)
+>[CursorBase](xref:ShadowSql.Cursors.CursorBase)
 
 ## 3. 类
->[GroupByMultiCursor](/api/ShadowSql.Cursors.GroupByMultiCursor.html)
+>[GroupByMultiCursor](xref:ShadowSql.Cursors.GroupByMultiCursor)
 
 
 ## 4. ToCursor
@@ -95,6 +95,6 @@ GroupByMultiCursor AggregateDesc<TAliasTable>(string tableName, Func<TAliasTable
 
 ## 7. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[GroupByMultiCursor](/api/ShadowSql.Cursors.GroupByMultiCursor.html)的方法和扩展方法部分
+>* 参看[GroupByMultiCursor](xref:ShadowSql.Cursors.GroupByMultiCursor)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/cursor/index.md)

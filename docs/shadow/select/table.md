@@ -5,20 +5,20 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[TableSelect\<TTable\>](/api/ShadowSql.Select.TableSelect-1.html)
+>[TableSelect\<TTable\>](xref:ShadowSql.Select.TableSelect%601)
 ~~~csharp
 class TableSelect<TTable>
     where TTable : ITable;
 ~~~
 
 ## 4. ToSelect
->创建[TableSelect\<TTable\>](/api/ShadowSql.Select.TableSelect-1.html)
+>创建[TableSelect\<TTable\>](xref:ShadowSql.Select.TableSelect%601)
 ### 4.1 从表获取
 ~~~csharp
 TableSelect<TTable> ToSelect<TTable>(this TTable table)

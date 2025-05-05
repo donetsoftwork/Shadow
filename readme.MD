@@ -1,15 +1,15 @@
 # ShadowSql
->Ò»¸ö.net ORM¹¤¾ß
+>ä¸€ä¸ª.net ORMå·¥å…·
 
-## Ò»¡¢¼ò½é
->* Ö÷ÒªÓÃÀ´Æ´½Ósql
->* Í¨¹ıÀ©Õ¹DapperÀ´ÔöÇ¿ORM¹¦ÄÜ
->* ¶Ô±ê¿ªÔ´ÏîÄ¿SqlKata(ÏêÇé²é¿´Benchmarks²âÊÔÏîÄ¿)
+## ä¸€ã€ç®€ä»‹
+>* ä¸»è¦ç”¨æ¥æ‹¼æ¥sql
+>* é€šè¿‡æ‰©å±•Dapperæ¥å¢å¼ºORMåŠŸèƒ½
+>* å¯¹æ ‡å¼€æºé¡¹ç›®SqlKata(è¯¦æƒ…æŸ¥çœ‹Benchmarksæµ‹è¯•é¡¹ç›®)
 
-## ¶ş¡¢Quick Examples
-### 1¡¢ÅäÖÃDapperÖ´ĞĞÆ÷
->* ÅäÖÃÊı¾İ¿â·½ÑÔ
->* ÅäÖÃÊı¾İ¿âÁ¬½Ó
+## äºŒã€Quick Examples
+### 1ã€é…ç½®Dapperæ‰§è¡Œå™¨
+>* é…ç½®æ•°æ®åº“æ–¹è¨€
+>* é…ç½®æ•°æ®åº“è¿æ¥
 
 ~~~csharp
 var engine = new SqliteEngine();
@@ -17,15 +17,15 @@ var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
 var executor = new DapperExecutor(engine, connection);
 ~~~
 
-### 2¡¢¶ÁÈ¡ÕûÕÅ±í
+### 2ã€è¯»å–æ•´å¼ è¡¨
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToDapperSelect()
     .Get<Student>();
 ~~~
 
-### 3¡¢²éÑ¯Êı¾İ
-#### 3.1 Ô­Éúsql²éÑ¯
+### 3ã€æŸ¥è¯¢æ•°æ®
+#### 3.1 åŸç”ŸsqlæŸ¥è¯¢
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToSqlQuery()
@@ -34,7 +34,7 @@ var students = SqliteExecutor.From("Students")
     .Get<Student>();
 ~~~
 
-#### 3.2 Âß¼­ÔËËã²éÑ¯
+#### 3.2 é€»è¾‘è¿ç®—æŸ¥è¯¢
 ~~~csharp
 var ageFilter = Column.Use("Age").EqualValue(10);
 var students = SqliteExecutor.From("Students")
@@ -44,19 +44,19 @@ var students = SqliteExecutor.From("Students")
     .Get<Student>();
 ~~~
 
-#### 3.3 Or²éÑ¯
+#### 3.3 OræŸ¥è¯¢
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToSqlQuery()
     .ColumnValue("Age", 10)
     .ToOr()
-    .ColumnLikeValue("Name", "ÕÅ%")
+    .ColumnLikeValue("Name", "å¼ %")
     .ToDapperSelect()
     .Get<Student>();
 ~~~
 
-### 4¡¢Ö±½ÓÂß¼­ÔËËã¹ıÂË
->ÕâÖÖ·½Ê½ĞÔÄÜ×îºÃ,ÄÚ´æÒ²ÉÙ
+### 4ã€ç›´æ¥é€»è¾‘è¿ç®—è¿‡æ»¤
+>è¿™ç§æ–¹å¼æ€§èƒ½æœ€å¥½,å†…å­˜ä¹Ÿå°‘
 
 ~~~csharp
 var table = new StudentTable("Students");
@@ -64,9 +64,9 @@ var students = table.ToSelect(table.Age.EqualValue(10))
     .Get<Student>(SqliteExecutor);
 ~~~
 
-### 5¡¢Cursor(·ÖÒ³¼°ÅÅĞò)
->* SkipºÍTakeÓÃÓÚ·ÖÒ³
->* Desc¡¢Asc¼°OrderByÓÃÀ´ÅÅĞò
+### 5ã€Cursor(åˆ†é¡µåŠæ’åº)
+>* Skipå’ŒTakeç”¨äºåˆ†é¡µ
+>* Descã€AscåŠOrderByç”¨æ¥æ’åº
 
 ~~~csharp
 var table = new StudentTable("Students");
@@ -80,7 +80,7 @@ var students = table.ToQuery()
     .Get<Student>(SqliteExecutor);
 ~~~
 
-### 6¡¢Áª±í
+### 6ã€è”è¡¨
 ~~~csharp
 var s = new StudentAliasTable("s");
 var c = new SchoolClassAliaTable("c");
@@ -92,28 +92,27 @@ select.Fields.Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
 var students = select.Get<StudentView>(SqliteExecutor);
 ~~~
 
-### 7¡¢Ìí¼ÓÊı¾İ
-#### 7.1 °´ÁĞ²ÎÊıÌí¼Ó
+### 7ã€æ·»åŠ æ•°æ®
+#### 7.1 æŒ‰åˆ—å‚æ•°æ·»åŠ 
 ~~~csharp
 var studentInsert = CreateStudentTable()
     .ToInsert()
     .InsertSelfColumns();
-SqliteExecutor.Execute(studentInsert, new Student(1, "ÕÅÈı", 10, 1));
-SqliteExecutor.Execute(studentInsert, new Student(2, "ÀîËÄ", 11, 1));
+SqliteExecutor.Execute(studentInsert, new Student(1, "å¼ ä¸‰", 10, 1));
+SqliteExecutor.Execute(studentInsert, new Student(2, "æå››", 11, 1));
 ~~~
 
-#### 7.2 °´ÖµÌí¼Ó
+#### 7.2 æŒ‰å€¼æ·»åŠ 
 ~~~csharp
 var insert = SqliteExecutor.From("Students")
     .AddColums(_name, _age)
     .ToDapperInsert()
-    .Insert(_name.InsertValue("ÕÅÈı"))
+    .Insert(_name.InsertValue("å¼ ä¸‰"))
     .Insert(s => s.Column("Age").InsertValue(11));
 var result = insert.Execute();
 ~~~
 
-### 8¡¢É¾³ıÊı¾İ
-#### 8.1 µ¥±íÉ¾³ı
+### 8ã€åˆ é™¤æ•°æ®
 ~~~csharp
 var table = new StudentTable();
 var result = table.ToQuery()
@@ -122,10 +121,7 @@ var result = table.ToQuery()
     .Execute();
 ~~~
 
-#### 8.2 Áª±íÉ¾³ı
-
-### 9¡¢ĞŞ¸ÄÊı¾İ
-#### 9.1 µ¥±íĞŞ¸Ä
+### 9ã€ä¿®æ”¹æ•°æ®
 ~~~csharp
 var table = new StudentTable();
 var result = table.ToQuery()
@@ -134,6 +130,3 @@ var result = table.ToQuery()
     .Set(table.ClassId.EqualToValue(1))
     .Execute();
 ~~~
-
-#### 9.2 Áª±íĞŞ¸Ä
-

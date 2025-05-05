@@ -1,6 +1,7 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
+using System;
 
 namespace Dapper.Shadow.Insert;
 
@@ -24,4 +25,13 @@ public class DapperSelectInsert<TTable>(IExecutor executor, TTable table, ISelec
     public IExecutor Executor
         => _executor;
     #endregion
+    /// <summary>
+    /// 设置需要插入的列
+    /// </summary>
+    /// <returns></returns>
+    new public DapperSelectInsert<TTable> Insert(Func<TTable, IColumn> select)
+    {
+        Add(select(_table));
+        return this;
+    }
 }

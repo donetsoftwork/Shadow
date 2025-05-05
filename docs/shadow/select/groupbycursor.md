@@ -6,16 +6,16 @@
 >* 本组件通过[分组分页游标](../cursor/groupby.md)来分页
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[GroupByTableCursorSelect\<TTable\>](/api/ShadowSql.CursorSelect.GroupByTableCursorSelect-1.html)
+>[GroupByTableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.GroupByTableCursorSelect%601)
 
 ## 4. ToSelect扩展方法
->* 从[分组分页游标](../cursor/groupby.md)创建[GroupByTableCursorSelect\<TTable\>](/api/ShadowSql.CursorSelect.GroupByTableCursorSelect-1.html)
+>* 从[分组分页游标](../cursor/groupby.md)创建[GroupByTableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.GroupByTableCursorSelect%601)
 >* 先分组再分页后筛选
 >* 调用路径: GroupBy().ToCursor().ToSelect()
 >* 筛选的默认字段为当前分组字段

@@ -37,7 +37,10 @@ public class GroupByMultiCursor : GroupByCursorBase
     }
 
     #region 配置
-    private readonly IMultiView _multiTable;
+    /// <summary>
+    /// 多(联)表
+    /// </summary>
+    protected readonly IMultiView _multiTable;
     /// <summary>
     /// 多(联)表
     /// </summary>

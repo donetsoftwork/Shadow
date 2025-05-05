@@ -2,13 +2,13 @@
 >* 本组件用来拼接含SELECT子句的INSERT语句
 
 ## 1. 接口
->* [ISelectInsert](/api/ShadowSql.Insert.ISelectInsert.html)
+>* [ISelectInsert](xref:ShadowSql.Insert.ISelectInsert)
 
 ## 2. 基类
->* [SelectInsertBase](/api/ShadowSql.Insert.SelectInsertBase.html)
+>* [SelectInsertBase](xref:ShadowSql.Insert.SelectInsertBase)
 
 ## 3. 类型
->* [SelectInsert](/api/ShadowSql.Insert.SelectInsert.html)
+>* [SelectInsert](xref:ShadowSql.Insert.SelectInsert)
 
 ## 4 方法
 ### 4.1 Insert方法

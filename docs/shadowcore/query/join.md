@@ -6,15 +6,15 @@
 >* WHERE查询部分与[多表逻辑查询](./multi.md)类似
 
 ## 1. 接口
->* [IJoinTable](/api/ShadowSql.Identifiers.IJoinTable.html)
->* [IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)
->* [IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
+>* [IJoinTable](xref:ShadowSql.Identifiers.IJoinTable)
+>* [IMultiView](xref:ShadowSql.Identifiers.IMultiView)
+>* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 基类
->[MultiTableBase](/api/ShadowSql.Join.MultiTableBase.html)
+>[MultiTableBase](xref:ShadowSql.Join.MultiTableBase)
 
 ## 3. 类
->[JoinTableQuery](/api/ShadowSql.Join.JoinTableQuery.html)
+>[JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)
 
 ## 4. 示例
 ### 4.1 自定义别名表

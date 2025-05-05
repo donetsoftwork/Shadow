@@ -2,10 +2,10 @@
 >从表中按逻辑查询数据
 
 ## 1. 接口
->* [IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
+>* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 类
->[TableQuery](/api/ShadowSql.Tables.TableQuery.html)
+>[TableQuery](xref:ShadowSql.Tables.TableQuery)
 
 ## 3. 构造函数
 ### 3.1 使用table

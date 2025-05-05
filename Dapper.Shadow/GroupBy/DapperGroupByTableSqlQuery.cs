@@ -1,7 +1,9 @@
-﻿using ShadowSql.GroupBy;
+using ShadowSql.Aggregates;
+using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
+using System;
 
 namespace Dapper.Shadow.GroupBy;
 
@@ -26,5 +28,18 @@ public class DapperGroupByTableSqlQuery<TTable>(IExecutor executor, TTable table
     /// </summary>
     public IExecutor Executor
         => _executor;
+    #endregion
+    #region 查询扩展
+    /// <summary>
+    /// 按逻辑查询
+    /// </summary>
+    /// <param name="aggregate"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    new public GroupByTableSqlQuery<TTable> HavingAggregate(Func<TTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
+    {
+        _filter.AddLogic(query(aggregate(_source)));
+        return this;
+    }
     #endregion
 }

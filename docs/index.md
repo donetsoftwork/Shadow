@@ -8,14 +8,14 @@ _layout: landing
 >* 对标开源项目SqlKata
 
 ## 一、五个子项目
-### 1、[ShadowSql.Core](./shadowcore/index.md)
+### 1、[精简版](./shadowcore/index.md)
 >* .net拼接sql工具
 >* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
 >* Nuget包名: ShadowSql.Core
 >* 精简版
 
-### 2、[ShadowSql](./shadow/index.md)
+### 2、[易用版](./shadow/index.md)
 >* .net拼接sql工具
 >* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
@@ -33,7 +33,7 @@ _layout: landing
 >* Nuget包名: ShadowSql.Dapper
 >* 易用版
 
-### 3、[Shadow.DDL](./ddl/index.md)
+### 3、[DDL](./ddl/index.md)
 >* 用于拼写DDL的sql语句,主要是CreateTable
 >* 搭配Dapper.Shadow可以实现执行DDL操作
 
@@ -116,12 +116,17 @@ public interface ISqlEntity {
 >* 修改字段名相应sql可以同步重构完成
 >* 也就是可实现编译检测的sql拼写
 
-### 2、高性能
+### 2、通用轻量级
+>* 跨平台,支持net7.0;net8.0;net9.0;netstandard2.0;netstandard2.1
+>* 支持多种数据库(MsSql,MySql,Oracle,Sqlite,Postgres等),可扩展其他数据库方言的支持
+>* 本工具很小、且不依赖第三方包
+
+### 3、高性能
 >* 拼写sql耗时更少
 >* 拼写sql内存消耗更少
 >* 拼写sql方便直接对接Dapper,使用Dapper高效执行sql
 
-### 3、简便易用
->* 能[快速上手](./getting-started.md)
+### 4、简便易用
+>* 能快速[上手](./getting-started.md)
 >* 大多数API和sql一致,代码可读性强,使用简单
 >* 支持链式语法,大多数功能可以直接一行代码搞定

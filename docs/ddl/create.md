@@ -1,10 +1,10 @@
 # 建表
 
 ## 1. 接口
->[IExecuteSql](/api/ShadowSql.Fragments.IExecuteSql.html)
+>[IExecuteSql](xref:ShadowSql.Fragments.IExecuteSql)
 
 ## 2. 类
->[CreateTable](/api/Shadow.DDL.CreateTable.html)
+>[CreateTable](xref:Shadow.DDL.CreateTable)
 
 ## 3. CreateTable
 ~~~csharp

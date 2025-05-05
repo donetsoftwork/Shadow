@@ -1,6 +1,6 @@
 # ShadowSql
 >* .net拼接sql工具
->* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等
+>* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等,可扩展其他数据库方言的支持
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
 >* 在ShadowSql.Core项目基础上,进行泛型扩展和增强
 >* Nuget包名: ShadowSql
@@ -69,54 +69,54 @@ sequenceDiagram
 ### 1.1 组件说明
 #### 1.1.1 Table
 >* 原始表对象
->* 接口[ITable](/api/ShadowSql.Identifiers.ITable.html)
->* 类型为[Table](/api/ShadowSql.Identifiers.Table.html)、[SimpleTable](/api/ShadowSql.Simples.SimpleTable.html)、[TableSchema](/api/Shadow.DDL.Schemas.TableSchema.html)或自定义等
+>* 接口[ITable](xref:ShadowSql.Identifiers.ITable)
+>* 类型为[Table](xref:ShadowSql.Identifiers.Table)、[SimpleTable](xref:ShadowSql.Simples.SimpleTable)、[TableSchema](xref:Shadow.DDL.Schemas.TableSchema)或自定义等
 
 #### 1.1.2 TableAlias 
 >* 表别名对象
->* 接口[IAliasTable](/api/ShadowSql.Identifiers.IAliasTable.html)
->* 类型为[TableAlias\<TTable\>](/api/ShadowSql.Variants.TableAlias-1.html)或自定义等
+>* 接口[IAliasTable](xref:ShadowSql.Identifiers.IAliasTable)
+>* 类型为[TableAlias\<TTable\>](xref:ShadowSql.Variants.TableAlias%601)或自定义等
 
 #### 1.1.3 TableQuery
 >* 表查询对象
->* 接口[IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
->* 类型为[TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)或[TableQuery\<TTable\>](/api/ShadowSql.Tables.TableQuery-1.html)等
+>* 接口[IDataQuery](xref:ShadowSql.Queries.IDataQuery)
+>* 类型为[TableSqlQuery\<TTable\>](xref:ShadowSql.Tables.TableSqlQuery%601)或[TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)等
 
 #### 1.1.4 JoinQuery
 >* 多、联表查询对象
->* 接口[IMultiView](/api/ShadowSql.Identifiers.IMultiView.html)
->* 类型为[JoinTableSqlQuery](/api/ShadowSql.Join.JoinTableSqlQuery.html)、[JoinTableQuery](/api/ShadowSql.Join.JoinTableQuery.html)、[MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)或[MultiTableQuery](/api/ShadowSql.Join.MultiTableQuery.html)等
+>* 接口[IMultiView](xref:ShadowSql.Identifiers.IMultiView)
+>* 类型为[JoinTableSqlQuery](xref:ShadowSql.Join.JoinTableSqlQuery)、[JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)、[MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)或[MultiTableQuery](xref:ShadowSql.Join.MultiTableQuery)等
 
 #### 1.1.5 GroupByQuery
 >* 分组查询对象
->* 接口[IGroupByView](/api/ShadowSql.Identifiers.IGroupByView.html)
->* 类型为[GroupByTableSqlQuery](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)、[GroupByTableQuery](/api/ShadowSql.GroupBy.GroupByTableQuery-1.html)、[GroupByMultiSqlQuery](/api/ShadowSql.GroupBy.GroupByMultiSqlQuery.html)或[GroupByMultiQuery](/api/ShadowSql.GroupBy.GroupByMultiQuery.html)等
+>* 接口[IGroupByView](xref:ShadowSql.Identifiers.IGroupByView)
+>* 类型为[GroupByTableSqlQuery](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)、[GroupByTableQuery](xref:ShadowSql.GroupBy.GroupByTableQuery%601)、[GroupByMultiSqlQuery](xref:ShadowSql.GroupBy.GroupByMultiSqlQuery)或[GroupByMultiQuery](xref:ShadowSql.GroupBy.GroupByMultiQuery)等
 
 #### 1.1.6 Cursor
 >* 游标对象,封装ORDER BY和分页参数
->* 接口[ICursor](/api/ShadowSql.Cursors.ICursor.html)
->* 类型为[TableCursor\<TTable\>](/api/ShadowSql.Cursors.TableCursor-1.html)、[MultiTableCursor](/api/ShadowSql.Cursors.MultiTableCursor.html)、[GroupByTableCursor\<TTable\>](/api/ShadowSql.Cursors.GroupByTableCursor-1.html)或[GroupByMultiCursor](/api/ShadowSql.Cursors.GroupByMultiCursor.html)等
+>* 接口[ICursor](xref:ShadowSql.Cursors.ICursor)
+>* 类型为[TableCursor\<TTable\>](xref:ShadowSql.Cursors.TableCursor%601)、[MultiTableCursor](xref:ShadowSql.Cursors.MultiTableCursor)、[GroupByTableCursor\<TTable\>](xref:ShadowSql.Cursors.GroupByTableCursor%601)或[GroupByMultiCursor](xref:ShadowSql.Cursors.GroupByMultiCursor)等
 
 ### 1.2 功能说明
 #### 1.2.1 Select
 >* 筛选获取对象
->* 接口[ISelect](/api/ShadowSql.Select.ISelect.html)
->* 类型为[TableSelect\<TTable\>](/api/ShadowSql.Select.TableSelect-1.html)、[MultiTableSelect](/api/ShadowSql.Select.MultiTableSelect.html)、[GroupByTableSelect\<TTable\>](/api/ShadowSql.Select.GroupByTableSelect-1.html)、[GroupByMultiSelect](/api/ShadowSql.Select.GroupByMultiSelect.html)、[TableCursorSelect\<TTable\>](/api/ShadowSql.Select.TableCursorSelect-1.html)、[MultiTableCursorSelect](/api/ShadowSql.Select.MultiTableCursorSelect.html)、[GroupByTableCursorSelect\<TTable\>](/api/ShadowSql.Select.GroupByTableCursorSelect-1.html)或[GroupByMultiCursorSelect](/api/ShadowSql.Select.GroupByMultiCursorSelect.html)等
+>* 接口[ISelect](xref:ShadowSql.Select.ISelect)
+>* 类型为[TableSelect\<TTable\>](/api/ShadowSql.Select.TableSelect<TTable>)、[MultiTableSelect](/api/ShadowSql.Select.MultiTableSelect)、[GroupByTableSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableSelect%601)、[GroupByMultiSelect](xref:ShadowSql.Select.GroupByMultiSelect)、[TableCursorSelect\<TTable\>](xref:ShadowSql.Select.TableCursorSelect%601)、[MultiTableCursorSelect](xref:ShadowSql.Select.MultiTableCursorSelect)、[GroupByTableCursorSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableCursorSelect%601)或[GroupByMultiCursorSelect](xref:ShadowSql.Select.GroupByMultiCursorSelect)等
 
 #### 1.2.2 Insert
 >* 插入对象
->* 接口[IInsert](/api/ShadowSql.Insert.IInsert.html)
->* 类型为[SingleInsert\<TTable\>](/api/ShadowSql.Insert.SingleInsert-1.html)、[MultiInsert\<TTable\>](/api/ShadowSql.Insert.MultiInsert-1.html)或[SelectInsert\<TTable\>](/api/ShadowSql.Insert.SelectInsert-1.html)等
+>* 接口[IInsert](xref:ShadowSql.Insert.IInsert)
+>* 类型为[SingleInsert\<TTable\>](xref:ShadowSql.Insert.SingleInsert%601)、[MultiInsert\<TTable\>](xref:ShadowSql.Insert.MultiInsert%601)或[SelectInsert\<TTable\>](xref:ShadowSql.Insert.SelectInsert%601)等
 
 #### 1.2.3 Update
 >* 更新对象
->* 接口[IUpdate](/api/ShadowSql.Update.IUpdate.html)
->* 类型为[TableUpdate\<TTable\>](/api/ShadowSql.Update.TableUpdate-1.html)或[MultiTableUpdate](/api/ShadowSql.Update.MultiTableUpdate.html)等
+>* 接口[IUpdate](xref:ShadowSql.Update.IUpdate)
+>* 类型为[TableUpdate\<TTable\>](xref:ShadowSql.Update.TableUpdate%601)或[MultiTableUpdate](xref:ShadowSql.Update.MultiTableUpdate)等
 
 #### 1.2.4 Delete
 >* 删除对象
->* 接口[IDelete](/api/ShadowSql.Delete.IDelete.html)
->* 类型为[TableDelete](/api/ShadowSql.Delete.TableDelete.html)或[MultiTableDelete](/api/ShadowSql.Delete.MultiTableDelete.html)等
+>* 接口[IDelete](xref:ShadowSql.Delete.IDelete)
+>* 类型为[TableDelete](xref:ShadowSql.Delete.TableDelete)或[MultiTableDelete](xref:ShadowSql.Delete.MultiTableDelete)等
 
 ### 1.3 方法说明
 #### 1.3.1 As

@@ -4,16 +4,16 @@
 >* 本组件是对ShadowSql.Core同名组件的扩展
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[MultiTableSelect](/api/ShadowSql.Select.MultiTableSelect.html)
+>[MultiTableSelect](xref:ShadowSql.Select.MultiTableSelect)
 
 ## 4. ToSelect
->创建[MultiTableSelect](/api/ShadowSql.Select.MultiTableSelect.html)
+>创建[MultiTableSelect](xref:ShadowSql.Select.MultiTableSelect)
 ~~~csharp
 MultiTableSelect ToSelect(this IMultiView table);
 MultiTableSelect ToSelect(this IJoinOn table);

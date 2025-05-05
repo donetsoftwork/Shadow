@@ -6,13 +6,13 @@
 >* 本组件通过[表游标](../cursor/table.md)来分页
 
 ## 1. 接口
->[ISelect](/api/ShadowSql.Select.ISelect.html)
+>[ISelect](xref:ShadowSql.Select.ISelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[TableCursorSelect\<TTable\>](/api/ShadowSql.CursorSelect.TableCursorSelect-1.html)
+>[TableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.TableCursorSelect%601)
 ~~~csharp
 class TableCursorSelect<TTable>(TableCursor<TTable> cursor)
     where TTable : ITable;

@@ -2,13 +2,13 @@
 >对数据进行截取,处理分页和排序
 
 ## 1. 接口
->[ICursor](/api/ShadowSql.Cursors.ICursor.html)
+>[ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->[CursorBase](/api/ShadowSql.Cursors.CursorBase.html)
+>[CursorBase](xref:ShadowSql.Cursors.CursorBase)
 
 ## 3. 类
->[TableCursor](/api/ShadowSql.Cursors.TableCursor.html)
+>[TableCursor](xref:ShadowSql.Cursors.TableCursor)
 
 ## 4. 使用方法
 ### 4.1 截取table

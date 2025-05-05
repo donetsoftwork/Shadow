@@ -1,14 +1,14 @@
 # sql查询简介
->* 基于[SqlQuery](/api/ShadowSql.Queries.SqlQuery.html)的实现类SqlAndQuery和SqlOrQuery
->* [SqlAndQuery](/api/ShadowSql.Queries.SqlAndQuery.html)实现AND连接查询
->* [SqlOrQuery](/api/ShadowSql.Queries.SqlOrQuery.html)实现OR连接查询
+>* 基于[SqlQuery](xref:ShadowSql.Queries.SqlQuery)的实现类SqlAndQuery和SqlOrQuery
+>* [SqlAndQuery](xref:ShadowSql.Queries.SqlAndQuery)实现AND连接查询
+>* [SqlOrQuery](xref:ShadowSql.Queries.SqlOrQuery)实现OR连接查询
 >* ToOr从AND切换到OR
 >* ToAnd从OR切换到AND
 >* 按sql关键字where、having、on来操作
 >* 支持按原生sql查询
 
 ## 1. 接口
->[IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
+>[IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
 
 ## 2. Where查询
 >* Where扩展方法

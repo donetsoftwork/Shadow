@@ -5,14 +5,14 @@
 >* 本组件是对ShadowSql.Core同名组件的扩展
 
 ## 1. 接口
->* [ISelect](/api/ShadowSql.Select.ISelect.html)
->* [IGroupBySelect](/api/ShadowSql.Select.IGroupBySelect.html)
+>* [ISelect](xref:ShadowSql.Select.ISelect)
+>* [IGroupBySelect](xref:ShadowSql.Select.IGroupBySelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[GroupByTableSelect\<TTable\>](/api/ShadowSql.Select.GroupByTableSelect-1.html)
+>[GroupByTableSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableSelect%601)
 ~~~csharp
 class GroupByTableSelect<TTable> : SelectBase<TTable>
     where TTable : ITable;

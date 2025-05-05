@@ -1,4 +1,5 @@
-﻿using Dapper.Shadow.Cursors;
+using Dapper.Shadow.Cursors;
+using Dapper.Shadow.CursorSelect;
 using Dapper.Shadow.GroupBy;
 using Dapper.Shadow.Join;
 using Dapper.Shadow.Queries;

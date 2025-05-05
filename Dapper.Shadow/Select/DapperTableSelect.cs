@@ -1,5 +1,3 @@
-using ShadowSql.Cursors;
-using ShadowSql.CursorSelect;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Select;
@@ -56,26 +54,6 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView source, TT
         : this(executor, query, query.Source)
     {
     }
-    #region 配置
-    private readonly IExecutor _executor = executor;
-    /// <summary>
-    /// 执行器
-    /// </summary>
-    public IExecutor Executor
-        => _executor;
-    #endregion
-}
-/// <summary>
-/// 表范围(分页)及列筛选
-/// </summary>
-/// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="cursor"></param>
-public sealed class DapperTableCursorSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor)
-    : CursorSelectBase<TTable>(cursor, cursor.Source)
-    , IDapperSelect
-    where TTable : ITable
-{
     #region 配置
     private readonly IExecutor _executor = executor;
     /// <summary>

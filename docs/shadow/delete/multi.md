@@ -2,10 +2,10 @@
 >* 从联表中某个表删除数据
 
 ## 1. 接口
->[IDelete](/api/ShadowSql.Delete.IDelete.html)
+>[IDelete](xref:ShadowSql.Delete.IDelete)
 
 ## 2. 类
->[MultiTableDelete](/api/ShadowSql.Delete.MultiTableDelete.html)
+>[MultiTableDelete](xref:ShadowSql.Delete.MultiTableDelete)
 
 ## 3. 相关方法
 ### 3.1 ToDelete扩展方法
@@ -65,5 +65,5 @@ var delete = JoinOnSqlQuery.Create("Comments", "Posts")
 
 ## 4. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[MultiTableDelete](/api/ShadowSql.Delete.MultiTableDelete.html)的扩展方法部分
+>* 参看[MultiTableDelete](xref:ShadowSql.Delete.MultiTableDelete)的扩展方法部分
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/delete/multi.md)

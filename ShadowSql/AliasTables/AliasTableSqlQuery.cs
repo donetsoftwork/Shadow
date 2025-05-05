@@ -1,4 +1,4 @@
-﻿using ShadowSql.Filters;
+using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
@@ -37,14 +37,14 @@ public class AliasTableSqlQuery<TTable>(TableAlias<TTable> table, SqlQuery query
         _filter.AddLogic(query(Prefix(select)));
         return this;
     }
+    #endregion
     /// <summary>
     /// 增加前缀
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    private IPrefixColumn Prefix(Func<TTable, IColumn> select)
+    protected IPrefixColumn Prefix(Func<TTable, IColumn> select)
         => _source.Prefix(select(_table));
-    #endregion
     #region IDataQuery
     SqlQuery IDataSqlQuery.Query
     {

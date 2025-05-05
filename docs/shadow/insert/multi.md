@@ -4,13 +4,13 @@
 >* 支持对表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->* [IMultiInsert](/api/ShadowSql.Insert.IMultiInsert.html)
+>* [IMultiInsert](xref:ShadowSql.Insert.IMultiInsert)
 
 ## 2. 基类
->* [MultiInsertBase](/api/ShadowSql.Insert.MultiInsertBase.html)
+>* [MultiInsertBase](xref:ShadowSql.Insert.MultiInsertBase)
 
 ## 3. 类型
->* [MultiInsert\<TTable\>](/api/ShadowSql.Insert.MultiInsert-1.html)
+>* [MultiInsert\<TTable\>](xref:ShadowSql.Insert.MultiInsert%601)
 
 ## 4 方法
 ### 4.1 ToMultiInsert扩展方法
@@ -41,5 +41,5 @@ var insert = new StudentTable()
 
 ## 5. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[MultiInsert\<TTable\>](/api/ShadowSql.Insert.MultiInsert-1.html)的方法和扩展方法部分
+>* 参看[MultiInsert\<TTable\>](xref:ShadowSql.Insert.MultiInsert%601)的方法和扩展方法部分
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/insert/multi.md)

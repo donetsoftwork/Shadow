@@ -5,17 +5,17 @@
 >* 本组件是对ShadowSql.Core同名组件的扩展
 
 ## 1. 接口
->* [ISelect](/api/ShadowSql.Select.ISelect.html)
->* [IGroupBySelect](/api/ShadowSql.Select.IGroupBySelect.html)
+>* [ISelect](xref:ShadowSql.Select.ISelect)
+>* [IGroupBySelect](xref:ShadowSql.Select.IGroupBySelect)
 
 ## 2. 基类
->* [SelectFieldsBase](/api/ShadowSql.Select.SelectFieldsBase.html)
+>* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
 
 ## 3. 类
->[GroupByMultiSelect](/api/ShadowSql.Select.GroupByMultiSelect.html)
+>[GroupByMultiSelect](xref:ShadowSql.Select.GroupByMultiSelect)
 
 ## 4. ToSelect
->创建[GroupByMultiSelect](/api/ShadowSql.Select.GroupByMultiSelect.html)
+>创建[GroupByMultiSelect](xref:ShadowSql.Select.GroupByMultiSelect)
 
 ### 4.1 ToSelect扩展方法
 >* 从sql联表分组获取

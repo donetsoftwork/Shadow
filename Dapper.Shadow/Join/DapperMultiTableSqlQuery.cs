@@ -1,5 +1,8 @@
+using ShadowSql;
+using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Queries;
+using System;
 
 namespace Dapper.Shadow.Join;
 
@@ -19,4 +22,17 @@ public class DapperMultiTableSqlQuery(IExecutor executor, SqlQuery filter)
     public IExecutor Executor
         => _executor;
     #endregion
+    /// <summary>
+    /// 指定表查询
+    /// </summary>
+    /// <typeparam name="TAliasTable"></typeparam>
+    /// <param name="tableName"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    new public DapperMultiTableSqlQuery Apply<TAliasTable>(string tableName, Func<SqlQuery, TAliasTable, SqlQuery> query)
+        where TAliasTable : IAliasTable
+    {
+        _filter = query(_filter, this.From<TAliasTable>(tableName));
+        return this;
+    }
 }

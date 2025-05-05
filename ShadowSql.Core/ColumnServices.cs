@@ -2,7 +2,6 @@ using ShadowSql.Aggregates;
 using ShadowSql.Assigns;
 using ShadowSql.CompareLogics;
 using ShadowSql.Compares;
-using ShadowSql.FieldInfos;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
@@ -634,6 +633,24 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     public static AtomicLogic LessEqual(this ICompareView column, ISqlValue right)
         => new CompareLogic(column, CompareSymbol.LessEqual, right);
+    /// <summary>
+    /// 在...之间逻辑
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="begin"></param>
+    /// <param name="end"></param>
+    /// <returns></returns>
+    public static AtomicLogic BetweenValue(this ICompareView column, ISqlValue begin, ISqlValue end)
+        => new BetweenLogic(column, begin, end);
+    /// <summary>
+    /// 不在...之间逻辑
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="begin"></param>
+    /// <param name="end"></param>
+    /// <returns></returns>
+    public static AtomicLogic NotBetweenValue(this ICompareView column, ISqlValue begin, ISqlValue end)
+        => new NotBetweenLogic(column, begin, end);
     #endregion
     #endregion
     #region 子查询

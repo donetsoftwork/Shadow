@@ -4,13 +4,13 @@
 >* 支持对表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->* [ISingleInsert](/api/ShadowSql.Insert.ISingleInsert.html)
+>* [ISingleInsert](xref:ShadowSql.Insert.ISingleInsert)
 
 ## 2. 基类
->* [SingleInsertBase](/api/ShadowSql.Insert.SingleInsertBase.html)
+>* [SingleInsertBase](xref:ShadowSql.Insert.SingleInsertBase)
 
 ## 3. 类型
->* [SingleInsert\<TTable\>](/api/ShadowSql.Insert.SingleInsert-1.html)
+>* [SingleInsert\<TTable\>](xref:ShadowSql.Insert.SingleInsert%601)
 
 ## 4. 相关方法
 ### 4.1 ToInsert扩展方法
@@ -41,5 +41,5 @@ var insert = new StudentTable()
 
 ## 5. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[SingleInsert\<TTable\>](/api/ShadowSql.Insert.SingleInsert-1.html)的方法和扩展方法部分
+>* 参看[SingleInsert\<TTable\>](xref:ShadowSql.Insert.SingleInsert%601)的方法和扩展方法部分
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/insert/single.md)

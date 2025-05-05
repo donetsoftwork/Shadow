@@ -2,13 +2,13 @@
 >* 本组件用来组装sql的INSERT语句
 
 ## 1. 接口
->* [ISingleInsert](/api/ShadowSql.Insert.ISingleInsert.html)
+>* [ISingleInsert](xref:ShadowSql.Insert.ISingleInsert)
 
 ## 2. 基类
->* [SingleInsertBase](/api/ShadowSql.Insert.SingleInsertBase.html)
+>* [SingleInsertBase](xref:ShadowSql.Insert.SingleInsertBase)
 
 ## 3. 类型
->* [SingleInsert](/api/Dapper.Shadow.Insert.html)
+>* [SingleInsert](xref:Dapper.Shadow.Insert)
 
 ## 4. 方法
 ### 4.1 Insert方法

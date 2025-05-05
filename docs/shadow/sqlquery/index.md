@@ -5,7 +5,7 @@
 >* 支持对各查询和数据类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[IDataSqlQuery](/api/ShadowSql.Queries.IDataSqlQuery.html)
+>[IDataSqlQuery](xref:ShadowSql.Queries.IDataSqlQuery)
 
 ## 2. 按列查询
 >* [按列名查询扩展](./columnquery.md)
@@ -14,31 +14,31 @@
 >* [按字段名查询扩展](./fieldquery.md)
 
 ## 4. TableSqlQuery
->* [TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)
+>* [TableSqlQuery\<TTable\>](xref:ShadowSql.Tables.TableSqlQuery%601)
 >* [表查询](./table.md)
 
 ## 5. MultiTableSqlQuery
->* [MultiTableSqlQuery](/api/ShadowSql.Join.MultiTableSqlQuery.html)
+>* [MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)
 >* [多表查询](./multi.md)
 
 ## 6. JoinOnSqlQuery
->* [JoinOnSqlQuery\<LTable, RTable\>](/api/ShadowSql.Join.JoinOnSqlQuery-2.html)
+>* [JoinOnSqlQuery\<LTable, RTable\>](xref:ShadowSql.Join.JoinOnSqlQuery%602)
 >* [表关联查询](./joinon.md)
 
 ## 7. AliasJoinOnSqlQuery
->* [AliasJoinOnSqlQuery\<TLeft, TRight\>](/api/ShadowSql.Join.AliasJoinOnSqlQuery-2.html)
+>* [AliasJoinOnSqlQuery\<TLeft, TRight\>](xref:ShadowSql.Join.AliasJoinOnSqlQuery%602)
 >* [别名表关联查询](./aliasjoinon.md)
 
 ## 8. JoinTableSqlQuery
->* [JoinTableSqlQuery](/api/ShadowSql.Join.JoinTableSqlQuery.html)]
+>* [JoinTableSqlQuery](xref:ShadowSql.Join.JoinTableSqlQuery)]
 >* [联表查询](./join.md)
 
 ## 9. GroupByTableSqlQuery
->* [GroupByTableSqlQuery\<TTable\>](/api/ShadowSql.GroupBy.GroupByTableSqlQuery-1.html)
+>* [GroupByTableSqlQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableSqlQuery%601)
 >* [分组查询](./groupby.md)
 
 ## 10. GroupByMultiSqlQuery
->* [GroupByMultiSqlQuery](/api/ShadowSql.GroupBy.GroupByMultiSqlQuery.html)
+>* [GroupByMultiSqlQuery](xref:ShadowSql.GroupBy.GroupByMultiSqlQuery)
 >* [联表分组](./groupbyjoin.md)
 
 ## 11. 扩展方法

@@ -4,13 +4,13 @@
 >* 按And、Or来操作
 
 ## 1. 接口
->[IGroupByView](/api/ShadowSql.Identifiers.IGroupByView.html)
+>[IGroupByView](xref:ShadowSql.Identifiers.IGroupByView)
 
 ## 2. 基类
->[GroupByBase](/api/ShadowSql.GroupBy.GroupByBase.html)
+>[GroupByBase](xref:ShadowSql.GroupBy.GroupByBase)
 
 ## 3. 类
->[GroupByQuery](/api//api/ShadowSql.GroupBy.GroupByQuery.html)
+>[GroupByQuery](/api/xref:ShadowSql.GroupBy.GroupByQuery)
 
 ## 4. 方法
 ### 4.1 Create静态方法

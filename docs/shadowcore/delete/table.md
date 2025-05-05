@@ -2,10 +2,10 @@
 >从表中删除数据
 
 ## 1. 接口
->[IDelete](/api/ShadowSql.Delete.IDelete.html)
+>[IDelete](xref:ShadowSql.Delete.IDelete)
 
 ## 2. 类
->[TableDelete](/api/ShadowSql.Delete.TableDelete.html)
+>[TableDelete](xref:ShadowSql.Delete.TableDelete)
 
 ## 3. 相关方法
 ### 3.1 ToDelete扩展方法

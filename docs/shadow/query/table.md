@@ -2,13 +2,13 @@
 >从表中按逻辑查询数据
 
 ## 1. 接口
->* [IDataQuery](/api/ShadowSql.Queries.IDataQuery.html)
+>* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 类
->[TableQuery](/api/ShadowSql.Tables.TableQuery.html)
+>[TableQuery](xref:ShadowSql.Tables.TableQuery)
 
 ## 3. 从表创建查询
->从表创建[TableQuery\<TTable\>](/api/ShadowSql.Tables.TableQuery-1.html)
+>从表创建[TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)
 ### 3.1 ToQuery扩展方法
 >* 从表创建TableQuery\<TTable\>的AND查询
 ```csharp
@@ -79,6 +79,6 @@ var query = new UserTable()
 
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[TableQuery\<TTable\>](/api/ShadowSql.Tables.TableQuery-1.html)的方法和扩展方法部分
+>* 参看[TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)的方法和扩展方法部分
 >* 参看[查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/query/index.md)

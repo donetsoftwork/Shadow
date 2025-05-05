@@ -2,13 +2,13 @@
 >* 本组件用来组装sql的INSERT语句,支持一次插入多条数据
 
 ## 1. 接口
->* [IMultiInsert](/api/ShadowSql.Insert.IMultiInsert.html)
+>* [IMultiInsert](xref:ShadowSql.Insert.IMultiInsert)
 
 ## 2. 基类
->* [MultiInsertBase](/api/ShadowSql.Insert.MultiInsertBase.html)
+>* [MultiInsertBase](xref:ShadowSql.Insert.MultiInsertBase)
 
 ## 3. 类型
->* [MultiInsert](/api/ShadowSql.Insert.MultiInsert.html)
+>* [MultiInsert](xref:ShadowSql.Insert.MultiInsert)
 
 ## 4 方法
 ### 4.1 Insert方法
