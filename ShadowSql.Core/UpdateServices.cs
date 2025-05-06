@@ -21,7 +21,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="op"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static TUpdate SetParameter<TUpdate>(this TUpdate update, string columnName, string op = "=", string parameter = "")
+    public static TUpdate Set<TUpdate>(this TUpdate update, string columnName, string op = "=", string parameter = "")
         where TUpdate : UpdateBase, IUpdate
     {
         update.SetCore(CreateOperation(update, columnName, AssignSymbol.Get(op), parameter));

@@ -671,6 +671,81 @@ public static partial class ShadowSqlCoreServices
         => new(select, alias);
     #endregion
     #region 赋值
+    #region 参数
+    /// <summary>
+    /// 等于
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation EqualTo(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.EqualTo, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 加上
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Add(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Add, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 减去
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Sub(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Sub, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 乘上
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Mul(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Mul, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 除去
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Div(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Div, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 取模
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Mod(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Mod, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 位与
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation And(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.And, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 位或
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Or(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Or, Parameter.Use(parameter, column.Name));
+    /// <summary>
+    /// 位异或
+    /// </summary>
+    /// <param name="column"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    public static AssignOperation Xor(this IAssignField column, string parameter = "")
+        => new(column, AssignSymbol.Xor, Parameter.Use(parameter, column.Name));
+    #endregion
+    #region 数据库值
     /// <summary>
     /// 等于
     /// </summary>
@@ -743,6 +818,8 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     public static AssignOperation Xor(this IAssignView column, ISqlValue right)
         => new(column, AssignSymbol.Xor, right);
+    #endregion
+    #region 值
     /// <summary>
     /// 等于
     /// </summary>
@@ -815,6 +892,7 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     public static AssignOperation XorValue<TValue>(this IAssignView column, TValue value)
         => new(column, AssignSymbol.Xor, SqlValue.From(value));
+    #endregion
     #endregion
     #region 插入
     #region 插入值

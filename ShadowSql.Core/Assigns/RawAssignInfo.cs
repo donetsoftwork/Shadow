@@ -9,7 +9,7 @@ namespace ShadowSql.Assigns;
 /// 原始赋值信息
 /// </summary>
 /// <param name="assignInfo"></param>
-internal class RawAssignInfo(string assignInfo) : IAssignInfo
+public class RawAssignInfo(string assignInfo) : IAssignInfo
 {
     private readonly string _assignInfo = assignInfo;
     /// <summary>

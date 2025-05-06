@@ -72,7 +72,7 @@ public class TableUpdateTests
     {
         var id = Column.Use("Id");
         var update = TableUpdate.Create("Users", id.EqualValue(1))
-            .SetParameter("Status", "=", "DenyStatus");
+            .Set("Status", "=", "DenyStatus");
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Users] SET [Status]=@DenyStatus WHERE [Id]=1", sql);
     }

@@ -110,7 +110,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="query"></param>
     /// <param name="logic"></param>
     /// <returns></returns>
-    public static SqlOrQuery And(this SqlOrQuery query, AndLogic logic)
+    public static SqlOrQuery Or(this SqlOrQuery query, AndLogic logic)
     {
         logic.MergeToOr(query.Complex);
         return query;
@@ -121,7 +121,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="query"></param>
     /// <param name="logic"></param>
     /// <returns></returns>
-    public static SqlOrQuery And(this SqlOrQuery query, ComplexAndLogic logic)
+    public static SqlOrQuery Or(this SqlOrQuery query, ComplexAndLogic logic)
     {
         logic.MergeToOr(query.Complex);
         return query;

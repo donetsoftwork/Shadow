@@ -21,6 +21,9 @@
     href: sqlquery/
   - name: 逻辑查询
     href: query/
-  - href: aggregate.md
+  - name: 赋值逻辑
+    href: assign/
+  - name: 聚合
+    href: aggregate.md
   - name: 游标
     href: cursor/

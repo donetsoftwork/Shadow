@@ -64,7 +64,7 @@ public class AssignSymbol : ISqlEntity
     /// </summary>
     public static AssignSymbol Or => _manager.Value.Or;
     /// <summary>
-    /// “位异或”并赋值
+    /// “异或”并赋值
     /// </summary>
     public static AssignSymbol Xor => _manager.Value.Xor;
     /// <summary>

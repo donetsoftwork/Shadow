@@ -1,5 +1,7 @@
+using ShadowSql.Assigns;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -49,12 +51,18 @@ public class MultiTableUpdate(IMultiView multiTable, IAliasTable table)
     protected override IColumn? GetColumn(string columName)
         => _multiTable.GetColumn(columName);
     #endregion
+    //public MultiTableUpdate Set<TAliasTable>(Func<TAliasTable, IAssignInfo> operation)
+    //    where TAliasTable : IAliasTable
+    //{
+    //    _multiTable.From< TAliasTable >("")
+    //    return this;
+    //}
     #region ISqlEntity
-    /// <summary>
-    /// 拼写Update子句
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+        /// <summary>
+        /// 拼写Update子句
+        /// </summary>
+        /// <param name="engine"></param>
+        /// <param name="sql"></param>
     protected override void WriteUpdate(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteUpdate(engine, sql);

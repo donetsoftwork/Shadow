@@ -5,7 +5,7 @@
 >* 比较运算符支持前后交换运算
 
 ## 1. CompareSymbol
->* 比较运算符
+>* [比较运算符](xref:ShadowSql.Compares.CompareSymbol)
 ~~~csharp
 class CompareSymbol : ISqlEntity{
 /// <summary>
