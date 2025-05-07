@@ -48,9 +48,9 @@ var students = SqliteExecutor.From("Students")
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToSqlQuery()
-    .StrictValue("Age", 10)
+    .FieldValue("Age", 10)
     .ToOr()
-    .StrictLikeValue("Name", "张%")
+    .FieldLikeValue("Name", "张%")
     .ToDapperSelect()
     .Get<Student>();
 ~~~
@@ -108,7 +108,7 @@ var insert = SqliteExecutor.From("Students")
     .AddColums(_name, _age)
     .ToDapperInsert()
     .Insert(_name.InsertValue("张三"))
-    .Insert(s => s.Strict("Age").InsertValue(11));
+    .Insert(s => s.Field("Age").InsertValue(11));
 var result = insert.Execute();
 ~~~
 

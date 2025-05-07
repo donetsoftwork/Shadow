@@ -9,8 +9,8 @@
 ~~~csharp
 var query = _db.From("Users")
     .ToSqlQuery()
-    .StrictParameter("Id", "<", "LastId")
-    .StrictValue("Status", true);
+    .FieldParameter("Id", "<", "LastId")
+    .FieldValue("Status", true);
 // SELECT * FROM [Users] WHERE [Id]<@LastId AND [Status]=1
 ~~~
 
