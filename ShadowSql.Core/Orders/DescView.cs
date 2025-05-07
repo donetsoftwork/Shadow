@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -8,7 +8,7 @@ namespace ShadowSql.Orders;
 /// 倒序
 /// </summary>
 /// <param name="asc"></param>
-internal class DescView(IOrderAsc asc)
+public class DescView(IOrderAsc asc)
     : IOrderDesc
 {
     private readonly IOrderAsc _asc = asc;

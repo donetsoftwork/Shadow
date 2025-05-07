@@ -8,9 +8,9 @@ namespace ShadowSql.Orders;
 /// <summary>
 /// 比较原始sql语句
 /// </summary>
-public sealed class OrderRawFieldInfo : Identifier, IOrderView
+public sealed class RawOrderByInfo : Identifier, IOrderView
 {
-    private OrderRawFieldInfo(string statement)
+    private RawOrderByInfo(string statement)
         : base(statement)
     {
     }
@@ -19,12 +19,12 @@ public sealed class OrderRawFieldInfo : Identifier, IOrderView
     /// </summary>
     /// <param name="statement"></param>
     /// <returns></returns>
-    public static OrderRawFieldInfo Use(string statement)
+    public static RawOrderByInfo Use(string statement)
         => _cacher.Get(statement);
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<OrderRawFieldInfo> _cacher = new(static statement => new OrderRawFieldInfo(statement));
+    private static readonly CacheService<RawOrderByInfo> _cacher = new(static statement => new RawOrderByInfo(statement));
 
     /// <summary>
     /// 拼写sql

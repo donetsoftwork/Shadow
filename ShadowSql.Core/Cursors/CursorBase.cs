@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Orders;
 using System.Collections.Generic;
@@ -102,7 +102,7 @@ public abstract class CursorBase(int limit, int offset)
     /// <returns></returns>
     internal void OrderByCore(string orderBy)
     {
-        _fields.Add(OrderRawFieldInfo.Use(orderBy));
+        _fields.Add(RawOrderByInfo.Use(orderBy));
     }
     #endregion
     /// <summary>
@@ -110,7 +110,13 @@ public abstract class CursorBase(int limit, int offset)
     /// </summary>
     /// <param name="columnName"></param>
     /// <returns></returns>
-    public abstract IColumn? GetColumn(string columnName);
+    protected abstract IColumn? GetColumn(string columnName);
+    /// <summary>
+    /// 获取字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected abstract IField Field(string fieldName);
     #endregion
     /// <summary>
     /// 确认正序
@@ -121,7 +127,7 @@ public abstract class CursorBase(int limit, int offset)
     {
         if (GetColumn(fieldName) is IColumn column)
             return column;
-        return OrderByField.Use(fieldName);
+        return Field(fieldName);
     }
     /// <summary>
     /// 确认倒叙

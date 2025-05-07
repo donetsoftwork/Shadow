@@ -11,7 +11,7 @@
     <Copyright>Copyright (c) ShadowSql All Rights Reserved</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/donetsoftwork/Shadow</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/donetsoftwork/Shadow</PackageProjectUrl>
+    <PackageProjectUrl>https://donetsoftwork.github.io/Shadow</PackageProjectUrl>
     <!-- SourceLink settings -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

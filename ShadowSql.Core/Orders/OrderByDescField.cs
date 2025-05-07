@@ -8,7 +8,7 @@ namespace ShadowSql.Orders;
 /// <summary>
 /// 降序字段
 /// </summary>
-internal class OrderByDescField : Identifier, IOrderField
+public class OrderByDescField : Identifier, IOrderDesc
 {
     /// <summary>
     /// 降序
@@ -38,7 +38,4 @@ internal class OrderByDescField : Identifier, IOrderField
         => _cacher.Get(name);
 
     private static readonly CacheService<OrderByDescField> _cacher = new(static name => new OrderByDescField(name));
-
-    string IView.ViewName
-        => _name;
 }

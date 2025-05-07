@@ -49,19 +49,27 @@ public class CursorBase<TSource>(TSource source, int limit, int offset)
     protected virtual void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion
-
     #region ITableView
     /// <summary>
     /// 获取列
     /// </summary>
     /// <param name="columnName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columnName)
+    protected override IColumn? GetColumn(string columnName)
         => _source.GetColumn(columnName);
+    /// <summary>
+    /// 获取字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField Field(string fieldName)
+        => _source.Field(fieldName);
     IEnumerable<IColumn> ITableView.Columns
         => _source.Columns;
+    IColumn? ITableView.GetColumn(string columName)
+        => GetColumn(columName);
     IField ITableView.Field(string fieldName)
-        => _source.Field(fieldName);
+        => Field(fieldName);
     ICompareField ITableView.GetCompareField(string fieldName)
         => _source.GetCompareField(fieldName);
     #endregion
