@@ -109,12 +109,12 @@ public abstract class MultiTableBase
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public IPrefixColumn? GetPrefixColumn(string columName)
+    public IPrefixField? GetPrefixField(string columName)
     {
         foreach (var member in _tables)
         {
-            if (member.GetPrefixColumn(columName) is IPrefixColumn prefixColumn)
-                return prefixColumn;
+            if (member.GetPrefixField(columName) is IPrefixField prefixField)
+                return prefixField;
         }
         return null;
     }
@@ -122,34 +122,67 @@ public abstract class MultiTableBase
     /// <summary>
     /// 列
     /// </summary>
-    public IEnumerable<IPrefixColumn> PrefixColumns
-        => _tables.SelectMany(m => m.PrefixColumns);
+    public IEnumerable<IPrefixField> PrefixFields
+        => _tables.SelectMany(m => m.PrefixFields);
     #endregion
+    ///// <summary>
+    ///// 获取比较列
+    ///// </summary>
+    ///// <param name="fieldName"></param>
+    ///// <returns></returns>
+    //internal override ICompareField GetCompareField(string fieldName)
+    //{
+    //    if (GetPrefixField(fieldName) is ICompareField prefixField)
+    //        return prefixField;
+    //    return GetField(fieldName);
+    //}
+    //#region ITableView
+    ///// <summary>
+    ///// 获取所有列
+    ///// </summary>
+    ///// <returns></returns>
+    //protected override IEnumerable<IColumn> GetFields()
+    //    => PrefixFields;
+    ///// <summary>
+    ///// 获取列
+    ///// </summary>
+    ///// <param name="columName"></param>
+    ///// <returns></returns>
+    //public override IColumn? GetColumn(string columName)
+    //    => GetPrefixField(columName);
+    //#endregion
+    #region FilterBase
     /// <summary>
-    /// 获取比较列
+    /// 获取所有字段
+    /// </summary>
+    /// <returns></returns>
+    protected override IEnumerable<IField> GetFields()
+        => _tables.SelectMany(m => m.PrefixFields);
+    /// <summary>
+    /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    internal override ICompareField GetCompareField(string fieldName)
+    protected override IField? GetField(string fieldName)
+        => GetPrefixField(fieldName);
+    /// <summary>
+    /// 获取比较字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override ICompareField GetCompareField(string fieldName)
     {
-        if (GetPrefixColumn(fieldName) is ICompareField prefixColumn)
-            return prefixColumn;
-        return Field(fieldName);
+        if(GetPrefixField(fieldName) is IPrefixField field)
+            return field;
+        return Column.Use(fieldName);
     }
-    #region ITableView
     /// <summary>
-    /// 获取所有列
+    /// 构造新字段
     /// </summary>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IEnumerable<IColumn> GetColumns()
-        => PrefixColumns;
-    /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
-        => GetPrefixColumn(columName);
+    protected override IField NewField(string fieldName)
+        => Column.Use(fieldName);
     #endregion
     #region ISqlEntity
     /// <summary>

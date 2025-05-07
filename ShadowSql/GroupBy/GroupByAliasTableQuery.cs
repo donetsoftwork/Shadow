@@ -16,7 +16,7 @@ namespace ShadowSql.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic where, IFieldView[] fields, Logic having)
+public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic where, IField[] fields, Logic having)
     : GroupByQueryBase<TableAlias<TTable>>(source, fields, having)
     where TTable : ITable
 {
@@ -26,7 +26,7 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     /// <param name="table"></param>
     /// <param name="where"></param>
     /// <param name="fields"></param>
-    public GroupByAliasTableQuery(TableAlias<TTable> table, ISqlLogic where, IFieldView[] fields)
+    public GroupByAliasTableQuery(TableAlias<TTable> table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, new AndLogic())
     {
     }
@@ -45,7 +45,7 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByAliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
+    public GroupByAliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
         
         _filter = _filter.And(query(aggregate(_source.Prefix(select(_source.Target)))));
@@ -58,7 +58,7 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByAliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
+    public GroupByAliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
         _filter = _filter.Or(query(aggregate(_source.Prefix(select(_source.Target)))));
         return this;

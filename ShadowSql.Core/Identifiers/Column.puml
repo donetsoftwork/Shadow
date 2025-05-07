@@ -37,14 +37,10 @@ IOrderField
 **:变形
 Variants
 ;
-***: IPrefixColumn
+***: IPrefixField
 <code>
-IPrefixColumn : IColumn
+IPrefixField : IField
 {
-    /// <summary>
-    /// 全名
-    /// </summary>
-    string FullName { get; }
 }
 </code>
 用于多表(联表)需要增加限定符

@@ -1,6 +1,5 @@
 using ShadowSql.Cursors;
 using ShadowSql.Engines;
-using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
 using System.Collections.Generic;
@@ -24,28 +23,35 @@ public sealed class CursorSelect(ICursor cursor) : SelectFieldsBase, ISelect
     ITableView ISelect.Source
         => _source;
     #endregion
-    #region ITableView
+    #region TableViewBase
     /// <summary>
-    /// 获取列
+    /// 获取所有字段
     /// </summary>
-    /// <param name="columnName"></param>
     /// <returns></returns>
-    protected override IColumn? GetColumn(string columnName)
-        => _source.GetColumn(columnName);
+    protected override IEnumerable<IField> GetFields()
+        => _source.Fields;
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IField Field(string fieldName)
-        => _source.Field(fieldName);
+    protected override IField? GetField(string fieldName)
+        => _source.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
     #endregion
-    #region ISelect
-    IEnumerable<IColumn> ISelectFields.ToColumns()
-        => ToColumnsCore();
-    bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
-        => WriteSelectedCore(engine, sql, false);
-    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
-         => engine.SelectCursor(sql, this, _source);
+    #region ISqlEntity
+    /// <summary>
+    /// 拼写分页sql
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
+        => engine.SelectCursor(sql, this, _source);
     #endregion
 }

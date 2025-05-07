@@ -33,10 +33,10 @@ var joinOn = _db.From("Employees")
 ### 5.1 On扩展方法
 >按字段联表
 ```csharp
-AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IColumn> left, Func<TRight, IColumn> right)
+AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IPrefixField> left, Func<TRight, IPrefixField> right)
         where TLeft : IAliasTable<ITable>
         where TRight : IAliasTable<ITable>;
-AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IColumn> left, CompareSymbol compare, Func<TRight, IColumn> right)
+AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IPrefixField> left, CompareSymbol compare, Func<TRight, IPrefixField> right)
         where TLeft : IAliasTable<ITable>
         where TRight : IAliasTable<ITable>;
 ```

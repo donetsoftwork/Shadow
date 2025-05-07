@@ -33,7 +33,7 @@ public class DapperAliasTableQuery<TTable>(IExecutor executor, TableAlias<TTable
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    new public DapperAliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    new public DapperAliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter = _filter.And(query(Prefix(select)));
         return this;
@@ -44,7 +44,7 @@ public class DapperAliasTableQuery<TTable>(IExecutor executor, TableAlias<TTable
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    new public DapperAliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    new public DapperAliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter = _filter.Or(query(Prefix(select)));
         return this;

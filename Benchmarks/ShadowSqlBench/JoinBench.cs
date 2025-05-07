@@ -106,10 +106,10 @@ public class JoinBench
             Content = AddColumn(Column.Use(nameof(Content)));
             Pick = AddColumn(Column.Use(nameof(Pick)));
         }
-        public readonly IPrefixColumn Id;
-        public readonly IPrefixColumn PostId;
-        public readonly IPrefixColumn Content;
-        public readonly IPrefixColumn Pick;
+        public readonly IPrefixField Id;
+        public readonly IPrefixField PostId;
+        public readonly IPrefixField Content;
+        public readonly IPrefixField Pick;
     }
     class PostTable : TableAlias<Table>
     {
@@ -125,9 +125,9 @@ public class JoinBench
             Author = AddColumn(Column.Use(nameof(Author)));
         }
         //Id, Title, Author
-        public readonly IPrefixColumn Id;
-        public readonly IPrefixColumn Title;
-        public readonly IPrefixColumn Author;
+        public readonly IPrefixField Id;
+        public readonly IPrefixField Title;
+        public readonly IPrefixField Author;
     }
 
 }

@@ -34,11 +34,11 @@ public interface IJoinOn : IMultiView, ISqlEntity
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    IPrefixColumn? GetLeftColumn(string columName);
+    IPrefixField? GetLeftField(string columName);
     /// <summary>
     /// 获取右表列
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    IPrefixColumn? GetRightColumn(string columName);
+    IPrefixField? GetRightField(string columName);
 }

@@ -1,7 +1,5 @@
-using ShadowSql.Assigns;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using System;
 using System.Linq;
 using System.Text;
 
@@ -44,31 +42,6 @@ public class MultiTableUpdate(IMultiView multiTable, IAliasTable table)
     #endregion
     #region UpdateBase
     /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    protected override IColumn? GetColumn(string columName)
-        => _multiTable.GetColumn(columName);
-    #endregion
-    //public MultiTableUpdate Set<TAliasTable>(Func<TAliasTable, IAssignInfo> operation)
-    //    where TAliasTable : IAliasTable
-    //{
-    //    _multiTable.From< TAliasTable >("")
-    //    return this;
-    //}
-    #region ISqlEntity
-        /// <summary>
-        /// 拼写Update子句
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="sql"></param>
-    protected override void WriteUpdate(ISqlEngine engine, StringBuilder sql)
-    {
-        base.WriteUpdate(engine, sql);
-        sql.Append(_table.Alias);
-    }
-    /// <summary>
     /// 拼写数据源
     /// </summary>
     /// <param name="engine"></param>
@@ -77,6 +50,38 @@ public class MultiTableUpdate(IMultiView multiTable, IAliasTable table)
     {
         sql.Append(" FROM ");
         _multiTable.Write(engine, sql);
+    }
+    /// <summary>
+    /// 获取字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField? GetField(string fieldName)
+        => _table.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _table.NewField(fieldName);
+    #endregion
+    //public MultiTableUpdate Set<TAliasTable>(Func<TAliasTable, IAssignInfo> operation)
+    //    where TAliasTable : IAliasTable
+    //{
+    //    _multiTable.From< TAliasTable >("")
+    //    return this;
+    //}
+    #region ISqlEntity
+    /// <summary>
+    /// 拼写Update子句
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <param name="sql"></param>
+    protected override void WriteUpdate(ISqlEngine engine, StringBuilder sql)
+    {
+        base.WriteUpdate(engine, sql);
+        sql.Append(_table.Alias);
     }
     #endregion
 }

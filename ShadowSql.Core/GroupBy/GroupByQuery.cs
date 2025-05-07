@@ -15,7 +15,7 @@ namespace ShadowSql.GroupBy;
 /// </summary>
 public class GroupByQuery : GroupByBase<Logic>, IDataQuery
 {
-    internal GroupByQuery(Logic having, ITableView source, IFieldView[] fields)
+    internal GroupByQuery(Logic having, ITableView source, IField[] fields)
         : base(fields, having)
     {
         _source = source;
@@ -27,7 +27,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="table"></param>
     /// <param name="having"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(ITable table, Logic having, params IFieldView[] fields)
+    public GroupByQuery(ITable table, Logic having, params IField[] fields)
         : this(having, table, fields)
     {
     }
@@ -36,7 +36,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// </summary>
     /// <param name="table"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(ITable table, params IFieldView[] fields)
+    public GroupByQuery(ITable table, params IField[] fields)
         : this(new AndLogic(), table, fields)
     {
     }
@@ -48,7 +48,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="table"></param>
     /// <param name="having"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(IAliasTable table, Logic having, params IFieldView[] fields)
+    public GroupByQuery(IAliasTable table, Logic having, params IField[] fields)
         : this(having, table, fields)
     {
     }
@@ -57,7 +57,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// </summary>
     /// <param name="table"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(IAliasTable table, params IFieldView[] fields)
+    public GroupByQuery(IAliasTable table, params IField[] fields)
         : this(new AndLogic(), table, fields)
     {
     }
@@ -69,7 +69,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="tableName"></param>
     /// <param name="having"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(string tableName, Logic having, params IFieldView[] fields)
+    public GroupByQuery(string tableName, Logic having, params IField[] fields)
         : this(having, SimpleTable.Use(tableName), fields)
     {
     }
@@ -78,7 +78,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// </summary>
     /// <param name="tableName"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(string tableName, params IFieldView[] fields)
+    public GroupByQuery(string tableName, params IField[] fields)
         : this(new AndLogic(), SimpleTable.Use(tableName), fields)
     {
     }
@@ -90,7 +90,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="filter"></param>
     /// <param name="having"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(IDataFilter filter, Logic having, params IFieldView[] fields)
+    public GroupByQuery(IDataFilter filter, Logic having, params IField[] fields)
         : this(having, filter, fields)
     {
     }
@@ -99,7 +99,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// </summary>
     /// <param name="filter"></param>
     /// <param name="fields"></param>
-    public GroupByQuery(IDataFilter filter, params IFieldView[] fields)
+    public GroupByQuery(IDataFilter filter, params IField[] fields)
         : this(new AndLogic(), filter, fields)
     {
     }
@@ -112,7 +112,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <summary>
     /// 数据源表
     /// </summary>
-    public ITableView Source
+    public override ITableView Source
         => _source;
     #endregion
     #region Create
@@ -123,7 +123,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="table"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByQuery Create(ITable table, params IFieldView[] fields)
+    public static GroupByQuery Create(ITable table, params IField[] fields)
         => new(table, fields);
     /// <summary>
     /// 创建分组查询
@@ -132,7 +132,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="columnNames"></param>
     /// <returns></returns>
     public static GroupByQuery Create(ITable table, params IEnumerable<string> columnNames)
-        => new(table, [.. table.SelectFields(columnNames)]);
+        => new(table, [.. table.Fields(columnNames)]);
     #endregion
     #region IAliasTable
     /// <summary>
@@ -141,7 +141,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="table"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByQuery Create(IAliasTable table, params IFieldView[] fields)
+    public static GroupByQuery Create(IAliasTable table, params IField[] fields)
         => new(table, fields);
     /// <summary>
     /// 创建分组查询
@@ -150,7 +150,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="columnNames"></param>
     /// <returns></returns>
     public static GroupByQuery Create(IAliasTable table, params IEnumerable<string> columnNames)
-        => new(table, [.. table.SelectFields(columnNames)]);
+        => new(table, [.. table.Fields(columnNames)]);
     #endregion
     #region tableName
     /// <summary>
@@ -159,7 +159,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="tableName"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByQuery Create(string tableName, params IFieldView[] fields)
+    public static GroupByQuery Create(string tableName, params IField[] fields)
         => new(tableName, fields);
     /// <summary>
     /// 创建分组查询
@@ -177,7 +177,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="filter"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByQuery Create(IDataFilter filter, params IFieldView[] fields)
+    public static GroupByQuery Create(IDataFilter filter, params IField[] fields)
         => new(filter, fields);
     /// <summary>
     /// 创建分组查询
@@ -186,8 +186,17 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="columnNames"></param>
     /// <returns></returns>
     public static GroupByQuery Create(IDataFilter filter, params IEnumerable<string> columnNames)
-        => new(filter, [.. filter.Source.SelectFields(columnNames)]);
+        => new(filter, [.. filter.Source.Fields(columnNames)]);
     #endregion
+    #endregion
+    #region TableViewBase
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
     #endregion
     #region ISqlEntity
     /// <summary>

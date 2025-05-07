@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.FieldInfos;
 
 namespace ShadowSql.Identifiers;
@@ -8,7 +8,7 @@ namespace ShadowSql.Identifiers;
 /// </summary>
 /// <param name="name"></param>
 public abstract class ColumnBase(string name)
-    : IdentifierBase(name)
+    : IdentifierBase(name), ICompareField
 {
     /// <summary>
     /// 聚合别名
@@ -19,8 +19,8 @@ public abstract class ColumnBase(string name)
     public virtual IAggregateFieldAlias AggregateAs(string aggregate, string alias)
     {
         if (AggregateConstants.MatchCount(aggregate))
-            return new DistinctCountAliasFieldInfo(alias, (IFieldView)this);
-        return new AggregateAliasFieldInfo(aggregate, (IFieldView)this, alias);
+            return new DistinctCountAliasFieldInfo(this, alias);
+        return new AggregateAliasFieldInfo(this, aggregate, alias);
     }
     /// <summary>
     /// 聚合
@@ -30,8 +30,8 @@ public abstract class ColumnBase(string name)
     public virtual IAggregateField AggregateTo(string aggregate)
     {
         if (AggregateConstants.MatchCount(aggregate))
-            return new DistinctCountFieldInfo((IFieldView)this);
-        return new AggregateFieldInfo(aggregate, (IFieldView)this);
+            return new DistinctCountFieldInfo(this);
+        return new AggregateFieldInfo(this, aggregate);
     }
     /// <summary>
     /// 获取别名列
@@ -39,5 +39,7 @@ public abstract class ColumnBase(string name)
     /// <param name="alias"></param>
     /// <returns></returns>
     public virtual IFieldAlias As(string alias)
-        => new AliasFieldInfo(alias, (IFieldView)this);
+        => new AliasFieldInfo(this, alias);
+    string IView.ViewName
+        => _name;
 }

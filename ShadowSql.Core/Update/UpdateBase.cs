@@ -86,18 +86,16 @@ public abstract class UpdateBase : ISqlEntity
     protected abstract void WriteSource(ISqlEngine engine, StringBuilder sql);
     #endregion
     /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    protected abstract IColumn? GetColumn(string columName);
-    /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected virtual IField Field(string fieldName)
-        => FieldInfo.Use(fieldName);
+    protected abstract IField? GetField(string fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    protected abstract IField NewField(string fieldName);
     /// <summary>
     /// 获取赋值字段
     /// </summary>
@@ -105,9 +103,9 @@ public abstract class UpdateBase : ISqlEntity
     /// <returns></returns>
     internal IAssignView GetAssignField(string fieldName)
     {
-        if (GetColumn(fieldName) is IAssignView assignField)
+        if (GetField(fieldName) is IAssignView assignField)
             return assignField;
-        return Field(fieldName);
+        return NewField(fieldName);
     }
 }
 

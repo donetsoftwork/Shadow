@@ -1,4 +1,3 @@
-﻿using ShadowSql.FieldInfos;
 using System.Collections.Generic;
 
 namespace ShadowSql.Identifiers;
@@ -15,15 +14,21 @@ public abstract class TableBase(string name)
     /// <summary>
     /// 插入列
     /// </summary>
-    public abstract IEnumerable<IColumn> InsertColumns { get; }
+    internal abstract IEnumerable<IColumn> InsertColumns { get; }
     /// <summary>
     /// 修改列
     /// </summary>
-    public abstract IEnumerable<IColumn> UpdateColumns { get; }
+    internal abstract IEnumerable<IColumn> UpdateColumns { get; }
     /// <summary>
     /// 列
     /// </summary>
     public abstract IEnumerable<IColumn> Columns { get; }
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    protected virtual IField NewField(string fieldName)
+        => Column.Use(fieldName);
     #endregion
     /// <summary>
     /// 查找列
@@ -31,29 +36,28 @@ public abstract class TableBase(string name)
     /// <param name="columName"></param>
     /// <returns></returns>
     public abstract IColumn? GetColumn(string columName);
-    #endregion  
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    public IField Field(string fieldName)
-        => FieldInfo.Use(fieldName);
-    IEnumerable<IColumn> IUpdateTable.UpdateColumns
+    #endregion
+    #region ITable
+    IEnumerable<IColumn> IInsertTable.InsertColumns
+        => InsertColumns;
+    IEnumerable<IAssignView> IUpdateTable.UpdateColumns
         => UpdateColumns;
+    #endregion
     #region ITableView
     string IView.ViewName
         => _name;
-    IEnumerable<IColumn> ITableView.Columns
+    IEnumerable<IField> ITableView.Fields
         => Columns;
     /// <summary>
     /// 查找列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    IColumn? ITableView.GetColumn(string columName)
-        => GetColumn(columName);
+    IField? ITableView.GetField(string fieldName)
+        => GetColumn(fieldName);
     ICompareField ITableView.GetCompareField(string fieldName)
-        => this.GetCompareField(fieldName);
+        => GetColumn(fieldName) ?? Column.Use(fieldName);
+    IField ITableView.NewField(string fieldName)
+        => NewField(fieldName);
     #endregion
 }

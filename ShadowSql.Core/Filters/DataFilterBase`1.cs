@@ -42,27 +42,27 @@ public abstract class DataFilterBase<TFilter>(ITableView source, TFilter filter)
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
-    #region ITableView
+    #region FilterBase
     /// <summary>
-    /// 获取列
+    /// 获取所有字段
     /// </summary>
     /// <returns></returns>
-    protected override IEnumerable<IColumn> GetColumns()
-        => _source.Columns;
-    /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
-        => _source.GetColumn(columName);
+    protected override IEnumerable<IField> GetFields()
+        => _source.Fields;
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public override IField Field(string fieldName)
-        => _source.Field(fieldName);
+    protected override IField? GetField(string fieldName)
+        => _source.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
     #endregion
     #region ISqlEntity
     /// <summary>

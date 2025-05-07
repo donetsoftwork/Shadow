@@ -1,5 +1,4 @@
 using ShadowSql;
-using ShadowSql.ColumnQueries;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -29,7 +28,7 @@ public class JoinOnSqlQueryTests
             .AsLeftJoin()
             .On((t1, t2) => t1.Field("DepartmentId").Equal(t2.Field("Id")))
             //多表同名字段,优先本次被联接的表
-            .On(view => view.Column("Id").IsNull());
+            .On(view => view.Strict("Id").IsNull());
         var sql = _engine.Sql(join.Root);
         Assert.Equal("[Employees] AS t1 LEFT JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] AND t2.[Id] IS NULL", sql);
     }

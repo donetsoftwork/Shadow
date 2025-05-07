@@ -6,11 +6,27 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 字段
 /// </summary>
-public interface IField : IIdentifier, IFieldView, ICompareField, IOrderField, IAssignField;
+public interface IField : IFieldView, ICompareField, IOrderField, IAssignView;
+/// <summary>
+/// 前缀字段(前缀限定符)
+/// </summary>
+public interface IPrefixField : IField
+{
+    /// <summary>
+    /// 匹配字段
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    bool IsMatch(IField field);
+}
+///// <summary>
+///// 原始字段
+///// </summary>
+//public interface IIdentifierField : IIdentifier, IField;
 /// <summary>
 /// 字段或表达式(select使用)
 /// </summary>
-public interface IFieldView : IView, ISqlEntity
+public interface IFieldView : IView, IMatch, ISqlEntity
 {
     /// <summary>
     /// 转化为列(用于新表/视图(insert、groupby等))
@@ -24,10 +40,7 @@ public interface IFieldView : IView, ISqlEntity
     /// <returns></returns>
     IFieldAlias As(string alias);
 }
-/// <summary>
-/// 前缀字段(前缀限定符)
-/// </summary>
-public interface IPrefixField : IFieldView, ICompareView, IAssignView;
+
 /// <summary>
 /// 去重字段统计
 /// </summary>

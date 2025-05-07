@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -54,7 +54,7 @@ public class AliasTableCursorTests
             .ToCursor()
             .Asc("Age");
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Users] AS u ORDER BY [Age]", sql);
+        Assert.Equal("[Users] AS u ORDER BY u.[Age]", sql);
     }
     [Fact]
     public void AscField()

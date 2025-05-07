@@ -14,7 +14,7 @@ namespace ShadowSql.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IFieldView[] fields, Logic having)
+public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IField[] fields, Logic having)
     : GroupByQueryBase<TTable>(table, fields, having)
     where TTable : ITable
 {
@@ -24,7 +24,7 @@ public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IFieldView
     /// <param name="table"></param>
     /// <param name="where"></param>
     /// <param name="fields"></param>
-    public GroupByTableQuery(TTable table, ISqlLogic where, IFieldView[] fields)
+    public GroupByTableQuery(TTable table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, new AndLogic())
     {
     }

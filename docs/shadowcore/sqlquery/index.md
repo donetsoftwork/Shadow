@@ -61,9 +61,9 @@ TJoinOn On<TJoinOn>(this TJoinOn joinOn, Func<SqlQuery, SqlQuery> query)
 	where TJoinOn : JoinOnBase, IDataSqlQuery;
 TJoinOn On<TJoinOn>(this TJoinOn joinOn, Func<IJoinOn, SqlQuery, SqlQuery> query)
 	where TJoinOn : JoinOnBase, IDataSqlQuery, IJoinOn;
-TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixColumn left, IPrefixColumn right)
+TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixField left, IPrefixField right)
 	where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery;
-TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixColumn left, CompareSymbol compare, IPrefixColumn right)
+TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixField left, CompareSymbol compare, IPrefixField right)
 	where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery;
 TJoinOn On<TJoinOn>(this TJoinOn joinOn, IColumn left, IColumn right)
 	where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery;

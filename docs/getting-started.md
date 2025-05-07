@@ -44,11 +44,11 @@ public class CommentAliasTable : TableAlias<CommentTable>
         Content = AddColumn(table.Content);
         Pick = AddColumn(table.Pick);
     }
-    public readonly IPrefixColumn Id;
-    public readonly IPrefixColumn UserId;
-    public readonly IPrefixColumn PostId;
-    public readonly IPrefixColumn Content;
-    public readonly IPrefixColumn Pick;
+    public readonly IPrefixField Id;
+    public readonly IPrefixField UserId;
+    public readonly IPrefixField PostId;
+    public readonly IPrefixField Content;
+    public readonly IPrefixField Pick;
 }
 ~~~
 

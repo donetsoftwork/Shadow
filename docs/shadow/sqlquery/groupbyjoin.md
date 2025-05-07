@@ -16,8 +16,8 @@
 >从多、联表创建[GroupByMultiSqlQuery](xref:ShadowSql.GroupBy.GroupByMultiSqlQuery)
 ### 4.1 SqlGroupBy扩展方法
 ```csharp
-GroupByMultiSqlQuery SqlGroupBy(this JoinTableSqlQuery multiTable, params IFieldView[] fields);
-GroupByMultiSqlQuery SqlGroupBy(this MultiTableSqlQuery multiTable, params IFieldView[] fields);
+GroupByMultiSqlQuery SqlGroupBy(this JoinTableSqlQuery multiTable, params IField[] fields);
+GroupByMultiSqlQuery SqlGroupBy(this MultiTableSqlQuery multiTable, params IField[] fields);
 ```
 ```csharp
 CommentAliasTable c = new("c");
@@ -60,7 +60,7 @@ var query = _db.From("Employees")
 
 ### 4.3 AliasJoinOnSqlQuery的SqlGroupBy
 ```csharp
-GroupByMultiSqlQuery SqlGroupBy<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, TRight, IFieldView[]> select)
+GroupByMultiSqlQuery SqlGroupBy<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, TRight, IField[]> select)
         where TLeft : IAliasTable<ITable>
         where TRight : IAliasTable<ITable>;
 ```

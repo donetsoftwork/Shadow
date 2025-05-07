@@ -17,7 +17,7 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     public GroupByMultiCursor(GroupByMultiQuery source, int limit, int offset)
-        : this(source, source.Source, limit, offset)
+        : this(source, source._source, limit, offset)
     {
     }
     /// <summary>
@@ -27,7 +27,7 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     public GroupByMultiCursor(GroupByMultiSqlQuery source, int limit, int offset)
-        : this(source, source.Source, limit, offset)
+        : this(source, source._source, limit, offset)
     {
     }
     private GroupByMultiCursor(IGroupByView source, IMultiView multiTable, int limit, int offset)
@@ -84,13 +84,13 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate)
         where TTable : ITable
     {
         var member = _multiTable.Alias<TTable>(tableName);
         //增加前缀
-        if (member.GetPrefixColumn(select(member.Target)) is IPrefixColumn prefixColumn)
-            AscCore(aggregate(prefixColumn));
+        if (member.GetPrefixField(select(member.Target)) is IPrefixField prefixField)
+            AscCore(aggregate(prefixField));
         return this;
     }
     /// <summary>
@@ -101,14 +101,14 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate)
         where TTable : ITable
     {
         var member = _multiTable.Alias<TTable>(tableName);
         //增加前缀
-        var prefixColumn = member.GetPrefixColumn(select(member.Target));
-        if (prefixColumn is not null)
-            DescCore(aggregate(prefixColumn));
+        var prefixField = member.GetPrefixField(select(member.Target));
+        if (prefixField is not null)
+            DescCore(aggregate(prefixField));
         return this;
     }
     #endregion    

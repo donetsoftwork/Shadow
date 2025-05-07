@@ -258,8 +258,8 @@ public static partial class ShadowSqlCoreServices
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IColumn left, CompareSymbol compare, IColumn right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
     {
-        var leftColumn = joinOn.Left.GetPrefixColumn(left);
-        var rightColumn = joinOn.JoinSource.GetPrefixColumn(right);
+        var leftColumn = joinOn.Left.GetPrefixField(left);
+        var rightColumn = joinOn.JoinSource.GetPrefixField(right);
         if (leftColumn != null && rightColumn != null)
             joinOn.Query.AddLogic(new CompareLogic(leftColumn, compare, rightColumn));
         return joinOn;
@@ -272,7 +272,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixColumn left, IPrefixColumn right)
+    public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixField left, IPrefixField right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
         => On(joinOn, left, CompareSymbol.Equal, right);
     /// <summary>
@@ -284,7 +284,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="compare"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixColumn left, CompareSymbol compare, IPrefixColumn right)
+    public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixField left, CompareSymbol compare, IPrefixField right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
     {
         joinOn.Query.AddLogic(new CompareLogic(left, compare, right));

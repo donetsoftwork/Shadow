@@ -1,4 +1,4 @@
-﻿using ShadowSql.AliasTables;
+using ShadowSql.AliasTables;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -110,7 +110,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static long LongCount<TTable>(this GroupByTableSqlQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Executor.Count<long>(query, param);
+        => query._source.Executor.Count<long>(query, param);
     /// <summary>
     /// GroupBy后计数
     /// </summary>
@@ -120,7 +120,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static long LongCount<TTable>(this GroupByTableQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Executor.Count<long>(query, param);
+        => query._source.Executor.Count<long>(query, param);
     #endregion
     #region GroupByAliasTable
     /// <summary>
@@ -132,7 +132,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static long LongCount<TTable>(this GroupByAliasTableSqlQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Target.Executor.Count<long>(query, param);
+        => query._source.Target.Executor.Count<long>(query, param);
     /// <summary>
     /// GroupBy别名表后计数
     /// </summary>
@@ -142,7 +142,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static long LongCount<TTable>(this GroupByAliasTableQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Target.Executor.Count<long>(query, param);
+        => query._source.Target.Executor.Count<long>(query, param);
     #endregion
     #endregion
 }

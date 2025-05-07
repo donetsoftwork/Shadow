@@ -62,9 +62,9 @@ public sealed class AliasTableCursor<TTable>(TableAlias<TTable> source, ISqlLogi
     public AliasTableCursor<TTable> Asc(Func<TTable, IColumn> select)
     {
         //增加前缀
-        var prefixColumn = _source.GetPrefixColumn(select(_table));
-        if (prefixColumn is not null)
-            AscCore(prefixColumn);
+        var prefixField = _source.GetPrefixField(select(_table));
+        if (prefixField is not null)
+            AscCore(prefixField);
         return this;
     }
     /// <summary>
@@ -75,9 +75,9 @@ public sealed class AliasTableCursor<TTable>(TableAlias<TTable> source, ISqlLogi
     public AliasTableCursor<TTable> Desc(Func<TTable, IColumn> select)
     {
         //增加前缀
-        var prefixColumn = _source.GetPrefixColumn(select(_table));
-        if (prefixColumn is not null)
-            DescCore(prefixColumn);
+        var prefixField = _source.GetPrefixField(select(_table));
+        if (prefixField is not null)
+            DescCore(prefixField);
         return this;
     }    
     #endregion

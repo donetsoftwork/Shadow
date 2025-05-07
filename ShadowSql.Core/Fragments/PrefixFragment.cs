@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
 
 namespace ShadowSql.Fragments;
@@ -40,6 +40,5 @@ public class PrefixFragment<TEntity>(TEntity target, params string[] prefix)
     public virtual void Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.ConcatPrefix(_target, sql, _prefix);
-        //return engine.ConcatPrefix(_target, sql, _prefix);
     }
 }

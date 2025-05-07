@@ -194,7 +194,7 @@ public class GroupBySqlQueryTests
     {
         var view = _db.From("Users")
             .SqlGroupBy("Grade")
-            .Having(FieldInfo.Use("Score").Max().GreaterValue(90));
+            .Having(Column.Use("Score").Max().GreaterValue(90));
         var sql = _engine.Sql(view);
         Assert.Equal("[Users] GROUP BY [Grade] HAVING MAX([Score])>90", sql);
     }

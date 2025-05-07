@@ -44,8 +44,8 @@ public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target
     {
         var member = _target.Alias<TTable>(tableName);
         //增加前缀
-        if (member.GetPrefixColumn(select(member.Target)) is IPrefixColumn prefixColumn)
-            SelectCore(prefixColumn);
+        if (member.GetPrefixField(select(member.Target)) is IPrefixField prefixField)
+            SelectCore(prefixField);
     }
     /// <summary>
     /// 筛选多列
@@ -62,8 +62,8 @@ public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target
         foreach (var column in columns)
         {
             //增加前缀
-            if (member.GetPrefixColumn(column) is IPrefixColumn prefixColumn)
-                SelectCore(prefixColumn);
+            if (member.GetPrefixField(column) is IPrefixField prefixField)
+                SelectCore(prefixField);
         }
     }
     #endregion

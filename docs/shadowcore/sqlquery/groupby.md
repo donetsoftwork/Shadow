@@ -16,7 +16,7 @@
 ### 4.1 Create静态方法
 #### 4.1.1 对table分组 
 ```csharp
-GroupBySqlQuery Create(ITable table, params IFieldView[] fields);
+GroupBySqlQuery Create(ITable table, params IField[] fields);
 GroupBySqlQuery Create(ITable table, params IEnumerable<string> columnNames);
 ```
 ```csharp
@@ -27,7 +27,7 @@ var groupBy = GroupBySqlQuery.Create(table, "City");
 
 #### 4.1.2 对tableName分组 
 ```csharp
-GroupBySqlQuery Create(ITable table, params IFieldView[] fields);
+GroupBySqlQuery Create(ITable table, params IField[] fields);
 GroupBySqlQuery Create(ITable table, params IEnumerable<string> columnNames);
 ```
 ```csharp
@@ -37,12 +37,12 @@ var groupBy = GroupBySqlQuery.Create("Users", "City");
 
 #### 4.1.3 先查询再分组
 ```csharp
-GroupBySqlQuery Create(IDataFilter filter, params IFieldView[] fields);
+GroupBySqlQuery Create(IDataFilter filter, params IField[] fields);
 GroupBySqlQuery Create(IDataFilter filter, params IEnumerable<string> columnNames);
 ```
 ```csharp
 var query = new TableSqlQuery("Users")
-    .ColumnEqualValue("Age", 20);
+    .StrictEqualValue("Age", 20);
 var groupBy = GroupBySqlQuery.Create(query, "City");
 // SELECT * FROM [Users] WHERE [Age]=20 GROUP BY [City]
 ```
@@ -83,7 +83,7 @@ var groupBy = GroupBySqlQuery.Create("Users", "CityId")
 ```
 ```csharp
 var query = new TableSqlQuery("Users")
-    .ColumnEqualValue("Age", 20);
+    .StrictEqualValue("Age", 20);
 var groupBy = GroupBySqlQuery.Create(query, "CityId")
     .Having( static g => g.Max("Level").GreaterValue(9));
 // SELECT * FROM [Users] WHERE [Age]=20 GROUP BY [CityId] HAVING MAX([Level])>9

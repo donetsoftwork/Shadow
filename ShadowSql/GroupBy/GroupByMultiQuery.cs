@@ -11,7 +11,7 @@ namespace ShadowSql.GroupBy;
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
 /// <param name="filter"></param>
-public class GroupByMultiQuery(IMultiView multiTable, IFieldView[] fields, Logic filter)
+public class GroupByMultiQuery(IMultiView multiTable, IField[] fields, Logic filter)
     : GroupByQueryBase<IMultiView>(multiTable, fields, filter)
 {
     /// <summary>
@@ -19,7 +19,7 @@ public class GroupByMultiQuery(IMultiView multiTable, IFieldView[] fields, Logic
     /// </summary>
     /// <param name="multiTable"></param>
     /// <param name="fields"></param>
-    public GroupByMultiQuery(IMultiView multiTable, IFieldView[] fields)
+    public GroupByMultiQuery(IMultiView multiTable, IField[] fields)
         : this(multiTable, fields, new AndLogic())
     {
     }
@@ -46,7 +46,7 @@ public class GroupByMultiQuery(IMultiView multiTable, IFieldView[] fields, Logic
     /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByMultiQuery Apply<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
+    public GroupByMultiQuery Apply<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
         where TTable : ITable
     {
         var table = _source.Alias<TTable>(tableName);

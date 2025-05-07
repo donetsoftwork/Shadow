@@ -7,15 +7,19 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 原始表标识
 /// </summary>
-public interface ITable : IIdentifier, IInsertTable, IUpdateTable/*, ISelectView*/, ITableView
+public interface ITable : IIdentifier, IInsertTable, IUpdateTable, ITableView
 {
+    /// <summary>
+    /// 所有列
+    /// </summary>
+    IEnumerable<IColumn> Columns { get; }
+    /// <summary>
+    /// 获取单个列
+    /// </summary>
+    /// <param name="columName"></param>
+    /// <returns></returns>
+    IColumn? GetColumn(string columName);
 }
-///// <summary>
-///// Select筛选视图
-///// </summary>
-//public interface ISelectView : ISqlEntity
-//{
-//}
 /// <summary>
 /// 插入表
 /// </summary>
@@ -34,7 +38,7 @@ public interface IUpdateTable : IView, ISqlEntity
     /// <summary>
     /// 修改列
     /// </summary>
-    IEnumerable<IColumn> UpdateColumns { get; }
+    IEnumerable<IAssignView> UpdateColumns { get; }
 }
 /// <summary>
 /// 表视图
@@ -42,27 +46,27 @@ public interface IUpdateTable : IView, ISqlEntity
 public interface ITableView : ISqlEntity
 {
     /// <summary>
-    /// 所有列
+    /// 所有字段
     /// </summary>
-    IEnumerable<IColumn> Columns { get; }
-    /// <summary>
-    /// 获取单个列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    IColumn? GetColumn(string columName);
+    IEnumerable<IField> Fields { get; }
     /// <summary>
     /// 构造字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    IField Field(string fieldName);
+    IField? GetField(string fieldName);
     /// <summary>
     /// 获取比较字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
     ICompareField GetCompareField(string fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    IField NewField(string fieldName);
 }
 /// <summary>
 /// 多表视图
@@ -80,22 +84,6 @@ public interface IMultiView : ITableView
     /// <returns></returns>
     IAliasTable? GetMember(string tableName);
 }
-///// <summary>
-///// 多表(联表)
-///// </summary>
-//public interface IMultiTable : IMultiView
-//{
-//    ///// <summary>
-//    ///// 构造新成员名
-//    ///// </summary>
-//    ///// <returns></returns>
-//    //string CreateMemberName();
-//    ///// <summary>
-//    ///// 添加表成员
-//    ///// </summary>
-//    ///// <param name="aliasTable"></param>
-//    //void AddMember(IAliasTable aliasTable);
-//}
 /// <summary>
 /// 联表
 /// </summary>
@@ -116,12 +104,12 @@ public interface IJoinTable : IMultiView
 /// </summary>
 public interface IGroupByView : ITableView
 {
-    ///// <summary>
-    ///// 数据源表
-    ///// </summary>
-    //ITableView Source { get; }
+    /// <summary>
+    /// 分组数据源表
+    /// </summary>
+    ITableView Source { get; }
     /// <summary>
     /// 分组字段
     /// </summary>
-    IFieldView[] Fields { get; }
+    IField[] GroupByFields { get; }
 }

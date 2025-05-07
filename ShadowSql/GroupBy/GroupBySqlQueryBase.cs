@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
 using System.Text;
@@ -12,7 +12,7 @@ namespace ShadowSql.GroupBy;
 /// <param name="source"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public abstract class GroupBySqlQueryBase<TSource>(TSource source, IFieldView[] fields, SqlQuery having)
+public abstract class GroupBySqlQueryBase<TSource>(TSource source, IField[] fields, SqlQuery having)
     : GroupByBase<SqlQuery>(fields, having), IDataSqlQuery
     where TSource : ITableView
 {
@@ -20,11 +20,11 @@ public abstract class GroupBySqlQueryBase<TSource>(TSource source, IFieldView[] 
     /// <summary>
     /// 数据源表
     /// </summary>
-    protected readonly TSource _source = source;
+    internal readonly TSource _source = source;
     /// <summary>
-    /// 数据源表
+    /// 分组数据源表
     /// </summary>
-    public TSource Source
+    public override ITableView Source
         => _source;
     #endregion
     #region ISqlEntity
@@ -35,6 +35,15 @@ public abstract class GroupBySqlQueryBase<TSource>(TSource source, IFieldView[] 
     /// <param name="sql"></param>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
+    #endregion
+    #region TableViewBase
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
     #endregion
     #region IDataQuery
     SqlQuery IDataSqlQuery.Query

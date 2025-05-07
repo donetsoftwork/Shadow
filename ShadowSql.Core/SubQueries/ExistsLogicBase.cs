@@ -1,9 +1,10 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ShadowSql.SubQueries;
@@ -45,10 +46,9 @@ public abstract class ExistsLogicBase(ITableView source, CompareSymbol op)
         sql.Append('*');
         return true;
     }
-
     IEnumerable<IColumn> ISelectFields.ToColumns()
-        => _source.Columns;
+        => _source.Fields.Select(f => f.ToColumn());
     IEnumerable<IFieldView> ISelectFields.Selected
-        => [];
+        => _source.Fields;
     #endregion
 }

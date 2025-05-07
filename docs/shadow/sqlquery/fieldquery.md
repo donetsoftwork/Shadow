@@ -1,7 +1,7 @@
 # 按字段查询
 >* 按字段名查询扩展
 >* 无需提前定义,随查随用
->* 需要校验请使用[按列查询](./fieldquery.md)
+>* 需要校验请使用[严格查询](./columnquery.md)
 >* using ShadowSql.FieldQueries后即可使用
 
 ## 1. FieldParameter扩展方法

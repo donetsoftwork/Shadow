@@ -61,24 +61,24 @@ public abstract class JoinOnBase
     /// <summary>
     /// 获取左边列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    public abstract IPrefixColumn? GetLeftColumn(string columName);
+    public abstract IPrefixField? GetLeftField(string fieldName);
     /// <summary>
     /// 获取右边列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    public abstract IPrefixColumn? GetRightColumn(string columName);
+    public abstract IPrefixField? GetRightField(string fieldName);
     /// <summary>
     /// 获取列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    public IPrefixColumn? GetPrefixColumn(string columName)
+    public IPrefixField? GetPrefixField(string fieldName)
     {
-        return GetRightColumn(columName)
-            ?? GetLeftColumn(columName);
+        return GetRightField(fieldName)
+            ?? GetLeftField(fieldName);
     }
     #endregion
     #region Field
@@ -103,7 +103,7 @@ public abstract class JoinOnBase
     /// <returns></returns>
     public ICompareView GetLeftCompareField(string fieldName)
     {
-        if (GetLeftColumn(fieldName) is IColumn column)
+        if (GetLeftField(fieldName) is IColumn column)
             return column;
         return LeftField(fieldName);
     }
@@ -114,7 +114,7 @@ public abstract class JoinOnBase
     /// <returns></returns>
     public ICompareView GetRightCompareField(string fieldName)
     {
-        if (GetRightColumn(fieldName) is IColumn column)
+        if (GetRightField(fieldName) is IColumn column)
             return column;
         return RightField(fieldName);
     }

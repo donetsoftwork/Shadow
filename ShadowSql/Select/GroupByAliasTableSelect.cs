@@ -19,7 +19,7 @@ public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, IAlias
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByAliasTableSelect(GroupByAliasTableSqlQuery<TTable> groupBy)
-        : this(groupBy, groupBy.Source)
+        : this(groupBy, groupBy._source)
     {
     }
     /// <summary>
@@ -27,7 +27,7 @@ public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, IAlias
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByAliasTableSelect(GroupByAliasTableQuery<TTable> groupBy)
-        : this(groupBy, groupBy.Source)
+        : this(groupBy, groupBy._source)
     {
     }
 }

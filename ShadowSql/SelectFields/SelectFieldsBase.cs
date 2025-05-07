@@ -26,20 +26,28 @@ public abstract class SelectFieldsBase<TTarget>(TTarget target)
     public TTarget Target
         => _target;
     #endregion
+    #region TableViewBase
     /// <summary>
-    /// 获取列
+    /// 获取所有字段
     /// </summary>
-    /// <param name="columnName"></param>
     /// <returns></returns>
-    protected override IColumn? GetColumn(string columnName)
-        => _target.GetColumn(columnName);
+    protected override IEnumerable<IField> GetFields()
+        => _target.Fields;
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IField Field(string fieldName)
-        => _target.Field(fieldName);
+    protected override IField? GetField(string fieldName)
+        => _target.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _target.NewField(fieldName);
+    #endregion
     #region ISelectFields
     bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
         => WriteSelectedCore(engine, sql, false);

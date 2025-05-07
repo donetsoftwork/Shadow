@@ -56,7 +56,7 @@ public static partial class ShadowSqlServicess
     public static TSelect SelectGroupBy<TSelect>(this TSelect select)
         where TSelect : SelectFieldsBase, IGroupBySelect
     {
-        select.SelectCore(select.Target.Fields);
+        select.SelectCore(select.Target.GroupByFields);
         return select;
     }
     /// <summary>

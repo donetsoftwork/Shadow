@@ -20,7 +20,7 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     public GroupByAliasTableCursor(GroupByAliasTableQuery<TTable> source, int limit, int offset)
-        : this(source, source.Source, source.Source.Target, limit, offset)
+        : this(source, source._source, source._source.Target, limit, offset)
     {
     }
     /// <summary>
@@ -30,7 +30,7 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     public GroupByAliasTableCursor(GroupByAliasTableSqlQuery<TTable> source, int limit, int offset)
-        : this(source, source.Source, source.Source.Target, limit, offset)
+        : this(source, source._source, source._source.Target, limit, offset)
     {
     }
     private GroupByAliasTableCursor(IGroupByView groupBy, IAliasTable<TTable> aliasTable, TTable table, int limit, int offset)
@@ -61,12 +61,12 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByAliasTableCursor<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByAliasTableCursor<TTable> AggregateAsc(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate)
     {
         //增加前缀
-        var prefixColumn = _aliasTable.GetPrefixColumn(select(_table));
-        if (prefixColumn is not null)
-            AscCore(aggregate(prefixColumn));
+        var prefixField = _aliasTable.GetPrefixField(select(_table));
+        if (prefixField is not null)
+            AscCore(aggregate(prefixField));
         return this;
     }
     /// <summary>
@@ -75,12 +75,12 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    public GroupByAliasTableCursor<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    public GroupByAliasTableCursor<TTable> AggregateDesc(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate)
     {
         //增加前缀
-        var prefixColumn = _aliasTable.GetPrefixColumn(select(_table));
-        if (prefixColumn is not null)
-            DescCore(aggregate(prefixColumn));
+        var prefixField = _aliasTable.GetPrefixField(select(_table));
+        if (prefixField is not null)
+            DescCore(aggregate(prefixField));
         return this;
     }
     #endregion    

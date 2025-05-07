@@ -46,7 +46,7 @@ var select = new CursorSelect(cursor)
 >[GroupBySqlQuery](../sqlquery/groupby.md)
 ```csharp
 var query = new TableSqlQuery("Users")
-    .ColumnLessValue("Age", 20);
+    .StrictLessValue("Age", 20);
 var groupBy = GroupBySqlQuery.Create(query, "City");
 var cursor = new TableCursor(groupBy, 10, 20)
     .Desc(groupBy.Count());

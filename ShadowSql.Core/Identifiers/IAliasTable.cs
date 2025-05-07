@@ -27,19 +27,19 @@ public interface IAliasTable : IView, ITableView
     /// </summary>
     public ITable Target { get; }
     /// <summary>
-    /// 前缀列
+    /// 前缀字段
     /// </summary>
-    IEnumerable<IPrefixColumn> PrefixColumns { get; }
+    IEnumerable<IPrefixField> PrefixFields { get; }
     /// <summary>
-    /// 获取前缀列
+    /// 获取前缀字段
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    IPrefixColumn? GetPrefixColumn(string columName);
+    IPrefixField? GetPrefixField(string fieldName);
     /// <summary>
-    /// 获取前缀列
+    /// 获取前缀字段
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="field"></param>
     /// <returns></returns>
-    IPrefixColumn? GetPrefixColumn(IColumn column);
+    IPrefixField? GetPrefixField(IField field);
 }

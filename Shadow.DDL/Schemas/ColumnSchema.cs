@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Variants;
 using System;
 
@@ -46,18 +46,6 @@ public class ColumnSchema(string name, string sqlType = "INT")
         get { return _columnType; }
         set { _columnType = value; }
     }
-
-    /// <summary>
-    /// 增加前缀
-    /// </summary>
-    /// <param name="prefix"></param>
-    /// <returns></returns>
-    public IPrefixColumn GetPrefixColumn(params string[] prefix)
-    {
-        return new PrefixColumn(this, prefix);
-    }    
-    string IView.ViewName
-        => _name;
     /// <summary>
     /// 转化为列
     /// </summary>

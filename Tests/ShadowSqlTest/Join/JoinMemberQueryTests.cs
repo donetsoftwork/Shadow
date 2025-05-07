@@ -2,7 +2,7 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.ColumnQueries;
+using ShadowSql.StrictQueries;
 
 namespace ShadowSqlTest.Join;
 
@@ -27,7 +27,7 @@ public class JoinMemberQueryTests
             .And(e.Prefix(DepartmentId).Equal(d.Prefix(Id)));
         var joinTableQuery = departmentJoin.Root
             .And(e.Field("Age").GreaterValue(40))
-            .And(d.Column("Manager").NotEqualValue("CEO"));
+            .And(d.Strict("Manager").NotEqualValue("CEO"));
         var sql = _engine.Sql(joinTableQuery);
         Assert.Equal("[Employees] AS e INNER JOIN [Departments] AS d ON e.[DepartmentId]=d.[Id] WHERE e.[Age]>40 AND d.[Manager]<>'CEO'", sql);
     }

@@ -59,7 +59,7 @@ public static partial class ShadowSqlServices
     /// <param name="right"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static JoinOnSqlQuery<LTable, RTable> On<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right,  Func<IColumn, IColumn, AtomicLogic> query)
+    public static JoinOnSqlQuery<LTable, RTable> On<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right,  Func<IPrefixField, IPrefixField, AtomicLogic> query)
         where LTable : ITable
         where RTable : ITable
     {
@@ -80,7 +80,7 @@ public static partial class ShadowSqlServices
     /// <param name="left"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IColumn> left, Func<TRight, IColumn> right)
+    public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IPrefixField> left, Func<TRight, IPrefixField> right)
         where TLeft : IAliasTable<ITable>
         where TRight : IAliasTable<ITable>
         => On(joinOn, left, CompareSymbol.Equal, right);
@@ -94,7 +94,7 @@ public static partial class ShadowSqlServices
     /// <param name="compare"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IColumn> left, CompareSymbol compare, Func<TRight, IColumn> right)
+    public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IPrefixField> left, CompareSymbol compare, Func<TRight, IPrefixField> right)
         where TLeft : IAliasTable<ITable>
         where TRight : IAliasTable<ITable>
         => joinOn.On(new CompareLogic(left(joinOn.Left), compare, right(joinOn.Source)));
@@ -202,7 +202,7 @@ public static partial class ShadowSqlServices
     /// <param name="right"></param>
     /// <param name="logic"></param>
     /// <returns></returns>
-    public static JoinOnQuery<LTable, RTable> Apply<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right, Func<Logic, IColumn, IColumn, Logic> logic)
+    public static JoinOnQuery<LTable, RTable> Apply<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right, Func<Logic, IPrefixField, IPrefixField, Logic> logic)
         where LTable : ITable
         where RTable : ITable
     {

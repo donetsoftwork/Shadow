@@ -1,4 +1,4 @@
-﻿using ShadowSql.AliasTables;
+using ShadowSql.AliasTables;
 using ShadowSql.GroupBy;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
@@ -108,7 +108,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static Task<int> CountAsync<TTable>(this GroupByTableSqlQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Executor.CountAsync<int>(query, param);
+        => query._source.Executor.CountAsync<int>(query, param);
     /// <summary>
     /// GroupBy后计数
     /// </summary>
@@ -118,7 +118,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static Task<int> CountAsync<TTable>(this GroupByTableQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Executor.CountAsync<int>(query, param);
+        => query._source.Executor.CountAsync<int>(query, param);
     #endregion
     #region GroupByAliasTable
     /// <summary>
@@ -130,7 +130,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static Task<int> CountAsync<TTable>(this GroupByAliasTableSqlQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Target.Executor.CountAsync<int>(query, param);
+        => query._source.Target.Executor.CountAsync<int>(query, param);
     /// <summary>
     /// GroupBy别名表后计数
     /// </summary>
@@ -140,7 +140,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static Task<int> CountAsync<TTable>(this GroupByAliasTableQuery<TTable> query, object? param = null)
         where TTable : IDapperTable
-        => query.Source.Target.Executor.CountAsync<int>(query, param);
+        => query._source.Target.Executor.CountAsync<int>(query, param);
     #endregion
     #endregion    
 }

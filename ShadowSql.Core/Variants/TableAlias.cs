@@ -25,41 +25,40 @@ public class TableAlias<TTable>
     {
         _tablePrefix = [tableAlias, "."];
         //内联的展开运算符“..”
-        _prefixColumns = [.. GetPrefixColumns(_tablePrefix, target.Columns)];
+        _prefixFields = [.. GetPrefixColumns(_tablePrefix, target.Columns)];
     }
     #region 配置
     private readonly string[] _tablePrefix;
     /// <summary>
     /// 表前缀包装列
     /// </summary>
-    private readonly List<IPrefixColumn> _prefixColumns;
+    private readonly List<IPrefixField> _prefixFields;
     /// <summary>
     /// 表前缀包装的列
     /// </summary>
-    public IEnumerable<IPrefixColumn> PrefixColumns
-        => _prefixColumns;
+    public IEnumerable<IPrefixField> PrefixFields
+        => _prefixFields;
     #endregion
     /// <summary>
     /// 添加列
     /// </summary>
     /// <param name="column"></param>
-    public IPrefixColumn AddColumn(IColumn column)
+    public IPrefixField AddColumn(IColumn column)
     {
-        var prefixColumn = column.GetPrefixColumn(_tablePrefix);
-        _prefixColumns.Add(prefixColumn);
-        return prefixColumn;
+        var prefixField = new PrefixColumn(column, _tablePrefix);
+        _prefixFields.Add(prefixField);
+        return prefixField;
     }
-
     /// <summary>
     /// 转化联表字段
     /// </summary>
     /// <param name="tablePrefix"></param>
     /// <param name="columns"></param>
     /// <returns></returns>
-    public static IEnumerable<IPrefixColumn> GetPrefixColumns(string[] tablePrefix, IEnumerable<IColumn> columns)
+    public static IEnumerable<IPrefixField> GetPrefixColumns(string[] tablePrefix, IEnumerable<IColumn> columns)
     {
         foreach (var column in columns)
-            yield return column.GetPrefixColumn(tablePrefix);
+            yield return new PrefixColumn(column, tablePrefix);
     }
     /// <summary>
     /// sql拼写
@@ -87,41 +86,35 @@ public class TableAlias<TTable>
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public IPrefixColumn? GetPrefixColumn(string columName)
+    internal IPrefixField? GetPrefixField(string columName)
     {
-
-        //return _columns.FirstOrDefault(c => c.IsMatch(columName));
-        return _prefixColumns.FirstOrDefault(c => Identifier.Match(c.ViewName, columName))
-            ?? Table.GetColumnWithTablePrefix(_name, _prefixColumns, columName)
-            ?? Table.GetColumnWithTablePrefix(_target.Name, _prefixColumns, columName);
+        return _prefixFields.FirstOrDefault(c => Identifier.Match(c.ViewName, columName))
+            ?? Table.GetFieldWithTablePrefix(_name, _prefixFields, columName)
+            ?? Table.GetFieldWithTablePrefix(_target.Name, _prefixFields, columName);
     }
     /// <summary>
     /// 获取列
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="field"></param>
     /// <returns></returns>
-    public IPrefixColumn? GetPrefixColumn(IColumn column)
-        => _prefixColumns.FirstOrDefault(c => c.IsMatch(column));
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    public IField Field(string fieldName)
-        => new AliasTableFieldInfo(this, fieldName);
+    internal IPrefixField? GetPrefixField(IField field)
+        => _prefixFields.FirstOrDefault(c => c.IsMatch(field));
+    #region IAliasTable
     ITable IAliasTable.Target
         => _target;
+    IPrefixField? IAliasTable.GetPrefixField(string fieldName)
+        => GetPrefixField(fieldName);
+    IPrefixField? IAliasTable.GetPrefixField(IField field)
+        => GetPrefixField(field);
+    #endregion
     #region ITableView
-    IEnumerable<IColumn> ITableView.Columns
-        => _prefixColumns;
-    IColumn? ITableView.GetColumn(string columName)
-        => GetPrefixColumn(columName);
-
+    IEnumerable<IField> ITableView.Fields
+        => _prefixFields;
     ICompareField ITableView.GetCompareField(string fieldName)
-    {
-        if(GetPrefixColumn(fieldName) is IPrefixColumn prefixColumn)
-            return prefixColumn;
-        return Field(fieldName);
-    }
+        => GetPrefixField(fieldName) ?? new AliasTableFieldInfo(this, fieldName);
+    IField? ITableView.GetField(string fieldName)
+        => GetPrefixField(fieldName);
+    IField ITableView.NewField(string fieldName)
+        => new AliasTableFieldInfo(this, fieldName);
     #endregion
 }

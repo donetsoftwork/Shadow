@@ -16,7 +16,7 @@
 ### 4.1 Create静态方法
 #### 4.1.1 对table分组 
 ```csharp
-GroupByQuery Create(ITable table, params IFieldView[] fields);
+GroupByQuery Create(ITable table, params IField[] fields);
 GroupByQuery Create(ITable table, params IEnumerable<string> columnNames);
 ```
 ```csharp
@@ -27,7 +27,7 @@ var groupBy = GroupByQuery.Create(table, "City");
 
 #### 4.1.2 对tableName分组 
 ```csharp
-GroupByQuery Create(string tableName, params IFieldView[] fields);
+GroupByQuery Create(string tableName, params IField[] fields);
 GroupByQuery Create(string tableName, params IEnumerable<string> columnNames);
 ```
 ```csharp
@@ -37,7 +37,7 @@ var groupBy = GroupByQuery.Create("Users", "City");
 
 #### 4.1.3 先查询再分组
 ```csharp
-GroupByQuery Create(IDataFilter filter, params IFieldView[] fields);
+GroupByQuery Create(IDataFilter filter, params IField[] fields);
 GroupByQuery Create(IDataFilter filter, params IEnumerable<string> columnNames);
 ```
 ```csharp

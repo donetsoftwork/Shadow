@@ -44,7 +44,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<LTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<LTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter.AddLogic(query(_left.Prefix(select(_left.Target))));
         return this;
@@ -55,7 +55,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> OnRight(Func<RTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public JoinOnSqlQuery<LTable, RTable> OnRight(Func<RTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter.AddLogic(query(_source.Prefix(select(_source.Target))));
         return this;
@@ -69,7 +69,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<LTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<LTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _root.Where(query(_left.Prefix(select(_left.Target))));
         return this;
@@ -82,7 +82,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<RTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<RTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _root.Where(query(_source.Prefix(select(_source.Target))));
         return this;

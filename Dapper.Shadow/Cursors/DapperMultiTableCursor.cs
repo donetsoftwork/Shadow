@@ -65,9 +65,9 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int l
     {
         var member = _source.Alias<TTable>(tableName);
         //增加前缀
-        var prefixColumn = member.GetPrefixColumn(select(member.Target));
-        if (prefixColumn is not null)
-            AscCore(prefixColumn);
+        var prefixField = member.GetPrefixField(select(member.Target));
+        if (prefixField is not null)
+            AscCore(prefixField);
         return this;
     }
     /// <summary>
@@ -82,9 +82,9 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int l
     {
         var member = _source.Alias<TTable>(tableName);
         //增加前缀
-        var prefixColumn = member.GetPrefixColumn(select(member.Target));
-        if (prefixColumn is not null)
-            DescCore(prefixColumn);
+        var prefixField = member.GetPrefixField(select(member.Target));
+        if (prefixField is not null)
+            DescCore(prefixField);
         return this;
     }
     #endregion

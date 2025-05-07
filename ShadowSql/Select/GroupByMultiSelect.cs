@@ -25,7 +25,7 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByMultiSelect(GroupByMultiSqlQuery groupBy)
-        : this(groupBy, groupBy.Source)
+        : this(groupBy, groupBy._source)
     {
     }
     /// <summary>
@@ -33,7 +33,7 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByMultiSelect(GroupByMultiQuery groupBy)
-        : this(groupBy, groupBy.Source)
+        : this(groupBy, groupBy._source)
     {
     }
     #region SelectAggregate
@@ -74,7 +74,7 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// <param name="select"></param>
     /// <param name="aggregate"></param>
     /// <returns></returns>
-    public GroupByMultiSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixColumn, IAggregateFieldAlias> aggregate)
+    public GroupByMultiSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
     {
         var member = _groupSource.Alias<TTable>(tableName);

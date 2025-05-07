@@ -32,7 +32,7 @@ public class AliasTableSqlQuery<TTable>(TableAlias<TTable> table, SqlQuery query
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public AliasTableSqlQuery<TTable> Where(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public AliasTableSqlQuery<TTable> Where(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter.AddLogic(query(Prefix(select)));
         return this;
@@ -43,7 +43,7 @@ public class AliasTableSqlQuery<TTable>(TableAlias<TTable> table, SqlQuery query
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    protected IPrefixColumn Prefix(Func<TTable, IColumn> select)
+    protected IPrefixField Prefix(Func<TTable, IColumn> select)
         => _source.Prefix(select(_table));
     #region IDataQuery
     SqlQuery IDataSqlQuery.Query

@@ -1,4 +1,4 @@
-﻿using ShadowSql.FieldInfos;
+using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
 
 namespace ShadowSql.Aggregates;
@@ -8,8 +8,8 @@ namespace ShadowSql.Aggregates;
 /// </summary>
 /// <param name="aggregate"></param>
 /// <param name="target"></param>
-public abstract class AggregateFieldInfoBase(string aggregate, IFieldView target)
-    : VariantFieldInfoBase(target)
+public abstract class AggregateFieldInfoBase(string aggregate, ICompareField target)
+    : VariantFieldInfoBase<ICompareField>(target)
 {
     #region 配置
     /// <summary>

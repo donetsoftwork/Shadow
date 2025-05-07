@@ -63,7 +63,7 @@ public sealed class GroupByMultiCursorSelect(GroupByMultiCursor cursor)
     /// <param name="select"></param>
     /// <param name="aggregate"></param>
     /// <returns></returns>
-    public GroupByMultiCursorSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixColumn, IAggregateFieldAlias> aggregate)
+    public GroupByMultiCursorSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
     {
         var member = _groupSource.Alias<TTable>(tableName);

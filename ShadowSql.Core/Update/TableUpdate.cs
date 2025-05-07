@@ -53,12 +53,19 @@ public class TableUpdate(ITable table, ISqlLogic filter)
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _table.Write(engine, sql);
     /// <summary>
-    /// 获取列
+    /// 获取字段
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IColumn? GetColumn(string columName)
-        => _table.GetColumn(columName);
+    protected override IField? GetField(string fieldName)
+        => _table.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _table.NewField(fieldName);
     #endregion
     /// <summary>
     /// 按表名修改

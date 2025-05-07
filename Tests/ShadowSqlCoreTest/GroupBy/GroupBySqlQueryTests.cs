@@ -80,20 +80,9 @@ public class GroupBySqlQueryTests
     public void Count()
     {
         var view = GroupBySqlQuery.Create(_db.From("Users"), "Grade")
-            .Having(FieldInfo.Use("Score").Max().GreaterValue(90));
+            .Having(Column.Use("Score").Max().GreaterValue(90));
         var sql = _engine.Sql(view);
         Assert.Equal("[Users] GROUP BY [Grade] HAVING MAX([Score])>90", sql);
-    }
-    [Fact]
-    public void SourceField()
-    {
-        var table = _db.From("Users");
-        var query = new TableSqlQuery(table)
-            .Where("Age=20");
-        var groupBy = GroupBySqlQuery.Create(query, "CityId")
-            .Having(source => source.Field("City").InValue("北京", "上海"));
-        var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] WHERE Age=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海')", sql);
     }
     [Fact]
     public void Field()

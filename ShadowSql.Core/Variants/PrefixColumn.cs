@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
@@ -6,12 +6,12 @@ using ShadowSql.Identifiers;
 namespace ShadowSql.Variants;
 
 /// <summary>
-/// 前缀列
+/// 前缀字段
 /// </summary>
 /// <param name="column"></param>
 /// <param name="prefix"></param>
 public class PrefixColumn(IColumn column, params string[] prefix)
-    : PrefixFragment<IColumn>(column, prefix), IPrefixColumn
+    : PrefixFragment<IColumn>(column, prefix), IPrefixField
 {
     //////内联的展开运算符“..”
     //private readonly string _fullName = string.Concat([.. tablePrefix, column.Name]);
@@ -55,12 +55,12 @@ public class PrefixColumn(IColumn column, params string[] prefix)
         return new AliasFieldInfo(this, alias);
     }
     /// <summary>
-    /// 匹配列
+    /// 匹配字段
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="field"></param>
     /// <returns></returns>
-    public bool IsMatch(IColumn column)
-        => column == this || column == _target;
+    public bool IsMatch(IField field)
+        => field == this || field == _target;
     /// <summary>
     /// 是否匹配
     /// </summary>
@@ -70,7 +70,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
         => _target.IsMatch(name)
         && MatchPrefixColumn(_tablePrefix, _target.ViewName, name);
     /// <summary>
-    /// 判断是否为前缀列名
+    /// 判断是否为前缀字段名
     /// </summary>
     /// <param name="prefix"></param>
     /// <param name="column"></param>
@@ -98,7 +98,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
         => _target.ViewName;
 
     IColumn IFieldView.ToColumn()
-        => this;
-    IPrefixColumn IColumn.GetPrefixColumn(params string[] prefix)
-        => _target.GetPrefixColumn(prefix);
+        => _target;
+    //IPrefixField IColumn.GetPrefixColumn(params string[] prefix)
+    //    => _target.GetPrefixColumn(prefix);
 }

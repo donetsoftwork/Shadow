@@ -121,11 +121,9 @@ public static partial class ShadowSqlCoreServices
     /// <param name="table"></param>
     /// <param name="columnName"></param>
     /// <returns></returns>
-    public static IFieldView SelectField(this ITableView table, string columnName)
+    public static IField SelectField(this ITableView table, string columnName)
     {
-        if (table.GetColumn(columnName) is IColumn column)
-            return column;
-        return table.Field(columnName);
+        return table.GetField(columnName) ?? table.NewField(columnName);
     }
     /// <summary>
     /// 选择列
@@ -133,10 +131,10 @@ public static partial class ShadowSqlCoreServices
     /// <param name="table"></param>
     /// <param name="columnNames"></param>
     /// <returns></returns>
-    public static IEnumerable<IFieldView> SelectFields(this ITableView table, params IEnumerable<string> columnNames)
+    public static IEnumerable<IField> Fields(this ITableView table, params IEnumerable<string> columnNames)
     {
         foreach (var name in columnNames)
-            yield return table.SelectField(name);
+            yield return table.Field(name);
     }
     /// <summary>
     /// 选择列
@@ -145,8 +143,8 @@ public static partial class ShadowSqlCoreServices
     /// <param name="table"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static IPrefixColumn SelectPrefixColumn<TTable>(this TableAlias<TTable> table, Func<TTable, IColumn> query)
+    public static IPrefixField SelectPrefixColumn<TTable>(this TableAlias<TTable> table, Func<TTable, IColumn> query)
         where TTable : ITable
-        => table.GetPrefixColumn(query(table.Target)) ?? throw new ArgumentException("PrefixColumn不存在", nameof(query));
+        => table.GetPrefixField(query(table.Target)) ?? throw new ArgumentException("PrefixColumn不存在", nameof(query));
      
 }

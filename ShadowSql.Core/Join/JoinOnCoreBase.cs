@@ -50,32 +50,32 @@ public abstract class JoinOnCoreBase<TJoinTable, TFilter>(TJoinTable root, IAlia
     /// <summary>
     /// 表前缀包装列
     /// </summary>
-    private readonly IPrefixColumn[] _prefixColumns = [.. left.PrefixColumns, .. right.PrefixColumns];
+    private readonly IPrefixField[] _prefixFields = [.. left.PrefixFields, .. right.PrefixFields];
     /// <summary>
     /// 表前缀包装的列
     /// </summary>
-    public IEnumerable<IPrefixColumn> PrefixColumns
-        => _prefixColumns;
+    public IEnumerable<IPrefixField> PrefixFields
+        => _prefixFields;
     /// <summary>
     /// 联表条件
     /// </summary>
     internal TFilter _filter = filter;
     #endregion
-    #region Column
+    #region Field
     /// <summary>
     /// 获取左边列
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public override IPrefixColumn? GetLeftColumn(string columName)
-        => _left.GetPrefixColumn(columName);
+    public override IPrefixField? GetLeftField(string columName)
+        => _left.GetPrefixField(columName);
     /// <summary>
     /// 获取右边列
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public override IPrefixColumn? GetRightColumn(string columName)
-        => _source.GetPrefixColumn(columName);
+    public override IPrefixField? GetRightField(string columName)
+        => _source.GetPrefixField(columName);
     #endregion
     #region Field
     /// <summary>
@@ -84,14 +84,14 @@ public abstract class JoinOnCoreBase<TJoinTable, TFilter>(TJoinTable root, IAlia
     /// <param name="fieldName"></param>
     /// <returns></returns>
     public override IField LeftField(string fieldName)
-        => _left.Field(fieldName);
+        => _left.GetField(fieldName) ?? _left.NewField(fieldName);
     /// <summary>
     /// 获取右边字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
     public override IField RightField(string fieldName)
-        => _source.Field(fieldName);
+        => _source.GetField(fieldName) ?? _source.NewField(fieldName);
     #endregion
     #region IJoinOn
     IAliasTable IJoinOn.Left
@@ -124,20 +124,38 @@ public abstract class JoinOnCoreBase<TJoinTable, TFilter>(TJoinTable root, IAlia
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
-    #region IDataView
+    #region FilterBase
     /// <summary>
-    /// 获取所有列
+    /// 获取所有字段
     /// </summary>
     /// <returns></returns>
-    protected override IEnumerable<IColumn> GetColumns()
-        => _prefixColumns;
+    protected override IEnumerable<IField> GetFields()
+       => _prefixFields;
     /// <summary>
-    /// 获取列
+    /// 获取字段
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
-        => GetPrefixColumn(columName);
+    protected override IField? GetField(string fieldName)
+        => GetPrefixField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
+    /// <summary>
+    /// 获取比较字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override ICompareField GetCompareField(string fieldName)
+    {
+        return _source.GetPrefixField(fieldName)
+            ?? _left.GetPrefixField(fieldName)
+            ?? _source.NewField(fieldName);
+    }
     #endregion
     #region ISqlEntity
     /// <summary>

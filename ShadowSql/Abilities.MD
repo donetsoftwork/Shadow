@@ -1,4 +1,4 @@
-﻿# 功能
+# 功能
 
 ## 一、数据库
 ### 1、接口
@@ -63,11 +63,11 @@ public class TableAlias<TTable>(TTable target, string tableAlias)
 >* 注: 其中JoinOnQuery为JoinTableQuery的组件,用于Join的俩俩关联
 
 ## 三、列(字段)
-### 1、前缀列
+### 1、前缀字段
 ### 1.1 接口
->IPrefixColumn
+>IPrefixField
 ~~~csharp
-interface IPrefixColumn : IColumn;
+interface IPrefixField : IField;
 ~~~
 >
 >* 注:用于多表(联表、子查询),通过前缀增加表限定符区分同名列
@@ -76,7 +76,7 @@ interface IPrefixColumn : IColumn;
 >* PrefixColumn
 ~~~csharp
 class PrefixColumn(IColumn column, params string[] prefix)
-    : IPrefixColumn
+    : IPrefixField
 ~~~
 
 ### 2、列(一般指原始列)
@@ -89,7 +89,7 @@ interface IColumn : IFieldView, IAssignView, ICompareField, IOrderField;
 ### 2.2 类型
 >* Column
 >* ColumnSchema
->* 也包含IPrefixColumn的实现类型
+>* 也包含IPrefixField的实现类型
 
 ### 2.3 用途
 >* 作为ITable成员

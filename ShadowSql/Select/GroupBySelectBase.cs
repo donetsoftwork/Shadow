@@ -48,6 +48,6 @@ public abstract class GroupBySelectBase<TSource, TGroupSource>(TSource source, I
     {
         if(base.WriteSelectedCore(engine, sql, appended))
             return true;
-        return WriteSelectFields(engine, sql, _target.Fields, false);
+        return WriteSelectFields(engine, sql, _target.GroupByFields, false);
     }
 }

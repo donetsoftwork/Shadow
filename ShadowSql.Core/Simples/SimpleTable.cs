@@ -43,12 +43,12 @@ public class SimpleTable : TableBase
     /// <summary>
     /// 插入列为空
     /// </summary>
-    public override IEnumerable<IColumn> InsertColumns
+    internal override IEnumerable<IColumn> InsertColumns
          => [];
     /// <summary>
     /// 修改列为空
     /// </summary>
-    public override IEnumerable<IColumn> UpdateColumns
+    internal override IEnumerable<IColumn> UpdateColumns
         => [];
     #endregion
 }

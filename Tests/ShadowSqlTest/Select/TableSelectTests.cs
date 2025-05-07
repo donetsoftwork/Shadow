@@ -1,5 +1,4 @@
 using ShadowSql;
-using ShadowSql.ColumnQueries;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
@@ -135,7 +134,7 @@ public class TableSelectTests
         var select = new Table("Users")
             .DefineColums("Id", "Name", "Status")
             .ToSqlQuery()
-            .Where(table => table.Column("Status").EqualValue(true))
+            .Where(table => table.Strict("Status").EqualValue(true))
             .ToSelect()
             .Select("Id", "Name");
         var sql = _engine.Sql(select);
@@ -147,9 +146,9 @@ public class TableSelectTests
         var u = new Table("Users")
             .DefineColums("Id", "Name", "Status");
         var select = u.ToSqlQuery()
-            .Where(u.Column("Status").EqualValue(true))
+            .Where(u.Strict("Status").EqualValue(true))
             .ToSelect()
-            .Select(u.Column("Id"), u.Column("Name"));
+            .Select(u.Strict("Id"), u.Strict("Name"));
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT [Id],[Name] FROM [Users] WHERE [Status]=1", sql);
     }

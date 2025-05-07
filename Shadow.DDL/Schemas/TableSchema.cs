@@ -1,6 +1,5 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
-using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
@@ -88,7 +87,7 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
     public ColumnSchema? GetColumn(string columName)
     {
         return _columns.FirstOrDefault(c => c.IsMatch(columName))
-            ?? Table.GetColumnWithTablePrefix(_name, _columns, columName);
+            ?? Table.GetFieldWithTablePrefix(_name, _columns, columName);
     }
     #region ISqlEntity
     /// <summary>
@@ -108,21 +107,31 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
     }
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => Write(engine, sql);
+
+    IColumn? ITable.GetColumn(string columName)
+        => GetColumn(columName);
+
+    IField? ITableView.GetField(string fieldName)
+        => GetColumn(fieldName);
+    ICompareField ITableView.GetCompareField(string fieldName)
+    {
+        if (GetColumn(fieldName) is ColumnSchema column)
+            return column;
+        return Column.Use(fieldName);
+    }
+    IField ITableView.NewField(string fieldName)
+        => Column.Use(fieldName);
     #endregion
     #region ITable
     IEnumerable<IColumn> IInsertTable.InsertColumns
         => _insertColumns;
-    IEnumerable<IColumn> IUpdateTable.UpdateColumns
+    IEnumerable<IAssignView> IUpdateTable.UpdateColumns
         => _updateColumns;
-    IEnumerable<IColumn> ITableView.Columns
-        => _columns;
     string IView.ViewName
         => _name;
-    IColumn? ITableView.GetColumn(string columName)
-        => GetColumn(columName);
-    IField ITableView.Field(string fieldName)
-        => FieldInfo.Use(fieldName);
-    ICompareField ITableView.GetCompareField(string fieldName)
-        => this.GetCompareField(fieldName);
+    IEnumerable<IColumn> ITable.Columns
+        => _columns;
+    IEnumerable<IField> ITableView.Fields
+        => _columns;
     #endregion
 }

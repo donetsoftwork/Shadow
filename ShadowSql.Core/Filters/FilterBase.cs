@@ -1,8 +1,5 @@
-﻿using ShadowSql.Engines;
-using ShadowSql.FieldInfos;
-using ShadowSql.Fragments;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ShadowSql.Filters;
@@ -10,46 +7,8 @@ namespace ShadowSql.Filters;
 /// <summary>
 /// 过滤基类
 /// </summary>
-public abstract class FilterBase : ITableView
-{    
-    #region ITableView
-    /// <summary>
-    /// 获取所有列
-    /// </summary>
-    /// <returns></returns>
-    protected abstract IEnumerable<IColumn> GetColumns();
-    /// <summary>
-    /// 构造字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    public virtual IField Field(string fieldName)
-        => FieldInfo.Use(fieldName);
-    /// <summary>
-    /// 获取单个列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    public abstract IColumn? GetColumn(string columName);
-    /// <summary>
-    /// 获取比较字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    internal virtual ICompareField GetCompareField(string fieldName)
-    {
-        if (GetColumn(fieldName) is IColumn column)
-            return column;
-        return Field(fieldName);
-    }
-    /// <summary>
-    /// 所有列
-    /// </summary>
-    IEnumerable<IColumn> ITableView.Columns
-        => GetColumns();
-    ICompareField ITableView.GetCompareField(string fieldName)
-        => GetCompareField(fieldName);
-    #endregion
+public abstract class FilterBase : TableViewBase
+{   
     #region ISqlEntity
     /// <summary>
     /// 拼写数据源
@@ -76,7 +35,7 @@ public abstract class FilterBase : ITableView
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    internal void Write(ISqlEngine engine, StringBuilder sql)
+    protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         WriteSource(engine, sql);
         var point = sql.Length;
@@ -87,7 +46,5 @@ public abstract class FilterBase : ITableView
             sql.Length = point;
         }
     }
-    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
-        => Write(engine, sql);
     #endregion
 }

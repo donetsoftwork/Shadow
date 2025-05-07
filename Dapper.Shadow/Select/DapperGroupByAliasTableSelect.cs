@@ -22,7 +22,7 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
     public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableSqlQuery<TTable> groupBy)
-        : this(executor, groupBy, groupBy.Source)
+        : this(executor, groupBy, groupBy._source)
     {
     }
     /// <summary>
@@ -31,7 +31,7 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
     /// <param name="executor"></param>
     /// <param name="groupBy"></param>
     public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableQuery<TTable> groupBy)
-        : this(executor, groupBy, groupBy.Source)
+        : this(executor, groupBy, groupBy._source)
     {
     }
     #region 配置

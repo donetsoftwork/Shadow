@@ -59,7 +59,7 @@ public static class AggregateAsServices
     /// <param name="alias"></param>
     /// <returns></returns>
     public static IAggregateFieldAlias DistinctCountAs(this IGroupByView view, string field, string alias = "")
-        => new DistinctCountAliasFieldInfo(view.Field(field), alias);
+        => new DistinctCountAliasFieldInfo(view.Source.GetCompareField(field), alias);
     /// <summary>
     /// 最大值聚合
     /// </summary>
@@ -68,7 +68,7 @@ public static class AggregateAsServices
     /// <param name="alias"></param>
     /// <returns></returns>
     public static IAggregateFieldAlias SumAs(this IGroupByView view, string field, string alias = "")
-        => view.Field(field).AggregateAs(AggregateConstants.Sum, alias);
+        => view.Source.GetCompareField(field).AggregateAs(AggregateConstants.Sum, alias);
     /// <summary>
     /// 均值聚合
     /// </summary>
@@ -77,7 +77,7 @@ public static class AggregateAsServices
     /// <param name="alias"></param>
     /// <returns></returns>
     public static IAggregateFieldAlias AvgAs(this IGroupByView view, string field, string alias = "")
-        => view.Field(field).AggregateAs(AggregateConstants.Avg, alias);
+        => view.Source.GetCompareField(field).AggregateAs(AggregateConstants.Avg, alias);
     /// <summary>
     /// 最大值聚合
     /// </summary>
@@ -86,7 +86,7 @@ public static class AggregateAsServices
     /// <param name="alias"></param>
     /// <returns></returns>
     public static IAggregateFieldAlias MaxAs(this IGroupByView view, string field, string alias = "")
-        => view.Field(field).AggregateAs(AggregateConstants.Max, alias);
+        => view.Source.GetCompareField(field).AggregateAs(AggregateConstants.Max, alias);
     /// <summary>
     /// 最小值聚合
     /// </summary>
@@ -95,7 +95,7 @@ public static class AggregateAsServices
     /// <param name="alias"></param>
     /// <returns></returns>
     public static IAggregateFieldAlias MinAs(this IGroupByView view, string field, string alias = "")
-        => view.Field(field).AggregateAs(AggregateConstants.Min, alias);
+        => view.Source.GetCompareField(field).AggregateAs(AggregateConstants.Min, alias);
     /// <summary>
     /// 聚合
     /// </summary>
@@ -105,6 +105,6 @@ public static class AggregateAsServices
     /// <param name="alias"></param>
     /// <returns></returns>
     public static IAggregateFieldAlias AggregateAs(this IGroupByView view, string aggregate, string field, string alias = "")
-        => view.Field(field).AggregateAs(aggregate, alias);
+        => view.Source.GetCompareField(field).AggregateAs(aggregate, alias);
     #endregion
 }

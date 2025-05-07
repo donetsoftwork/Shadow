@@ -49,13 +49,13 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public static MultiTableSqlQuery Where<TTable>(this MultiTableSqlQuery multiTable, string tableName, Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public static MultiTableSqlQuery Where<TTable>(this MultiTableSqlQuery multiTable, string tableName, Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
         where TTable : ITable
     {
         var aliasTable = multiTable.Alias<TTable>(tableName);
-        var prefixColumn = aliasTable.GetPrefixColumn(select(aliasTable.Target));
-        if (prefixColumn is not null)
-            multiTable._filter.AddLogic(query(prefixColumn));
+        var prefixField = aliasTable.GetPrefixField(select(aliasTable.Target));
+        if (prefixField is not null)
+            multiTable._filter.AddLogic(query(prefixField));
         return multiTable;
     }
     #endregion

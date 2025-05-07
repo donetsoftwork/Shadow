@@ -11,7 +11,7 @@ namespace ShadowSql.Cursors;
 /// </summary>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public abstract class CursorBase(int limit, int offset)
+public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
 {
     #region 配置
     /// <summary>
@@ -105,39 +105,27 @@ public abstract class CursorBase(int limit, int offset)
         _fields.Add(RawOrderByInfo.Use(orderBy));
     }
     #endregion
-    /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
-    protected abstract IColumn? GetColumn(string columnName);
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected abstract IField Field(string fieldName);
     #endregion
     /// <summary>
     /// 确认正序
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    private IOrderView CheckAsc(string fieldName)
+    protected IOrderView CheckAsc(string fieldName)
     {
-        if (GetColumn(fieldName) is IColumn column)
-            return column;
-        return Field(fieldName);
+        if (GetField(fieldName) is IField field)
+            return field;
+        return NewField(fieldName);
     }
     /// <summary>
     /// 确认倒叙
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    private IOrderView CheckDesc(string fieldName)
+    protected IOrderView CheckDesc(string fieldName)
     {
-        if (GetColumn(fieldName) is IColumn column)
-            return column.Desc();
+        if (GetField(fieldName) is IField field)
+            return field.Desc();
         return OrderByDescField.Use(fieldName);
     }
     /// <summary>
@@ -163,6 +151,11 @@ public abstract class CursorBase(int limit, int offset)
         //回滚
         sql.Length = point;
         return false;
+    }
+    ICursor ICursor.Skip(int offset)
+    {
+        SkipCore(offset);
+        return this;
     }
 }
 

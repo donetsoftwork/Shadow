@@ -1,5 +1,4 @@
 using ShadowSql;
-using ShadowSql.ColumnQueries;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -76,7 +75,7 @@ public class AliasTableQueryTests
         var query = new UserTable()
             .As("u")
             .ToSqlQuery()
-            .Where(user => user.Column("Id").Less("LastId"));
+            .Where(user => user.Strict("Id").Less("LastId"));
         var sql = engine.Sql(query);
         Assert.Equal(expected, sql);
     }

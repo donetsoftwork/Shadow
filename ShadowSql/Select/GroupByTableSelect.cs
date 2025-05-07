@@ -21,7 +21,7 @@ public class GroupByTableSelect<TTable> : GroupBySelectBase<IGroupByView, TTable
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByTableSelect(GroupByTableSqlQuery<TTable> groupBy)
-        : this(groupBy, groupBy.Source)
+        : this(groupBy, groupBy._source)
     {
     }
     /// <summary>
@@ -29,7 +29,7 @@ public class GroupByTableSelect<TTable> : GroupBySelectBase<IGroupByView, TTable
     /// </summary>
     /// <param name="groupBy"></param>
     public GroupByTableSelect(GroupByTableQuery<TTable> groupBy)
-        : this(groupBy, groupBy.Source)
+        : this(groupBy, groupBy._source)
     {
     }
     /// <summary>

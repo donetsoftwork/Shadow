@@ -35,8 +35,8 @@ public class PostAliasTable : TableAlias<PostTable>
         AuthorId = AddColumn(table.AuthorId);
     }
     //Id, Title, Author
-    public readonly IPrefixColumn Id;
-    public readonly IPrefixColumn Title;
-    public readonly IPrefixColumn Author;
-    public readonly IPrefixColumn AuthorId;
+    public readonly IPrefixField Id;
+    public readonly IPrefixField Title;
+    public readonly IPrefixField Author;
+    public readonly IPrefixField AuthorId;
 }

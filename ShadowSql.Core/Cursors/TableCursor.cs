@@ -1,6 +1,5 @@
 using ShadowSql.Engines;
 using ShadowSql.Filters;
-using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Text;
@@ -64,30 +63,6 @@ public class TableCursor : CursorBase, ICursor
     public ITableView Source
         => _source;
     #endregion
-    #region ITableView
-    /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
-    protected override IColumn? GetColumn(string columnName)
-        => _source.GetColumn(columnName);
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected override IField Field(string fieldName)
-        => _source.Field(fieldName);
-    IEnumerable<IColumn> ITableView.Columns
-        => _source.Columns;
-    IColumn? ITableView.GetColumn(string columName)
-        => GetColumn(columName);
-    IField ITableView.Field(string fieldName)
-        => Field(fieldName);
-    ICompareField ITableView.GetCompareField(string fieldName)
-        => _source.GetCompareField(fieldName);
-    #endregion
     #region ICursor
     ICursor ICursor.Skip(int offset)
     {
@@ -95,14 +70,36 @@ public class TableCursor : CursorBase, ICursor
         return this;
     }
     #endregion
+    #region TableViewBase
+    /// <summary>
+    /// 所有字段
+    /// </summary>
+    /// <returns></returns>
+    protected override IEnumerable<IField> GetFields()
+        => _source.Fields;
+    /// <summary>
+    /// 获取字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField? GetField(string fieldName)
+        => _source.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+         => _source.NewField(fieldName);
+    #endregion
     #region ISqlEntity
     /// <summary>
     /// 拼写sql
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
-    /// <returns></returns>
-    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
+    /// <exception cref="System.NotImplementedException"></exception>
+    protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         _source.Write(engine, sql);
         WriteOrderBy(engine, sql);

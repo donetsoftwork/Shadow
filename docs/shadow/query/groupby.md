@@ -17,9 +17,9 @@
 ### 4.1 GroupBy扩展方法
 >* 从表创建[GroupByTableQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableQuery%601)
 ```csharp
-GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, params IFieldView[] fields)
+GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, params IField[] fields)
         where TTable : ITable;
-GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, Func<TTable, IFieldView[]> select)
+GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, Func<TTable, IField[]> select)
         where TTable : ITable;
 GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, params IEnumerable<string> columnNames)
         where TTable : ITable;
@@ -43,9 +43,9 @@ var groupBy = new CommentTable()
 ### 4.2 GroupBy重载扩展方法
 >* 从表和查询条件创建[GroupByTableQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableQuery%601)
 ```csharp
-GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, ISqlLogic where, params IFieldView[] fields)
+GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, ISqlLogic where, params IField[] fields)
         where TTable : ITable;
-GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, Func<TTable, ISqlLogic> where, Func<TTable, IFieldView[]> select)
+GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, Func<TTable, ISqlLogic> where, Func<TTable, IField[]> select)
         where TTable : ITable;
 GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable;
@@ -71,9 +71,9 @@ var groupBy = new CommentTable()
 ### 4.3 GroupBy重载扩展方法
 >* 从[TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)创建[GroupByTableQuery\<TTable\>](xref:ShadowSql.GroupBy.GroupByTableQuery%601)
 ```csharp
-GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IFieldView[] fields)
+GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IField[] fields)
         where TTable : ITable;
-GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, Func<TTable, IFieldView[]> select)
+GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, Func<TTable, IField[]> select)
         where TTable : ITable;
 GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable;

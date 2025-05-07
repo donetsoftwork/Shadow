@@ -13,7 +13,7 @@ var students = SqliteExecutor.From("Students")
 ~~~csharp
 var students = SqliteExecutor.From("Students")
     .ToQuery()
-    .ColumnValue("Age", 10)
+    .StrictValue("Age", 10)
     .ToDapperSelect()
     .Get<Student>();
 ~~~
@@ -53,7 +53,7 @@ var students = new StudentTable("Students")
 var students = new Table("Students")
     .DefineColums("Age")
     .ToQuery()
-    .Where(student => student.Column("Age").EqualValue(10))
+    .Where(student => student.Strict("Age").EqualValue(10))
     .ToSelect()
     .Get<Student>(SqliteExecutor);
 ~~~

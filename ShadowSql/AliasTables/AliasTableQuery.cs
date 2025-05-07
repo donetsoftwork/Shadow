@@ -40,7 +40,7 @@ public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public AliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public AliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter = _filter.And(query(Prefix(select)));
         return this;
@@ -51,7 +51,7 @@ public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public AliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    public AliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter = _filter.Or(query(Prefix(select)));
         return this;
@@ -62,7 +62,7 @@ public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    protected IPrefixColumn Prefix(Func<TTable, IColumn> select)
+    protected IPrefixField Prefix(Func<TTable, IColumn> select)
         => _source.Prefix(select(_table));
     #region IDataQuery
     Logic IDataQuery.Logic

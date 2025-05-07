@@ -36,7 +36,7 @@ public class AliasJoinOnQuery<TLeft, TRight>(JoinTableQuery root, TLeft left, TR
     /// <param name="right"></param>
     /// <param name="logic"></param>
     /// <returns></returns>
-    public AliasJoinOnQuery<TLeft, TRight> Apply(Func<TLeft, IPrefixColumn> left, Func<TRight, IPrefixColumn> right, Func<Logic, IPrefixColumn, IPrefixColumn, Logic> logic)
+    public AliasJoinOnQuery<TLeft, TRight> Apply(Func<TLeft, IPrefixField> left, Func<TRight, IPrefixField> right, Func<Logic, IPrefixField, IPrefixField, Logic> logic)
     {
         _filter = logic(_filter, left(_left), right(_source));
         return this;

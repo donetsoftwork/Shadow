@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using Microsoft.Data.Sqlite;
 using ShadowSql;
 using ShadowSql.Cursors;
@@ -139,7 +139,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
         var table = new Table("Students")
             .DefineColums("Age");
         var query = new TableSqlQuery(table)
-            .Where(student => student.Column("Age").EqualValue(10));
+            .Where(student => student.Strict("Age").EqualValue(10));
         int count = query.Count(SqliteExecutor);
         Assert.True(count > 0);
         var select = new TableSelect(query);

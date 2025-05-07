@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -15,7 +15,7 @@ namespace ShadowSql.GroupBy;
 /// <typeparam name="TFilter"></typeparam>
 /// <param name="fields"></param>
 /// <param name="filter"></param>
-public abstract class GroupByBase<TFilter>(IFieldView[] fields, TFilter filter)
+public abstract class GroupByBase<TFilter>(IField[] fields, TFilter filter)
     : GroupByBase(fields), IDataFilter
     where TFilter : ISqlLogic
 {
@@ -50,18 +50,22 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     /// 分组基类
     /// </summary>
     /// <param name="fields"></param>
-    public GroupByBase(IFieldView[] fields)
+    public GroupByBase(IField[] fields)
     {
-        _fields = fields;
-        _columns = new(() => [.. _fields.Select(field => field.ToColumn())]);
+        _groupByFields = fields;
+        _columns = new(() => [.. _groupByFields.Select(field => field.ToColumn())]);
     }
     #region 配置
-    private readonly IFieldView[] _fields;
+    /// <summary>
+    /// 分组数据源表
+    /// </summary>
+    public abstract ITableView Source { get; }
+    private readonly IField[] _groupByFields;
     /// <summary>
     /// 分组字段
     /// </summary>
-    public IFieldView[] Fields
-        => _fields;
+    public IField[] GroupByFields
+        => _groupByFields;
     private readonly Lazy<IColumn[]> _columns;
     /// <summary>
     /// 分组列
@@ -93,7 +97,7 @@ public abstract class GroupByBase : FilterBase, IGroupByView
         //必选的GROUP BY
         engine.GroupByPrefix(sql);
         var next = false;
-        foreach (var field in _fields)
+        foreach (var field in _groupByFields)
         {
             var point2 = sql.Length;
             if (next)
@@ -124,28 +128,19 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     protected override void FilterPrefix(ISqlEngine engine, StringBuilder sql)
         => engine.HavingPrefix(sql);
     #endregion
+    #region TableViewBase
     /// <summary>
-    /// 获取列
+    /// 获取所有字段
     /// </summary>
     /// <returns></returns>
-    protected override IEnumerable<IColumn> GetColumns()
-        => _columns.Value;
+    protected override IEnumerable<IField> GetFields()
+        => _groupByFields;
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
-        => _columns.Value.FirstOrDefault(c => c.IsMatch(columName));
-    /// <summary>
-    /// 获取比较字段
+    /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    internal override ICompareField GetCompareField(string fieldName)
-    {
-        if (_fields.FirstOrDefault(field => field.IsMatch(fieldName)) is ICompareField compareField)
-            return compareField;
-        return Field(fieldName);
-    }
+    protected override IField? GetField(string fieldName)
+        => _groupByFields.FirstOrDefault(f => f.IsMatch(fieldName));
+    #endregion    
 }

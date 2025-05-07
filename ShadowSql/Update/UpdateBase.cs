@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -33,20 +33,22 @@ public abstract class UpdateBase<TSource>(TSource source)
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion    
-    /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    protected override IColumn? GetColumn(string columName)
-        => _source.GetColumn(columName);
+    #region UpdateBase
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IField Field(string fieldName)
-        => _source.Field(fieldName);
+    protected override IField? GetField(string fieldName)
+        => _source.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
+    #endregion
     #region IUpdate
     ITableView IUpdate.Table
         => _source;

@@ -60,14 +60,14 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     public TRight Source
         => _source;
     /// <summary>
-    /// 表前缀包装列
+    /// 表前缀包装字段
     /// </summary>
-    private readonly IPrefixColumn[] _prefixColumns = [.. left.PrefixColumns, .. right.PrefixColumns];
+    private readonly IPrefixField[] _prefixFields = [.. left.PrefixFields, .. right.PrefixFields];
     /// <summary>
-    /// 表前缀包装的列
+    /// 表前缀包装的字段
     /// </summary>
-    public IEnumerable<IPrefixColumn> PrefixColumns
-        => _prefixColumns;
+    public IEnumerable<IPrefixField> PrefixFields
+        => _prefixFields;
     /// <summary>
     /// 联表条件
     /// </summary>
@@ -79,15 +79,15 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public override IPrefixColumn? GetLeftColumn(string columName)
-        => _left.GetPrefixColumn(columName);
+    public override IPrefixField? GetLeftField(string columName)
+        => _left.GetPrefixField(columName);
     /// <summary>
     /// 获取右边列
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public override IPrefixColumn? GetRightColumn(string columName)
-        => _source.GetPrefixColumn(columName);
+    public override IPrefixField? GetRightField(string columName)
+        => _source.GetPrefixField(columName);
     #endregion
     #region Field
     /// <summary>
@@ -144,20 +144,38 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
-    #region IDataView
+    #region FilterBase
     /// <summary>
-    /// 获取所有列
+    /// 获取所有字段
     /// </summary>
     /// <returns></returns>
-    protected override IEnumerable<IColumn> GetColumns()
-        => _prefixColumns;
+    protected override IEnumerable<IField> GetFields()
+       => _prefixFields;
     /// <summary>
-    /// 获取列
+    /// 获取字段
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
-        => GetPrefixColumn(columName);
+    protected override IField? GetField(string fieldName)
+        => GetPrefixField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => _source.NewField(fieldName);
+    /// <summary>
+    /// 获取比较字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override ICompareField GetCompareField(string fieldName)
+    {
+        return _source.GetPrefixField(fieldName)
+            ?? _left.GetPrefixField(fieldName)
+            ?? _source.NewField(fieldName);
+    }
     #endregion
     #region ISqlEntity
     /// <summary>

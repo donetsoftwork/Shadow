@@ -22,23 +22,11 @@ public class Column : ColumnBase, IColumn
     /// <param name="name"></param>
     /// <returns></returns>
     public static Column Use(string name)
-        => _cacher.Get(name);
-    /// <summary>
-    /// 增加前缀
-    /// </summary>
-    /// <param name="prefix"></param>
-    /// <returns></returns>
-    public IPrefixColumn GetPrefixColumn(params string[] prefix)
-    {
-        return new PrefixColumn(this, prefix);
-    }    
+        => _cacher.Get(name); 
     /// <summary>
     /// 缓存
     /// </summary>
     private static readonly CacheService<Column> _cacher = new(static name => new Column(name));
-
-    string IView.ViewName
-        => _name;
     IColumn IFieldView.ToColumn()
         => this;
 }

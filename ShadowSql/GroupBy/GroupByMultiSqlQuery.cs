@@ -12,7 +12,7 @@ namespace ShadowSql.GroupBy;
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
 /// <param name="filter"></param>
-public class GroupByMultiSqlQuery(IMultiView multiTable, IFieldView[] fields, SqlQuery filter)
+public class GroupByMultiSqlQuery(IMultiView multiTable, IField[] fields, SqlQuery filter)
     : GroupBySqlQueryBase<IMultiView>(multiTable, fields, filter)
 {
     /// <summary>
@@ -20,7 +20,7 @@ public class GroupByMultiSqlQuery(IMultiView multiTable, IFieldView[] fields, Sq
     /// </summary>
     /// <param name="multiTable"></param>
     /// <param name="fields"></param>
-    public GroupByMultiSqlQuery(IMultiView multiTable, IFieldView[] fields)
+    public GroupByMultiSqlQuery(IMultiView multiTable, IField[] fields)
         : this(multiTable, fields, SqlQuery.CreateAndQuery())
     {
     }
@@ -48,7 +48,7 @@ public class GroupByMultiSqlQuery(IMultiView multiTable, IFieldView[] fields, Sq
     /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public GroupByMultiSqlQuery HavingAggregate<TTable>(string tableName,  Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
+    public GroupByMultiSqlQuery HavingAggregate<TTable>(string tableName,  Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
         where TTable : ITable
     {
         var table = _source.Alias<TTable>(tableName);

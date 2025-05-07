@@ -17,40 +17,59 @@ using System.Linq;
 namespace ShadowSql;
 
 /// <summary>
-/// Column扩展
+/// 字段扩展
 /// </summary>
 public static partial class ShadowSqlCoreServices
 {
     /// <summary>
     /// 定位到列
     /// </summary>
-    /// <param name="view"></param>
+    /// <param name="table"></param>
     /// <param name="columnName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static IColumn Column(this ITableView view, string columnName)
-        => view.GetColumn(columnName)
+    public static IColumn Column(this ITable table, string columnName)
+        => table.Column(columnName)
         ?? throw new ArgumentException("列不存在", nameof(columnName));
     /// <summary>
-    /// 获取比较字段
+    /// 定位到字段(严格校验)
     /// </summary>
-    /// <param name="filter"></param>
+    /// <param name="view"></param>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public static ICompareField Compare(this IDataFilter filter, string fieldName)
-        => filter.GetCompareField(fieldName);
+    /// <exception cref="ArgumentException"></exception>
+    public static IField Strict(this ITableView view, string fieldName)
+        => view.GetField(fieldName)
+        ?? throw new ArgumentException("字段不存在", nameof(fieldName));
     /// <summary>
-    /// 获取比较字段
+    /// 定位到字段(宽松不校验)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="view"></param>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    public static ICompareField GetCompareField(this ITableView table, string fieldName)
-    {
-        if (table.GetColumn(fieldName) is IColumn column)
-            return column;
-        return table.Field(fieldName);
-    }
+    /// <exception cref="ArgumentException"></exception>
+    public static IField Field(this ITableView view, string fieldName)
+        => view.GetField(fieldName) ?? view.NewField(fieldName);
+    ///// <summary>
+    ///// 获取比较字段
+    ///// </summary>
+    ///// <param name="filter"></param>
+    ///// <param name="fieldName"></param>
+    ///// <returns></returns>
+    //public static ICompareField Compare(this ITableView filter, string fieldName)
+    //    => filter.GetCompareField(fieldName);
+    ///// <summary>
+    ///// 获取比较字段
+    ///// </summary>
+    ///// <param name="table"></param>
+    ///// <param name="fieldName"></param>
+    ///// <returns></returns>
+    //public static ICompareField GetCompareField(this ITableView table, string fieldName)
+    //{
+    //    if (table.GetColumn(fieldName) is IColumn column)
+    //        return column;
+    //    return table.GetField(fieldName);
+    //}
     /// <summary>
     /// 获取指定表比较字段
     /// </summary>
@@ -61,20 +80,20 @@ public static partial class ShadowSqlCoreServices
     public static ICompareField TableCompare(this IMultiView multi, string tableName, string fieldName)
     {
         var member = multi.From(tableName);
-        if (member.GetPrefixColumn(fieldName) is IPrefixColumn prefixColumn)
-            return prefixColumn;
-        return member.Field(fieldName);
+        if (member.GetPrefixField(fieldName) is IPrefixField prefixField)
+            return prefixField;
+        return member.NewField(fieldName);
     }
     #region Prefix
     /// <summary>
-    /// 定位到前缀列
+    /// 定位到前缀字段
     /// </summary>
     /// <param name="table"></param>
     /// <param name="columnName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static IPrefixColumn PrefixColumn(this IAliasTable table, string columnName)
-        => table.GetPrefixColumn(columnName)
+    public static IPrefixField PrefixColumn(this IAliasTable table, string columnName)
+        => table.GetPrefixField(columnName)
         ?? throw new ArgumentException("列不存在", nameof(columnName));
     /// <summary>
     /// 增加前缀
@@ -83,8 +102,8 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static IPrefixColumn Prefix(this IAliasTable table, IColumn column)
-        => table.GetPrefixColumn(column)
+    public static IPrefixField Prefix(this IAliasTable table, IColumn column)
+        => table.GetPrefixField(column)
         ?? throw new ArgumentException("列不存在", nameof(column));
     /// <summary>
     /// 增加前缀
@@ -93,10 +112,10 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static IPrefixColumn Prefix(this IJoinOn join, IColumn column)
+    public static IPrefixField Prefix(this IJoinOn join, IColumn column)
     {
-        if(column is IPrefixColumn prefixColumn)
-            return prefixColumn;
+        if(column is IPrefixField prefixField)
+            return prefixField;
         var left = join.Left;
         var right = join.JoinSource;
         foreach (var c in right.Target.Columns)
@@ -105,8 +124,8 @@ public static partial class ShadowSqlCoreServices
         foreach (var c in left.Target.Columns)
             if (c == column)
                 return left.Prefix(c);
-        return right.GetPrefixColumn(column)
-            ?? left.GetPrefixColumn(column)
+        return right.GetPrefixField(column)
+            ?? left.GetPrefixField(column)
             ?? throw new ArgumentException("列不存在", nameof(column));
     }
     /// <summary>
@@ -116,9 +135,9 @@ public static partial class ShadowSqlCoreServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public static IPrefixColumn PrefixColumn(this IJoinOn join, string columnName)
-        => join.GetRightColumn(columnName)
-        ?? join.GetLeftColumn(columnName)
+    public static IPrefixField PrefixColumn(this IJoinOn join, string columnName)
+        => join.GetRightField(columnName)
+        ?? join.GetLeftField(columnName)
         ?? throw new ArgumentException("列不存在", nameof(columnName));
     #endregion
     #region DistinctCount
@@ -678,72 +697,72 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation EqualTo(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.EqualTo, Parameter.Use(parameter, column.Name));
+    public static AssignOperation EqualTo(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.EqualTo, Parameter.Use(parameter, column));
     /// <summary>
     /// 加上
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Add(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Add, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Add(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Add, Parameter.Use(parameter, column));
     /// <summary>
     /// 减去
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Sub(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Sub, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Sub(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Sub, Parameter.Use(parameter, column));
     /// <summary>
     /// 乘上
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Mul(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Mul, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Mul(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Mul, Parameter.Use(parameter, column));
     /// <summary>
     /// 除去
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Div(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Div, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Div(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Div, Parameter.Use(parameter, column));
     /// <summary>
     /// 取模
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Mod(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Mod, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Mod(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Mod, Parameter.Use(parameter, column));
     /// <summary>
     /// 位与
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation And(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.And, Parameter.Use(parameter, column.Name));
+    public static AssignOperation And(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.And, Parameter.Use(parameter, column));
     /// <summary>
     /// 位或
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Or(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Or, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Or(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Or, Parameter.Use(parameter, column));
     /// <summary>
     /// 位异或
     /// </summary>
     /// <param name="column"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static AssignOperation Xor(this IAssignField column, string parameter = "")
-        => new(column, AssignSymbol.Xor, Parameter.Use(parameter, column.Name));
+    public static AssignOperation Xor(this IAssignView column, string parameter = "")
+        => new(column, AssignSymbol.Xor, Parameter.Use(parameter, column));
     #endregion
     #region 数据库值
     /// <summary>

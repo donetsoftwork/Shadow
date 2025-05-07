@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using Microsoft.Data.Sqlite;
 using Shadow.DDL;
 using Shadow.DDL.Components;
@@ -118,9 +118,9 @@ public abstract class ExecuteTestBase
             Teacher = AddColumn(Column.Use(nameof(Teacher)));
         }
 
-        public readonly IPrefixColumn Id;
-        new public readonly IPrefixColumn Name;
-        public readonly IPrefixColumn Teacher;
+        public readonly IPrefixField Id;
+        new public readonly IPrefixField Name;
+        public readonly IPrefixField Teacher;
     }
     public class StudentAliasTable
         : TableAlias<Table>
@@ -137,10 +137,10 @@ public abstract class ExecuteTestBase
             Age = AddColumn(Column.Use(nameof(Age)));
             ClassId = AddColumn(Column.Use(nameof(ClassId)));
         }
-        public readonly IPrefixColumn Id;
-        new public readonly IPrefixColumn Name;
-        public readonly IPrefixColumn Age;
-        public readonly IPrefixColumn ClassId;
+        public readonly IPrefixField Id;
+        new public readonly IPrefixField Name;
+        public readonly IPrefixField Age;
+        public readonly IPrefixField ClassId;
     }
 
 

@@ -3,7 +3,6 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Simples;
-using ShadowSql.ColumnQueries;
 
 namespace ShadowSqlTest.Join;
 
@@ -21,7 +20,7 @@ public class JoinTableTests
             .DefineColums("Id", "Name", "Manager", "ParentId", "RootId");
 
         var joinOn = employees.Join(departments);
-        joinOn.And(joinOn.Left.Column("DepartmentId").Equal(joinOn.Source.Column("Id")));
+        joinOn.And(joinOn.Left.Strict("DepartmentId").Equal(joinOn.Source.Strict("Id")));
         var sql = _engine.Sql(joinOn.Root);
         Assert.Equal("[Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id]", sql);
     }

@@ -19,7 +19,7 @@ public class GroupByTableCursor<TTable> : GroupByCursorBase
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     public GroupByTableCursor(GroupByTableQuery<TTable> source, int limit, int offset)
-        : this(source, source.Source, limit, offset)
+        : this(source, source._source, limit, offset)
     {
     }
     /// <summary>
@@ -29,7 +29,7 @@ public class GroupByTableCursor<TTable> : GroupByCursorBase
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     public GroupByTableCursor(GroupByTableSqlQuery<TTable> source, int limit, int offset)
-        : this(source, source.Source, limit, offset)
+        : this(source, source._source, limit, offset)
     {
     }
     private GroupByTableCursor(IGroupByView source, TTable table, int limit, int offset)

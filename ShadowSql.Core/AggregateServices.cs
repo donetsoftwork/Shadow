@@ -64,7 +64,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="field"></param>
     /// <returns></returns>
     public static IAggregateField DistinctCount(this IGroupByView view, string field)
-        => new DistinctCountFieldInfo(view.Field(field));
+        => new DistinctCountFieldInfo(view.Source.GetCompareField(field));
     /// <summary>
     /// 最大值聚合
     /// </summary>
@@ -72,7 +72,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="field"></param>
     /// <returns></returns>
     public static IAggregateField Sum(this IGroupByView view, string field)
-        => view.Field(field).AggregateTo(AggregateConstants.Sum);
+        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Sum);
     /// <summary>
     /// 均值聚合
     /// </summary>
@@ -80,7 +80,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="field"></param>
     /// <returns></returns>
     public static IAggregateField Avg(this IGroupByView view, string field)
-        => view.Field(field).AggregateTo(AggregateConstants.Avg);
+        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Avg);
     /// <summary>
     /// 最大值聚合
     /// </summary>
@@ -88,7 +88,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="field"></param>
     /// <returns></returns>
     public static IAggregateField Max(this IGroupByView view, string field)
-        => view.Field(field).AggregateTo(AggregateConstants.Max);
+        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Max);
     /// <summary>
     /// 最小值聚合
     /// </summary>
@@ -96,7 +96,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="field"></param>
     /// <returns></returns>
     public static IAggregateField Min(this IGroupByView view, string field)
-        => view.Field(field).AggregateTo(AggregateConstants.Min);
+        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Min);
     /// <summary>
     /// 聚合
     /// </summary>
@@ -105,7 +105,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="field"></param>
     /// <returns></returns>
     public static IAggregateField Aggregate(this IGroupByView view, string aggregate, string field)
-        => view.Field(field).AggregateTo(aggregate);
+        => view.Source.GetCompareField(field).AggregateTo(aggregate);
     #endregion
     #region IAliasTable<TTable>
     ///// <summary>

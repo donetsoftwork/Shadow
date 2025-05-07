@@ -38,7 +38,7 @@ public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable>
     /// <param name="right"></param>
     /// <param name="logic"></param>
     /// <returns></returns>
-    public JoinOnQuery<LTable, RTable> Apply(Func<LTable, IColumn> left, Func<RTable, IColumn> right, Func<Logic, IPrefixColumn, IPrefixColumn, Logic> logic)
+    public JoinOnQuery<LTable, RTable> Apply(Func<LTable, IColumn> left, Func<RTable, IColumn> right, Func<Logic, IPrefixField, IPrefixField, Logic> logic)
     {
         _filter = logic(_filter, _left.Prefix(left(_left.Target)), _source.Prefix(right(_source.Target)));
         return this;
@@ -49,7 +49,7 @@ public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable>
     /// <param name="left"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public JoinOnQuery<LTable, RTable> ApplyLeft(Func<LTable, IColumn> left, Func<Logic, IColumn, Logic> query)
+    public JoinOnQuery<LTable, RTable> ApplyLeft(Func<LTable, IColumn> left, Func<Logic, IPrefixField, Logic> query)
     {
         _root._filter = query(_root._filter, _left.Prefix(left(_left.Target)));
         return this;
@@ -60,7 +60,7 @@ public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable>
     /// <param name="right"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    public JoinOnQuery<LTable, RTable> ApplyRight(Func<RTable, IColumn> right, Func<Logic, IColumn, Logic> query)
+    public JoinOnQuery<LTable, RTable> ApplyRight(Func<RTable, IColumn> right, Func<Logic, IPrefixField, Logic> query)
     {
         _root._filter = query(_root._filter, _source.Prefix(right(_source.Target)));
         return this;

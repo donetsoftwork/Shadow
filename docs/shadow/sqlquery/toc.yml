@@ -1,9 +1,9 @@
 - name: 简介
   href: index.md
-- name: 按列查询
-  href: columnquery.md
 - name: 按字段查询
   href: fieldquery.md
+- name: 严格查询
+  href: columnquery.md
 - name: 表查询
   href: table.md
 - name: 多表查询

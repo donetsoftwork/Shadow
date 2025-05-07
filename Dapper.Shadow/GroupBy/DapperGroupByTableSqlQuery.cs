@@ -16,7 +16,7 @@ namespace Dapper.Shadow.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class DapperGroupByTableSqlQuery<TTable>(IExecutor executor, TTable table, ISqlLogic where, IFieldView[] fields, SqlQuery having)
+public class DapperGroupByTableSqlQuery<TTable>(IExecutor executor, TTable table, ISqlLogic where, IField[] fields, SqlQuery having)
     : GroupByTableSqlQuery<TTable>(table, where, fields, having)
     , IDapperSource
     where TTable : ITable

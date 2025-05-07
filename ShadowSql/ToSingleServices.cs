@@ -98,7 +98,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this GroupByTableSqlQuery<TTable> source, Func<TTable, IAggregateFieldAlias> select)
         where TTable : ITable
-        => new(source, select(source.Source));
+        => new(source, select(source._source));
     /// <summary>
     /// GroupBy后再筛选单列
     /// </summary>
@@ -108,7 +108,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this GroupByTableQuery<TTable> source, Func<TTable, IAggregateFieldAlias> select)
         where TTable : ITable
-        => new(source, select(source.Source));
+        => new(source, select(source._source));
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选单列
     /// </summary>
@@ -129,9 +129,9 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <param name="aggregate"></param>
     /// <returns></returns>
-    public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableSqlQuery<TTable> source, Func<TTable, IColumn> select, Func<IColumn, IAggregateFieldAlias> aggregate)
+    public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableSqlQuery<TTable> source, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
-        => new(source, aggregate(source.Source.Prefix(select(source.Source.Target))));
+        => new(source, aggregate(source._source.Prefix(select(source._source.Target))));
     /// <summary>
     /// GroupBy别名表后再筛选单列
     /// </summary>
@@ -140,9 +140,9 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <param name="aggregate"></param>
     /// <returns></returns>
-    public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableQuery<TTable> source, Func<TTable, IColumn> select, Func<IColumn, IAggregateFieldAlias> aggregate)
+    public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableQuery<TTable> source, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
-        => new(source, aggregate(source.Source.Prefix(select(source.Source.Target))));
+        => new(source, aggregate(source._source.Prefix(select(source._source.Target))));
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选单列
     /// </summary>
@@ -152,7 +152,7 @@ public static partial class ShadowSqlServices
     /// <param name="aggregate"></param>
     /// <returns></returns>
 
-    public static CursorSingleSelect ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor, Func<TTable, IColumn> select, Func<IColumn, IAggregateFieldAlias> aggregate)
+    public static CursorSingleSelect ToSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
         => new(cursor, aggregate(cursor.AliasTable.Prefix(select(cursor.Table))));
     #endregion

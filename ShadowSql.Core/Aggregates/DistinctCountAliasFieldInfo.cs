@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -7,34 +7,11 @@ namespace ShadowSql.Aggregates;
 /// <summary>
 /// 去重字段统计别名
 /// </summary>
-public class DistinctCountAliasFieldInfo
-    : DistinctCountFieldInfoBase, IDistinctCountFieldAlias
+public class DistinctCountAliasFieldInfo(ICompareField field, string alias/* = "Count"*/)
+    : DistinctCountFieldInfoBase(field), IDistinctCountFieldAlias
 {
-    /// <summary>
-    /// 按字段去重统计字段信息
-    /// </summary>
-    /// <param name="field"></param>
-    /// <param name="alias"></param>
-    public DistinctCountAliasFieldInfo(IField field, string alias/* = "Count"*/)
-        : this(alias, field)
-    {
-    }
-    /// <summary>
-    /// 按列去重统计字段信息
-    /// </summary>
-    /// <param name="column"></param>
-    /// <param name="alias"></param>
-    public DistinctCountAliasFieldInfo(IColumn column, string alias/* = "Count"*/)
-        : this(alias, column)
-    {
-    }
-    internal DistinctCountAliasFieldInfo(string alias, IFieldView target)
-        : base(target)
-    {
-        _alias = alias;
-    }
     #region 配置
-    private readonly string _alias;
+    private readonly string _alias = alias;
     /// <summary>
     /// 别名
     /// </summary>
@@ -54,7 +31,7 @@ public class DistinctCountAliasFieldInfo
     IColumn IFieldView.ToColumn()
         => Column.Use(_alias);
     IFieldAlias IFieldView.As(string alias)
-        => new DistinctCountAliasFieldInfo(alias, _target);
+        => new DistinctCountAliasFieldInfo(_target, alias);
     #endregion
     #region ISqlEntity
     /// <summary>
@@ -63,7 +40,7 @@ public class DistinctCountAliasFieldInfo
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    protected override void Write(ISqlEngine engine, StringBuilder sql)
+    protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(AggregateConstants.Count)
             .Append("(DISTINCT ");

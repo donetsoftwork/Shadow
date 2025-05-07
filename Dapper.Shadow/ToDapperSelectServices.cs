@@ -125,7 +125,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this GroupByTableSqlQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query.Source.Executor, query);
+        => new(query._source.Executor, query);
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
@@ -134,7 +134,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this GroupByTableQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query.Source.Executor, query);
+        => new(query._source.Executor, query);
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
@@ -154,7 +154,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableSqlQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query.Source.Target.Executor, query);
+        => new(query._source.Target.Executor, query);
     /// <summary>
     /// GroupBy别名表后再筛选列
     /// </summary>
@@ -163,7 +163,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query.Source.Target.Executor, query);
+        => new(query._source.Target.Executor, query);
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>

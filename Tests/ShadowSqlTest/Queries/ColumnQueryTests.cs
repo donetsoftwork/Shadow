@@ -1,8 +1,8 @@
 using ShadowSql;
-using ShadowSql.ColumnQueries;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
+using ShadowSql.StrictQueries;
 
 
 namespace ShadowSqlTest.Queries;
@@ -17,8 +17,8 @@ public class ColumnQueryTests
         var userTable = new Table("Users")
             .DefineColums("Id", "Status");
         var query = userTable.ToSqlQuery()
-            .ColumnParameter("Id", "<", "LastId")
-            .ColumnParameter("Status", "=", "state");
+            .StrictParameter("Id", "<", "LastId")
+            .StrictParameter("Status", "=", "state");
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<@LastId AND [Status]=@state", sql);
     }
@@ -28,7 +28,7 @@ public class ColumnQueryTests
         var userTable = new Table("Users")
             .DefineColums("Id");
         var query = userTable.ToSqlQuery()
-            .ColumnIn("Id", "Ids");
+            .StrictIn("Id", "Ids");
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id] IN @Ids", sql);
     }
@@ -38,8 +38,8 @@ public class ColumnQueryTests
         var userTable = new Table("Users")
             .DefineColums("Id", "Status");
         var query = userTable.ToSqlOrQuery()
-            .ColumnValue("Id", 100, "<")
-            .ColumnValue("Status", true);
+            .StrictValue("Id", 100, "<")
+            .StrictValue("Status", true);
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<100 OR [Status]=1", sql);
     }
@@ -49,8 +49,8 @@ public class ColumnQueryTests
         var u = new Table("Users")
             .DefineColums("Id", "Status");
         var query = u.ToSqlQuery()
-            .Where(u.Column("Id").GreaterEqual("LastId"))
-            .Where(u => u.Column("Status").EqualValue(true));
+            .Where(u.Strict("Id").GreaterEqual("LastId"))
+            .Where(u => u.Strict("Status").EqualValue(true));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]>=@LastId AND [Status]=1", sql);
     }
@@ -64,8 +64,8 @@ public class ColumnQueryTests
         var query = commentTable.SqlJoin(postTable)
             .OnColumn("PostId", "Id")
             .Root            
-            .TableColumnParameter("Comments", "Pick", "=", "PickState")
-            .TableColumnParameter("Posts", "Author");
+            .TableStrictParameter("Comments", "Pick", "=", "PickState")
+            .TableStrictParameter("Posts", "Author");
         var sql = _engine.Sql(query);
         Assert.Equal("[Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t1.[Pick]=@PickState AND t2.[Author]=@Author", sql);
     }
@@ -79,8 +79,8 @@ public class ColumnQueryTests
         var query = commentTable.SqlJoin(postTable)
             .OnColumn("PostId", "Id")
             .Root
-            .Where(join => join.From("Comments").Column("Pick").Equal())
-            .Where("t2", p => p.Column("Author").EqualValue("张三"));
+            .Where(join => join.From("Comments").Strict("Pick").Equal())
+            .Where("t2", p => p.Strict("Author").EqualValue("张三"));
         var sql = _engine.Sql(query);
         Assert.Equal("[Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t1.[Pick]=@Pick AND t2.[Author]='张三'", sql);
     }
@@ -94,8 +94,8 @@ public class ColumnQueryTests
 
         var query = commentTable.SqlMulti(postTable)
             .Where("t1.PostId=t2.Id")
-            .TableColumnValue("Comments", "Pick", false)
-            .TableColumnValue("Posts", "Author", "张三");
+            .TableStrictValue("Comments", "Pick", false)
+            .TableStrictValue("Posts", "Author", "张三");
         var sql = _engine.Sql(query);
         Assert.Equal("[Comments] AS t1,[Posts] AS t2 WHERE t1.[Pick]=0 AND t2.[Author]='张三' AND t1.PostId=t2.Id", sql);
     }

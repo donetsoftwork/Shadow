@@ -19,12 +19,11 @@ public class AliasTableFieldInfo(IAliasTable aliasTable, string name)
         => _aliasTable;
     #endregion
     /// <summary>
-    /// 获取前缀列
+    /// 获取前缀字段
     /// </summary>
     /// <returns></returns>
-    public IPrefixColumn? GetPrefixColumn()
-        => _aliasTable.GetPrefixColumn(_name);
+    public IPrefixField? GetPrefixField()
+        => _aliasTable.GetPrefixField(_name);
     IColumn IFieldView.ToColumn()
-        => GetPrefixColumn()
-        ?? Column.Use(_name).GetPrefixColumn([_aliasTable.Alias, "."]);
+        => Column.Use(_name);
 }

@@ -1,5 +1,6 @@
 using ShadowSql.Engines;
 using ShadowSql.FieldInfos;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace ShadowSql.SelectFields;
 /// <summary>
 /// 筛选字段基类
 /// </summary>
-public abstract class SelectFieldsBase : ISelectFields
+public abstract class SelectFieldsBase : ViewBase, ISelectFields
 {
     #region 配置
     /// <summary>
@@ -61,26 +62,14 @@ public abstract class SelectFieldsBase : ISelectFields
         _selected.Add(new RawFieldAliasInfo(statement, alias));
     }
     /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
-    protected abstract IColumn? GetColumn(string columnName);
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected abstract IField Field(string fieldName);
-    /// <summary>
     /// 构建列信息
     /// </summary>
-    /// <param name="columnName"></param>
-    internal IFieldView CheckField(string columnName)
+    /// <param name="fieldName"></param>
+    internal IFieldView CheckField(string fieldName)
     {
-        if (GetColumn(columnName) is IColumn column)
-            return column;
-        return Field(columnName);
+        if (GetField(fieldName) is IField field)
+            return field;
+        return NewField(fieldName);
     }
     #endregion
     #region ISelectFields

@@ -63,7 +63,7 @@ var select = new CommentAliasTable("c")
 >* 聚合筛选
 >* 从表聚合,先定位再聚合
 ~~~csharp
-GroupByMultiCursorSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixColumn, IAggregateFieldAlias> aggregate)
+GroupByMultiCursorSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable;
 ~~~
 ~~~csharp

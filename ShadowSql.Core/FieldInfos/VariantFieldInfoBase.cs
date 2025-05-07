@@ -1,6 +1,5 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
-using ShadowSql.Identifiers;
 using System.Text;
 
 namespace ShadowSql.FieldInfos;
@@ -9,18 +8,19 @@ namespace ShadowSql.FieldInfos;
 /// 字段变形
 /// </summary>
 /// <param name="target"></param>
-public abstract class VariantFieldInfoBase(IFieldView target)
+public abstract class VariantFieldInfoBase<TField>(TField target)
     : ISqlEntity
+    where TField : ISqlEntity
 {
     #region 配置
     /// <summary>
     /// 被去重的字段
     /// </summary>
-    protected readonly IFieldView _target = target;
+    protected readonly TField _target = target;
     /// <summary>
     /// 被去重的字段
     /// </summary>
-    public IFieldView Target
+    public TField Target
         => _target;
     #endregion
     /// <summary>
@@ -28,8 +28,7 @@ public abstract class VariantFieldInfoBase(IFieldView target)
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
-    protected abstract void Write(ISqlEngine engine, StringBuilder sql);
-
+    protected abstract void WriteCore(ISqlEngine engine, StringBuilder sql);
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
-        => Write(engine, sql);
+        => WriteCore(engine, sql);
 }

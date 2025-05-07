@@ -62,13 +62,13 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery s
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    new public DapperGroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    new public DapperGroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate)
         where TTable : ITable
     {
         var member = _multiTable.Alias<TTable>(tableName);
         //增加前缀
-        if (member.GetPrefixColumn(select(member.Target)) is IPrefixColumn prefixColumn)
-            AscCore(aggregate(prefixColumn));
+        if (member.GetPrefixField(select(member.Target)) is IPrefixField prefixField)
+            AscCore(aggregate(prefixField));
         return this;
     }
     /// <summary>
@@ -79,14 +79,14 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery s
     /// <param name="select">定位列</param>
     /// <param name="aggregate">聚合</param>
     /// <returns></returns>
-    new public DapperGroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    new public DapperGroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate)
         where TTable : ITable
     {
         var member = _multiTable.Alias<TTable>(tableName);
         //增加前缀
-        var prefixColumn = member.GetPrefixColumn(select(member.Target));
-        if (prefixColumn is not null)
-            DescCore(aggregate(prefixColumn));
+        var prefixField = member.GetPrefixField(select(member.Target));
+        if (prefixField is not null)
+            DescCore(aggregate(prefixField));
         return this;
     }
     #endregion    

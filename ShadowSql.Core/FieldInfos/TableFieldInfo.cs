@@ -10,7 +10,7 @@ namespace ShadowSql.FieldInfos;
 /// <param name="tableName"></param>
 /// <param name="name"></param>
 public class TableFieldInfo(string tableName, string name)
-    : FieldInfoBase(name), IField, ICompareField, IPrefixField
+    : ColumnBase(name), IField, ICompareField, IPrefixField
 {
     #region 配置
     private readonly string _tableName = tableName;
@@ -31,9 +31,10 @@ public class TableFieldInfo(string tableName, string name)
         sql.Append(_tableName).Append('.');
         engine.Identifier(sql, _name);
     }
-
-    string IView.ViewName
-        => _name;
+    #region IPrefixField
+    bool IPrefixField.IsMatch(IField field)
+        => IsMatch(field.ViewName);
+    #endregion
     IColumn IFieldView.ToColumn()
-        => Column.Use(_name).GetPrefixColumn([_tableName, "."]);
+        => Column.Use(_name);
 }

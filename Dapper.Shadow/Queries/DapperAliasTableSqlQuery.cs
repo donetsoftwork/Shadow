@@ -33,7 +33,7 @@ public class DapperAliasTableSqlQuery<TTable>(IExecutor executor, TableAlias<TTa
     /// <param name="select"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    new public DapperAliasTableSqlQuery<TTable> Where(Func<TTable, IColumn> select, Func<IColumn, AtomicLogic> query)
+    new public DapperAliasTableSqlQuery<TTable> Where(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
         _filter.AddLogic(query(Prefix(select)));
         return this;

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -15,7 +15,7 @@ namespace ShadowSql.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class GroupByTableSqlQuery<TTable>(TTable table, ISqlLogic where, IFieldView[] fields, SqlQuery having)
+public class GroupByTableSqlQuery<TTable>(TTable table, ISqlLogic where, IField[] fields, SqlQuery having)
     : GroupBySqlQueryBase<TTable>(table, fields, having)
     where TTable : ITable
 {
@@ -25,7 +25,7 @@ public class GroupByTableSqlQuery<TTable>(TTable table, ISqlLogic where, IFieldV
     /// <param name="table"></param>
     /// <param name="where"></param>
     /// <param name="fields"></param>
-    public GroupByTableSqlQuery(TTable table, ISqlLogic where, IFieldView[] fields)
+    public GroupByTableSqlQuery(TTable table, ISqlLogic where, IField[] fields)
         :this(table, where, fields, SqlQuery.CreateAndQuery())
     {
     }

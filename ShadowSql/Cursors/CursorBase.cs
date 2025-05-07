@@ -34,8 +34,7 @@ public class CursorBase<TSource>(TSource source, int limit, int offset)
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
-    /// <returns></returns>
-    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
+    protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         WriteSource(engine, sql);
         WriteOrderBy(engine, sql);
@@ -49,36 +48,27 @@ public class CursorBase<TSource>(TSource source, int limit, int offset)
     protected virtual void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion
-    #region ITableView
+    #region TableViewBase
     /// <summary>
-    /// 获取列
+    /// 所有字段
     /// </summary>
-    /// <param name="columnName"></param>
     /// <returns></returns>
-    protected override IColumn? GetColumn(string columnName)
-        => _source.GetColumn(columnName);
+    protected override IEnumerable<IField> GetFields()
+        => _source.Fields;
     /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IField Field(string fieldName)
-        => _source.Field(fieldName);
-    IEnumerable<IColumn> ITableView.Columns
-        => _source.Columns;
-    IColumn? ITableView.GetColumn(string columName)
-        => GetColumn(columName);
-    IField ITableView.Field(string fieldName)
-        => Field(fieldName);
-    ICompareField ITableView.GetCompareField(string fieldName)
-        => _source.GetCompareField(fieldName);
-    #endregion
-    #region ICursor
-    ICursor ICursor.Skip(int offset)
-    {
-        SkipCore(offset);
-        return this;
-    }
+    protected override IField? GetField(string fieldName)
+        => _source.GetField(fieldName);
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+         => _source.NewField(fieldName);
     #endregion
 }
 

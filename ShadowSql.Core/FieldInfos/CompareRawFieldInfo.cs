@@ -1,7 +1,6 @@
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Services;
-using ShadowSql.SqlVales;
 using System.Text;
 
 namespace ShadowSql.FieldInfos;
@@ -9,7 +8,7 @@ namespace ShadowSql.FieldInfos;
 /// <summary>
 /// 比较原始sql语句
 /// </summary>
-public sealed class CompareRawFieldInfo : IdentifierBase, ISqlValue
+public sealed class CompareRawFieldInfo : IdentifierBase, ICompareView
 {
     private CompareRawFieldInfo(string statement)
         : base(statement)

@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using Microsoft.Data.Sqlite;
 using ShadowSql;
 using ShadowSql.Engines.Sqlite;

@@ -32,7 +32,7 @@ public class UserAliasTable : TableAlias<UserTable>
         Name = AddColumn(table.Name);
         Status = AddColumn(table.Status);
     }
-    public IPrefixColumn Id { get; private set; }
-    new public IPrefixColumn Name { get; private set; }
-    public IPrefixColumn Status { get; private set; }
+    public IPrefixField Id { get; private set; }
+    new public IPrefixField Name { get; private set; }
+    public IPrefixField Status { get; private set; }
 }

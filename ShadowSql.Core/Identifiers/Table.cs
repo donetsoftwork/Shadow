@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -33,7 +33,7 @@ public class Table(string name)
     /// <summary>
     /// 插入列
     /// </summary>
-    public override IEnumerable<IColumn> InsertColumns
+    internal override IEnumerable<IColumn> InsertColumns
     {
         get
         {
@@ -48,7 +48,7 @@ public class Table(string name)
     /// <summary>
     /// 修改列
     /// </summary>
-    public override IEnumerable<IColumn> UpdateColumns
+    internal override IEnumerable<IColumn> UpdateColumns
     {
         get
         {
@@ -80,9 +80,9 @@ public class Table(string name)
     {
         if (_columns.TryGetValue(columName, out var column))
             return column;
-        return GetColumnWithTablePrefix(_name, _columns.Values, columName);
+        return GetFieldWithTablePrefix(_name, _columns.Values, columName);
     }
-    #region DefineColum
+    #region DefineColumn
     /// <summary>
     /// 定义列
     /// </summary>
@@ -195,18 +195,18 @@ public class Table(string name)
     /// <summary>
     /// 获取含表名前缀的列
     /// </summary>
-    /// <typeparam name="Column"></typeparam>
+    /// <typeparam name="TField"></typeparam>
     /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="fields"></param>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public static Column? GetColumnWithTablePrefix<Column>(string table, IEnumerable<Column> columns, string columName)
-        where Column : class, IColumn
+    public static TField? GetFieldWithTablePrefix<TField>(string table, IEnumerable<TField> fields, string columName)
+        where TField : class, IField
     {
         if (CheckTablePrefix(table, columName))
         {
             var innerName = columName[(table.Length + 1)..];
-            return columns.FirstOrDefault(c => Match(c.ViewName, innerName));
+            return fields.FirstOrDefault(c => Match(c.ViewName, innerName));
         }
         return null;
     }

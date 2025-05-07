@@ -14,7 +14,7 @@ namespace Dapper.Shadow.GroupBy;
 /// <param name="multiTable"></param>
 /// <param name="fields"></param>
 /// <param name="filter"></param>
-public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, IFieldView[] fields, Logic filter)
+public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, IField[] fields, Logic filter)
     : GroupByMultiQuery(multiTable, fields, filter)
     , IDapperSource
 {
@@ -49,7 +49,7 @@ public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, 
     /// <param name="aggregate"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    new public DapperGroupByMultiQuery Apply<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
+    new public DapperGroupByMultiQuery Apply<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
         where TTable : ITable
     {
         var table = _source.Alias<TTable>(tableName);

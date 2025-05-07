@@ -1,13 +1,13 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 
 namespace ShadowSql.Identifiers;
 
+///// <summary>
+///// 赋值字段(可insert和update)
+///// </summary>
+//public interface IAssignField : IIdentifier, IAssignView;
 /// <summary>
-/// 赋值字段(可insert和update)
+/// 赋值字段(用于update)
 /// </summary>
-public interface IAssignField : IIdentifier, IAssignView;
-/// <summary>
-/// 赋值表达式(可update)
-/// </summary>
-public interface IAssignView : ISqlEntity;
+public interface IAssignView : IView, ISqlEntity;
 
