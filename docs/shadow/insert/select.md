@@ -10,13 +10,13 @@
 >* [SelectInsertBase](xref:ShadowSql.Insert.SelectInsertBase)
 
 ## 3. 类型
->* [SelectInsert<TTable>](xref:ShadowSql.Insert.SelectInsert%601)
+>* [SelectInsert\<TTable\>](xref:ShadowSql.Insert.SelectInsert%601)
 
 ## 4 方法
 ### 4.1 ToInsert扩展方法
 ```csharp
 SelectInsert<TTable> ToInsert<TTable>(this TTable table, ISelect select)
-        where TTable : ITable;
+    where TTable : IInsertTable;
 ```
 ```csharp
 var select = _db.From("Students")
@@ -24,7 +24,7 @@ var select = _db.From("Students")
     .Where("AddTime between '2024-01-01' and '2025-01-01'")
     .ToSelect()
     .Select("Name", "Age");
-var insert = _db.From("Backup2024")
+var insert = new Table("Backup2024")
     .ToInsert(select);
 // INSERT INTO [Backup2024]([Name],[Age])SELECT [Name],[Age] FROM [Students] WHERE AddTime between '2024-01-01' and '2025-01-01'
 ```
@@ -33,7 +33,7 @@ var insert = _db.From("Backup2024")
 #### 4.2.1 InsertTo扩展方法
 ```csharp
 SelectInsert<TTable> InsertTo<TTable>(this ISelect select, TTable table)
-      where TTable : ITable;
+    where TTable : IInsertTable;
 ```
 ```csharp
 var insert = _db.From("Students")
@@ -41,14 +41,14 @@ var insert = _db.From("Students")
     .Where("AddTime between '2024-01-01' and '2025-01-01'")
     .ToSelect()
     .Select("Name", "Age")
-    .InsertTo(_db.From("Backup2024"));
+    .InsertTo(new Table("Backup2024"));
 // INSERT INTO [Backup2024]([Name],[Age])SELECT [Name],[Age] FROM [Students] WHERE AddTime between '2024-01-01' and '2025-01-01'
 ```
 
 #### 4.2.2 InsertTo重载扩展方法
 ```csharp
 SelectInsert<TTable> InsertTo<TTable>(this ISelect select, TTable table)
-      where TTable : ITable;
+    where TTable : IInsertTable;
 ```
 ```csharp
 var insert = _db.From("Students")
@@ -56,7 +56,7 @@ var insert = _db.From("Students")
     .Where("AddTime between '2024-01-01' and '2025-01-01'")
     .ToSelect()
     .Select("Name", "Age")
-    .InsertTo(_db.From("Backup2024"));
+    .InsertTo(new Table("Backup2024"));
 // INSERT INTO [Backup2024]([Name],[Age])SELECT [Name],[Age] FROM [Students] WHERE AddTime between '2024-01-01' and '2025-01-01'
 ```
 

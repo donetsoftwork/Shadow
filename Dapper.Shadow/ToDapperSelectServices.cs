@@ -10,7 +10,6 @@ using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
-using ShadowSql.Variants;
 
 namespace Dapper.Shadow;
 
@@ -75,7 +74,7 @@ public static partial class DapperShadowServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this TableAlias<TTable> table)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table)
         where TTable : IDapperTable
         => new(table.Target.Executor, table);
     /// <summary>
@@ -85,7 +84,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this TableAlias<TTable> table, ISqlLogic filter)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter)
         where TTable : IDapperTable
         => new(table.Target.Executor, table, filter);
     /// <summary>
@@ -372,7 +371,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this TableAlias<TTable> table, IExecutor executor)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, IExecutor executor)
         where TTable : ITable
         => new(executor, table);
     /// <summary>
@@ -383,7 +382,7 @@ public static partial class DapperShadowServices
     /// <param name="filter"></param>
     /// <param name="executor"></param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this TableAlias<TTable> table, ISqlLogic filter, IExecutor executor)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, IExecutor executor)
         where TTable : ITable
         => new(executor, table, filter);
     /// <summary>

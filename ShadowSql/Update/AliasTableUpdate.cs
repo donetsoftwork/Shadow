@@ -1,20 +1,29 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.AliasTables;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Variants;
 using System.Text;
 
 namespace ShadowSql.Update;
 
 /// <summary>
-/// 修改表
+/// 修改别名表
 /// </summary>
 /// <param name="table"></param>
 /// <param name="filter"></param>
-public class AliasTableUpdate<TTable>(TableAlias<TTable> table, ISqlLogic filter)
-    : UpdateBase<TableAlias<TTable>>(table)
-    where TTable : ITable
+public class AliasTableUpdate<TTable>(AliasUpdateTable<TTable> table, ISqlLogic filter)
+    : UpdateBase<AliasUpdateTable<TTable>>(table)
+    where TTable : IUpdateTable
 {
+    /// <summary>
+    /// 修改别名表
+    /// </summary>
+    /// <param name="table"></param>
+    /// <param name="filter"></param>
+    public AliasTableUpdate(IAliasTable<TTable> table, ISqlLogic filter)
+        : this(new AliasUpdateTable<TTable>(table), filter)
+    {
+    }
     #region 配置
     /// <summary>
     /// 过滤条件

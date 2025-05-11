@@ -1,4 +1,5 @@
-﻿using Dapper.Shadow.Insert;
+using Dapper.Shadow.Insert;
+using ShadowSql.Identifiers;
 using ShadowSql.Select;
 
 namespace Dapper.Shadow;
@@ -15,7 +16,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static DapperSingleInsert<TTable> ToDapperInsert<TTable>(this TTable table)
-        where TTable : IDapperTable
+        where TTable : IDapperTable, IInsertTable
         => new(table.Executor, table);
     #endregion
     #region MultiInsert
@@ -25,7 +26,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static DapperMultiInsert<TTable> ToDapperMultiInsert<TTable>(this TTable table)
-        where TTable : IDapperTable
+        where TTable : IDapperTable, IInsertTable
         => new(table.Executor, table);
     #endregion
     #region SelectInsert
@@ -37,7 +38,7 @@ public static partial class DapperShadowServices
     /// <param name="select"></param>
     /// <returns></returns>
     public static DapperSelectInsert<TTable> ToDapperInsert<TTable>(this TTable table, ISelect select)
-        where TTable : IDapperTable
+        where TTable : IDapperTable, IInsertTable
         => new(table.Executor, table, select);
     /// <summary>
     /// 插入Select
@@ -47,7 +48,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static DapperSelectInsert<TTable> DapperInsertTo<TTable>(this ISelect select, TTable table)
-      where TTable : IDapperTable
+      where TTable : IDapperTable, IInsertTable
       => new(table.Executor, table, select);
     #endregion
 }

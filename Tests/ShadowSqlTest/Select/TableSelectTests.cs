@@ -3,7 +3,6 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.Select;
@@ -11,7 +10,7 @@ namespace ShadowSqlTest.Select;
 public class TableSelectTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void Select()

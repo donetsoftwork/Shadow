@@ -3,7 +3,6 @@ using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Select;
 using ShadowSql.Tables;
-using ShadowSql.Variants;
 
 namespace Dapper.Shadow.Select;
 
@@ -14,8 +13,8 @@ namespace Dapper.Shadow.Select;
 /// <param name="executor"></param>
 /// <param name="source"></param>
 /// <param name="target"></param>
-public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView source, TableAlias<TTable> target)
-    : SelectBase<ITableView, TableAlias<TTable>>(source, target)
+public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView source, IAliasTable<TTable> target)
+    : SelectBase<ITableView, IAliasTable<TTable>>(source, target)
     , IDapperSelect
     where TTable : ITable
 {
@@ -24,7 +23,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// </summary>
     /// <param name="executor"></param>
     /// <param name="source"></param>
-    public DapperAliasTableSelect(IExecutor executor, TableAlias<TTable> source)
+    public DapperAliasTableSelect(IExecutor executor, IAliasTable<TTable> source)
         : this(executor, source, source)
     {
     }
@@ -34,7 +33,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <param name="executor"></param>
     /// <param name="source"></param>
     /// <param name="where"></param>
-    public DapperAliasTableSelect(IExecutor executor, TableAlias<TTable> source, ISqlLogic where)
+    public DapperAliasTableSelect(IExecutor executor, IAliasTable<TTable> source, ISqlLogic where)
         : this(executor, new TableFilter(source, where), source)
     {
     }

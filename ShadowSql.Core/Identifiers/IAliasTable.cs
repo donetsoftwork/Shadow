@@ -42,4 +42,10 @@ public interface IAliasTable : IView, ITableView
     /// <param name="field"></param>
     /// <returns></returns>
     IPrefixField? GetPrefixField(IField field);
+    /// <summary>
+    /// 构造新前缀字段
+    /// </summary>
+    /// <param name="column"></param>
+    /// <returns></returns>
+    IPrefixField NewPrefixField(IColumn column);
 }

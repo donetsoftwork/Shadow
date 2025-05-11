@@ -1,7 +1,6 @@
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Variants;
 using System;
 using System.Text;
 
@@ -15,8 +14,8 @@ namespace ShadowSql.Cursors;
 /// <param name="where"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public sealed class AliasTableCursor<TTable>(TableAlias<TTable> source, ISqlLogic where, int limit, int offset)
-    : CursorBase<TableAlias<TTable>>(source, limit, offset)
+public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLogic where, int limit, int offset)
+    : CursorBase<IAliasTable<TTable>>(source, limit, offset)
     where TTable : ITable
 {
     #region 配置

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using System;
 
@@ -13,7 +13,7 @@ namespace Dapper.Shadow.Insert;
 public class DapperMultiInsert<TTable>(IExecutor executor, TTable table)
     : MultiInsert<TTable>(table)
     , IDapperExecute
-    where TTable : ITable
+    where TTable : IInsertTable
 {
     #region 配置
     private readonly IExecutor _executor = executor;

@@ -30,7 +30,7 @@ public static partial class ShadowSqlServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     public static TableSingleSelect ToSingle(this ITable table, string columnName)
-        => new(table, table.SelectField(columnName));
+        => new(table, table.Field(columnName));
     /// <summary>
     /// 表筛选单列
     /// </summary>
@@ -58,7 +58,7 @@ public static partial class ShadowSqlServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     public static TableSingleSelect ToSingle(this ITable table, ISqlLogic filter, string columnName)
-        => new(new TableFilter(table, filter), table.SelectField(columnName));
+        => new(new TableFilter(table, filter), table.Field(columnName));
     /// <summary>
     /// 表过滤筛选单列
     /// </summary>
@@ -87,7 +87,7 @@ public static partial class ShadowSqlServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     public static TableSingleSelect ToSingle(this IAliasTable table, string columnName)
-        => new(table, table.SelectField(columnName));
+        => new(table, table.Field(columnName));
     /// <summary>
     /// 表筛选单列
     /// </summary>
@@ -115,7 +115,7 @@ public static partial class ShadowSqlServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     public static TableSingleSelect ToSingle(this IAliasTable table, ISqlLogic filter, string columnName)
-        => new(new TableFilter(table, filter), table.SelectField(columnName));
+        => new(new TableFilter(table, filter), table.Field(columnName));
     /// <summary>
     /// 表过滤筛选单列
     /// </summary>
@@ -144,7 +144,7 @@ public static partial class ShadowSqlServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     public static TableSingleSelect ToSingle(this IDataFilter query, string columnName)
-        => new(query, query.SelectField(columnName));
+        => new(query, query.Field(columnName));
     #endregion
     #region ICursor
     /// <summary>
@@ -162,7 +162,7 @@ public static partial class ShadowSqlServices
     /// <param name="columnName"></param>
     /// <returns></returns>
     public static CursorSingleSelect ToSingle(this ICursor cursor, string columnName)
-        => new(cursor, cursor.SelectField(columnName));
+        => new(cursor, cursor.Field(columnName));
     #endregion
     #region IMultiView
     /// <summary>

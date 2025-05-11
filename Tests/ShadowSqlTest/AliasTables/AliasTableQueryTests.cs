@@ -2,7 +2,6 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.AliasTables;
@@ -10,7 +9,7 @@ namespace ShadowSqlTest.AliasTables;
 public class AliasTableQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
     static readonly IColumn _id = ShadowSql.Identifiers.Column.Use("Id");
 
 

@@ -11,7 +11,7 @@ namespace ShadowSqlTest.Update;
 public class TableUpdateTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = DB.Use("MyDB");
+    static readonly DB _db = DB.Use("MyDB");
     //分数
     static readonly IColumn _score = Column.Use("Score");
 
@@ -55,5 +55,19 @@ public class TableUpdateTests
             .Set(table => table.Score.AddValue(10));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]+=10 WHERE [Score]<60", sql);
+    }
+    [Fact]
+    public void IgnoreUpdate()
+    {
+        var id = Column.Use("Id");
+        var name = Column.Use("Name");
+        var age = Column.Use("Age");
+        var table = new Table("Users")
+            .AddColums(id, name, age)
+            .IgnoreUpdate(id);
+        var update = table.ToUpdate(id.Equal())
+            .SetSelfFields();
+        var sql = _engine.Sql(update);
+        Assert.Equal("UPDATE [Users] SET [Name]=@Name,[Age]=@Age WHERE [Id]=@Id", sql);
     }
 }

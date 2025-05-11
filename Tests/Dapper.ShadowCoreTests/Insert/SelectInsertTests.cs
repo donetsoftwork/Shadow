@@ -1,8 +1,6 @@
 using Dapper;
 using Dapper.Shadow;
 using ShadowSql;
-using ShadowSql.Engines;
-using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
@@ -16,17 +14,16 @@ public class SelectInsertTests : ExecuteTestBase, IDisposable
         CreateStudentTable("Backup2025");
     }
 
-    //static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly DB _db = DB.Use("MyDB");
-    static readonly Table _students = _db.From("Students");
-
     [Fact]
     public void SelectInsert()
     {
-        var select = new TableSelect( _students);
-        select.Select(_name, _age);
-        var backup = _db.From("Backup2025")
-            .AddColums(_name, _age);
+        var table = new Table("Students");
+        var name = Column.Use("Name");
+        var age = Column.Use("Age");
+        var select = new TableSelect(table)
+            .Select(name, age);
+        var backup = new Table("Backup2025")
+            .AddColums(name, age);
         var insert = new SelectInsert(backup, select);
         var result = insert.Execute(SqliteExecutor);
         Assert.Equal(0, result);

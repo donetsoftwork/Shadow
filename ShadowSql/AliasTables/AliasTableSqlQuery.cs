@@ -2,7 +2,6 @@ using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using ShadowSql.Variants;
 using System;
 
 namespace ShadowSql.AliasTables;
@@ -13,8 +12,8 @@ namespace ShadowSql.AliasTables;
 /// <typeparam name="TTable"></typeparam>
 /// <param name="table"></param>
 /// <param name="query"></param>
-public class AliasTableSqlQuery<TTable>(TableAlias<TTable> table, SqlQuery query)
-    : DataFilterBase<TableAlias<TTable>, SqlQuery>(table, query), IDataSqlQuery, IWhere
+public class AliasTableSqlQuery<TTable>(IAliasTable<TTable> table, SqlQuery query)
+    : DataFilterBase<IAliasTable<TTable>, SqlQuery>(table, query), IDataSqlQuery, IWhere
     where TTable : ITable
 {
     #region 配置

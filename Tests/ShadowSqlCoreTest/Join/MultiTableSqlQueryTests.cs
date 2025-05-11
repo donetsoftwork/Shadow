@@ -3,7 +3,6 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlCoreTest.Join;
@@ -85,9 +84,9 @@ public class MultiTableSqlQueryTests
     [Fact]
     public void AliasTable3()
     {
-        var c = SimpleTable.Use("Comments")
+        var c = new Table("Comments")
             .As("c");
-        var p = SimpleTable.Use("Posts")
+        var p = new Table("Posts")
             .As("p");
         var multiTable = new MultiTableSqlQuery()
             .AddMembers(c, p)

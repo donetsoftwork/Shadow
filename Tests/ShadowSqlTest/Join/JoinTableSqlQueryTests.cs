@@ -4,7 +4,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
+using ShadowSql.Tables;
 using TestSupports;
 
 namespace ShadowSqlTest.Join;
@@ -37,8 +37,8 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void WhereLeft3()
     {
-        var joinOn = SimpleDB.From("Comments")
-            .SqlJoin(SimpleDB.From("Posts"))
+        var joinOn = SimpleTable.Use("Comments")
+            .SqlJoin(SimpleTable.Use("Posts"))
             .OnColumn("PostId", "Id")
             .WhereLeft("Pick", Pick => Pick.EqualValue(true));
         var sql = _engine.Sql(joinOn.Root);
@@ -67,8 +67,8 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void WhereRight3()
     {
-        var joinOn = SimpleDB.From("Comments")
-            .SqlJoin(SimpleDB.From("Posts"))
+        var joinOn = SimpleTable.Use("Comments")
+            .SqlJoin(SimpleTable.Use("Posts"))
             .OnColumn("PostId", "Id")
             .WhereLeft("Pick", Pick => Pick.EqualValue(true))
             .WhereRight("Author", Author => Author.NotEqualValue("张三"));

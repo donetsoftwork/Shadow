@@ -1,6 +1,5 @@
 using ShadowSql.Assigns;
 using ShadowSql.Engines;
-using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System;
@@ -37,14 +36,14 @@ public abstract class UpdateBase : ISqlEntity
     #endregion
     #region ISqlEntity
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
-        => Write(engine, sql);
+        => WriteCore(engine, sql);
     /// <summary>
     /// 拼写sql
     /// </summary>
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    protected virtual void Write(ISqlEngine engine, StringBuilder sql)
+    protected virtual void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         WriteUpdate(engine, sql);
         WriteSet(engine, sql);
@@ -86,26 +85,10 @@ public abstract class UpdateBase : ISqlEntity
     protected abstract void WriteSource(ISqlEngine engine, StringBuilder sql);
     #endregion
     /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected abstract IField? GetField(string fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    protected abstract IField NewField(string fieldName);
-    /// <summary>
     /// 获取赋值字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    internal IAssignView GetAssignField(string fieldName)
-    {
-        if (GetField(fieldName) is IAssignView assignField)
-            return assignField;
-        return NewField(fieldName);
-    }
+    internal abstract IAssignView GetAssignField(string fieldName);
 }
 

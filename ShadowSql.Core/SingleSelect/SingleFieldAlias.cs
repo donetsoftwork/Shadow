@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Variants;
 using System.Text;
@@ -33,6 +33,6 @@ public class SingleFieldAlias(ISingleSelect target, string alias)
         => Column.Use(_name);
 
     IFieldAlias IFieldView.As(string alias)
-        =>new SingleFieldAlias(_target, alias);
+        => new SingleFieldAlias(_target, alias);
     #endregion
 }

@@ -2,7 +2,6 @@ using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ShadowSql.Select;
@@ -47,13 +46,7 @@ public abstract class SelectBase<TSource, TTarget>(TSource source, TTarget targe
     /// <param name="select"></param>
     internal void SelectCore(Func<TTarget, IFieldView> select)
         => SelectCore(select(_target));
-    #region TableViewBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
-    protected override IEnumerable<IField> GetFields()
-        => _source.Fields;
+    #region GetFieldBase
     /// <summary>
     /// 获取字段
     /// </summary>

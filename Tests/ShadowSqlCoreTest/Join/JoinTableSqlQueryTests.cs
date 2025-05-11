@@ -3,7 +3,6 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlCoreTest.Join;
@@ -46,7 +45,7 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void SqlQuery2()
     {
-        var joinOn = JoinOnSqlQuery.Create(SimpleDB.From("Employees"), SimpleDB.From("Departments"));
+        var joinOn = JoinOnSqlQuery.Create(new Table("Employees"), new Table("Departments"));
         var (t1, t2) = (joinOn.Left, joinOn.Source);
         joinOn.On(t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = joinOn.Root
@@ -59,8 +58,8 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void SqlQuery3()
     {
-        var e = SimpleDB.From("Employees").As("e");
-        var d = SimpleDB.From("Departments").As("d");
+        var e = new Table("Employees").As("e");
+        var d = new Table("Departments").As("d");
         var joinOn = JoinOnSqlQuery.Create(e, d)
             .On(e.Field("DepartmentId").Equal(d.Field("Id")));
         var joinTable = joinOn.Root
@@ -112,9 +111,9 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void AliasTable3()
     {
-        var c = SimpleTable.Use("Comments")
+        var c = new Table("Comments")
             .As("c");
-        var p = SimpleTable.Use("Posts")
+        var p = new Table("Posts")
             .As("p");
         var joinOn = JoinOnSqlQuery.Create(c, p)
             .OnColumn("PostId", "Id");

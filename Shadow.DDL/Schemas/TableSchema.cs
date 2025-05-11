@@ -1,7 +1,7 @@
-using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ namespace Shadow.DDL.Schemas;
 /// <param name="columns"></param>
 /// <param name="schema"></param>
 public class TableSchema(string name, ColumnSchema[] columns, string schema = "")
-    : Identifier(name), ITable, ISqlEntity
+    : Identifier(name), ITable, IInsertTable, IUpdateTable, ISqlEntity
 {
     private readonly string _schema = schema;
     private readonly ColumnSchema[] _columns = columns;
@@ -32,53 +32,15 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
 
     #region 配置
     ////内联的展开运算符“..”
-    private readonly ColumnSchema[] _keys = [.. GetKeys(columns)];
-    private readonly ColumnSchema[] _insertColumns = [.. GetInsertColumns(columns)];
-    private readonly ColumnSchema[] _updateColumns = [.. GetUpdateColumns(columns)];
+    private readonly ColumnSchema[] _keys = [.. ColumnSchema.GetKeys(columns)];
+    private readonly ColumnSchema[] _insertColumns = [.. ColumnSchema.GetInsertColumns(columns)];
+    private readonly ColumnSchema[] _updateColumns = [.. ColumnSchema.GetUpdateColumns(columns)];
    /// <summary>
    /// 主键
    /// </summary>
-   public ColumnSchema[] Keys 
+   public ColumnSchema[] Keys
         => _keys;
-    /// <summary>
-    /// 插入列
-    /// </summary>
-    public ColumnSchema[] InsertColumns
-        => _insertColumns;
-    /// <summary>
-    /// 修改列
-    /// </summary>
-    public ColumnSchema[] UpdateColumns
-        => _updateColumns;
     #endregion
-
-    /// <summary>
-    /// 获取主键
-    /// </summary>
-    /// <param name="fields"></param>
-    /// <returns></returns>
-    public static IEnumerable<ColumnSchema> GetKeys(IEnumerable<ColumnSchema> fields)
-        => fields.Where(o => (o.ColumnType & ColumnType.Key) == ColumnType.Key);
-    /// <summary>
-    /// 获取插入列
-    /// </summary>
-    /// <param name="fields"></param>
-    /// <returns></returns>
-    public static IEnumerable<ColumnSchema> GetInsertColumns(IEnumerable<ColumnSchema> fields)
-    {
-        var ignoreType = ColumnType.Identity | ColumnType.Computed;
-        return fields.Where(o => (o.ColumnType & ignoreType) == ColumnType.Empty);
-    }
-    /// <summary>
-    /// 获取修改列
-    /// </summary>
-    /// <param name="fields"></param>
-    /// <returns></returns>
-    public static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
-    {
-        var ignoreType = ColumnType.Identity | ColumnType.Key | ColumnType.Computed;
-        return fields.Where(o => (o.ColumnType & ignoreType) == ColumnType.Empty);
-    }
     /// <summary>
     /// 查找字段
     /// </summary>
@@ -117,7 +79,7 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
     {
         if (GetColumn(fieldName) is ColumnSchema column)
             return column;
-        return Column.Use(fieldName);
+        throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     }
     IField ITableView.NewField(string fieldName)
         => Column.Use(fieldName);
@@ -125,10 +87,31 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
     #region ITable
     IEnumerable<IColumn> IInsertTable.InsertColumns
         => _insertColumns;
-    IEnumerable<IAssignView> IUpdateTable.UpdateColumns
+    /// <summary>
+    /// 获取插入列
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <returns></returns>
+    IColumn? IInsertTable.GetInsertColumn(string columnName)
+    {
+        if (GetColumn(columnName) is ColumnSchema column)
+        {
+            if ((column.ColumnType & ColumnSchema.InsertIgnoreType) == ColumnType.Empty)
+                return column;
+        }
+        return null;
+    }
+    IEnumerable<IAssignView> IUpdateTable.AssignFields
         => _updateColumns;
-    string IView.ViewName
-        => _name;
+    IAssignView? IUpdateTable.GetAssignField(string fieldName)
+    {
+        if (GetColumn(fieldName) is ColumnSchema column)
+        {
+            if ((column.ColumnType & ColumnSchema.UpdateIgnoreType) == ColumnType.Empty)
+                return column;
+        }
+        return null;
+    }
     IEnumerable<IColumn> ITable.Columns
         => _columns;
     IEnumerable<IField> ITableView.Fields

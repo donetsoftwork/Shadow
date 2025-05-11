@@ -8,7 +8,7 @@ namespace ShadowSql.Aggregates;
 /// 去重统计字段信息
 /// </summary>
 public class DistinctCountFieldInfo(ICompareField field)
-    : DistinctCountFieldInfoBase(field), IDistinctCountField
+    : DistinctCountFieldInfoBase(field), IAggregateField
 {
     string IAggregateField.TargetName
         => _target.ViewName;

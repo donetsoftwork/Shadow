@@ -72,7 +72,7 @@ public static partial class ShadowSqlCoreServices
     public static TGroupBy HavingAggregate<TGroupBy>(this TGroupBy groupBy, string aggregate, string columnName, Func<IAggregateField, AtomicLogic> query)
         where TGroupBy : GroupByBase, IDataSqlQuery
     {
-        groupBy.Query.AddLogic(query(groupBy.GetCompareField(columnName).AggregateTo(aggregate)));
+        groupBy.Query.AddLogic(query(groupBy.Source.GetCompareField(columnName).AggregateTo(aggregate)));
         return groupBy;
     }
     #endregion

@@ -1,8 +1,8 @@
 using ShadowSql.AliasTables;
 using ShadowSql.GroupBy;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
-using ShadowSql.Variants;
 using System.Threading.Tasks;
 
 namespace Dapper.Shadow;
@@ -63,7 +63,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public static Task<int> CountAsync<TTable>(this TableAlias<TTable> table, object? param = null)
+    public static Task<int> CountAsync<TTable>(this IAliasTable<TTable> table, object? param = null)
         where TTable : IDapperTable
         => table.Target.Executor.CountAsync<int>(table, param);
     /// <summary>
@@ -74,7 +74,7 @@ public static partial class DapperShadowServices
     /// <param name="filter"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public static Task<int> CountAsync<TTable>(this TableAlias<TTable> table, ISqlLogic filter, object? param = null)
+    public static Task<int> CountAsync<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, object? param = null)
         where TTable : IDapperTable
         => table.Target.Executor.CountAsync<int>(new TableFilter(table, filter), param);
     /// <summary>

@@ -4,14 +4,13 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 
 namespace Dapper.ShadowTests;
 
 public class ParametricContextTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void ColumnValue()

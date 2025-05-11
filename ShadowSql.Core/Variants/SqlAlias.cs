@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 
 namespace ShadowSql.Variants;
@@ -16,7 +16,7 @@ public abstract class SqlAlias<TFragment>(TFragment target, string alias)
     /// <summary>
     /// 被包裹对象
     /// </summary>
-    protected readonly TFragment _target = target;
+    internal readonly TFragment _target = target;
     /// <summary>
     /// 被包裹对象
     /// </summary>

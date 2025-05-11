@@ -17,7 +17,7 @@
 >从表创建SingleInsert
 ```csharp
 SingleInsert<TTable> ToInsert<TTable>(this TTable table)
-        where TTable : ITable;
+    where TTable : IInsertTable;
 ```
 ```csharp
 var table = new StudentTable();
@@ -29,7 +29,8 @@ var insert = table.ToInsert()
 
 ### 4.2 Insert方法
 ```csharp
-SingleInsert<TTable> Insert(Func<TTable, IInsertValue> select);
+SingleInsert<TTable> Insert(Func<TTable, IInsertValue> select)
+    where TTable : IInsertTable;
 ```
 ```csharp
 var insert = new StudentTable()

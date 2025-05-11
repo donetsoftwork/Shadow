@@ -11,7 +11,7 @@ namespace ShadowSql.Select;
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 public sealed class AliasTableSelect<TTable>
-    : SelectBase<ITableView, TableAlias<TTable>>
+    : SelectBase<ITableView, IAliasTable<TTable>>
     where TTable : ITable
 {
     /// <summary>
@@ -19,7 +19,7 @@ public sealed class AliasTableSelect<TTable>
     /// </summary>
     /// <param name="source"></param>
     /// <param name="target"></param>
-    internal AliasTableSelect(ITableView source, TableAlias<TTable> target)
+    internal AliasTableSelect(ITableView source, IAliasTable<TTable> target)
         : base(source, target)
     {
     }
@@ -27,7 +27,7 @@ public sealed class AliasTableSelect<TTable>
     /// 别名表筛选列
     /// </summary>
     /// <param name="source"></param>
-    public AliasTableSelect(TableAlias<TTable> source)
+    public AliasTableSelect(IAliasTable<TTable> source)
         : this(source, source)
     {
     }
@@ -36,7 +36,7 @@ public sealed class AliasTableSelect<TTable>
     /// </summary>
     /// <param name="source"></param>
     /// <param name="where"></param>
-    public AliasTableSelect(TableAlias<TTable> source, ISqlLogic where)
+    public AliasTableSelect(IAliasTable<TTable> source, ISqlLogic where)
         : this(new TableFilter(source, where), source)
     {
     }

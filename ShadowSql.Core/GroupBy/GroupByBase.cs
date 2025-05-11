@@ -142,5 +142,12 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     /// <returns></returns>
     protected override IField? GetField(string fieldName)
         => _groupByFields.FirstOrDefault(f => f.IsMatch(fieldName));
+    /// <summary>
+    /// 构造新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override IField NewField(string fieldName)
+        => throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     #endregion    
 }

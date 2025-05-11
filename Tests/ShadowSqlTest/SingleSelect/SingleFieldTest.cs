@@ -2,14 +2,13 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 
 namespace ShadowSqlTest.SingleSelect;
 
 public class SingleFieldTest
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void SingleField()

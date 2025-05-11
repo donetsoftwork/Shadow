@@ -1,14 +1,13 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.CursorSelect;
 
 public class GroupByTableCursorSelectTests
 {
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
     [Theory]
     [InlineData(SqlEngineNames.MsSql, "SELECT [City] FROM [Users] GROUP BY [City] ORDER BY COUNT(*) OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY")]
     [InlineData(SqlEngineNames.MySql, "SELECT `City` FROM `Users` GROUP BY `City` ORDER BY COUNT(*) LIMIT 20,10")]

@@ -89,19 +89,18 @@ public interface ISqlEntity {
 
 ### 2、执行更快、内存消耗更少
 #### 2.1 简单查询对比
->* SqlKata耗时是SqlQuery的8倍多
->* SqlKata耗时是Query的10倍左右
->* SqlKata耗时是ByParametricLogic的14倍
->* ByLogic性能最好,直接拼接参数,SqlKata耗时是他的25倍
->* 内存消耗也是差不多比例
+>* 简单查询对比
+>* SqlKata耗时是TableName的20倍多
+>* SqlKata耗时是SqlQuery的33倍
+>* Logic性能最好,SqlKata耗时是他的50倍
+>* SqlKata内存消耗也是3种的10多倍以上
 
-| Method                     | Mean       | Error     | StdDev    | Median     | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
-|--------------------------- |-----------:|----------:|----------:|-----------:|------:|--------:|-------:|----------:|------------:|
-| ShadowSqlBySqlQuery        |   561.5 ns |  10.31 ns |  16.64 ns |   560.8 ns |  0.13 |    0.01 |      - |    1680 B |        0.13 |
-| ShadowSqlByQuery           |   445.1 ns |   6.88 ns |  12.04 ns |   443.1 ns |  0.10 |    0.01 |      - |    1488 B |        0.12 |
-| ShadowSqlByParametricLogic |   330.2 ns |   6.25 ns |  11.10 ns |   328.6 ns |  0.07 |    0.01 |      - |    1112 B |        0.09 |
-| ShadowSqlByLogic           |   190.1 ns |   3.54 ns |   5.92 ns |   188.1 ns |  0.04 |    0.00 |      - |     608 B |        0.05 |
-| SqlKataBench               | 4,519.9 ns | 216.02 ns | 383.98 ns | 4,347.3 ns |  1.01 |    0.11 | 0.7000 |   12712 B |        1.00 |
+| Method               | Mean        | Error     | StdDev    | Ratio | Gen0   | Gen1   | Allocated | Alloc Ratio |
+|--------------------- |------------:|----------:|----------:|------:|-------:|-------:|----------:|------------:|
+| ShadowSqlByTableName |   220.64 ns |  2.883 ns |  3.205 ns |  0.05 | 0.0955 |      - |    1656 B |        0.13 |
+| ShadowSqlBySqlQuery  |   115.90 ns |  0.638 ns |  0.709 ns |  0.03 | 0.0530 |      - |     920 B |        0.07 |
+| ShadowSqlByLogic     |    69.81 ns |  1.259 ns |  1.450 ns |  0.02 | 0.0330 |      - |     576 B |        0.05 |
+| SqlKataBench         | 4,173.57 ns | 24.612 ns | 28.343 ns |  1.00 | 0.7365 | 0.0040 |   12712 B |        1.00 |
 
 >* 更多对比信息查阅测试项目ShadowSqlBench
 >[ShadowSqlBench](https://github.com/donetsoftwork/Shadow/tree/master/Benchmarks/ShadowSqlBench)

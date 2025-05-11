@@ -2,7 +2,7 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
+using ShadowSql.Tables;
 
 namespace ShadowSqlTest.Join;
 
@@ -68,7 +68,7 @@ public class JoinTableTests
     [Fact]
     public void SqlQuery()
     {
-        var joinOn = SimpleDB.From("Employees").SqlJoin(SimpleDB.From("Departments"))
+        var joinOn = SimpleTable.Use("Employees").SqlJoin(SimpleTable.Use("Departments"))
             .OnColumn("DepartmentId", "Id")
             .WhereLeft("Age", Age => Age.GreaterValue(30))
             .WhereRight("Manager", Manager => Manager.EqualValue("CEO"));
@@ -78,7 +78,7 @@ public class JoinTableTests
     [Fact]
     public void SqlQuery2()
     {
-        var joinOn = SimpleDB.From("Employees").SqlJoin(SimpleDB.From("Departments"));
+        var joinOn = SimpleTable.Use("Employees").SqlJoin(SimpleTable.Use("Departments"));
         var (t1, t2) = (joinOn.Left, joinOn.Source);
         joinOn.On(t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = joinOn.Root
@@ -91,8 +91,8 @@ public class JoinTableTests
     [Fact]
     public void SqlQuery3()
     {
-        var e = SimpleDB.From("Employees").As("e");
-        var d = SimpleDB.From("Departments").As("d");
+        var e = SimpleTable.Use("Employees").As("e");
+        var d = SimpleTable.Use("Departments").As("d");
         var joinOn = e.SqlJoin(d)
             .On(e.Field("DepartmentId").Equal(d.Field("Id")));
         var joinTable = joinOn.Root
@@ -105,7 +105,7 @@ public class JoinTableTests
     [Fact]
     public void Query()
     {
-        var joinOn = SimpleDB.From("Employees").Join(SimpleDB.From("Departments"));
+        var joinOn = SimpleTable.Use("Employees").Join(SimpleTable.Use("Departments"));
         var (t1, t2) = (joinOn.Left, joinOn.Source);
         joinOn.And(t1.Field("DepartmentId").Equal(t2.Field("Id")));
         var joinTable = joinOn.Root
@@ -118,8 +118,8 @@ public class JoinTableTests
     [Fact]
     public void Query2()
     {
-        var e = SimpleDB.From("Employees").As("e");
-        var d = SimpleDB.From("Departments").As("d");
+        var e = SimpleTable.Use("Employees").As("e");
+        var d = SimpleTable.Use("Departments").As("d");
         var joinOn = e.Join(d)
             .And(e.Field("DepartmentId").Equal(d.Field("Id")));
         var joinTable = joinOn.Root

@@ -2,7 +2,6 @@ using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using ShadowSql.Simples;
 
 namespace ShadowSql.Tables;
 
@@ -41,7 +40,7 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// <param name="tableName"></param>
     /// <param name="filter"></param>
     public TableQuery(string tableName, Logic filter)
-        : this(filter, SimpleTable.Use(tableName))
+        : this(filter, new Table(tableName))
     {
     }
     /// <summary>
@@ -49,7 +48,7 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// </summary>
     /// <param name="tableName"></param>
     public TableQuery(string tableName)
-        : this(new AndLogic(), SimpleTable.Use(tableName))
+        : this(new AndLogic(), new Table(tableName))
     {
     }
     #endregion

@@ -3,12 +3,12 @@ using ShadowSql.Services;
 using System;
 using System.Collections.Generic;
 
-namespace ShadowSql.Simples;
+namespace ShadowSql.Tables;
 
 /// <summary>
 /// 简单表名对象
 /// </summary>
-public class SimpleTable : TableBase
+public class SimpleTable : Identifier, ITable
 {
     private SimpleTable(string name)
         : base(name)
@@ -26,29 +26,14 @@ public class SimpleTable : TableBase
     /// <returns></returns>
     public static SimpleTable Use(string tableName)
         => _cacher.Get(tableName);
-
-    /// <summary>
-    /// 获取列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
-        => null;
     #region ITable
-    /// <summary>
-    /// 列为空
-    /// </summary>
-    public override IEnumerable<IColumn> Columns
-        => [];
-    /// <summary>
-    /// 插入列为空
-    /// </summary>
-    internal override IEnumerable<IColumn> InsertColumns
-         => [];
-    /// <summary>
-    /// 修改列为空
-    /// </summary>
-    internal override IEnumerable<IColumn> UpdateColumns
-        => [];
+    IEnumerable<IColumn> ITable.Columns => [];
+    IColumn? ITable.GetColumn(string columName) => null;
+    IEnumerable<IField> ITableView.Fields => [];
+    IField? ITableView.GetField(string fieldName) => null;
+    ICompareField ITableView.GetCompareField(string fieldName)
+        => Column.Use(fieldName);
+    IField ITableView.NewField(string fieldName)
+        => Column.Use(fieldName);
     #endregion
 }

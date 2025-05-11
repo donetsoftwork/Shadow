@@ -41,14 +41,14 @@ public interface IFieldView : IView, IMatch, ISqlEntity
     IFieldAlias As(string alias);
 }
 
-/// <summary>
-/// 去重字段统计
-/// </summary>
-public interface IDistinctCountField : IAggregateField;
-/// <summary>
-/// 去重字段统计别名
-/// </summary>
-public interface IDistinctCountFieldAlias : IAggregateFieldAlias;
+///// <summary>
+///// 去重字段统计
+///// </summary>
+//public interface IDistinctCountField : IAggregateField;
+///// <summary>
+///// 去重字段统计别名
+///// </summary>
+//public interface IDistinctCountFieldAlias : IAggregateFieldAlias;
 /// <summary>
 /// 字段别名
 /// </summary>

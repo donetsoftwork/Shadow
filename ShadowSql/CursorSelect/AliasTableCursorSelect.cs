@@ -10,7 +10,7 @@ namespace ShadowSql.CursorSelect;
 /// <typeparam name="TTable"></typeparam>
 /// <param name="cursor"></param>
 public sealed class AliasTableCursorSelect<TTable>(AliasTableCursor<TTable> cursor)
-    : CursorSelectBase<TableAlias<TTable>>(cursor, cursor.Source)
+    : CursorSelectBase<IAliasTable<TTable>>(cursor, cursor.Source)
     where TTable : ITable
 {
 }

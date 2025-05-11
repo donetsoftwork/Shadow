@@ -2,7 +2,7 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
+using ShadowSql.Tables;
 using TestSupports;
 
 namespace ShadowSqlTest.CursorSelect;

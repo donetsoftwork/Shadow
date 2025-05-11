@@ -54,6 +54,6 @@ var select = new CommentTable()
 >* 参看[获取简介](./index.md)
 >* 参看[sql分组](../sqlquery/groupby.md)
 >* 参看[逻辑分组](../query/groupby.md)
->* 参看[聚合](../../shadowcore/aggregate.md)
+>* 参看[聚合](../../shadowcore/fields/aggregate.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/select/index.md)
 

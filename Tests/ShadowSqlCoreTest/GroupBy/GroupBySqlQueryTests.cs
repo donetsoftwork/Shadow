@@ -1,11 +1,9 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.FieldInfos;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
 using ShadowSql.Tables;
 using TestSupports;
 
@@ -14,7 +12,7 @@ namespace ShadowSqlCoreTest.GroupBy;
 public class GroupBySqlQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void Table()
@@ -83,6 +81,13 @@ public class GroupBySqlQueryTests
             .Having(Column.Use("Score").Max().GreaterValue(90));
         var sql = _engine.Sql(view);
         Assert.Equal("[Users] GROUP BY [Grade] HAVING MAX([Score])>90", sql);
+    }
+    [Fact]
+    public void SourceField()
+    {
+        var groupBy = GroupBySqlQuery.Create(_db.From("Users"), "CityId");
+        // GroupBy不能对分组之外的字段直接查询(可以聚合)
+        Assert.ThrowsAny<ArgumentException>(() => groupBy.Field("City"));
     }
     [Fact]
     public void Field()

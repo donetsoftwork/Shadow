@@ -42,8 +42,8 @@ public static partial class ShadowSqlServices
         where LTable : ITable
         where RTable : ITable
     {
-        var leftColumn = joinOn.Left.SelectPrefixColumn(left);
-        var rightColumn = joinOn.Source.SelectPrefixColumn(right);
+        var leftColumn = joinOn.Left.Prefix(left);
+        var rightColumn = joinOn.Source.Prefix(right);
         if (leftColumn != null && rightColumn != null)
             joinOn._filter.AddLogic(new CompareLogic(leftColumn, compare, rightColumn));
 

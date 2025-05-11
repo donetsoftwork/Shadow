@@ -1,5 +1,6 @@
 using ShadowSql.AliasTables;
 using ShadowSql.GroupBy;
+using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
 using ShadowSql.Variants;
@@ -62,7 +63,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public static int Count<TTable>(this TableAlias<TTable> table, object? param = null)
+    public static int Count<TTable>(this IAliasTable<TTable> table, object? param = null)
         where TTable : IDapperTable
         => table.Target.Executor.Count<int>(table, param);
     /// <summary>

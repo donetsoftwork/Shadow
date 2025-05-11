@@ -2,7 +2,10 @@ using ShadowSql.Assigns;
 using ShadowSql.Identifiers;
 using ShadowSql.SqlVales;
 using ShadowSql.Update;
+using ShadowSql.Variants;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShadowSql;
 
@@ -27,6 +30,44 @@ public static partial class ShadowSqlCoreServices
         update.SetCore(CreateOperation(update, columnName, AssignSymbol.Get(op), parameter));
         return update;
     }
+    /// <summary>
+    /// 按字段修改
+    /// </summary>
+    /// <typeparam name="TUpdate"></typeparam>
+    /// <param name="update"></param>
+    /// <param name="field"></param>
+    /// <param name="op"></param>
+    /// <returns></returns>
+    public static TUpdate Set<TUpdate>(this TUpdate update, IAssignView field, string op = "=")
+        where TUpdate : UpdateBase, IUpdate
+    {        
+        update.SetCore(new AssignOperation(field, AssignSymbol.Get(op), Parameter.Use(field.ViewName)));
+        return update;
+    }
+    /// <summary>
+    /// 按字段修改
+    /// </summary>
+    /// <typeparam name="TUpdate"></typeparam>
+    /// <param name="update"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static TUpdate SetFields<TUpdate>(this TUpdate update, params IEnumerable<IAssignView> fields)
+        where TUpdate : UpdateBase, IUpdate
+    {
+        var equalTo = AssignSymbol.EqualTo;
+        foreach (var field in fields)
+            update.SetCore(new AssignOperation(field, equalTo, Parameter.Use(field.ViewName)));
+        return update;
+    }
+    /// <summary>
+    /// 按自己的列修改
+    /// </summary>
+    /// <typeparam name="TUpdate"></typeparam>
+    /// <param name="update"></param>
+    /// <returns></returns>
+    public static TUpdate SetSelfFields<TUpdate>(this TUpdate update)
+        where TUpdate : UpdateBase, IUpdate
+        => update.SetFields(update.Table.AssignFields);
     /// <summary>
     /// 赋值
     /// </summary>
@@ -72,6 +113,7 @@ public static partial class ShadowSqlCoreServices
         update.SetCore(new AssignOperation(update.GetAssignField(columnName), AssignSymbol.EqualTo, SqlValue.From(value)));
         return update;
     }
+
     #endregion
     #region 赋值操作
     /// <summary>
@@ -114,7 +156,7 @@ public static partial class ShadowSqlCoreServices
     public static MultiTableUpdate Update<TMultiUpdate>(this TMultiUpdate update, string tableName)
         where TMultiUpdate : MultiTableUpdate
     {
-        update._table = update.MultiTable.From(tableName);
+        update._table = update.MultiTable.From<IAliasTable<IUpdateTable>>(tableName);
         return update;
     }
     /// <summary>
@@ -124,26 +166,46 @@ public static partial class ShadowSqlCoreServices
     /// <param name="update"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static TMultiUpdate Update<TMultiUpdate>(this TMultiUpdate update, IAliasTable table)
+    public static TMultiUpdate Update<TMultiUpdate>(this TMultiUpdate update, IAliasTable<IUpdateTable> table)
         where TMultiUpdate : MultiTableUpdate
     {
         update._table = table;
         return update;
     }
-    /// <summary>
-    /// 赋值操作
-    /// </summary>
-    /// <typeparam name="TMultiUpdate"></typeparam>
-    /// <param name="update"></param>
-    /// <param name="operation"></param>
-    /// <returns></returns>
-    public static TMultiUpdate Set<TMultiUpdate>(this TMultiUpdate update, Func<IAliasTable, IAssignInfo> operation)
-        where TMultiUpdate : MultiTableUpdate
-    {
-        update.SetCore(operation(update._table));
-        return update;
-    }
+    ///// <summary>
+    ///// 赋值操作
+    ///// </summary>
+    ///// <typeparam name="TMultiUpdate"></typeparam>
+    ///// <param name="update"></param>
+    ///// <param name="operation"></param>
+    ///// <returns></returns>
+    //public static TMultiUpdate Set<TMultiUpdate>(this TMultiUpdate update, Func<IAliasTable, IAssignInfo> operation)
+    //    where TMultiUpdate : MultiTableUpdate
+    //{
+    //    update.SetCore(operation(update._table));
+    //    return update;
+    //}
     #endregion
+    /// <summary>
+    /// 获取被修改字段
+    /// </summary>
+    /// <param name="aliasTable"></param>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public static IAssignView? GetAssignField<TTable>(this IAliasTable<TTable> aliasTable, string fieldName)
+        where TTable : IUpdateTable
+    {
+        if (aliasTable.GetPrefixField(fieldName) is PrefixField prefixField)
+        {
+            IAssignView field = prefixField.Target;
+            if (aliasTable.Target.AssignFields.Any(c => c == field))
+                return prefixField;
+        }
+        if (aliasTable.Target.GetAssignField(fieldName) is IColumn column)
+            return aliasTable.NewPrefixField(column);
+        return null;
+    }
 
     private static AssignOperation CreateOperation(UpdateBase update, string columnName, AssignSymbol op, string parameter)
     {

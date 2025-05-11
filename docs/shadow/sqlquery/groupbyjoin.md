@@ -121,6 +121,6 @@ var query = new CommentTable()
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
 >* 参看[GroupByMultiSqlQuery](xref:ShadowSql.GroupBy.GroupByMultiSqlQuery)的方法和扩展方法部分
->* 参看[聚合](../../shadowcore/aggregate.md)
+>* 参看[聚合](../../shadowcore/fields/aggregate.md)
 >* 参看[sql查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/sqlquery/groupby.md)

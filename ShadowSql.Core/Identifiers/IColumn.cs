@@ -3,7 +3,7 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 原始列标识(作为原始表成员)
 /// </summary>
-public interface IColumn : IField
+public interface IColumn : IField, IIdentifier
 {
     ///// <summary>
     ///// 增加前缀

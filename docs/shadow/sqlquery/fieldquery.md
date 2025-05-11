@@ -2,6 +2,7 @@
 >* 按字段名查询扩展
 >* 无需提前定义,随查随用
 >* 需要校验请使用[严格查询](./columnquery.md)
+>* 特别注意:GroupBy后按字段查询也是校验的,因为HAVING不能直接查询分组外的字段(除非聚合)
 >* using ShadowSql.FieldQueries后即可使用
 
 ## 1. FieldParameter扩展方法

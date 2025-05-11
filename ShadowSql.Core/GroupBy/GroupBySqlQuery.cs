@@ -2,7 +2,6 @@ using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
-using ShadowSql.Simples;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,7 +68,7 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <param name="having"></param>
     /// <param name="fields"></param>
     public GroupBySqlQuery(string tableName, SqlQuery having, params IField[] fields)
-        : this(having, SimpleTable.Use(tableName), fields)
+        : this(having, new Table(tableName), fields)
     {
     }
     /// <summary>
@@ -78,7 +77,7 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <param name="tableName"></param>
     /// <param name="fields"></param>
     public GroupBySqlQuery(string tableName, params IField[] fields)
-        : this(SqlQuery.CreateAndQuery(), SimpleTable.Use(tableName), fields)
+        : this(SqlQuery.CreateAndQuery(), new Table(tableName), fields)
     {
     }
     #endregion
@@ -187,15 +186,6 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     public static GroupBySqlQuery Create(IDataFilter filter, params IEnumerable<string> columnNames)
         => new(filter, [.. filter.Source.Fields(columnNames)]);
     #endregion
-    #endregion
-    #region TableViewBase
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected override IField NewField(string fieldName)
-        => _source.NewField(fieldName);
     #endregion
     #region ISqlEntity
     /// <summary>

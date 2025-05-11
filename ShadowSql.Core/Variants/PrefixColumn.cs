@@ -2,6 +2,7 @@ using ShadowSql.Aggregates;
 using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
+using System.Collections.Generic;
 
 namespace ShadowSql.Variants;
 
@@ -10,10 +11,10 @@ namespace ShadowSql.Variants;
 /// </summary>
 /// <param name="column"></param>
 /// <param name="prefix"></param>
-public class PrefixColumn(IColumn column, params string[] prefix)
+public class PrefixField(IColumn column, params string[] prefix)
     : PrefixFragment<IColumn>(column, prefix), IPrefixField
 {
-    //////内联的展开运算符“..”
+    //内联的展开运算符“..”
     //private readonly string _fullName = string.Concat([.. tablePrefix, column.Name]);
     private readonly string _tablePrefix = prefix[^2];
     //private readonly string _tablePrefix = prefix[prefix.Length - 2];
@@ -51,9 +52,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
     /// <param name="alias"></param>
     /// <returns></returns>
     public IFieldAlias As(string alias)
-    {
-        return new AliasFieldInfo(this, alias);
-    }
+        => new AliasFieldInfo(this, alias);
     /// <summary>
     /// 匹配字段
     /// </summary>
@@ -76,7 +75,7 @@ public class PrefixColumn(IColumn column, params string[] prefix)
     /// <param name="column"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static bool MatchPrefixColumn(string prefix, string column, string name)
+    internal static bool MatchPrefixColumn(string prefix, string column, string name)
         => CheckTablePrefix(prefix, name)
         && Identifier.Match(name[prefix.Length..], column);
 
@@ -86,19 +85,26 @@ public class PrefixColumn(IColumn column, params string[] prefix)
     /// <param name="table"></param>
     /// <param name="column"></param>
     /// <returns></returns>
-    public static bool CheckTablePrefix(string table,  string column)
+    internal static bool CheckTablePrefix(string table,  string column)
     {
         var prefixIndex = table.Length;
         return column.Length > prefixIndex
             && column.StartsWith(table)
             && column[prefixIndex] == '.';
     }
-
+    /// <summary>
+    /// 转化联表字段
+    /// </summary>
+    /// <param name="tablePrefix"></param>
+    /// <param name="columns"></param>
+    /// <returns></returns>
+    internal static IEnumerable<IPrefixField> GetFields(string[] tablePrefix, IEnumerable<IColumn> columns)
+    {
+        foreach (var column in columns)
+            yield return new PrefixField(column, tablePrefix);
+    }
     string IView.ViewName
         => _target.ViewName;
-
     IColumn IFieldView.ToColumn()
         => _target;
-    //IPrefixField IColumn.GetPrefixColumn(params string[] prefix)
-    //    => _target.GetPrefixColumn(prefix);
 }

@@ -120,4 +120,4 @@ var groupBy = GroupBySqlQuery.Create("Users", "CityId")
 
 ## 5. 其他相关功能
 >* 参看[sql查询简介](./index.md)
->* 参看[聚合](../aggregate.md)
+>* 参看[聚合](../fields/aggregate.md)

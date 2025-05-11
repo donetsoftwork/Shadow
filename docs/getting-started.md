@@ -144,15 +144,27 @@ var groupBy = table.ToSqlQuery()
 ~~~
 
 ## 五、插入
->* 调用ToInsert
 >* 参看[Insert](./shadow/insert/single.md)
-~~~csharp
-var table = new StudentTable();
+### 1. 按列插入
+```csharp
+var name = Column.Use("Name");
+var score = Column.Use("Score");
+var insert = new SingleInsert("Students")
+    .InsertColumns(name, score);
+// INSERT INTO [Students]([Name],[Score])VALUES(@Name,@Score)
+```
+
+### 2. 插入所有字段
+>* 支持忽略部分字段
+```csharp
+var table = new Table("Users")
+    .DefineColums("Id","Name", "Age")
+    .IgnoreInsert("Id");
 var insert = table.ToInsert()
-    .Insert(insert.Name.Insert("StudentName"))
-    .Insert(insert.Score.InsertValue(90));
-// INSERT INTO [Students]([Name],[Score])VALUES(@StudentName,90)
-~~~
+    .InsertSelfColumns();
+// 预设Id是自增列,可查询不可插入
+// INSERT INTO [Users]([Name],[Age])VALUES(@Name,@Age)
+```
 
 ## 六、删除
 >* 调用ToDelete
@@ -166,8 +178,9 @@ var delete = table.ToSqlQuery()
 ~~~
 
 ## 七、更新
->* 调用ToUpdate
 >* 参看[update](./shadow/update/table.md)
+
+### 1. 按列更新
 ~~~csharp
 var table = new StudentTable();
 var update = table.ToSqlQuery()
@@ -175,6 +188,21 @@ var update = table.ToSqlQuery()
     .ToUpdate()
     .Set(table => table.Score.AddValue(10));
 // UPDATE [Students] SET [Score]+=10 WHERE [Score]<60
+~~~
+
+### 2. 更新所有字段
+>* 支持忽略部分字段
+~~~csharp
+var id = Column.Use("Id");
+var name = Column.Use("Name");
+var age = Column.Use("Age");
+var table = new Table("Users")
+    .AddColums(id, name, age)
+    .IgnoreUpdate(id);
+var update = table.ToUpdate(id.Equal())
+    .SetSelfFields();
+// 预设Id是主键不更新
+// UPDATE [Users] SET [Name]=@Name,[Age]=@Age WHERE [Id]=@Id
 ~~~
 
 ## 八、获取数据

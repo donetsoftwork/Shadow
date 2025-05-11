@@ -37,15 +37,6 @@ public abstract class GroupByQueryBase<TSource>(TSource source, IField[] fields,
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion
-    #region TableViewBase
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected override IField NewField(string fieldName)
-        => _source.NewField(fieldName);
-    #endregion
     #region IDataQuery
     Logic IDataQuery.Logic
     {

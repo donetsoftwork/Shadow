@@ -1,14 +1,13 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.Select;
 
 public class GroupByTableSelectTests
 {
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
     [Theory]
     [InlineData(SqlEngineNames.MsSql, "SELECT [City] FROM [Users] GROUP BY [City]")]
     [InlineData(SqlEngineNames.MySql, "SELECT `City` FROM `Users` GROUP BY `City`")]

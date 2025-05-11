@@ -1,7 +1,6 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
-using ShadowSql.Simples;
 
 namespace ShadowSql;
 
@@ -17,7 +16,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static SingleInsert<TTable> ToInsert<TTable>(this TTable table)
-        where TTable : ITable
+        where TTable : IInsertTable
         => new(table);
     #endregion
     #region ToMultiInsert
@@ -27,7 +26,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static MultiInsert<TTable> ToMultiInsert<TTable>(this TTable table)
-        where TTable : ITable
+        where TTable : IInsertTable
         => new(table);
     #endregion
     #region ToInsert
@@ -39,7 +38,7 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <returns></returns>
     public static SelectInsert<TTable> ToInsert<TTable>(this TTable table, ISelect select)
-        where TTable : ITable
+        where TTable : IInsertTable
         => new(table, select);
     #endregion
     #region InsertTo
@@ -51,7 +50,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <returns></returns>
     public static SelectInsert<TTable> InsertTo<TTable>(this ISelect select, TTable table)
-      where TTable : ITable
+      where TTable : IInsertTable
       => new(table, select);
     /// <summary>
     /// 插入Select
@@ -59,7 +58,7 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <param name="tableName"></param>
     /// <returns></returns>
-    public static SelectInsert<SimpleTable> InsertTo(this ISelect select, string tableName)
-      => new(SimpleTable.Use(tableName), select);
+    public static SelectInsert<Table> InsertTo(this ISelect select, string tableName)
+      => new(new Table(tableName), select);
     #endregion
 }

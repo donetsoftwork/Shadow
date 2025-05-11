@@ -2,7 +2,6 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using System;
 using static ShadowSqlTest.Delete.TableDeleteTests;
 
 namespace ShadowSqlTest.Insert;
@@ -10,7 +9,6 @@ namespace ShadowSqlTest.Insert;
 public class SingleInsertTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = DB.Use("MyDB");
     static readonly IColumn _name = Column.Use("Name");
     //分数
     static readonly IColumn _score = Column.Use("Score");
@@ -18,7 +16,7 @@ public class SingleInsertTests
     [Fact]
     public void Insert()
     {
-        var insert = _db.From("Students")
+        var insert = new Table("Students")
             .ToInsert()
             .Insert(_name.Insert())
             .Insert(_score.InsertValue(90));

@@ -102,6 +102,23 @@ public static partial class ShadowSqlCoreServices
         return table;
     }
     /// <summary>
+    /// 忽略插入的列
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="table"></param>
+    /// <param name="columns"></param>
+    /// <returns></returns>
+    public static TTable IgnoreInsert<TTable>(this TTable table, params IEnumerable<string> columns)
+        where TTable : Table
+    {
+        foreach (var columnName in columns)
+        {
+            if (table.GetColumn(columnName) is IColumn column)
+                table.AddInsertIgnore(column);
+        }
+        return table;
+    }
+    /// <summary>
     /// 忽略修改的列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
@@ -116,35 +133,20 @@ public static partial class ShadowSqlCoreServices
         return table;
     }
     /// <summary>
-    /// 选择列
-    /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
-    public static IField SelectField(this ITableView table, string columnName)
-    {
-        return table.GetField(columnName) ?? table.NewField(columnName);
-    }
-    /// <summary>
-    /// 选择列
-    /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
-    /// <returns></returns>
-    public static IEnumerable<IField> Fields(this ITableView table, params IEnumerable<string> columnNames)
-    {
-        foreach (var name in columnNames)
-            yield return table.Field(name);
-    }
-    /// <summary>
-    /// 选择列
+    /// 忽略修改的列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="columns"></param>
     /// <returns></returns>
-    public static IPrefixField SelectPrefixColumn<TTable>(this TableAlias<TTable> table, Func<TTable, IColumn> query)
-        where TTable : ITable
-        => table.GetPrefixField(query(table.Target)) ?? throw new ArgumentException("PrefixColumn不存在", nameof(query));
-     
+    public static TTable IgnoreUpdate<TTable>(this TTable table, params IEnumerable<string> columns)
+        where TTable : Table
+    {
+        foreach (var columnName in columns)
+        {
+            if (table.GetColumn(columnName) is IColumn column)
+                table.AddUpdateIgnore(column);
+        }
+        return table;
+    }
 }

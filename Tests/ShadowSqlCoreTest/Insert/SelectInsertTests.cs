@@ -11,7 +11,6 @@ namespace ShadowSqlCoreTest.Insert;
 public class SelectInsertTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly DB _db = DB.Use("MyDB");
     static readonly IColumn name = Column.Use("Name");
     static readonly IColumn age = Column.Use("Age");
 
@@ -24,9 +23,7 @@ public class SelectInsertTests
             .Where("AddTime between '2024-01-01' and '2025-01-01'");
         var select = new TableSelect(query)
             .Select(name, age);
-
-        var backup = _db.From("Backup2024");
-        var insert = new SelectInsert(backup, select);
+        var insert = new SelectInsert("Backup2024", select);
         var sql = _engine.Sql(insert);
         Assert.Equal("INSERT INTO [Backup2024]([Name],[Age])SELECT [Name],[Age] FROM [Students] WHERE AddTime between '2024-01-01' and '2025-01-01'", sql);
     }

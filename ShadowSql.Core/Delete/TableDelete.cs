@@ -1,8 +1,7 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Simples;
 using System.Text;
 
 namespace ShadowSql.Delete;
@@ -21,7 +20,7 @@ public class TableDelete(ITable table, ISqlLogic filter)
     /// <param name="tableName"></param>
     /// <param name="filter"></param>
     public TableDelete(string tableName, ISqlLogic filter)
-        : this(SimpleTable.Use(tableName), filter)
+        : this(new Table(tableName), filter)
     {
     }
     #region 配置

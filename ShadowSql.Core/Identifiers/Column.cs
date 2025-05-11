@@ -1,5 +1,4 @@
 using ShadowSql.Services;
-using ShadowSql.Variants;
 
 namespace ShadowSql.Identifiers;
 

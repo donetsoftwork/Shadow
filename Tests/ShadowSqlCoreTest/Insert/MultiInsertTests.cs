@@ -10,17 +10,15 @@ namespace ShadowSqlCoreTest.Insert;
 public class MultiInsertTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = DB.Use("MyDB");
-    static readonly IColumn _name = Column.Use("Name");
-    //分数
-    static readonly IColumn _score = Column.Use("Score");
 
     [Fact]
     public void Insert()
     {
+        var name = Column.Use("Name");
+        var score = Column.Use("Score");
         var insert = new MultiInsert("Students")
-            .Insert(_name.InsertValues("张三", "李四"))
-            .Insert(_score.InsertValues(90, 85));
+            .Insert(name.InsertValues("张三", "李四"))
+            .Insert(score.InsertValues(90, 85));
         var sql = _engine.Sql(insert);
         Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES('张三',90),('李四',85)", sql);
     }

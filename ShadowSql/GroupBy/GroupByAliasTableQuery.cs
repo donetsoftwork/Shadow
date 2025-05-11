@@ -2,7 +2,6 @@ using ShadowSql.Aggregates;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Variants;
 using System;
 using System.Text;
 
@@ -16,8 +15,8 @@ namespace ShadowSql.GroupBy;
 /// <param name="where"></param>
 /// <param name="fields"></param>
 /// <param name="having"></param>
-public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic where, IField[] fields, Logic having)
-    : GroupByQueryBase<TableAlias<TTable>>(source, fields, having)
+public class GroupByAliasTableQuery<TTable>(IAliasTable<TTable> source, ISqlLogic where, IField[] fields, Logic having)
+    : GroupByQueryBase<IAliasTable<TTable>>(source, fields, having)
     where TTable : ITable
 {
     /// <summary>
@@ -26,7 +25,7 @@ public class GroupByAliasTableQuery<TTable>(TableAlias<TTable> source, ISqlLogic
     /// <param name="table"></param>
     /// <param name="where"></param>
     /// <param name="fields"></param>
-    public GroupByAliasTableQuery(TableAlias<TTable> table, ISqlLogic where, IField[] fields)
+    public GroupByAliasTableQuery(IAliasTable<TTable> table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, new AndLogic())
     {
     }

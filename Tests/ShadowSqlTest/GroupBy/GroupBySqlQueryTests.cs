@@ -1,10 +1,8 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.FieldInfos;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.GroupBy;
@@ -12,7 +10,7 @@ namespace ShadowSqlTest.GroupBy;
 public class GroupBySqlQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void SqlGroupBy()
@@ -160,18 +158,6 @@ public class GroupBySqlQueryTests
         Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [City] HAVING Count(City)>100", sql);
     }
     [Fact]
-    public void HavingQuery()
-    {
-        var table = _db.From("Users");
-        var query = table.ToSqlQuery()
-            .FieldEqualValue("Age", 20);
-        var groupBy = query.SqlGroupBy("CityId")
-            .FieldInValue("City", "北京", "上海")
-            .FieldBetweenValue("CityId", 1, 11);
-        var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海') AND [CityId] BETWEEN 1 AND 11", sql);
-    }
-    [Fact]
     public void Having()
     {
         var view = _db.From("Users")
@@ -202,12 +188,10 @@ public class GroupBySqlQueryTests
     public void SourceField()
     {
         var table = _db.From("Users");
-        var query = table.ToSqlQuery()
-            .FieldEqualValue("Age", 20);
-        var groupBy = query.SqlGroupBy("CityId")
-            .Having(source => source.Field("City").InValue("北京", "上海"));
-        var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海')", sql);
+        var groupBy = table.ToSqlQuery()
+            .SqlGroupBy("CityId");
+        // GroupBy不能对分组之外的字段直接查询(可以聚合)
+        Assert.ThrowsAny<ArgumentException>(() => groupBy.Field("City"));
     }
     [Fact]
     public void SourceAggregate()

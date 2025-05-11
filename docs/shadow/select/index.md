@@ -9,12 +9,12 @@
 
 ## 2. 基类
 >* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
->* [SelectBase\<TTable\>](xref:ShadowSql.Select.SelectBase%601)
->* [MultiSelectBase](xref:ShadowSql.Select.MultiSelectBase)
->* [GroupBySelectBase](xref:ShadowSql.Select.GroupBySelectBase)
+>* [SelectBase\<TSource, TTarget\>](xref:ShadowSql.Select.SelectBase%602)
+>* [MultiSelectBase\<TSource\>](xref:ShadowSql.Select.MultiSelectBase%601)
+>* [GroupBySelectBase\<TSource, TGroupSource\>](xref:ShadowSql.Select.GroupBySelectBase%602)
 >* [CursorSelectBase\<TTarget\>](xref:ShadowSql.CursorSelect.CursorSelectBase%601)
 >* [MultiCursorSelectBase](xref:ShadowSql.CursorSelect.MultiCursorSelectBase)
->* [GroupCursorBySelectBase](xref:ShadowSql.CursorSelect.GroupCursorBySelectBase)
+>* [GroupCursorBySelectBase\<TGroupSource\>](xref:ShadowSql.CursorSelect.GroupCursorBySelectBase%601)
 
 ## 3. 功能类
 ### 3.1 TableSelect

@@ -4,7 +4,6 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
 using ShadowSql.Tables;
 
 namespace ShadowSqlTest.Queries;
@@ -12,7 +11,7 @@ namespace ShadowSqlTest.Queries;
 public class FieldQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void FieldParameter()

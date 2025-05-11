@@ -8,7 +8,6 @@ using ShadowSql.Cursors;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
-using ShadowSql.Variants;
 
 namespace Dapper.Shadow;
 
@@ -79,7 +78,7 @@ public static partial class DapperShadowServices
     /// <param name="table"></param>
     /// <param name="singleField"></param>
     /// <returns></returns>
-    public static DapperTableSingleSelect ToDapperSingle<TTable>(this TableAlias<TTable> table, IFieldView singleField)
+    public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> table, IFieldView singleField)
         where TTable : IDapperTable
         => new(table.Target.Executor, table, singleField);
     /// <summary>
@@ -90,7 +89,7 @@ public static partial class DapperShadowServices
     /// <param name="filter"></param>
     /// <param name="singleField"></param>
     /// <returns></returns>
-    public static DapperTableSingleSelect ToDapperSingle<TTable>(this TableAlias<TTable> table, ISqlLogic filter, IFieldView singleField)
+    public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, IFieldView singleField)
         where TTable : IDapperTable
         => new(table.Target.Executor, new TableFilter(table, filter), singleField);
     /// <summary>

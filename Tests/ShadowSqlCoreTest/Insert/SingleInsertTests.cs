@@ -10,7 +10,6 @@ namespace ShadowSqlCoreTest.Insert;
 public class SingleInsertTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = DB.Use("MyDB");
     static readonly IColumn _name = Column.Use("Name");
     //分数
     static readonly IColumn _score = Column.Use("Score");
@@ -45,9 +44,18 @@ public class SingleInsertTests
         var sql = _engine.Sql(insert);
         Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@Name,@Score)", sql);
     }
-
     [Fact]
     public void InsertColumns()
+    {
+        var name = Column.Use("Name");
+        var score = Column.Use("Score");
+        var insert = new SingleInsert("Students")
+            .InsertColumns(name, score);
+        var sql = _engine.Sql(insert);
+        Assert.Equal("INSERT INTO [Students]([Name],[Score])VALUES(@Name,@Score)", sql);
+    }
+    [Fact]
+    public void InsertColumns2()
     {
         var table = new StudentTable();
         var insert = new SingleInsert(table)

@@ -15,7 +15,7 @@ namespace Dapper.Shadow.Insert;
 public class DapperSelectInsert<TTable>(IExecutor executor, TTable table, ISelect select)
     : SelectInsert<TTable>(table, select)
     , IDapperExecute
-    where TTable : ITable
+    where TTable : IInsertTable
 {
     #region 配置
     private readonly IExecutor _executor = executor;

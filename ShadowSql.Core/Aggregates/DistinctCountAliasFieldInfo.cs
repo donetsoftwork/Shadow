@@ -8,7 +8,7 @@ namespace ShadowSql.Aggregates;
 /// 去重字段统计别名
 /// </summary>
 public class DistinctCountAliasFieldInfo(ICompareField field, string alias/* = "Count"*/)
-    : DistinctCountFieldInfoBase(field), IDistinctCountFieldAlias
+    : DistinctCountFieldInfoBase(field), IAggregateFieldAlias
 {
     #region 配置
     private readonly string _alias = alias;

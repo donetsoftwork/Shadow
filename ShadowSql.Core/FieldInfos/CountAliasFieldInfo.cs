@@ -34,7 +34,7 @@ public sealed class CountAliasFieldInfo : IdentifierBase, IAggregateFieldAlias
     IColumn IFieldView.ToColumn()
         => Column.Use(_name);
     IFieldAlias IFieldView.As(string alias)
-        => Column.Use(_name).As(alias);
+        => Use(alias);
     string IFieldAlias.Alias
         => _name;
     string IView.ViewName 

@@ -4,7 +4,6 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
 using ShadowSql.Tables;
 using TestSupports;
 
@@ -13,7 +12,7 @@ namespace ShadowSqlCoreTest.GroupBy;
 public class GroupByQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
     static readonly IColumn Age = Column.Use("Age");
     static readonly IColumn City = Column.Use("City");
     static readonly IColumn CityId = Column.Use("CityId");

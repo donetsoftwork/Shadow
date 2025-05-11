@@ -19,7 +19,7 @@ public static partial class ShadowSqlServices
     /// <param name="where"></param>
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TTable table, ISqlLogic where)
-        where TTable : ITable
+        where TTable : IUpdateTable
         => new(table, where);
     /// <summary>
     /// 修改
@@ -28,7 +28,7 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
-        where TTable : ITable
+        where TTable : IUpdateTable
         => new(table, query(table));
     /// <summary>
     /// 修改
@@ -36,29 +36,29 @@ public static partial class ShadowSqlServices
     /// <param name="tableQuery"></param>
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
-        where TTable : ITable
+        where TTable : ITable, IUpdateTable
         => new(tableQuery.Source, tableQuery._filter);
     /// <summary>
     /// 修改
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static TableUpdate<ITable> ToUpdate(this TableSqlQuery tableQuery)
-        => new((ITable)tableQuery.Source, tableQuery._filter);
+    public static TableUpdate<IUpdateTable> ToUpdate(this TableSqlQuery tableQuery)
+        => new((IUpdateTable)tableQuery.Source, tableQuery._filter);
     /// <summary>
     /// 修改
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TableQuery<TTable> tableQuery)
-        where TTable : ITable
+        where TTable : ITable, IUpdateTable
         => new(tableQuery.Source, tableQuery._filter);
     /// <summary>
     /// 修改
     /// </summary>
     /// <param name="tableQuery"></param>
     /// <returns></returns>
-    public static TableUpdate<ITable> ToUpdate(this TableQuery tableQuery)
-        => new((ITable)tableQuery.Source, tableQuery._filter);
+    public static TableUpdate<IUpdateTable> ToUpdate(this TableQuery tableQuery)
+        => new((IUpdateTable)tableQuery.Source, tableQuery._filter);
     #endregion   
 }

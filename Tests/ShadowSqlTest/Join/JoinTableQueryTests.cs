@@ -4,7 +4,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Simples;
+using ShadowSql.Tables;
 using TestSupports;
 
 namespace ShadowSqlTest.Join;

@@ -14,7 +14,7 @@ namespace Dapper.Shadow.Update;
 /// <param name="filter"></param>
 public class DapperTableUpdate<TTable>(IExecutor executor, TTable table, ISqlLogic filter)
     : TableUpdate<TTable>(table, filter), IDapperExecute
-    where TTable : ITable
+    where TTable : IUpdateTable
 {
     #region 配置
     private readonly IExecutor _executor = executor;

@@ -1,7 +1,6 @@
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ShadowSql.Select;
@@ -12,6 +11,14 @@ namespace ShadowSql.Select;
 /// <param name="table"></param>
 public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
 {
+    /// <summary>
+    /// 获取表视图数据
+    /// </summary>
+    /// <param name="tableName"></param>
+    public TableSelect(string tableName)
+        : this(new Table(tableName))
+    {
+    }
     #region 配置
     private readonly ITableView _source = table;
     /// <summary>
@@ -21,12 +28,6 @@ public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
         => _source;
     #endregion
     #region TableViewBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
-    protected override IEnumerable<IField> GetFields()
-        => _source.Fields;
     /// <summary>
     /// 获取字段
     /// </summary>

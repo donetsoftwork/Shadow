@@ -10,7 +10,7 @@ namespace ShadowSql.Identifiers;
 /// </summary>
 /// <param name="name"></param>
 public class Table(string name)
-    : TableBase(name)
+    : Identifier(name), ITable, IInsertTable, IUpdateTable
 {
     #region 配置
     private readonly Dictionary<string, IColumn> _columns = new(StringComparer.OrdinalIgnoreCase);
@@ -28,12 +28,12 @@ public class Table(string name)
     /// <summary>
     /// 列
     /// </summary>
-    public override IEnumerable<IColumn> Columns
+    public IEnumerable<IColumn> Columns
         => _columns.Values;
     /// <summary>
     /// 插入列
     /// </summary>
-    internal override IEnumerable<IColumn> InsertColumns
+    internal IEnumerable<IColumn> InsertColumns
     {
         get
         {
@@ -48,7 +48,7 @@ public class Table(string name)
     /// <summary>
     /// 修改列
     /// </summary>
-    internal override IEnumerable<IColumn> UpdateColumns
+    internal IEnumerable<IColumn> UpdateColumns
     {
         get
         {
@@ -76,7 +76,7 @@ public class Table(string name)
     /// </summary>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public override IColumn? GetColumn(string columName)
+    public IColumn? GetColumn(string columName)
     {
         if (_columns.TryGetValue(columName, out var column))
             return column;
@@ -223,4 +223,50 @@ public class Table(string name)
             && columName.StartsWith(table)
             && columName[prefixIndex] == '.';
     }
+    #region ITable
+    IEnumerable<IColumn> IInsertTable.InsertColumns
+        => InsertColumns;
+    /// <summary>
+    /// 获取插入列
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <returns></returns>
+    IColumn? IInsertTable.GetInsertColumn(string columnName)
+    {
+        if (GetColumn(columnName) is IColumn column)
+        {
+            if (_insertIgnores.Contains(column))
+                return null;
+            return column;
+        }
+        return Column.Use(columnName);
+    }
+    IEnumerable<IAssignView> IUpdateTable.AssignFields
+        => UpdateColumns;
+    IAssignView? IUpdateTable.GetAssignField(string fieldName)
+    {
+        if (GetColumn(fieldName) is IColumn column)
+        {
+            if (_updateIgnores.Contains(column))
+                return null;
+            return column;
+        }
+        return Column.Use(fieldName);
+    }
+    #endregion
+    #region ITableView
+    IEnumerable<IField> ITableView.Fields
+        => Columns;
+    /// <summary>
+    /// 查找列
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    IField? ITableView.GetField(string fieldName)
+        => GetColumn(fieldName);
+    ICompareField ITableView.GetCompareField(string fieldName)
+        => GetColumn(fieldName) ?? Column.Use(fieldName);
+    IField ITableView.NewField(string fieldName)
+        => Column.Use(fieldName);
+    #endregion
 }

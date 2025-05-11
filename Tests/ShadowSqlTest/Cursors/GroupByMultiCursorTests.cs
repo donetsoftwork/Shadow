@@ -2,7 +2,7 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
+using ShadowSql.Tables;
 using TestSupports;
 
 namespace ShadowSqlTest.Cursors;
@@ -14,8 +14,8 @@ public class GroupByMultiCursorTests
     [Fact]
     public void ToCursor()
     {
-        var cursor = SimpleDB.From("Employees")
-            .SqlJoin(SimpleDB.From("Departments"))
+        var cursor = SimpleTable.Use("Employees")
+            .SqlJoin(SimpleTable.Use("Departments"))
             .OnColumn("DepartmentId", "Id")
             .Root
             .SqlGroupBy("Manager")

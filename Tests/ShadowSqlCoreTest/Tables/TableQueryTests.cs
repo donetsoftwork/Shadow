@@ -3,7 +3,6 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Simples;
 using ShadowSql.Tables;
 
 namespace ShadowSqlCoreTest.Tables;
@@ -11,7 +10,6 @@ namespace ShadowSqlCoreTest.Tables;
 public class TableQueryTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
     static readonly IColumn _id = Column.Use("Id");
     static readonly IColumn _status = Column.Use("Status");
 

@@ -85,9 +85,9 @@ var students = table.ToQuery()
 var s = new StudentAliasTable("s");
 var c = new SchoolClassAliaTable("c");
 var select = s.Join(c)
-    .On(s.ClassId.Equal(c.Id))
-    .Root.ToSelect();
-select.Fields.Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
+    .On(s.ClassId, c.Id)
+    .Root.ToSelect()
+    .Select(s.Id, s.Name, s.Age, c.Name.As("ClassName"), c.Teacher);
 
 var students = select.Get<StudentView>(SqliteExecutor);
 ~~~

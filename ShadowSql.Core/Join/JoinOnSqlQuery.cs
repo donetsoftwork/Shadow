@@ -1,6 +1,5 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
-using ShadowSql.Simples;
 
 namespace ShadowSql.Join;
 
@@ -32,14 +31,15 @@ public class JoinOnSqlQuery(JoinTableSqlQuery root, IAliasTable left, IAliasTabl
     /// <param name="t2"></param>
     /// <returns></returns>
     public static JoinOnSqlQuery Create(string t1, string t2)
-        => Create(SimpleDB.From(t1), SimpleDB.From(t2));
+        => Create(new Table(t1), new Table(t2));
     /// <summary>
     /// 联表查询
     /// </summary>
     /// <param name="t1"></param>
     /// <param name="t2"></param>
     /// <returns></returns>
-    public static JoinOnSqlQuery Create(ITable t1, ITable t2)
+    public static JoinOnSqlQuery Create<TTable>(TTable t1, TTable t2)
+        where TTable : ITable
     {
         var joinTable = new JoinTableSqlQuery();
         var a1 = joinTable.CreateMember(t1);

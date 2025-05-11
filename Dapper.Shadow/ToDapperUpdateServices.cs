@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow.Join;
+using Dapper.Shadow.Join;
 using Dapper.Shadow.Update;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
@@ -21,7 +21,7 @@ public static partial class DapperShadowServices
     /// <param name="where"></param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, ISqlLogic where)
-        where TTable : IDapperTable
+        where TTable : IDapperTable, IUpdateTable
         => new(table.Executor, table, where);
     /// <summary>
     /// 修改
@@ -30,7 +30,7 @@ public static partial class DapperShadowServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
-        where TTable : IDapperTable
+        where TTable : IDapperTable, IUpdateTable
         => new(table.Executor, table, query(table));
     /// <summary>
     /// 修改
@@ -38,7 +38,7 @@ public static partial class DapperShadowServices
     /// <param name="tableQuery"></param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
-        where TTable : IDapperTable
+        where TTable : IDapperTable, IUpdateTable
         => new(tableQuery.Source.Executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
     #endregion
     #region MultiTableUpdate
@@ -61,7 +61,7 @@ public static partial class DapperShadowServices
     /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, ISqlLogic where, IExecutor executor)
-        where TTable : ITable
+        where TTable : IUpdateTable
         => new(executor, table, where);
     /// <summary>
     /// 修改
@@ -71,7 +71,7 @@ public static partial class DapperShadowServices
     /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, Func<TTable, ISqlLogic> query, IExecutor executor)
-        where TTable : ITable
+        where TTable : IUpdateTable
         => new(executor, table, query(table));
     /// <summary>
     /// 修改
@@ -80,7 +80,7 @@ public static partial class DapperShadowServices
     /// <param name="executor"></param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery, IExecutor executor)
-        where TTable : ITable
+        where TTable : ITable, IUpdateTable
         => new(executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
     #endregion
     #region MultiTableUpdate

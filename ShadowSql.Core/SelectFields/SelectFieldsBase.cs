@@ -1,6 +1,5 @@
 using ShadowSql.Engines;
 using ShadowSql.FieldInfos;
-using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +9,7 @@ namespace ShadowSql.SelectFields;
 /// <summary>
 /// 筛选字段基类
 /// </summary>
-public abstract class SelectFieldsBase : ViewBase, ISelectFields
+public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
 {
     #region 配置
     /// <summary>

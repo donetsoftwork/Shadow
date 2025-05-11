@@ -1,14 +1,13 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.Select;
 
 public class GroupByMultiSelectTests
 {
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Theory]
     [InlineData(SqlEngineNames.MsSql, "SELECT [Manager] FROM [Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] GROUP BY [Manager]")]

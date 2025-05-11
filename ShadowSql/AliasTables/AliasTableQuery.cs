@@ -2,7 +2,6 @@ using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using ShadowSql.Variants;
 using System;
 
 namespace ShadowSql.AliasTables;
@@ -13,15 +12,15 @@ namespace ShadowSql.AliasTables;
 /// <typeparam name="TTable"></typeparam>
 /// <param name="table"></param>
 /// <param name="filter"></param>
-public class AliasTableQuery<TTable>(TableAlias<TTable> table, Logic filter)
-    : DataFilterBase<TableAlias<TTable>, Logic>(table, filter), IDataQuery
+public class AliasTableQuery<TTable>(IAliasTable<TTable> table, Logic filter)
+    : DataFilterBase<IAliasTable<TTable>, Logic>(table, filter), IDataQuery
     where TTable : ITable
 {
     /// <summary>
     /// 逻辑查询别名表
     /// </summary>
     /// <param name="table"></param>
-    public AliasTableQuery(TableAlias<TTable> table)
+    public AliasTableQuery(IAliasTable<TTable> table)
         : this(table, new AndLogic())
     {
     }

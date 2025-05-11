@@ -3,15 +3,13 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using TestSupports;
 
 namespace ShadowSqlTest.AliasTables;
 
 public class AliasTableSqlQueryTests
 {
-    static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
     static readonly IColumn _id = ShadowSql.Identifiers.Column.Use("Id");
 
     [Theory]

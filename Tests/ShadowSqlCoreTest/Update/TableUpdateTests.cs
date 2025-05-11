@@ -14,7 +14,7 @@ namespace ShadowSqlCoreTest.Update;
 public class TableUpdateTests 
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = DB.Use("MyDB");
+    static readonly DB _db = DB.Use("MyDB");
     //分数
     static readonly IColumn _score = Column.Use("Score");
 

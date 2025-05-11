@@ -2,7 +2,7 @@ using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Simples;
+using System;
 using System.Text;
 
 namespace ShadowSql.Update;
@@ -12,7 +12,7 @@ namespace ShadowSql.Update;
 /// </summary>
 /// <param name="table"></param>
 /// <param name="filter"></param>
-public class TableUpdate(ITable table, ISqlLogic filter)
+public class TableUpdate(IUpdateTable table, ISqlLogic filter)
     : UpdateBase, IUpdate
 {
     /// <summary>
@@ -21,18 +21,18 @@ public class TableUpdate(ITable table, ISqlLogic filter)
     /// <param name="tableName"></param>
     /// <param name="filter"></param>
     public TableUpdate(string tableName, ISqlLogic filter)
-        : this(SimpleTable.Use(tableName), filter)
+        : this(new Table(tableName), filter)
     {
     }
     #region 配置
     /// <summary>
     /// 源表
     /// </summary>
-    protected ITable _table = table;
+    protected IUpdateTable _table = table;
     /// <summary>
     /// 源表
     /// </summary>
-    public ITable Table
+    public IUpdateTable Table
         => _table;
     /// <summary>
     /// 过滤条件
@@ -53,19 +53,13 @@ public class TableUpdate(ITable table, ISqlLogic filter)
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _table.Write(engine, sql);
     /// <summary>
-    /// 获取字段
+    /// 获取赋值字段
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>
-    protected override IField? GetField(string fieldName)
-        => _table.GetField(fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
-    protected override IField NewField(string fieldName)
-        => _table.NewField(fieldName);
+    internal override IAssignView GetAssignField(string fieldName)
+        => _table.GetAssignField(fieldName)
+        ?? throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     #endregion
     /// <summary>
     /// 按表名修改
@@ -74,9 +68,7 @@ public class TableUpdate(ITable table, ISqlLogic filter)
     /// <param name="filter"></param>
     /// <returns></returns>
     public static TableUpdate Create(string tableName, ISqlLogic filter)
-        => new(SimpleTable.Use(tableName), filter);
-    ITableView IUpdate.Table
-        => _table;
+        => new(new Table(tableName), filter);
     #region ISqlEntity
     /// <summary>
     /// 拼写sql

@@ -1,7 +1,8 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.Simples;
+using ShadowSql.Tables;
+using ShadowSql.FieldQueries;
 
 namespace ShadowSqlTest.Simples;
 
@@ -12,23 +13,23 @@ public class SimpleTableTests
     [Fact]
     public void From()
     {
-        var users = SimpleDB.From("Users");
+        var users = SimpleTable.Use("Users");
         var tableName = _engine.Sql(users);
         Assert.Equal("[Users]", tableName);
     }
     [Fact]
     public void SqlQuery()
     {
-        var users = SimpleDB.From("Users");
-        var query = users.ToSqlQuery()
-            .Where(users.Field("Id").LessValue(100));
+        var userTable = SimpleTable.Use("Users");
+        var query = userTable.ToSqlQuery()
+            .Where(userTable.Field("Id").LessValue(100));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<100", sql);
     }
     [Fact]
     public void SqlQueryFunc()
     {
-        var query = SimpleDB.From("Users")
+        var query = SimpleTable.Use("Users")
             .ToSqlQuery()
             .Where(users => users.Field("Id").LessValue(100));
         var sql = _engine.Sql(query);
@@ -37,7 +38,7 @@ public class SimpleTableTests
     [Fact]
     public void Query()
     {
-        var users = SimpleDB.From("Users");
+        var users = SimpleTable.Use("Users");
         var query = users.ToQuery()
             .And(users.Field("Id").LessValue(100));
         var sql = _engine.Sql(query);
@@ -46,10 +47,32 @@ public class SimpleTableTests
     [Fact]
     public void QueryFunc()
     {
-        var query = SimpleDB.From("Users")
+        var query = SimpleTable.Use("Users")
             .ToQuery()
             .And(users => users.Field("Id").LessValue(100));
         var sql = _engine.Sql(query);
         Assert.Equal("[Users] WHERE [Id]<100", sql);
+    }
+    [Fact]
+    public void Select()
+    {
+        var query = SimpleTable.Use("Users")
+            .ToSqlQuery()
+            .FieldEqualValue("Id", 1)
+            .ToSelect()
+            .Select("Id", "Name");
+        var sql = _engine.Sql(query);
+        Assert.Equal("SELECT [Id],[Name] FROM [Users] WHERE [Id]=1", sql);
+
+    }
+    [Fact]
+    public void Delete()
+    {
+        var query = SimpleTable.Use("Users")
+            .ToSqlQuery()
+            .FieldEqualValue("Id", 1)
+            .ToDelete();
+        var sql = _engine.Sql(query);
+        Assert.Equal("DELETE FROM [Users] WHERE [Id]=1", sql);
     }
 }

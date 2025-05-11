@@ -15,6 +15,10 @@
 - href: select/cursor.md
 - name: 组件
   items:
+  - name: 表
+    href: tables/
+  - name: 字段
+    href: fields/
   - name: 查询逻辑
     href: logic/
   - name: sql查询
@@ -23,7 +27,5 @@
     href: query/
   - name: 赋值逻辑
     href: assign/
-  - name: 聚合
-    href: aggregate.md
   - name: 游标
     href: cursor/

@@ -11,11 +11,12 @@ public static partial class ShadowSqlCoreServices
 {
     #region ICompareField
     /// <summary>
-    /// 计数聚合
+    /// 字段去重统计
     /// </summary>
+    /// <param name="field"></param>
     /// <returns></returns>
-    public static IAggregateField DistinctCount(this ICompareField field)
-        => field.AggregateTo(AggregateConstants.Count);
+    public static DistinctCountFieldInfo DistinctCount(this ICompareField field)
+        => new(field);
     /// <summary>
     /// 最大值聚合
     /// </summary>
@@ -63,8 +64,8 @@ public static partial class ShadowSqlCoreServices
     /// <param name="view"></param>
     /// <param name="field"></param>
     /// <returns></returns>
-    public static IAggregateField DistinctCount(this IGroupByView view, string field)
-        => new DistinctCountFieldInfo(view.Source.GetCompareField(field));
+    public static DistinctCountFieldInfo DistinctCount(this IGroupByView view, string field)
+        => new(view.Source.GetCompareField(field));
     /// <summary>
     /// 最大值聚合
     /// </summary>

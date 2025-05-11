@@ -5,7 +5,6 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
-using ShadowSql.Simples;
 using ShadowSql.Tables;
 using TestSupports;
 
@@ -14,7 +13,7 @@ namespace ShadowSqlCoreTest.Select;
 public class CursorSelectTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = SimpleDB.Use("MyDb");
+    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void Cursor()

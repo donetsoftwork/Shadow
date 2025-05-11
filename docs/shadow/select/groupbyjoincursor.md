@@ -82,5 +82,5 @@ var select = new CommentTable()
 ## 6. 其他相关功能
 >* 参看[获取简介](./index.md)
 >* 参看[联表分组游标](../cursor/groupbyjoin.md)
->* 参看[聚合](../../shadowcore/aggregate.md)
+>* 参看[聚合](../../shadowcore/fields/aggregate.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/select/index.md)

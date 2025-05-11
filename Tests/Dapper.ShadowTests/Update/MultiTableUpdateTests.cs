@@ -40,7 +40,7 @@ public class MultiTableUpdateTests : ExecuteTestBase, IDisposable
         //Assert.True(result > 0);
 
         //var select = query.ToSelect();
-        //select.Fields.SelectTable(s);
+        //select.SelectTable(s);
 
         //var students = select.Get<Student>(SqliteExecutor)
         //    .ToList();

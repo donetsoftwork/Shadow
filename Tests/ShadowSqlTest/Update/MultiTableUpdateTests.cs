@@ -1,7 +1,7 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.Identifiers;
+using ShadowSql.Tables;
 using ShadowSql.Join;
 using TestSupports;
 
@@ -58,32 +58,44 @@ public class MultiTableUpdateTests
         Assert.Equal("UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author]='张三' AND c.[Pick]=0", sql);
     }
     [Fact]
-    public void UpdateTableName()
+    public void SimpleTableException()
     {
-        var joinOn = JoinOnSqlQuery.Create("Comments", "Posts");
+        var joinOn = JoinOnSqlQuery.Create(SimpleTable.Use("Comments"), SimpleTable.Use("Posts"));
         var (t1, t2) = (joinOn.Left, joinOn.Source);
         joinOn.On(t1.Field("PostId").Equal(t2.Field("Id")));
         var query = joinOn.Root
             .Where(t2.Field("Author").EqualValue("张三"))
             .Where(t1.Field("Pick").EqualValue(false));
-        var update = query.ToUpdate()
-            .Update("Comments")
-            .Set(t1.Field("Pick").EqualToValue(true));
-        var sql = _engine.Sql(update);
-        Assert.Equal("UPDATE t1 SET t1.[Pick]=1 FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t2.[Author]='张三' AND t1.[Pick]=0", sql);
+        var update = query.ToUpdate();
+        // SimpleTable不支持Update
+        Assert.ThrowsAny<ArgumentException>(() => update.Update("Comments"));
     }
     [Fact]
-    public void Set()
+    public void SimpleTableException2()
     {
-        var joinOn = JoinOnSqlQuery.Create("Comments", "Posts")
-            .On((t1, t2) => t1.Field("PostId").Equal(t2.Field("Id")));
+        var joinOn = JoinOnSqlQuery.Create(SimpleTable.Use("Comments"), SimpleTable.Use("Posts"));
+        var (t1, t2) = (joinOn.Left, joinOn.Source);
+        joinOn.On(t1.Field("PostId").Equal(t2.Field("Id")));
         var query = joinOn.Root
-            .Where("Posts", t2 => t2.Field("Author").EqualValue("张三"))
-            .Where("Comments", t1 => t1.Field("Pick").EqualValue(false));
+            .Where(t2.Field("Author").EqualValue("张三"))
+            .Where(t1.Field("Pick").EqualValue(false));
+        var update = query.ToUpdate();
+        // SimpleTable不支持Update
+        Assert.ThrowsAny<ArgumentException>(() => update.SetValue("Pick", true));
+        //update.SetValue("Pick", true);
+    }
+    [Fact]
+    public void SimpleTableException3()
+    {
+        var joinOn = JoinOnSqlQuery.Create(SimpleTable.Use("Comments"), SimpleTable.Use("Posts"))
+            .On("PostId", "Id");
+        var (t1, t2) = (joinOn.Left, joinOn.Source);
+        var query = joinOn.Root
+            .Where(t2.Field("Author").EqualValue("张三"))
+            .Where(t1.Field("Pick").EqualValue(false));
         var update = query.ToUpdate()
-            .Update("Comments")
-            .Set(t1 => t1.Field("Pick").EqualToValue(true));
-        var sql = _engine.Sql(update);
-        Assert.Equal("UPDATE t1 SET t1.[Pick]=1 FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t2.[Author]='张三' AND t1.[Pick]=0", sql);
+            .Set(t1.Field("Pick").EqualToValue(true));
+        // SimpleTable不支持Update
+        Assert.ThrowsAny<ArgumentException>(() => _engine.Sql(update));
     }
 }

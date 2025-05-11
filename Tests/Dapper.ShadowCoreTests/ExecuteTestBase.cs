@@ -7,7 +7,6 @@ using Shadow.DDL.Schemas;
 using ShadowSql.Components;
 using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using ShadowSql.Variants;
 using System.Collections;
 

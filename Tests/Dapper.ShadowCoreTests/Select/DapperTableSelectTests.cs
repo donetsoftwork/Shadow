@@ -6,7 +6,6 @@ using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
-using ShadowSql.Simples;
 using ShadowSql.Tables;
 
 namespace Dapper.ShadowCoreTests.Select;
@@ -26,7 +25,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void Get()
     {
-        var table = SimpleDB.From("Students");        
+        var table = new Table("Students");        
         var count = table.Count(SqliteExecutor);
         Assert.True(count > 0);
         var select = new TableSelect(table);
@@ -183,7 +182,7 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
     [Fact]
     public void FilterColumn()
     {
-        var table = SimpleDB.From("Students");
+        var table = new Table("Students");
         var age = Column.Use("Age");
         var filter = new TableFilter(table, age.EqualValue(10));
         var select = new TableSelect(filter);
@@ -231,5 +230,5 @@ public class DapperTableSelectTests : ExecuteTestBase, IDisposable
 
 
     void IDisposable.Dispose()
-    => DropStudentTable();
+        => DropStudentTable();
 }

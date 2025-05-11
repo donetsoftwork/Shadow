@@ -1,7 +1,6 @@
 using ShadowSql.Cursors;
 using ShadowSql.CursorSelect;
 using ShadowSql.Identifiers;
-using ShadowSql.Variants;
 
 namespace Dapper.Shadow.CursorSelect;
 
@@ -12,7 +11,7 @@ namespace Dapper.Shadow.CursorSelect;
 /// <param name="executor"></param>
 /// <param name="cursor"></param>
 public class DapperAliasTableCursorSelect<TTable>(IExecutor executor, AliasTableCursor<TTable> cursor)
-    : CursorSelectBase<TableAlias<TTable>>(cursor, cursor.Source)
+    : CursorSelectBase<IAliasTable<TTable>>(cursor, cursor.Source)
     , IDapperSelect
     where TTable : ITable
 {

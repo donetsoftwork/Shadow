@@ -7,7 +7,7 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 原始表标识
 /// </summary>
-public interface ITable : IIdentifier, IInsertTable, IUpdateTable, ITableView
+public interface ITable : IIdentifier, ITableView
 {
     /// <summary>
     /// 所有列
@@ -26,19 +26,31 @@ public interface ITable : IIdentifier, IInsertTable, IUpdateTable, ITableView
 public interface IInsertTable : IIdentifier, ISqlEntity
 {
     /// <summary>
-    /// 插入列
+    /// 所有插入列
     /// </summary>
     IEnumerable<IColumn> InsertColumns { get; }
+    /// <summary>
+    /// 获取插入列
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <returns></returns>
+    IColumn? GetInsertColumn(string columnName);
 }
 /// <summary>
-/// 修改表
+/// 更新表
 /// </summary>
-public interface IUpdateTable : IView, ISqlEntity
+public interface IUpdateTable : ISqlEntity
 {
     /// <summary>
-    /// 修改列
+    /// 所有更新字段
     /// </summary>
-    IEnumerable<IAssignView> UpdateColumns { get; }
+    IEnumerable<IAssignView> AssignFields { get; }
+    /// <summary>
+    /// 获取更新字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    IAssignView? GetAssignField(string fieldName);
 }
 /// <summary>
 /// 表视图

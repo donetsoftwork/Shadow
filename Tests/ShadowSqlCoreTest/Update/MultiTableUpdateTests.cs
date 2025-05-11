@@ -60,7 +60,7 @@ public class MultiTableUpdateTests
     [Fact]
     public void UpdateTableName()
     {
-        var joinOn = JoinOnSqlQuery.Create("Comments", "Posts");
+        var joinOn = JoinOnSqlQuery.Create(new Table("Comments"), new Table("Posts"));
         var (t1, t2) = (joinOn.Left, joinOn.Source);
         joinOn.On(t1.Field("PostId").Equal(t2.Field("Id")));
         var query = joinOn.Root

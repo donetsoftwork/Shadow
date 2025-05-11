@@ -1,6 +1,6 @@
 using ShadowSql.Identifiers;
-using ShadowSql.Variants;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Shadow.DDL.Schemas;
 
@@ -10,7 +10,7 @@ namespace Shadow.DDL.Schemas;
 /// <param name="name"></param>
 /// <param name="sqlType"></param>
 public class ColumnSchema(string name, string sqlType = "INT")
-    : ColumnBase(name), IColumn, IMatch
+    : ColumnBase(name), IColumn
 {
     private readonly string _sqlType = sqlType.ToUpperInvariant();
     /// <summary>
@@ -18,7 +18,6 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// </summary>
     public string SqlType
         => _sqlType;
-
     private string _default = string.Empty;
     /// <summary>
     /// 数据库默认值
@@ -52,6 +51,35 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// <returns></returns>
     public IColumn ToColumn()
         => this;
+    /// <summary>
+    /// 插入忽略字段类型
+    /// </summary>
+    public static readonly ColumnType InsertIgnoreType = ColumnType.Identity | ColumnType.Computed;
+    /// <summary>
+    /// 更新忽略字段类型
+    /// </summary>
+    public static readonly ColumnType UpdateIgnoreType = ColumnType.Identity | ColumnType.Key | ColumnType.Computed;
+    /// <summary>
+    /// 获取主键
+    /// </summary>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static IEnumerable<ColumnSchema> GetKeys(IEnumerable<ColumnSchema> fields)
+        => fields.Where(o => (o.ColumnType & ColumnType.Key) == ColumnType.Key);
+    /// <summary>
+    /// 获取插入列
+    /// </summary>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static IEnumerable<ColumnSchema> GetInsertColumns(IEnumerable<ColumnSchema> fields)
+        => fields.Where(o => (o.ColumnType & InsertIgnoreType) == ColumnType.Empty);
+    /// <summary>
+    /// 获取修改列
+    /// </summary>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
+        => fields.Where(o => (o.ColumnType & UpdateIgnoreType) == ColumnType.Empty);
     #region IMatch
     /// <summary>
     /// 是否匹配
@@ -63,48 +91,4 @@ public class ColumnSchema(string name, string sqlType = "INT")
     bool IMatch.IsMatch(string name)
         => IsMatch(name);
     #endregion
-}
-
-/// <summary>
-/// 字段类型
-/// </summary>
-[Flags]
-public enum ColumnType
-{
-    /// <summary>
-    /// 空
-    /// </summary>
-    Empty = 0,
-    /// <summary>
-    /// 自增列
-    /// </summary>
-    Identity = 1,
-    /// <summary>
-    /// 主键之一
-    /// </summary>
-    Key = 2,
-    /// <summary>
-    /// 唯一列
-    /// </summary>
-    Unique = 4,
-    /// <summary>
-    /// 非空
-    /// </summary>
-    NOTNULL = 8,
-    /// <summary>
-    /// 普通
-    /// </summary>
-    Normal = 16,
-    /// <summary>
-    /// 计算列
-    /// </summary>
-    Computed = 32,
-    /// <summary>
-    /// 逻辑删除
-    /// </summary>
-    Del = 64,
-    /// <summary>
-    /// 忽略
-    /// </summary>
-    Ignore = 128
 }

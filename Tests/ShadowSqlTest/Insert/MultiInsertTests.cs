@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
@@ -9,7 +9,6 @@ namespace ShadowSqlTest.Insert;
 public class MultiInsertTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = DB.Use("MyDB");
     static readonly IColumn _name = Column.Use("Name");
     //分数
     static readonly IColumn _score = Column.Use("Score");
@@ -17,7 +16,7 @@ public class MultiInsertTests
     [Fact]
     public void Insert()
     {
-        var insert = _db.From("Students")
+        var insert = new Table("Students")
             .ToMultiInsert()
             .Insert(_name.InsertValues("张三", "李四"))
             .Insert(_score.InsertValues(90, 85));

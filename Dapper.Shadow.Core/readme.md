@@ -1,4 +1,4 @@
-﻿# ShadowSql.Dapper.Core
+# ShadowSql.Dapper.Core
 >* ShadowSql.Core的Dapper扩展
 >* 用于执行ShadowSql.Core拼接的sql
 
@@ -6,7 +6,7 @@
 
 ## 1. 读取一张表
 ~~~csharp
-    var table = SimpleDB.From("Students");        
+    var table = SimpleTable.Use("Students");        
     var count = table.Count(Executor);
     var select = new TableSelect(table);
     var students = select.Get<Student>(Executor)；

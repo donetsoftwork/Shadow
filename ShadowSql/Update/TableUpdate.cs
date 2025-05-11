@@ -14,7 +14,7 @@ namespace ShadowSql.Update;
 /// <param name="filter"></param>
 public class TableUpdate<TTable>(TTable table, ISqlLogic filter)
     : UpdateBase<TTable>(table)
-    where TTable : ITable
+    where TTable : IUpdateTable
 {
     #region 配置
     /// <summary>
@@ -44,7 +44,7 @@ public class TableUpdate<TTable>(TTable table, ISqlLogic filter)
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    protected override void Write(ISqlEngine engine, StringBuilder sql)
+    protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         WriteUpdate(engine, sql);
         WriteSource(engine, sql);

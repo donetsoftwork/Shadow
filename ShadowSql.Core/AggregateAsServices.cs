@@ -12,11 +12,13 @@ public static class AggregateAsServices
 {
     #region ICompareField
     /// <summary>
-    /// 计数聚合
+    /// 字段去重统计
     /// </summary>
+    /// <param name="field"></param>
+    /// <param name="alias"></param>
     /// <returns></returns>
-    public static IAggregateFieldAlias DistinctCountAs(this ICompareField field, string alias = "")
-        => field.AggregateAs(AggregateConstants.Count, alias);
+    public static DistinctCountAliasFieldInfo DistinctCountAs(this ICompareField field, string alias = "Count")
+        => new(field, alias);
     /// <summary>
     /// 最大值聚合
     /// </summary>
@@ -58,8 +60,8 @@ public static class AggregateAsServices
     /// <param name="field"></param>
     /// <param name="alias"></param>
     /// <returns></returns>
-    public static IAggregateFieldAlias DistinctCountAs(this IGroupByView view, string field, string alias = "")
-        => new DistinctCountAliasFieldInfo(view.Source.GetCompareField(field), alias);
+    public static DistinctCountAliasFieldInfo DistinctCountAs(this IGroupByView view, string field, string alias = "Count")
+        => new(view.Source.GetCompareField(field), alias);
     /// <summary>
     /// 最大值聚合
     /// </summary>

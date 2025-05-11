@@ -1,7 +1,6 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
-using ShadowSql.Simples;
 using System.Collections.Generic;
 using System.Text;
 
@@ -28,7 +27,7 @@ public class MultiInsert(IInsertTable table, List<IInsertValues> items)
     /// </summary>
     /// <param name="tableName"></param>
     public MultiInsert(string tableName)
-        : this(SimpleTable.Use(tableName), [])
+        : this(new Table(tableName), [])
     {
     }
     #region 配置

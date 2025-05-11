@@ -13,7 +13,7 @@ public interface IUpdate : IExecuteSql
     /// <summary>
     /// 表
     /// </summary>
-    ITableView Table { get; }
+    IUpdateTable Table { get; }
     /// <summary>
     /// 修改信息
     /// </summary>

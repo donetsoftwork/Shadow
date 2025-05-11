@@ -54,6 +54,13 @@ public abstract class DataFilterBase<TSource, TFilter>(TSource source, TFilter f
     protected override IField? GetField(string fieldName)
         => _source.GetField(fieldName);
     /// <summary>
+    /// 获取比较字段
+    /// </summary>
+    /// <param name="fieldName"></param>
+    /// <returns></returns>
+    protected override ICompareField GetCompareField(string fieldName)
+        => _source.GetCompareField(fieldName);
+    /// <summary>
     /// 构造新字段
     /// </summary>
     /// <param name="fieldName"></param>
