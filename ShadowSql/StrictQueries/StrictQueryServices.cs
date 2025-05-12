@@ -373,7 +373,7 @@ public static partial class StrictQueryServices
     ///     .StrictInValue("Id", 1, 3, 5);
     /// </code>
     /// </example>
-    public static TQuery StrictInValue<TQuery, TValue>(this TQuery query, string columnName, IEnumerable<TValue> values)
+    public static TQuery StrictInValue<TQuery, TValue>(this TQuery query, string columnName, params IEnumerable<TValue> values)
         where TQuery : IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.Strict(columnName), CompareSymbol.In, SqlValue.Values(values)));
@@ -418,7 +418,7 @@ public static partial class StrictQueryServices
     ///     .StrictNotInValue("Id", 1, 3, 5);
     /// </code>
     /// </example>
-    public static TQuery StrictNotInValue<TQuery, TValue>(this TQuery query, string columnName, IEnumerable<TValue> values)
+    public static TQuery StrictNotInValue<TQuery, TValue>(this TQuery query, string columnName, params IEnumerable<TValue> values)
         where TQuery : IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.Strict(columnName), CompareSymbol.NotIn, SqlValue.Values(values)));
@@ -933,7 +933,7 @@ public static partial class StrictQueryServices
     /// <param name="values"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static TQuery TableStrictInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, IEnumerable<TValue> values)
+    public static TQuery TableStrictInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, params IEnumerable<TValue> values)
         where TQuery : MultiTableBase, IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.From(tableName).Strict(columnName), CompareSymbol.In, SqlValue.Values(values)));
@@ -966,7 +966,7 @@ public static partial class StrictQueryServices
     /// <param name="values"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static TQuery TableStrictNotInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, IEnumerable<TValue> values)
+    public static TQuery TableStrictNotInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, params IEnumerable<TValue> values)
         where TQuery : MultiTableBase, IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.From(tableName).Strict(columnName), CompareSymbol.NotIn, SqlValue.Values(values)));

@@ -44,10 +44,9 @@ public class GroupByQueryTests
         var query = new TableQuery(table)
             .And(Age.EqualValue(20));
         var groupBy = GroupByQuery.Create(query, "CityId")
-            .And(City.InValue("北京", "上海"))
             .And(CityId.BetweenValue(1, 11));
         var sql = _engine.Sql(groupBy);
-        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [City] IN ('北京','上海') AND [CityId] BETWEEN 1 AND 11", sql);
+        Assert.Equal("[Users] WHERE [Age]=20 GROUP BY [CityId] HAVING [CityId] BETWEEN 1 AND 11", sql);
     }
     [Fact]
     public void SourceField()

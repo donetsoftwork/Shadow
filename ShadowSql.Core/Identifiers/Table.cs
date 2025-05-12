@@ -200,7 +200,7 @@ public class Table(string name)
     /// <param name="fields"></param>
     /// <param name="columName"></param>
     /// <returns></returns>
-    public static TField? GetFieldWithTablePrefix<TField>(string table, IEnumerable<TField> fields, string columName)
+    internal static TField? GetFieldWithTablePrefix<TField>(string table, IEnumerable<TField> fields, string columName)
         where TField : class, IField
     {
         if (CheckTablePrefix(table, columName))

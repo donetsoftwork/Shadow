@@ -1,4 +1,5 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ShadowSql.SqlVales;
@@ -24,7 +25,7 @@ public static class SqlValue
     /// <typeparam name="T"></typeparam>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static ISqlValue Values<T>(params T[] values)
+    public static ISqlValue Values<T>(params IEnumerable<T> values)
     {
         return new SqlValuesWraper<T>(values);
     }
@@ -49,9 +50,9 @@ public static class SqlValue
             sqlValue.Write(engine, sql);
         }
     }
-    class SqlValuesWraper<T>(T[] values) : ISqlValue
+    class SqlValuesWraper<T>(IEnumerable<T> values) : ISqlValue
     {
-        private readonly T[] _values = values;
+        private readonly IEnumerable<T> _values = values;
 
         /// <summary>
         /// 拼写sql

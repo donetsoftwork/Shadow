@@ -64,21 +64,21 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// </summary>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static IEnumerable<ColumnSchema> GetKeys(IEnumerable<ColumnSchema> fields)
+    internal static IEnumerable<ColumnSchema> GetKeys(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & ColumnType.Key) == ColumnType.Key);
     /// <summary>
     /// 获取插入列
     /// </summary>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static IEnumerable<ColumnSchema> GetInsertColumns(IEnumerable<ColumnSchema> fields)
+    internal static IEnumerable<ColumnSchema> GetInsertColumns(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & InsertIgnoreType) == ColumnType.Empty);
     /// <summary>
     /// 获取修改列
     /// </summary>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
+    internal static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & UpdateIgnoreType) == ColumnType.Empty);
     #region IMatch
     /// <summary>

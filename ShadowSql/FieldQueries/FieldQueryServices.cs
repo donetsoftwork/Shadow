@@ -357,7 +357,7 @@ public static partial class FieldQueryServices
     ///     .FieldInValue("Id", 1, 3, 5);
     /// </code>
     /// </example>
-    public static TQuery FieldInValue<TQuery, TValue>(this TQuery query, string fieldName, IEnumerable<TValue> values)
+    public static TQuery FieldInValue<TQuery, TValue>(this TQuery query, string fieldName, params IEnumerable<TValue> values)
         where TQuery : IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.GetCompareField(fieldName), CompareSymbol.In, SqlValue.Values(values)));
@@ -400,7 +400,7 @@ public static partial class FieldQueryServices
     ///     .FieldNotInValue("Id", 1, 3, 5);
     /// </code>
     /// </example>
-    public static TQuery FieldNotInValue<TQuery, TValue>(this TQuery query, string fieldName, IEnumerable<TValue> values)
+    public static TQuery FieldNotInValue<TQuery, TValue>(this TQuery query, string fieldName, params IEnumerable<TValue> values)
         where TQuery : IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.GetCompareField(fieldName), CompareSymbol.NotIn, SqlValue.Values(values)));
@@ -888,7 +888,7 @@ public static partial class FieldQueryServices
     /// <param name="fieldName"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static TQuery TableFieldInValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, IEnumerable<TValue> values)
+    public static TQuery TableFieldInValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, params IEnumerable<TValue> values)
         where TQuery : MultiTableBase, IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(fieldName), CompareSymbol.In, SqlValue.Values(values)));
@@ -919,7 +919,7 @@ public static partial class FieldQueryServices
     /// <param name="fieldName"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static TQuery TableFieldNotInValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, IEnumerable<TValue> values)
+    public static TQuery TableFieldNotInValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, params IEnumerable<TValue> values)
         where TQuery : MultiTableBase, IDataSqlQuery
     {
         query.Query.AddLogic(new CompareLogic(query.From(tableName).GetCompareField(fieldName), CompareSymbol.NotIn, SqlValue.Values(values)));
