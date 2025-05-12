@@ -11,9 +11,11 @@
             "Dapper.Shadow.Core/Dapper.Shadow.Core.csproj",
             "Dapper.Shadow/Dapper.Shadow.csproj",
             "Shadow.DDL/Shadow.DDL.csproj"
-          ]
+          ],
+          "exclude": [ "Benchmarks/*", "Tests/*" ]
         }
       ],
+      "exclude": [ "Benchmarks/*", "Tests/*" ],
       "dest": "api"
     }
   ],
