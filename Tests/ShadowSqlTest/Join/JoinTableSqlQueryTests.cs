@@ -37,8 +37,8 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void WhereLeft3()
     {
-        var joinOn = SimpleTable.Use("Comments")
-            .SqlJoin(SimpleTable.Use("Posts"))
+        var joinOn = EmptyTable.Use("Comments")
+            .SqlJoin(EmptyTable.Use("Posts"))
             .OnColumn("PostId", "Id")
             .WhereLeft("Pick", Pick => Pick.EqualValue(true));
         var sql = _engine.Sql(joinOn.Root);
@@ -67,8 +67,8 @@ public class JoinTableSqlQueryTests
     [Fact]
     public void WhereRight3()
     {
-        var joinOn = SimpleTable.Use("Comments")
-            .SqlJoin(SimpleTable.Use("Posts"))
+        var joinOn = EmptyTable.Use("Comments")
+            .SqlJoin(EmptyTable.Use("Posts"))
             .OnColumn("PostId", "Id")
             .WhereLeft("Pick", Pick => Pick.EqualValue(true))
             .WhereRight("Author", Author => Author.NotEqualValue("张三"));

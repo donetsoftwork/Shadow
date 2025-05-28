@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 
 namespace ShadowSql.Cursors;
 
@@ -15,6 +15,12 @@ public interface ICursor : ITableView
     /// 跳过数量
     /// </summary>
     int Offset { get; }
+    /// <summary>
+    /// 获取数量
+    /// </summary>
+    /// <param name="limit"></param>
+    /// <returns></returns>
+    ICursor Take(int limit);
     /// <summary>
     /// 跳过数量
     /// </summary>

@@ -7,6 +7,7 @@ namespace ShadowSql.Identifiers;
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
 public interface IAliasTable<out TTable> : IAliasTable
+    where TTable : ITable
 {
     /// <summary>
     /// 原始表

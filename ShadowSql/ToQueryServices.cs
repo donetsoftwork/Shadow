@@ -12,15 +12,7 @@ namespace ShadowSql;
 /// </summary>
 public static partial class ShadowSqlServices
 {
-    #region TableQuery
-    /// <summary>
-    /// 查询(And查询)
-    /// </summary>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static TableQuery<TTable> Where<TTable>(this TTable table)
-        where TTable : ITable
-        => ToQuery(table);
+    #region Table
     #region TableQuery
     /// <summary>
     /// And查询
@@ -41,6 +33,14 @@ public static partial class ShadowSqlServices
     #endregion
     #region TableSqlQuery
     /// <summary>
+    /// 查询(And查询)
+    /// </summary>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static TableSqlQuery<TTable> Where<TTable>(this TTable table)
+        where TTable : ITable
+        => ToSqlQuery(table);
+    /// <summary>
     /// And查询
     /// </summary>
     /// <param name="table">表对象</param>
@@ -58,6 +58,7 @@ public static partial class ShadowSqlServices
         => new(table, SqlQuery.CreateOrQuery());
     #endregion
     #endregion
+    #region AliasTable
     #region AliasTableQuery
     /// <summary>
     /// And查询
@@ -65,17 +66,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static AliasTableQuery<TTable> Where<TTable>(this TableAlias<TTable> table)
-        where TTable : ITable
-        => ToQuery(table);
-    #region Query
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static AliasTableQuery<TTable> ToQuery<TTable>(this TableAlias<TTable> table)
+    public static AliasTableQuery<TTable> ToQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
         => new(table);
     /// <summary>
@@ -84,18 +75,27 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static AliasTableQuery<TTable> ToOrQuery<TTable>(this TableAlias<TTable> table)
+    public static AliasTableQuery<TTable> ToOrQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
         => new(table, new OrLogic());
     #endregion
-    #region SqlQuery
+    #region AliasTableSqlQuery
     /// <summary>
     /// And查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static AliasTableSqlQuery<TTable> ToSqlQuery<TTable>(this TableAlias<TTable> table)
+    public static AliasTableSqlQuery<TTable> Where<TTable>(this IAliasTable<TTable> table)
+        where TTable : ITable
+        => ToSqlQuery(table);
+    /// <summary>
+    /// And查询
+    /// </summary>
+    /// <typeparam name="TTable"></typeparam>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static AliasTableSqlQuery<TTable> ToSqlQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
     {
         SqlQuery sqlQuery = SqlQuery.CreateAndQuery();
@@ -108,7 +108,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static AliasTableSqlQuery<TTable> ToSqlOrQuery<TTable>(this TableAlias<TTable> table)
+    public static AliasTableSqlQuery<TTable> ToSqlOrQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
     {
         SqlQuery sqlQuery = SqlQuery.CreateOrQuery();

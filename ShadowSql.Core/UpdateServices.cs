@@ -54,7 +54,7 @@ public static partial class ShadowSqlCoreServices
     public static TUpdate SetFields<TUpdate>(this TUpdate update, params IEnumerable<IAssignView> fields)
         where TUpdate : UpdateBase, IUpdate
     {
-        var equalTo = AssignSymbol.EqualTo;
+        var equalTo = AssignSymbol.Assign;
         foreach (var field in fields)
             update.SetCore(new AssignOperation(field, equalTo, Parameter.Use(field.ViewName)));
         return update;
@@ -95,7 +95,7 @@ public static partial class ShadowSqlCoreServices
     public static TUpdate SetEqualTo<TUpdate>(this TUpdate update, string columnName, string parameter = "")
         where TUpdate : UpdateBase, IUpdate
     {
-        update.SetCore(CreateOperation(update, columnName, AssignSymbol.EqualTo, parameter));
+        update.SetCore(CreateOperation(update, columnName, AssignSymbol.Assign, parameter));
         return update;
     }
     /// <summary>
@@ -110,7 +110,7 @@ public static partial class ShadowSqlCoreServices
     public static TUpdate SetEqualToValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
         where TUpdate : UpdateBase, IUpdate
     {
-        update.SetCore(new AssignOperation(update.GetAssignField(columnName), AssignSymbol.EqualTo, SqlValue.From(value)));
+        update.SetCore(new AssignOperation(update.GetAssignField(columnName), AssignSymbol.Assign, SqlValue.From(value)));
         return update;
     }
 
@@ -156,7 +156,7 @@ public static partial class ShadowSqlCoreServices
     public static MultiTableUpdate Update<TMultiUpdate>(this TMultiUpdate update, string tableName)
         where TMultiUpdate : MultiTableUpdate
     {
-        update._table = update.MultiTable.From<IAliasTable<IUpdateTable>>(tableName);
+        update._table = update.MultiTable.From<IAliasTable<ITable>>(tableName);
         return update;
     }
     /// <summary>
@@ -166,25 +166,12 @@ public static partial class ShadowSqlCoreServices
     /// <param name="update"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static TMultiUpdate Update<TMultiUpdate>(this TMultiUpdate update, IAliasTable<IUpdateTable> table)
+    public static TMultiUpdate Update<TMultiUpdate>(this TMultiUpdate update, IAliasTable<ITable> table)
         where TMultiUpdate : MultiTableUpdate
     {
         update._table = table;
         return update;
     }
-    ///// <summary>
-    ///// 赋值操作
-    ///// </summary>
-    ///// <typeparam name="TMultiUpdate"></typeparam>
-    ///// <param name="update"></param>
-    ///// <param name="operation"></param>
-    ///// <returns></returns>
-    //public static TMultiUpdate Set<TMultiUpdate>(this TMultiUpdate update, Func<IAliasTable, IAssignInfo> operation)
-    //    where TMultiUpdate : MultiTableUpdate
-    //{
-    //    update.SetCore(operation(update._table));
-    //    return update;
-    //}
     #endregion
     /// <summary>
     /// 获取被修改字段
@@ -194,7 +181,7 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     public static IAssignView? GetAssignField<TTable>(this IAliasTable<TTable> aliasTable, string fieldName)
-        where TTable : IUpdateTable
+        where TTable : ITable
     {
         if (aliasTable.GetPrefixField(fieldName) is PrefixField prefixField)
         {

@@ -25,7 +25,7 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
     /// <summary>
     /// 排序字段
     /// </summary>
-    protected readonly List<IOrderView> _fields = [];
+    internal readonly List<IOrderView> _fields = [];
     /// <summary>
     /// 获取数量
     /// </summary>
@@ -152,10 +152,17 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
         sql.Length = point;
         return false;
     }
+    #region ICursor
+    ICursor ICursor.Take(int limit)
+    {
+        TakeCore(limit);
+        return this;
+    }
     ICursor ICursor.Skip(int offset)
     {
         SkipCore(offset);
         return this;
     }
+    #endregion
 }
 

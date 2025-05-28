@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 
 namespace ShadowSql;
 
@@ -232,6 +232,26 @@ public static partial class ShadowSqlCoreServices
         return logic;
     }
     #endregion
+    #endregion
+    #region MergeTo
+    /// <summary>
+    /// MergeTo
+    /// </summary>
+    /// <param name="logic"></param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    internal static Logic MergeTo(this Logic logic, Logic other)
+    {
+        if (other is AndLogic and)
+            return and.And(logic);
+        else if (other is OrLogic or)
+            return or.Or(logic);
+        else if (other is ComplexAndLogic complexAnd)
+            return complexAnd.And(logic);
+        else if (other is ComplexOrLogic complexOr)
+            return complexOr.Or(logic);
+        return logic;
+    }
     #endregion
     #region Not
     /// <summary>

@@ -16,7 +16,7 @@ public interface IAssignOperation : IAssignInfo, ISqlEntity
     /// <summary>
     /// 右边值(也可以是列)
     /// </summary>
-    ISqlValue Value { get; }
+    ICompareView Value { get; }
     /// <summary>
     /// 赋值操作符(默认Equal)
     /// </summary>

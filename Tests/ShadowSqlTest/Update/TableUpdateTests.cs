@@ -20,7 +20,7 @@ public class TableUpdateTests
     {
         var update = _db.From("Students")
             .ToUpdate(_score.LessValue(60))
-            .Set(_score.EqualToValue(60));
+            .Set(_score.AssignValue(60));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]=60 WHERE [Score]<60", sql);
     }

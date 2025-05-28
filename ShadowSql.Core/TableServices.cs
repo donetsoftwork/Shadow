@@ -30,7 +30,7 @@ public static partial class ShadowSqlCoreServices
     /// <exception cref="ArgumentNullException"></exception>
     public static IAliasTable<TTable> Alias<TTable>(this IMultiView multiTable, string tableName)
         where TTable : ITable
-        => multiTable.From<TableAlias<TTable>>(tableName);
+        => multiTable.From<IAliasTable<TTable>>(tableName);
     /// <summary>
     /// 定位到成员别名表
     /// </summary>

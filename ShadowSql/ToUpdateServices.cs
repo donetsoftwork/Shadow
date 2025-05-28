@@ -44,7 +44,7 @@ public static partial class ShadowSqlServices
     /// <param name="tableQuery"></param>
     /// <returns></returns>
     public static TableUpdate<IUpdateTable> ToUpdate(this TableSqlQuery tableQuery)
-        => new((IUpdateTable)tableQuery.Source, tableQuery._filter);
+        => new(tableQuery.Source.AsUpdate(), tableQuery._filter);
     /// <summary>
     /// 修改
     /// </summary>
@@ -59,6 +59,6 @@ public static partial class ShadowSqlServices
     /// <param name="tableQuery"></param>
     /// <returns></returns>
     public static TableUpdate<IUpdateTable> ToUpdate(this TableQuery tableQuery)
-        => new((IUpdateTable)tableQuery.Source, tableQuery._filter);
+        => new(tableQuery.Source.AsUpdate(), tableQuery._filter);
     #endregion   
 }

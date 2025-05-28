@@ -1,6 +1,7 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
+using ShadowSql.Tables;
 
 namespace ShadowSql;
 
@@ -58,7 +59,7 @@ public static partial class ShadowSqlServices
     /// <param name="select"></param>
     /// <param name="tableName"></param>
     /// <returns></returns>
-    public static SelectInsert<Table> InsertTo(this ISelect select, string tableName)
-      => new(new Table(tableName), select);
+    public static SelectInsert<EmptyTable> InsertTo(this ISelect select, string tableName)
+      => new(EmptyTable.Use(tableName), select);
     #endregion
 }

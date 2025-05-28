@@ -42,6 +42,8 @@ public sealed class CountAliasFieldInfo : IdentifierBase, IAggregateFieldAlias
     string IAggregate.Aggregate
         => AggregateConstants.Count;
     #endregion
+    IAggregateField IAggregateFieldAlias.ToAggregate()
+        => CountFieldInfo.Instance;
     #region ISqlEntity
     internal override void Write(ISqlEngine engine, StringBuilder sql)
     {

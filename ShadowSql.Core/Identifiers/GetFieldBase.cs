@@ -1,5 +1,6 @@
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ShadowSql.Identifiers;
@@ -9,6 +10,11 @@ namespace ShadowSql.Identifiers;
 /// </summary>
 public abstract class GetFieldBase : ISqlEntity
 {
+    /// <summary>
+    /// 所有字段
+    /// </summary>
+    /// <returns></returns>
+    protected abstract IEnumerable<IField> GetFields();
     /// <summary>
     /// 获取字段
     /// </summary>

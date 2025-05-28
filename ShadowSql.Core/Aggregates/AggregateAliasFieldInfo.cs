@@ -40,6 +40,8 @@ public class AggregateAliasFieldInfo(ICompareField field, string aggregate, stri
     bool IMatch.IsMatch(string name)
         => Identifier.Match(name, Alias);
     #endregion
+    IAggregateField IAggregateFieldAlias.ToAggregate()
+        => new AggregateFieldInfo(_target, _aggregate);
     #region ISqlEntity
     /// <summary>
     /// 拼写sql

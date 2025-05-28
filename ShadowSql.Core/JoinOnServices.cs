@@ -4,6 +4,7 @@ using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
+using ShadowSql.Tables;
 using System;
 using System.Collections.Generic;
 
@@ -101,7 +102,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="tableName"></param>
     /// <returns></returns>
     public static JoinOnQuery LeftTableJoin(this JoinOnQuery joinOn, string tableName)
-        => LeftTableJoin(joinOn, new Table(tableName));
+        => LeftTableJoin(joinOn, EmptyTable.Use(tableName));
     #endregion
     #region RightTableJoin
     /// <summary>
@@ -139,7 +140,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="tableName"></param>
     /// <returns></returns>
     public static JoinOnQuery RightTableJoin(this JoinOnQuery joinOn, string tableName)
-        => RightTableJoin(joinOn, new Table(tableName));
+        => RightTableJoin(joinOn, EmptyTable.Use(tableName));
     #endregion
     #region 扩展逻辑
     /// <summary>
@@ -347,7 +348,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="tableName"></param>
     /// <returns></returns>
     public static JoinOnSqlQuery LeftTableJoin(this JoinOnSqlQuery joinOn, string tableName)
-        => LeftTableJoin(joinOn, new Table(tableName));
+        => LeftTableJoin(joinOn, EmptyTable.Use(tableName));
     #endregion
     #region RightTableJoin
     /// <summary>
@@ -385,7 +386,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="tableName"></param>
     /// <returns></returns>
     public static JoinOnSqlQuery RightTableJoin(this JoinOnSqlQuery joinOn, string tableName)
-        => RightTableJoin(joinOn, new Table(tableName));
+        => RightTableJoin(joinOn, EmptyTable.Use(tableName));
     #endregion
     #region 扩展逻辑
     /// <summary>

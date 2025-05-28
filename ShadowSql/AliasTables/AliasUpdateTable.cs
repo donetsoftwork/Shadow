@@ -13,7 +13,7 @@ namespace ShadowSql.AliasTables;
 /// <param name="source"></param>
 public class AliasUpdateTable<TTable>(IAliasTable<TTable> source)
     : IUpdateTable
-    where TTable : IUpdateTable
+    where TTable : ITable
 {
     #region 配置
     private readonly IAliasTable<TTable> _source = source;

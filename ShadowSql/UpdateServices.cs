@@ -1,3 +1,4 @@
+using ShadowSql.AliasTables;
 using ShadowSql.Identifiers;
 using ShadowSql.Variants;
 using System;
@@ -18,7 +19,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<IPrefixField> GetAssignFields<TTable>(this IAliasTable<TTable> aliasTable)
-        where TTable : IUpdateTable
+        where TTable : ITable
 
     {
         var updateFields = aliasTable.Target.AssignFields.ToList();
@@ -31,5 +32,19 @@ public static partial class ShadowSqlServices
                     yield return field;
             }
         }
+    }
+    /// <summary>
+    /// 转化为修改表
+    /// </summary>
+    /// <param name="view"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    internal static IUpdateTable AsUpdate(this ITableView view)
+    {
+        if (view is ITable table)
+            return table;
+        if (view is IAliasTable<ITable> aliasTable)
+            return new AliasUpdateTable<ITable>(aliasTable);
+        throw new ArgumentException("不支持" + view.GetType().ToString());
     }
 }

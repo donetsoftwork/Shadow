@@ -1,4 +1,3 @@
-using ShadowSql.Aggregates;
 using ShadowSql.Fragments;
 
 namespace ShadowSql.Identifiers;
@@ -40,7 +39,6 @@ public interface IFieldView : IView, IMatch, ISqlEntity
     /// <returns></returns>
     IFieldAlias As(string alias);
 }
-
 ///// <summary>
 ///// 去重字段统计
 ///// </summary>
@@ -59,4 +57,3 @@ public interface IFieldAlias : IFieldView
     /// </summary>
     string Alias { get; }
 }
-

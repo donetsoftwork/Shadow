@@ -45,7 +45,37 @@ var cursor = _db.From("Employees")
 // SELECT * FROM [Employees] GROUP BY [DepartmentId] ORDER BY MAX([Age]) DESC
 ~~~
 
-## 5. AggregateAsc方法
+## 5. Take
+>* Take方法是ToCursor的平替
+### 5.1 Take扩展方法
+>* 从sql分组创建分组游标
+~~~csharp
+GroupByTableCursor<TTable> Take<TTable>(this GroupByTableSqlQuery<TTable> groupBy, int limit, int offset = 0)
+        where TTable : ITable;
+~~~
+~~~csharp
+var cursor = _db.From("Employees")
+    .SqlGroupBy("DepartmentId")
+    .Take(10);
+    .CountAsc();
+// SELECT TOP 10 * FROM [Employees] GROUP BY [DepartmentId] ORDER BY COUNT(*)
+~~~
+
+### 5.2 Take重载扩展方法
+>* 从逻辑分组创建分组游标
+~~~csharp
+GroupByTableCursor<TTable> Take<TTable>(this GroupByTableQuery<TTable> groupBy, int limit = 0, int offset = 0)
+        where TTable : ITable;
+~~~
+~~~csharp
+var cursor = _db.From("Employees")
+    .GroupBy("DepartmentId")
+    .Take(10)
+    .AggregateDesc(g => g.Max("Age"));
+// SELECT TOP 10 * FROM [Employees] GROUP BY [DepartmentId] ORDER BY MAX([Age]) DESC
+~~~
+
+## 6. AggregateAsc方法
 >* 聚合正序
 ~~~csharp
 GroupByTableCursor<TTable> AggregateAsc(Func<TTable, IAggregateField> aggregate);
@@ -58,7 +88,7 @@ var cursor = new CommentTable()
 // SELECT * FROM [Comments] GROUP BY [PostId] ORDER BY SUM([Pick])
 ~~~
 
-## 6. AggregateDesc方法
+## 7. AggregateDesc方法
 >* 聚合正序
 ~~~csharp
 GroupByTableCursor<TTable> AggregateDesc(Func<TTable, IAggregateField> aggregate);
@@ -71,7 +101,7 @@ var cursor = new CommentTable()
 // SELECT * FROM [Comments] GROUP BY [PostId] ORDER BY SUM([Pick]) DESC
 ~~~
 
-## 7. 其他相关功能
+## 8. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
 >* 参看[GroupByTableCursor\<TTable\>](/api/ShadowSql.Cursors.GroupByTableCursor-1.html)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)

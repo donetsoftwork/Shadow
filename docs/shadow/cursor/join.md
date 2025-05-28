@@ -50,8 +50,47 @@ var cursor = c.Multi(p)
     .ToCursor(10, 20);
 ~~~
 
-## 5. 按表排序
-### 5.1 Asc方法
+## 5. Take扩展方法
+>* Take方法是ToCursor的平替
+>* 把[IMultiView](xref:ShadowSql.Identifiers.IMultiView)转换为联表游标,IMultiView的4个实现类可用在这里
+>* [JoinTableSqlQuery](xref:ShadowSql.Join.JoinTableSqlQuery)
+>* [JoinTableQuery](xref:ShadowSql.Join.JoinTableQuery)
+>* [MultiTableSqlQuery](xref:ShadowSql.Join.MultiTableSqlQuery)
+>* [MultiTableQuery](xref:ShadowSql.Join.MultiTableQuery)
+~~~csharp
+MultiTableCursor Take(this MultiTableBase query, int limit, int offset = 0);
+~~~
+~~~csharp
+var cursor = _db.From("Employees")
+    .SqlJoin(_db.From("Departments"))
+    .On("DepartmentId", "Id")
+    .Root
+    .Take(10, 20);
+~~~
+~~~csharp
+CommentAliasTable c = new("c");
+PostAliasTable p = new("p");
+var cursor = c.Join(p)
+    .And(c.PostId.Equal(p.Id))
+    .Root
+    .Take(10, 20);
+~~~
+~~~csharp
+var cursor = _db.From("Employees")
+    .SqlMulti(_db.From("Departments"))
+    .Where("t1.DepartmentId=t2.Id")
+    .Take(10, 20);
+~~~
+~~~csharp
+CommentAliasTable c = new("c");
+PostAliasTable p = new("p");
+var cursor = c.Multi(p)
+    .And(c.PostId.Equal(p.Id))
+    .Take(10, 20);
+~~~
+
+## 6. 按表排序
+### 6.1 Asc方法
 >正序
 ~~~csharp
 MultiTableCursor Asc<TTable>(string tableName, Func<TTable, IColumn> select)
@@ -67,7 +106,7 @@ var cursor = new CommentTable()
 // SELECT * FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] ORDER BY t2.[Id]
 ~~~
 
-### 5.2 Desc方法
+### 6.2 Desc方法
 >倒序
 ~~~csharp
 MultiTableCursor Desc<TTable>(string tableName, Func<TTable, IColumn> select)
@@ -84,8 +123,8 @@ var cursor = c.SqlJoin(p)
 // SELECT * FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] ORDER BY t2.[Id] DESC
 ~~~
 
-## 6. 按别名表排序
-### 6.1 Asc方法
+## 7. 按别名表排序
+### 7.1 Asc方法
 >正序
 ~~~csharp
 MultiTableCursor Asc<TAliasTable>(string tableName, Func<TAliasTable, IOrderView> select)
@@ -101,7 +140,7 @@ var cursor = new CommentAliasTable("c")
 // SELECT * FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] ORDER BY c.[Id]
 ~~~
 
-### 6.2 Desc方法
+### 7.2 Desc方法
 >倒序
 ~~~csharp
 MultiTableCursor Desc<TAliasTable>(string tableName, Func<TAliasTable, IOrderAsc> select)
@@ -117,7 +156,7 @@ var cursor = new CommentAliasTable("c")
 // SELECT * FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] ORDER BY c.[Pick] DESC
 ~~~
 
-## 7. 其他相关功能
+## 8. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
 >* 参看[MultiTableCursor](xref:ShadowSql.Cursors.MultiTableCursor)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)

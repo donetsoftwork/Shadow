@@ -17,8 +17,8 @@ public class JoinTableQueryTests
     [Fact]
     public void ApplyLeft()
     {
-        var query = SimpleTable.Use("Comments")
-            .Join(SimpleTable.Use("Posts"))
+        var query = EmptyTable.Use("Comments")
+            .Join(EmptyTable.Use("Posts"))
             .Apply("PostId", "Id", (q, PostId, Id) => q.And(PostId.Equal(Id)))
             .ApplyLeft("Pick", (q, Pick) => q.And(Pick.EqualValue(true)));
         var sql = _engine.Sql(query.Root);
@@ -27,8 +27,8 @@ public class JoinTableQueryTests
     [Fact]
     public void ApplyRight()
     {
-        var query = SimpleTable.Use("Posts")
-            .Join(SimpleTable.Use("Comments"))
+        var query = EmptyTable.Use("Posts")
+            .Join(EmptyTable.Use("Comments"))
             .Apply("Id", "PostId", (q, Id, PostId) => q.And(Id.Equal(PostId)))
             .ApplyRight("Pick", (q, Pick) => q.And(Pick.EqualValue(true)));
         var sql = _engine.Sql(query.Root);

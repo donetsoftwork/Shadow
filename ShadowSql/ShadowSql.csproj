@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+    <Version>$(VersionBase).0-alpha</Version>
     <PackageId>ShadowSql</PackageId>
     <Description>拼接sql工具</Description>
     <PackageTags>sql;sql-builder;sql-query</PackageTags>
@@ -14,6 +14,7 @@
     <Content Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="ShadowExpressionSql" />
     <InternalsVisibleTo Include="Dapper.Shadow" />
     <InternalsVisibleTo Include="ShadowSqlTest" />
   </ItemGroup>

@@ -41,9 +41,9 @@ JoinTableSqlQuery query = joinOn.Root
 
 ### 4.3 使用表名生成别名表 
 ```csharp
-var c = SimpleTable.Use("Comments")
+var c = EmptyTable.Use("Comments")
     .As("c");
-var p = SimpleTable.Use("Posts")
+var p = EmptyTable.Use("Posts")
     .As("p");
 var joinOn = JoinOnSqlQuery.Create(c, p)
     .OnColumn("PostId", "Id");

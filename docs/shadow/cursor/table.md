@@ -84,7 +84,76 @@ var cursor = new TableQuery("Users")
     .ToCursor(10, 20);
 ~~~
 
-## 5. Asc方法
+## 5. Take
+>* Take方法是ToCursor的平替
+### 5.1 Take扩展方法
+~~~csharp
+TableCursor<TTable> Take<TTable>(this TTable source, int limit, int offset = 0)
+        where TTable : ITable;
+~~~
+~~~csharp
+var cursor = _db.From("Users")
+    .Take(10, 20);
+~~~
+
+### 5.2 Take重载扩展方法
+~~~csharp
+TableCursor<TTable> Take<TTable>(this TTable source, ISqlLogic where, int limit, int offset = 0)
+        where TTable : ITable;
+~~~
+~~~csharp
+var age = Column.Use("Age");
+var cursor = _db.From("Users")
+    .Take(age.GreaterValue(30), 10, 20);
+~~~
+
+### 5.3 Take重载扩展方法
+~~~csharp
+TableCursor<TTable> Take<TTable>(this TableSqlQuery<TTable> query, int limit, int offset = 0)
+        where TTable : ITable;
+~~~
+~~~csharp
+var cursor = _db.From("Users")
+    .ToSqlQuery()
+    .Where("Age>30")
+    .Take(10, 20);
+~~~
+
+### 5.4 Take重载扩展方法
+~~~csharp
+TableCursor<TTable> ToCursor<TTable>(this TableQuery<TTable> query, int limit, int offset = 0)
+        where TTable : ITable;
+~~~
+~~~csharp
+var age = Column.Use("Age");
+var cursor = _db.From("Users")
+    .ToQuery()
+    .And(age.GreaterValue(30))
+    .Take(10, 20);
+~~~
+
+### 5.5 Take重载扩展方法
+~~~csharp
+TableCursor<ITable> Take(this TableSqlQuery query, int limit, int offset = 0);
+~~~
+~~~csharp
+var cursor = new TableSqlQuery("Users")
+    .Where("Age>30")
+    .Take(10, 20);
+~~~
+
+### 5.6 Take重载扩展方法
+~~~csharp
+TableCursor<ITable> Take(this TableQuery query, int limit, int offset = 0);
+~~~
+~~~csharp
+var age = Column.Use("Age");
+var cursor = new TableQuery("Users")
+    .And(age.GreaterValue(30))
+    .Take(10, 20);
+~~~
+
+## 6. Asc方法
 ~~~csharp
 TableCursor<TTable> Asc(Func<TTable, IOrderView> select);
 ~~~
@@ -94,7 +163,7 @@ var select = new UserTable()
     .Asc(table => table.Id);
 ~~~
 
-## 6. Desc方法
+## 7. Desc方法
 ~~~csharp
 TableCursor<TTable> Desc(Func<TTable, IOrderAsc> select);
 ~~~
@@ -104,7 +173,7 @@ var select = new UserTable()
     .Desc(table => table.Id);
 ~~~
 
-## 7. 其他相关功能
+## 8. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
 >* 参看[TableCursor\<TTable\>](xref:ShadowSql.Cursors.TableCursor%601)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)

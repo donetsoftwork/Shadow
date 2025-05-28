@@ -24,7 +24,7 @@ interface ITable : IInsertTable, IUpdateTable, ITableView
 
 ### 1.2 类型
 >* Table
->* SimpleTable
+>* EmptyTable
 >* TableSchema
 
 ### 1.3 作用

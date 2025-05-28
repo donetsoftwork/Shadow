@@ -8,13 +8,13 @@ namespace ShadowSql.Assigns;
 /// <summary>
 /// 赋值操作
 /// </summary>
-public class AssignOperation(IAssignView column, AssignSymbol assign, ISqlValue value)
+public class AssignOperation(IAssignView column, AssignSymbol assign, ICompareView value)
     : IAssignOperation
 {
     #region 配置
     private readonly IAssignView _column = column;    
     private readonly AssignSymbol _assign = assign;
-    private readonly ISqlValue _value = value;
+    private readonly ICompareView _value = value;
 
     /// <summary>
     /// 左边列
@@ -24,7 +24,7 @@ public class AssignOperation(IAssignView column, AssignSymbol assign, ISqlValue 
     /// <summary>
     /// 右边值(也可以是列)
     /// </summary>
-    public ISqlValue Value
+    public ICompareView Value
         => _value;
     /// <summary>
     /// 赋值操作符(默认Equal)

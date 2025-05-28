@@ -40,7 +40,7 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// <param name="tableName"></param>
     /// <param name="filter"></param>
     public TableQuery(string tableName, Logic filter)
-        : this(filter, new Table(tableName))
+        : this(filter, EmptyTable.Use(tableName))
     {
     }
     /// <summary>
@@ -48,7 +48,7 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// </summary>
     /// <param name="tableName"></param>
     public TableQuery(string tableName)
-        : this(new AndLogic(), new Table(tableName))
+        : this(new AndLogic(), EmptyTable.Use(tableName))
     {
     }
     #endregion

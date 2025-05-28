@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,7 @@ namespace ShadowSql.Insert;
 public abstract class SingleInsertBase(List<IInsertValue> items)
 {
     #region 配置
-    private readonly List<IInsertValue> _items = items;
-
+    internal readonly List<IInsertValue> _items = items;
     /// <summary>
     /// 插入单值列表
     /// </summary>

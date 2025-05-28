@@ -1,6 +1,7 @@
 using ShadowSql.Delete;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using ShadowSql.Tables;
 using System;
 
 namespace ShadowSql;
@@ -29,6 +30,20 @@ public static partial class ShadowSqlCoreServices
     public static TableDelete ToDelete<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
         where TTable : ITable
         => new(table, query(table));
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TableDelete ToDelete(this TableSqlQuery query)
+        => new((ITable)query.Source, query._filter);
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TableDelete ToDelete(this TableQuery query)
+        => new((ITable)query.Source, query._filter);
     #endregion
     #region AliasTableDelete
     /// <summary>

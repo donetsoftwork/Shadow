@@ -2,6 +2,7 @@ using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
+using ShadowSql.Tables;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,7 +69,7 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <param name="having"></param>
     /// <param name="fields"></param>
     public GroupBySqlQuery(string tableName, SqlQuery having, params IField[] fields)
-        : this(having, new Table(tableName), fields)
+        : this(having, EmptyTable.Use(tableName), fields)
     {
     }
     /// <summary>
@@ -77,7 +78,7 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <param name="tableName"></param>
     /// <param name="fields"></param>
     public GroupBySqlQuery(string tableName, params IField[] fields)
-        : this(SqlQuery.CreateAndQuery(), new Table(tableName), fields)
+        : this(SqlQuery.CreateAndQuery(), EmptyTable.Use(tableName), fields)
     {
     }
     #endregion

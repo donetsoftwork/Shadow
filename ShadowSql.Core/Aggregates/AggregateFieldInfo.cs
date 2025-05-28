@@ -22,6 +22,9 @@ public sealed class AggregateFieldInfo(ICompareField target, string aggregate)
         _target.Write(engine, sql);
         sql.Append(')');
     }
+    IAggregateFieldAlias IAggregateField.As(string alias)
+        => new AggregateAliasFieldInfo(_target, _aggregate, alias);
+
     string IAggregateField.TargetName
         => _target.ViewName;
 }

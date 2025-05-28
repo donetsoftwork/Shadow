@@ -1,5 +1,6 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Join;
+using ShadowSql.Tables;
 using ShadowSql.Variants;
 using System.Collections.Generic;
 
@@ -50,7 +51,7 @@ public static partial class ShadowSqlCoreServices
     {
         foreach (var tableName in tableNames)
         {
-            var member = new Table(tableName)
+            var member = EmptyTable.Use(tableName)
                 .As(multiTable.CreateMemberName());
             multiTable.AddMemberCore(member);
         }

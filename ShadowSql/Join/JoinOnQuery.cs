@@ -3,7 +3,6 @@ using ShadowSql.Logics;
 using ShadowSql.Queries;
 using ShadowSql.Variants;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ShadowSql.Join;
 
@@ -16,8 +15,8 @@ namespace ShadowSql.Join;
 /// <param name="left"></param>
 /// <param name="right"></param>
 /// <param name="onQuery"></param>
-public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable> left, TableAlias<RTable> right, Logic onQuery)
-    : JoinOnBase<JoinTableQuery, TableAlias<LTable>, TableAlias<RTable>, LTable, RTable, Logic>(root, left, right, onQuery), IDataQuery
+public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, IAliasTable<LTable> left, IAliasTable<RTable> right, Logic onQuery)
+    : JoinOnBase<JoinTableQuery, IAliasTable<LTable>, IAliasTable<RTable>, LTable, RTable, Logic>(root, left, right, onQuery), IDataQuery
     where LTable : ITable
     where RTable : ITable
 {
@@ -27,7 +26,7 @@ public class JoinOnQuery<LTable, RTable>(JoinTableQuery root, TableAlias<LTable>
     /// <param name="root"></param>
     /// <param name="left"></param>
     /// <param name="right"></param>
-    public JoinOnQuery(JoinTableQuery root, TableAlias<LTable> left, TableAlias<RTable> right)
+    public JoinOnQuery(JoinTableQuery root, IAliasTable<LTable> left, IAliasTable<RTable> right)
         : this(root, left, right, new AndLogic())
     {
     }

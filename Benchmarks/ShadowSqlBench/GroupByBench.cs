@@ -4,7 +4,10 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
 using ShadowSql.FieldQueries;
+using ShadowSql.Expressions;
 using ShadowSql.Identifiers;
+using ShadowSql.Tables;
+using ShadowSqlBench.Supports;
 using SqlKata;
 using SqlKata.Compilers;
 
@@ -14,21 +17,20 @@ namespace ShadowSqlBench;
 //[MemoryDiagnoser, SimpleJob(launchCount: 1, warmupCount: 0, iterationCount: 0, invocationCount: 1)]
 public class GroupByBench
 {
-    private static ISqlEngine _engine = new MySqlEngine();
-    private static DB _db = DB.Use("ShadowSql");
-
-    private static Compiler _compiler = new MySqlCompiler();
-    private static IColumn PostId = ShadowSql.Identifiers.Column.Use("PostId");
-    private static IColumn Category = ShadowSql.Identifiers.Column.Use("Category");
-    private static IColumn Pick = ShadowSql.Identifiers.Column.Use("Pick");
-    private static IColumn Hits = ShadowSql.Identifiers.Column.Use("Hits");
-    private static Table Comments = _db.From("Comments")
+    private static readonly ISqlEngine _engine = new MySqlEngine();
+    private static readonly DB _db = DB.Use("ShadowSql");
+    private static readonly Compiler _compiler = new MySqlCompiler();
+    private static readonly IColumn PostId = ShadowSql.Identifiers.Column.Use("PostId");
+    private static readonly IColumn Category = ShadowSql.Identifiers.Column.Use("Category");
+    private static readonly IColumn Pick = ShadowSql.Identifiers.Column.Use("Pick");
+    private static readonly IColumn Hits = ShadowSql.Identifiers.Column.Use("Hits");
+    private static readonly Table Comments = _db.From("Comments")
         .AddColums(PostId, Category, Pick);
 
     [Benchmark]
     public string ShadowSqlByTableName()
     {
-        var select = new Table("Comments")
+        var select = EmptyTable.Use("Comments")
             .ToSqlQuery()
             .FieldEqualValue("Category", "csharp")
             .FieldEqualValue("Pick", true)
@@ -61,6 +63,22 @@ public class GroupByBench
         //Console.WriteLine(sql);
         return sql;
     }
+
+    [Benchmark]
+    public string ShadowSqlByExpression()
+    {
+        var select = Comments.GroupBy<int, Comment>(c => c.Pick, c => c.PostId)
+            .And(g => g.Sum(c => c.Hits) >= 100)
+            .ToCursor()
+            .Desc(g => g.Count())
+            .ToSelect()
+            .SelectKey()
+            .SelectCount("Count");
+        var sql = _engine.Sql(select);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+
     [Benchmark]
     public string ShadowSqlByLogic()
     {

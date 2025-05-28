@@ -40,6 +40,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowSqlCoreTest", "Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSupports", "Tests\TestSupports\TestSupports.csproj", "{35C82878-C865-4409-A14F-E1B3E14C75DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowSql.Expressions", "ShadowSql.Expressions\ShadowSql.Expressions.csproj", "{4B16B692-FB8C-E062-DF01-7B4903B9C014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowSql.ExpressionsTests", "Tests\ShadowSql.ExpressionsTests\ShadowSql.ExpressionsTests.csproj", "{2875AA7A-FCBE-04A4-0B5E-DB2D20BB1769}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +98,14 @@ Global
 		{35C82878-C865-4409-A14F-E1B3E14C75DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35C82878-C865-4409-A14F-E1B3E14C75DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35C82878-C865-4409-A14F-E1B3E14C75DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B16B692-FB8C-E062-DF01-7B4903B9C014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B16B692-FB8C-E062-DF01-7B4903B9C014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B16B692-FB8C-E062-DF01-7B4903B9C014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B16B692-FB8C-E062-DF01-7B4903B9C014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2875AA7A-FCBE-04A4-0B5E-DB2D20BB1769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2875AA7A-FCBE-04A4-0B5E-DB2D20BB1769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2875AA7A-FCBE-04A4-0B5E-DB2D20BB1769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2875AA7A-FCBE-04A4-0B5E-DB2D20BB1769}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +118,7 @@ Global
 		{52538039-BD62-42AA-A7C4-29B4C00429D7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{B368B419-8B35-E948-8E14-2EB83181D237} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{35C82878-C865-4409-A14F-E1B3E14C75DB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2875AA7A-FCBE-04A4-0B5E-DB2D20BB1769} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86396870-E402-4203-9799-57FE0BCCF5D8}

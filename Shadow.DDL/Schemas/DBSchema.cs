@@ -1,6 +1,5 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
-using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System;
 using System.Collections.Generic;

@@ -2,6 +2,7 @@ using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
+using ShadowSql.Tables;
 using System.Collections.Generic;
 using System.Text;
 
@@ -31,7 +32,7 @@ public class SelectInsert(IInsertTable table, List<IColumn> columns, ISelect sel
     /// <param name="tableName"></param>
     /// <param name="select"></param>
     public SelectInsert(string tableName, ISelect select)
-        : this(new Table(tableName), select)
+        : this(EmptyTable.Use(tableName), select)
     {
     }
     #region 配置

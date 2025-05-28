@@ -48,7 +48,7 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     public GroupByMultiSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IAggregateFieldAlias> select)
         where TAliasTable : IAliasTable
     {
-        SelectCore(select(_groupSource.From< TAliasTable>(tableName)));
+        SelectCore(select(_groupSource.From<TAliasTable>(tableName)));
         return this;
     }
     /// <summary>

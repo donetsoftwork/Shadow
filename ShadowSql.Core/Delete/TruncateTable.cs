@@ -1,6 +1,7 @@
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
+using ShadowSql.Tables;
 using System.Text;
 
 namespace ShadowSql.Delete;
@@ -17,7 +18,7 @@ public class TruncateTable(ITable table)
     /// </summary>
     /// <param name="tableName"></param>
     public TruncateTable(string tableName)
-        : this(new Table(tableName))
+        : this(EmptyTable.Use(tableName))
     {
     }
     #region 配置

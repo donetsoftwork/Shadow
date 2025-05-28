@@ -6,8 +6,10 @@ using ShadowSql.Engines;
 using ShadowSql.Engines.MySql;
 using ShadowSql.FieldQueries;
 using ShadowSql.Identifiers;
+using ShadowSql.Expressions;
 using ShadowSql.Select;
 using ShadowSql.Tables;
+using ShadowSqlBench.Supports;
 using SqlKata;
 using SqlKata.Compilers;
 
@@ -17,19 +19,19 @@ namespace ShadowSqlBench;
 //[MemoryDiagnoser, SimpleJob(launchCount: 1, warmupCount: 0, iterationCount: 0, invocationCount: 1)]
 public class CursorBench
 {
-    private static ISqlEngine _engine = new MySqlEngine();
-    private static DB _db = DB.Use("ShadowSql");
-    private static Table _table = _db.From("Posts");
-    private static Compiler _compiler = new MySqlCompiler();
-    private static IColumn Id = ShadowSql.Identifiers.Column.Use("Id");
-    private static IColumn Title = ShadowSql.Identifiers.Column.Use("Title");
-    private static IColumn Category = ShadowSql.Identifiers.Column.Use("Category");
-    private static IColumn Pick = ShadowSql.Identifiers.Column.Use("Pick");
+    private static readonly ISqlEngine _engine = new MySqlEngine();
+    private static readonly DB _db = DB.Use("ShadowSql");
+    private static readonly Table _table = _db.From("Posts");
+    private static readonly Compiler _compiler = new MySqlCompiler();
+    private static readonly IColumn Id = ShadowSql.Identifiers.Column.Use("Id");
+    private static readonly IColumn Title = ShadowSql.Identifiers.Column.Use("Title");
+    private static readonly IColumn Category = ShadowSql.Identifiers.Column.Use("Category");
+    private static readonly IColumn Pick = ShadowSql.Identifiers.Column.Use("Pick");
 
     [Benchmark]
     public string ShadowSqlByTableName()
     {
-        var select = new Table("Posts")
+        var select = EmptyTable.Use("Posts")
             .ToSqlQuery()
             .FieldEqualValue("Category", "csharp")
             .FieldEqualValue("Pick", true)
@@ -58,6 +60,22 @@ public class CursorBench
         //Console.WriteLine(sql);
         return sql;
     }
+
+    [Benchmark]
+    public string ShadowSqlByExpression()
+    {
+        bool Pick = true;
+        var select = _table.ToQuery<Post>()
+            .And(p => p.Pick == Pick)
+            .Take(10, 10)
+            .Desc(p => p.Id)
+            .ToSelect()
+            .Select(p => new { p.Id, p.Title });
+        var sql = _engine.Sql(select);
+        //Console.WriteLine(sql);
+        return sql;
+    }
+
     [Benchmark]
     public string ShadowSqlByLogic()
     {

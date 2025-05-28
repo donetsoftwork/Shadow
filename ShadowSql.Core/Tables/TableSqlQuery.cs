@@ -39,7 +39,7 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// <param name="tableName"></param>
     /// <param name="query"></param>
     public TableSqlQuery(string tableName, SqlQuery query)
-        : this(query, new Table(tableName))
+        : this(query, EmptyTable.Use(tableName))
     {
     }
     /// <summary>
@@ -47,7 +47,7 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// </summary>
     /// <param name="tableName"></param>
     public TableSqlQuery(string tableName)
-        : this(SqlQuery.CreateAndQuery(), new Table(tableName))
+        : this(SqlQuery.CreateAndQuery(), EmptyTable.Use(tableName))
     {
     }
     #endregion

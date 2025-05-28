@@ -58,7 +58,7 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
     /// <param name="engine"></param>
     /// <param name="sql"></param>
     /// <returns></returns>
-    private void Write(ISqlEngine engine, StringBuilder sql)
+    internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         if (!string.IsNullOrEmpty(_schema))
         {
@@ -67,8 +67,6 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         }
         engine.Identifier(sql, _name);
     }
-    void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
-        => Write(engine, sql);
 
     IColumn? ITable.GetColumn(string columName)
         => GetColumn(columName);

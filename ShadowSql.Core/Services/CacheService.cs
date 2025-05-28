@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+#if NET9_0_OR_GREATER
 using System.Threading;
+#endif
 
 namespace ShadowSql.Services;
 
@@ -56,23 +58,17 @@ public class CacheService<Identifier>(Func<string, Identifier> factory)
     /// <param name="name"></param>
     /// <param name="identifier"></param>
     public void Set(string name, Identifier identifier)
-    {
-        _cacher[name] = identifier;
-    }
+        => _cacher[name] = identifier;
     /// <summary>
     /// 移除
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
     public bool Remove(string name)
-    {
-        return _cacher.Remove(name);
-    }
+        => _cacher.Remove(name);
     /// <summary>
     /// 清空
     /// </summary>
     public void Clear()
-    {
-        _cacher.Clear();
-    }
+        => _cacher.Clear();
 }

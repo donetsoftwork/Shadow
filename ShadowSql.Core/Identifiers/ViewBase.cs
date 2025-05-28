@@ -9,12 +9,6 @@ public abstract class ViewBase : GetFieldBase
 {
     #region ITableView
     /// <summary>
-    /// 所有字段
-    /// </summary>
-    /// <returns></returns>
-    protected abstract IEnumerable<IField> GetFields();
-
-    /// <summary>
     /// 获取比较字段
     /// </summary>
     /// <param name="fieldName"></param>

@@ -13,7 +13,7 @@ namespace ShadowSql.Update;
 /// <param name="filter"></param>
 public class AliasTableUpdate<TTable>(AliasUpdateTable<TTable> table, ISqlLogic filter)
     : UpdateBase<AliasUpdateTable<TTable>>(table)
-    where TTable : IUpdateTable
+    where TTable : ITable
 {
     /// <summary>
     /// 修改别名表

@@ -74,7 +74,7 @@ public static partial class DapperShadowServices
     /// <param name="filter"></param>
     /// <param name="param"></param>
     /// <returns></returns>
-    public static int Count<TTable>(this TableAlias<TTable> table, ISqlLogic filter, object? param = null)
+    public static int Count<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, object? param = null)
         where TTable : IDapperTable
         => table.Target.Executor.Count<int>(new TableFilter(table, filter), param);
     /// <summary>

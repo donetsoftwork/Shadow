@@ -1,8 +1,7 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.SqlVales;
 using System.Text;
 
 namespace ShadowSql.CompareLogics;
@@ -13,18 +12,18 @@ namespace ShadowSql.CompareLogics;
 /// <param name="field"></param>
 /// <param name="op"></param>
 /// <param name="value"></param>
-public class CompareLogic(ICompareView field, CompareSymbol op, ISqlValue value)
+public class CompareLogic(ICompareView field, CompareSymbol op, ICompareView value)
     : CompareLogicBase(field, op)
 {
     /// <summary>
     /// 比较参数(或字段)
     /// </summary>
-    protected readonly ISqlValue _value = value;
+    protected readonly ICompareView _value = value;
 
     /// <summary>
     /// 比较参数(或字段)
     /// </summary>
-    public ISqlValue Value
+    public ICompareView Value
         => _value;
     /// <summary>
     /// 否定逻辑

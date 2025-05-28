@@ -72,10 +72,8 @@ var students = table.ToSelect(table.Age.EqualValue(10))
 var table = new StudentTable("Students");
 var students = table.ToQuery()
     .Where(table.Age.GreaterEqualValue(9))
-    .ToCursor()
+    .Skip(10, 10)
     .Desc(table.Id)
-    .Skip(10)
-    .Take(10)
     .ToSelect()
     .Get<Student>(SqliteExecutor);
 ~~~

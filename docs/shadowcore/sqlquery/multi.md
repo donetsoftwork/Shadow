@@ -116,9 +116,9 @@ var multiTable = new MultiTableSqlQuery()
 
 ### 5.3.2 使用表名生成别名表 
 ```csharp
-var c = SimpleTable.Use("Comments")
+var c = EmptyTable.Use("Comments")
     .As("c");
-var p = SimpleTable.Use("Posts")
+var p = EmptyTable.Use("Posts")
     .As("p");
 var multiTable = new MultiTableSqlQuery()
     .AddMembers(c, p)

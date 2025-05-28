@@ -23,7 +23,7 @@ public class TableUpdateTests
     {
         var table = _db.From("Students");
         var update = new TableUpdate(table, _score.LessValue(60))
-            .Set(_score.EqualToValue(60));
+            .Set(_score.AssignValue(60));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]=60 WHERE [Score]<60", sql);
     }
@@ -42,7 +42,7 @@ public class TableUpdateTests
     {
         var table = new UserTable();
         var update = new TableUpdate(table, table.Id.Equal())
-            .Set(table.Status.EqualToValue(false));
+            .Set(table.Status.AssignValue(false));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Users] SET [Status]=0 WHERE [Id]=@Id", sql);
     }
@@ -53,7 +53,7 @@ public class TableUpdateTests
         var query = new TableSqlQuery(table)
             .Where(table.Id.Equal());
         var update = new TableUpdate(table, query.Filter)
-            .Set(table.Status.EqualToValue(false));
+            .Set(table.Status.AssignValue(false));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Users] SET [Status]=0 WHERE [Id]=@Id", sql);
     }
@@ -63,7 +63,7 @@ public class TableUpdateTests
         var id = Column.Use("Id");
         var status = Column.Use("Status");
         var update = TableUpdate.Create("Users", id.EqualValue(1))
-             .Set(status.EqualToValue(false));
+             .Set(status.AssignValue(false));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Users] SET [Status]=0 WHERE [Id]=1", sql);
     }

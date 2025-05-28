@@ -64,6 +64,11 @@ public class TableCursor : CursorBase, ICursor
         => _source;
     #endregion
     #region ICursor
+    ICursor ICursor.Take(int limit)
+    {
+        TakeCore(limit);
+        return this;
+    }
     ICursor ICursor.Skip(int offset)
     {
         SkipCore(offset);

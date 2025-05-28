@@ -15,8 +15,8 @@ namespace ShadowSql.Join;
 /// <param name="left"></param>
 /// <param name="right"></param>
 /// <param name="onQuery"></param>
-public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<LTable> left, TableAlias<RTable> right, SqlQuery onQuery)
-    : JoinOnBase<JoinTableSqlQuery, TableAlias<LTable>, TableAlias<RTable>, LTable, RTable, SqlQuery>(root, left, right, onQuery), IDataSqlQuery
+public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, IAliasTable<LTable> left, IAliasTable<RTable> right, SqlQuery onQuery)
+    : JoinOnBase<JoinTableSqlQuery, IAliasTable<LTable>, IAliasTable<RTable>, LTable, RTable, SqlQuery>(root, left, right, onQuery), IDataSqlQuery
     where LTable : ITable
     where RTable : ITable
 {
@@ -26,7 +26,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, TableAlias<L
     /// <param name="root"></param>
     /// <param name="left"></param>
     /// <param name="right"></param>
-    public JoinOnSqlQuery(JoinTableSqlQuery root, TableAlias<LTable> left, TableAlias<RTable> right)
+    public JoinOnSqlQuery(JoinTableSqlQuery root, IAliasTable<LTable> left, IAliasTable<RTable> right)
         : this(root, left, right, SqlQuery.CreateAndQuery())
     { 
     }

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -18,7 +18,7 @@ public class BetweenLogic : CompareLogic
     /// <param name="field"></param>
     /// <param name="begin"></param>
     /// <param name="end"></param>
-    public BetweenLogic(ICompareView field, ISqlValue begin, ISqlValue end)
+    public BetweenLogic(ICompareView field, ICompareView begin, ICompareView end)
         : this(field, CompareSymbol.Between, begin, end)
     {
     }
@@ -29,7 +29,7 @@ public class BetweenLogic : CompareLogic
     /// <param name="op"></param>
     /// <param name="begin"></param>
     /// <param name="end"></param>
-    protected BetweenLogic(ICompareView field, CompareSymbol op, ISqlValue begin, ISqlValue end)
+    protected BetweenLogic(ICompareView field, CompareSymbol op, ICompareView begin, ICompareView end)
         : base(field, op, begin)
     {
         _end = end;
@@ -37,11 +37,11 @@ public class BetweenLogic : CompareLogic
     /// <summary>
     /// 下限
     /// </summary>
-    protected readonly ISqlValue _end;
+    protected readonly ICompareView _end;
     /// <summary>
     /// 下限
     /// </summary>
-    public ISqlValue End 
+    public ICompareView End 
         => _end;
     /// <summary>
     /// 拼写sql

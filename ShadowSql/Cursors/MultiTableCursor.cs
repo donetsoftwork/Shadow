@@ -9,7 +9,7 @@ namespace ShadowSql.Cursors;
 /// <param name="source"></param>
 /// <param name="limit"></param>
 /// <param name="offset"></param>
-public class MultiTableCursor(IMultiView source, int limit, int offset)
+public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
     : CursorBase<IMultiView>(source, limit, offset)
 {
     #region 功能

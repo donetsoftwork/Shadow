@@ -14,8 +14,8 @@ public class GroupByMultiCursorSelectTests
     [Fact]
     public void ToCursor()
     {
-        var select = SimpleTable.Use("Employees")
-            .SqlJoin(SimpleTable.Use("Departments"))
+        var select = EmptyTable.Use("Employees")
+            .SqlJoin(EmptyTable.Use("Departments"))
             .OnColumn("DepartmentId", "Id")
             .Root
             .SqlGroupBy("Manager")

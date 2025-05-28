@@ -144,7 +144,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this TableAlias<TTable> table, params IField[] fields)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, params IField[] fields)
         where TTable : ITable
         => new(table, EmptyLogic.Instance, fields);
     /// <summary>
@@ -153,7 +153,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this TableAlias<TTable> table, Func<TTable, IColumn[]> select)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, Func<TTable, IColumn[]> select)
         where TTable : ITable
         => new(table, EmptyLogic.Instance, [.. select(table.Target).Select(table.Prefix)]);
     /// <summary>
@@ -162,7 +162,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="columnNames"></param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this TableAlias<TTable> table, params IEnumerable<string> columnNames)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, params IEnumerable<string> columnNames)
         where TTable : ITable
         => new(table, EmptyLogic.Instance, [.. table.Fields(columnNames)]);
     #endregion
@@ -175,7 +175,7 @@ public static partial class ShadowSqlServices
     /// <param name="where"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this TableAlias<TTable> table, ISqlLogic where, params IField[] fields)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IField[] fields)
         where TTable : ITable
         => new(table, where, fields);
     /// <summary>
@@ -186,7 +186,7 @@ public static partial class ShadowSqlServices
     /// <param name="where"></param>
     /// <param name="columnNames"></param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this TableAlias<TTable> table, ISqlLogic where, params IEnumerable<string> columnNames)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable
         => new(table, where, [.. table.Fields(columnNames)]);
     #endregion
@@ -419,7 +419,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableAlias<TTable> table, params IField[] fields)
+    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, params IField[] fields)
         where TTable : ITable
         => new(table, EmptyLogic.Instance, fields);
     /// <summary>
@@ -428,7 +428,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableAlias<TTable> table, Func<TTable, IColumn[]> select)
+    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, Func<TTable, IColumn[]> select)
         where TTable : ITable
         => new(table, EmptyLogic.Instance, [.. select(table.Target).Select(table.Prefix)]);
     /// <summary>
@@ -437,7 +437,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="columnNames"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableAlias<TTable> table, params IEnumerable<string> columnNames)
+    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, params IEnumerable<string> columnNames)
         where TTable : ITable
         => new(table, EmptyLogic.Instance, [.. table.Fields(columnNames)]);
     #endregion
@@ -450,7 +450,7 @@ public static partial class ShadowSqlServices
     /// <param name="where"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableAlias<TTable> table, ISqlLogic where, params IField[] fields)
+    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IField[] fields)
         where TTable : ITable
         => new(table, where, fields);
     /// <summary>
@@ -461,7 +461,7 @@ public static partial class ShadowSqlServices
     /// <param name="where"></param>
     /// <param name="columnNames"></param>
     /// <returns></returns>
-    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableAlias<TTable> table, ISqlLogic where, params IEnumerable<string> columnNames)
+    public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable
         => new(table, where, [.. table.Fields(columnNames)]);
     #endregion

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.SqlVales;
@@ -11,7 +11,7 @@ namespace ShadowSql.CompareLogics;
 /// <param name="field"></param>
 /// <param name="begin"></param>
 /// <param name="end"></param>
-public class NotBetweenLogic(ICompareView field, ISqlValue begin, ISqlValue end)
+public class NotBetweenLogic(ICompareView field, ICompareView begin, ICompareView end)
     : BetweenLogic(field, CompareSymbol.NotBetween, begin, end)
 {
     /// <summary>

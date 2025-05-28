@@ -95,7 +95,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static TableSingleSelect ToSingle<TTable>(this TableAlias<TTable> table, Func<TTable, IColumn> select)
+    public static TableSingleSelect ToSingle<TTable>(this IAliasTable<TTable> table, Func<TTable, IColumn> select)
         where TTable : ITable
         => new(table, table.Prefix(select(table.Target)));
     /// <summary>
@@ -124,7 +124,7 @@ public static partial class ShadowSqlServices
     /// <param name="filter"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static TableSingleSelect ToSingle<TTable>(this TableAlias<TTable> table, ISqlLogic filter, Func<TTable, IColumn> select)
+    public static TableSingleSelect ToSingle<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, Func<TTable, IColumn> select)
         where TTable : ITable
         => new(new TableFilter(table, filter), table.Prefix(select(table.Target)));
     #endregion

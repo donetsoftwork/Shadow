@@ -1,15 +1,8 @@
 using ShadowSql.Aggregates;
-using ShadowSql.AliasTables;
-using ShadowSql.Cursors;
 using ShadowSql.FieldInfos;
-using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.Join;
-using ShadowSql.Logics;
 using ShadowSql.Select;
 using ShadowSql.SelectFields;
-using ShadowSql.Tables;
-using ShadowSql.Variants;
 using System;
 
 namespace ShadowSql;

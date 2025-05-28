@@ -55,6 +55,4 @@ public static partial class ShadowSqlCoreServices
         return query;
     }
     #endregion
-    #region SqlQuery
-    #endregion
 }

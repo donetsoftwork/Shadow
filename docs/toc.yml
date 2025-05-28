@@ -1,11 +1,13 @@
 - name: 上手
-  href: getting-started.md
+  href: quick.md
 - name: 简介
   href: introduction.md
 - name: 精简版
   href: shadowcore/
 - name: 易用版
   href: shadow/
+- name: 表达式版
+  href: expression/
 - name: Dapper.Shadow.Core
   href: dappercore/
 - name: Dapper.Shadow

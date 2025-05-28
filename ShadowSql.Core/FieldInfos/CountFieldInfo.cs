@@ -22,10 +22,11 @@ public sealed class CountFieldInfo : IAggregateField
     public readonly static CountFieldInfo Instance = new();
 
     string IAggregateField.TargetName
-        => "*";
+        => string.Empty;
     string IAggregate.Aggregate 
         => AggregateConstants.Count;
-
+    IAggregateFieldAlias IAggregateField.As(string alias)
+        => CountAliasFieldInfo.Use(alias);
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
          => engine.Count(sql);
 }

@@ -1,6 +1,7 @@
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
+using ShadowSql.Tables;
 using System.Text;
 
 namespace Shadow.DDL;
@@ -17,7 +18,7 @@ public class DropTable(ITable table)
     /// </summary>
     /// <param name="tableName"></param>
     public DropTable(string tableName)
-        : this(new Table(tableName))
+        : this(EmptyTable.Use(tableName))
     {
     }
     #region 配置

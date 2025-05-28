@@ -15,7 +15,7 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 字段信息
     /// </summary>
-    private readonly List<IFieldView> _selected = [];
+    internal readonly List<IFieldView> _selected = [];
     /// <summary>
     /// 字段信息
     /// </summary>
@@ -59,6 +59,13 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     internal void AliasCore(string alias, string statement)
     {
         _selected.Add(new RawFieldAliasInfo(statement, alias));
+    }
+    /// <summary>
+    /// 筛选自身所有字段
+    /// </summary>
+    internal void SelfColumnsCore()
+    {
+        _selected.AddRange(GetFields());
     }
     /// <summary>
     /// 构建列信息

@@ -2,7 +2,7 @@
   href: index.md
 - name: Table
   href: table.md
-- name: SimpleTable
+- name: EmptyTable
   href: simple.md
 - name: 别名表
   href: alias.md

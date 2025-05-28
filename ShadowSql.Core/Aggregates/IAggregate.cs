@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 
 namespace ShadowSql.Aggregates;
@@ -22,8 +22,21 @@ public interface IAggregateField : IAggregate, ICompareView
     /// 被计算的列名
     /// </summary>
     string TargetName { get; }
+    /// <summary>
+    /// 聚合别名(select使用)
+    /// </summary>
+    /// <param name="alias"></param>
+    /// <returns></returns>
+    IAggregateFieldAlias As(string alias);
 }
 /// <summary>
 /// 聚合列别名
 /// </summary>
-public interface IAggregateFieldAlias : IAggregate, IFieldAlias;
+public interface IAggregateFieldAlias : IAggregate, IFieldAlias
+{
+    /// <summary>
+    /// 聚合(逻辑运算使用)
+    /// </summary>
+    /// <returns></returns>
+    IAggregateField ToAggregate();
+}

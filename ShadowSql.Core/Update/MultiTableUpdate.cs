@@ -18,11 +18,11 @@ public class MultiTableUpdate(IMultiView multiTable)
     /// <summary>
     /// 被删除的表
     /// </summary>
-    internal IAliasTable<IUpdateTable>? _table;
+    internal IAliasTable<ITable>? _table;
     /// <summary>
     /// 被删除的表
     /// </summary>
-    public IAliasTable<IUpdateTable> Table
+    public IAliasTable<ITable> Table
         => CheckTable();
     private readonly IMultiView _multiTable = multiTable;
     /// <summary>
@@ -33,11 +33,11 @@ public class MultiTableUpdate(IMultiView multiTable)
     IUpdateTable IUpdate.Table
         => Table.Target;
     #endregion
-    private IAliasTable<IUpdateTable> CheckTable()
+    internal IAliasTable<ITable> CheckTable()
     {
         if (_table != null)
             return _table;
-        if (_multiTable.Tables.First() is IAliasTable<IUpdateTable> first)
+        if (_multiTable.Tables.First() is IAliasTable<ITable> first)
             return _table = first;
         throw new ArgumentException("被修改的表不存在", nameof(Table));
     }

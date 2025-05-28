@@ -1,7 +1,6 @@
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System;
-using System.Linq;
 using System.Text;
 
 namespace ShadowSql.Update;

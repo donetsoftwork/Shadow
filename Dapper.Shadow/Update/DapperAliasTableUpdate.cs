@@ -13,7 +13,7 @@ namespace Dapper.Shadow.Update;
 /// <param name="filter"></param>
 public class DapperAliasTableUpdate<TTable>(IExecutor executor, AliasUpdateTable<TTable> table, ISqlLogic filter)
     : AliasTableUpdate<TTable>(table, filter), IDapperExecute
-    where TTable : IUpdateTable
+    where TTable : ITable
 {
     /// <summary>
     /// 修改别名表

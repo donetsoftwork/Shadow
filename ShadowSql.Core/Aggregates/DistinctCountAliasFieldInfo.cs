@@ -33,6 +33,8 @@ public class DistinctCountAliasFieldInfo(ICompareField field, string alias/* = "
     IFieldAlias IFieldView.As(string alias)
         => new DistinctCountAliasFieldInfo(_target, alias);
     #endregion
+    IAggregateField IAggregateFieldAlias.ToAggregate()
+        => new DistinctCountFieldInfo(_target);
     #region ISqlEntity
     /// <summary>
     /// sql拼接

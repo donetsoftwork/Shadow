@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\package.props" />
+  <PropertyGroup>
+    <Version>$(VersionBase).0-alpha</Version>
+    <PackageId>ShadowSql.Expressions</PackageId>
+    <Description>拼接sql工具</Description>
+    <PackageTags>expression;sql-builder;sql-query</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.md">
+      <PackagePath>\</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShadowSql.Core\ShadowSql.Core.csproj" />
+  </ItemGroup>
+
+</Project>

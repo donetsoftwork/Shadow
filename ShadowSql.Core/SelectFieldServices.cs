@@ -79,6 +79,18 @@ public static partial class ShadowSqlCoreServices
         fields.SelectCore(select.ToField(alias));
         return fields;
     }
+    /// <summary>
+    /// 筛选自身所有字段
+    /// </summary>
+    /// <typeparam name="TSelectFields"></typeparam>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static TSelectFields SelectSelfColumns<TSelectFields>(this TSelectFields fields)
+        where TSelectFields : SelectFieldsBase
+    {
+        fields.SelfColumnsCore();
+        return fields;
+    }
     #endregion
     #endregion
 }

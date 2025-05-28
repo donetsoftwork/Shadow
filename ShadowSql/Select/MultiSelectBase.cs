@@ -24,14 +24,6 @@ public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target
     public ICollection<IAliasTable> SelectTables
         => _selectTables;
     #endregion
-    /// <summary>
-    /// 添加选择表
-    /// </summary>
-    /// <param name="table"></param>
-    internal void SelectTableCore(IAliasTable table)
-    {
-        _selectTables.Add(table);
-    }
     #region IColumn
     /// <summary>
     /// 筛选列

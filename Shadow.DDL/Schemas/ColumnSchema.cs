@@ -80,15 +80,4 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & UpdateIgnoreType) == ColumnType.Empty);
-    #region IMatch
-    /// <summary>
-    /// 是否匹配
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    internal bool IsMatch(string name)
-        => Identifier.Match(name, _name);
-    bool IMatch.IsMatch(string name)
-        => IsMatch(name);
-    #endregion
 }

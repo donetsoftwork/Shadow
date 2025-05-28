@@ -1,4 +1,4 @@
-# SimpleTable
+# EmptyTable
 >* 简单表(列为空)
 >* 作为表的影子(占位符)
 >* 主要用于[按字段查询](../../shadow/sqlquery/fieldquery.md)
@@ -9,19 +9,19 @@
 >* [ITable](xref:ShadowSql.Identifiers.ITable)
 >* [ITableView](xref:ShadowSql.Identifiers.ITableView)
 
-## 2. SimpleTable类
->* 参看[SimpleTable](xref:ShadowSql.Tables.SimpleTable)
+## 2. EmptyTable类
+>* 参看[EmptyTable](xref:ShadowSql.Tables.EmptyTable)
 ```csharp
-class SimpleTable(string name) : ITable, ITableView {
+class EmptyTable(string name) : ITable, ITableView {
     string Name { get; }
 }
 ```
 
 ## 3. 静态方法Use
->* 缓存SimpleTable对象
+>* 缓存EmptyTable对象
 >* 避免重复创建及垃圾回收
 ```csharp
-static SimpleTable Use(string tableName);
+static EmptyTable Use(string tableName);
 ```
 
 ## 4. Select功能
@@ -30,7 +30,7 @@ static SimpleTable Use(string tableName);
 >* 参看[获取表易用版](../../shadow/select/table.md)
 >* 参看[表分页易用版](../../shadow/select/tablecursor.md)
 ```csharp
-var query = SimpleTable.Use("Users")
+var query = EmptyTable.Use("Users")
     .ToSqlQuery()
     .FieldEqualValue("Id", 1)
     .ToSelect()
@@ -42,7 +42,7 @@ var query = SimpleTable.Use("Users")
 >* 参看[精简版](../delete/table.md)
 >* 参看[易用版](../../shadow/delete/table.md)
 ```csharp
-var query = SimpleTable.Use("Users")
+var query = EmptyTable.Use("Users")
     .ToSqlQuery()
     .FieldEqualValue("Id", 1)
     .ToDelete();
@@ -51,7 +51,7 @@ var query = SimpleTable.Use("Users")
 
 ## 6. 其他相关功能
 >* 本组件并非只支持以上功能,其他功能参看以下文档:
->* 参看[SimpleTable](xref:ShadowSql.Tables.SimpleTable)
+>* 参看[EmptyTable](xref:ShadowSql.Tables.EmptyTable)
 >* 参看[按字段查询](../../shadow/sqlquery/fieldquery.md)
 >* 参看[获取简介](../../shadow/select/index.md)
 >* 参看[获取表](../../shadow/select/table.md)

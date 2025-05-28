@@ -17,7 +17,7 @@ public abstract class UpdateBase : ISqlEntity
     /// <summary>
     /// 修改操作
     /// </summary>
-    protected readonly List<IAssignInfo> _assignInfos = [];
+    internal readonly List<IAssignInfo> _assignInfos = [];
     /// <summary>
     /// 赋值操作
     /// </summary>

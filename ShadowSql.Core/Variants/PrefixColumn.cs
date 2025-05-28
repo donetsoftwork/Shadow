@@ -67,7 +67,7 @@ public class PrefixField(IColumn column, params string[] prefix)
     /// <returns></returns>
     public bool IsMatch(string name)
         => _target.IsMatch(name)
-        && MatchPrefixColumn(_tablePrefix, _target.ViewName, name);
+        || MatchPrefixColumn(_tablePrefix, _target.ViewName, name);
     /// <summary>
     /// 判断是否为前缀字段名
     /// </summary>

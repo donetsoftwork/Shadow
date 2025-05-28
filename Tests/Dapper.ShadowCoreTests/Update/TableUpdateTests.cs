@@ -18,7 +18,7 @@ public class TableUpdateTests : ExecuteTestBase
     {
         var table = new StudentTable();
         var update = new TableUpdate(table, table.Age.LessValue(7))
-            .Set(table.ClassId.EqualToValue(1));
+            .Set(table.ClassId.AssignValue(1));
         var result = SqliteExecutor.Execute(update);
         Assert.Equal(0, result);
     }
@@ -30,7 +30,7 @@ public class TableUpdateTests : ExecuteTestBase
         var query = new TableSqlQuery(table)
             .Where(table.Age.LessValue(7));
         var update = new TableUpdate(table, query.Filter)
-            .Set(table.ClassId.EqualToValue(1));
+            .Set(table.ClassId.AssignValue(1));
         var result = SqliteExecutor.Execute(update);
         Assert.Equal(0, result);
     }

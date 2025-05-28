@@ -10,5 +10,4 @@ public abstract class GroupByMultiSelectBase<TSource>(TSource source, IGroupByVi
     : GroupBySelectBase<TSource, IMultiView>(source, groupBy, multiView)
     where TSource : ITableView
 {
-
 }

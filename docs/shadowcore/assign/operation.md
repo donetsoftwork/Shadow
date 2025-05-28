@@ -15,20 +15,20 @@ class AssignOperation(IAssignView column, AssignSymbol assign, ISqlValue value)
 
 ## 3. 赋参数
 ~~~csharp
-AssignOperation EqualTo(this IAssignField column, string parameter = "");
-AssignOperation Add(this IAssignField column, string parameter = "");
-AssignOperation Sub(this IAssignField column, string parameter = "");
-AssignOperation Mul(this IAssignField column, string parameter = "");
-AssignOperation Div(this IAssignField column, string parameter = "");
-AssignOperation Mod(this IAssignField column, string parameter = "");
-AssignOperation And(this IAssignField column, string parameter = "");
-AssignOperation Or(this IAssignField column, string parameter = "");
-AssignOperation Xor(this IAssignField column, string parameter = "");
+AssignOperation Assign(this IAssignField column, string parameter = "");
+AssignOperation AddAssign(this IAssignField column, string parameter = "");
+AssignOperation SubAssign(this IAssignField column, string parameter = "");
+AssignOperation MulAssign(this IAssignField column, string parameter = "");
+AssignOperation DivAssign(this IAssignField column, string parameter = "");
+AssignOperation ModAssign(this IAssignField column, string parameter = "");
+AssignOperation AndAssign(this IAssignField column, string parameter = "");
+AssignOperation OrAssign(this IAssignField column, string parameter = "");
+AssignOperation XorAssign(this IAssignField column, string parameter = "");
 ~~~
 
 ## 4. 赋值
 ~~~csharp
-AssignOperation EqualToValue<TValue>(this IAssignView column, TValue value);
+AssignOperation AssignValue<TValue>(this IAssignView column, TValue value);
 AssignOperation AddValue<TValue>(this IAssignView column, TValue value);
 AssignOperation SubValue<TValue>(this IAssignView column, TValue value);
 AssignOperation MulValue<TValue>(this IAssignView column, TValue value);
@@ -41,15 +41,15 @@ AssignOperation XorValue<TValue>(this IAssignView column, TValue value);
 
 ## 5. 数据库值
 ~~~csharp
-AssignOperation EqualTo(this IAssignView column, ISqlValue right);
-AssignOperation Add(this IAssignView column, ISqlValue right);
-AssignOperation Sub(this IAssignView column, ISqlValue right);
-AssignOperation Mul(this IAssignView column, ISqlValue right);
-AssignOperation Div(this IAssignView column, ISqlValue right);
-AssignOperation Mod(this IAssignView column, ISqlValue right);
-AssignOperation And(this IAssignView column, ISqlValue right);
-AssignOperation Or(this IAssignView column, ISqlValue right);
-AssignOperation Xor(this IAssignView column, ISqlValue right);
+AssignOperation Assign(this IAssignView column, ISqlValue right);
+AssignOperation AddAssign(this IAssignView column, ISqlValue right);
+AssignOperation SubAssign(this IAssignView column, ISqlValue right);
+AssignOperation MulAssign(this IAssignView column, ISqlValue right);
+AssignOperation DivAssign(this IAssignView column, ISqlValue right);
+AssignOperation ModAssign(this IAssignView column, ISqlValue right);
+AssignOperation AndAssign(this IAssignView column, ISqlValue right);
+AssignOperation OrAssign(this IAssignView column, ISqlValue right);
+AssignOperation XorAssign(this IAssignView column, ISqlValue right);
 ~~~
 
 ## 6. 其他相关功能

@@ -1,6 +1,8 @@
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
+using ShadowSql.Tables;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ShadowSql.Select;
@@ -16,7 +18,7 @@ public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
     /// </summary>
     /// <param name="tableName"></param>
     public TableSelect(string tableName)
-        : this(new Table(tableName))
+        : this(EmptyTable.Use(tableName))
     {
     }
     #region 配置
@@ -28,6 +30,12 @@ public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
         => _source;
     #endregion
     #region TableViewBase
+    /// <summary>
+    /// 获取所有字段
+    /// </summary>
+    /// <returns></returns>
+    protected override IEnumerable<IField> GetFields()
+        => _source.Fields;
     /// <summary>
     /// 获取字段
     /// </summary>

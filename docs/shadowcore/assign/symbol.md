@@ -18,15 +18,15 @@ string Operation { get; }
 
 |名称|SQL|作用|
 |:--|:--|:--|:--|:--|
-|EqualTo|=|等于|
-|Add|+=|加上并赋值|
-|Sub|-=|减去并赋值|
-|Mul|*=|乘上并赋值|
-|Div|/=|除去并赋值|
-|Mod|%=|取模并赋值|
-|And|&=|“位与”并赋值|
-|Or|\|=|“位或”并赋值|
-|Xor|^=|“异或”并赋值|
+|Assign|=|等于|
+|AddAssign|+=|加上并赋值|
+|SubAssign|-=|减去并赋值|
+|MulAssign|*=|乘上并赋值|
+|DivAssign|/=|除去并赋值|
+|ModAssign|%=|取模并赋值|
+|AndAssign|&=|“位与”并赋值|
+|OrAssign|\|=|“位或”并赋值|
+|XorAssign|^=|“异或”并赋值|
 
 ## 3. 其他相关功能
 >* 参看[赋值简介](./index.md)

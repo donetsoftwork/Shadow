@@ -24,7 +24,7 @@ interface ITable : IInsertTable, IUpdateTable, ITableView
 
 ### 1.2 类型
 >* Table
->* SimpleTable
+>* EmptyTable
 >* TableSchema
 
 ### 1.3 作用
@@ -45,7 +45,7 @@ interface ITable : IInsertTable, IUpdateTable, ITableView
 ### 2.2 类型
 >* TableAlias
 ~~~csharp
-public class TableAlias<TTable>(TTable target, string tableAlias)
+public class IAliasTable<TTable>(TTable target, string tableAlias)
     : IAliasTable
     where TTable : ITableView
 ~~~

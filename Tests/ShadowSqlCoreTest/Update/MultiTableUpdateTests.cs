@@ -22,7 +22,7 @@ public class MultiTableUpdateTests
             .Where(p.Author.EqualValue("张三"))
             .Where(c.Pick.EqualValue(false));
         var update = query.ToUpdate()
-            .Set(c.Pick.EqualToValue(true));
+            .Set(c.Pick.AssignValue(true));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author]='张三' AND c.[Pick]=0", sql);
     }
@@ -37,7 +37,7 @@ public class MultiTableUpdateTests
             .And(p.Author.EqualValue("张三"))
             .And(c.Pick.EqualValue(false));
         var update = query.ToUpdate()
-            .Set(c.Pick.EqualToValue(true));
+            .Set(c.Pick.AssignValue(true));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author]='张三' AND c.[Pick]=0", sql);
     }
@@ -53,7 +53,7 @@ public class MultiTableUpdateTests
             .Where(c.Pick.EqualValue(false));
         var update = query.ToUpdate()
             .Update(c)
-            .Set(c.Pick.EqualToValue(true));
+            .Set(c.Pick.AssignValue(true));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author]='张三' AND c.[Pick]=0", sql);
     }
@@ -68,7 +68,7 @@ public class MultiTableUpdateTests
             .Where(t1.Field("Pick").EqualValue(false));
         var update = query.ToUpdate()
             .Update("Comments")
-            .Set(t1.Field("Pick").EqualToValue(true));
+            .Set(t1.Field("Pick").AssignValue(true));
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE t1 SET t1.[Pick]=1 FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t2.[Author]='张三' AND t1.[Pick]=0", sql);
     }

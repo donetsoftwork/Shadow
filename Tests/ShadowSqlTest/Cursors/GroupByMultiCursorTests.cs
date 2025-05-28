@@ -14,8 +14,8 @@ public class GroupByMultiCursorTests
     [Fact]
     public void ToCursor()
     {
-        var cursor = SimpleTable.Use("Employees")
-            .SqlJoin(SimpleTable.Use("Departments"))
+        var cursor = EmptyTable.Use("Employees")
+            .SqlJoin(EmptyTable.Use("Departments"))
             .OnColumn("DepartmentId", "Id")
             .Root
             .SqlGroupBy("Manager")

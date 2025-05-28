@@ -8,6 +8,7 @@
           "files": [
             "ShadowSql.Core/ShadowSql.Core.csproj",
             "ShadowSql/ShadowSql.csproj",
+            "ShadowSql.Expressions/ShadowSql.Expressions.csproj",
             "Dapper.Shadow.Core/Dapper.Shadow.Core.csproj",
             "Dapper.Shadow/Dapper.Shadow.csproj",
             "Shadow.DDL/Shadow.DDL.csproj"

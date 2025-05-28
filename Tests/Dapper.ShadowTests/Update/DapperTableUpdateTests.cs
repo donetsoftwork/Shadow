@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow;
+using Dapper.Shadow;
 using ShadowSql;
 
 namespace Dapper.ShadowTests.Update;
@@ -17,7 +17,7 @@ public class DapperTableUpdateTests : ExecuteTestBase
         var result = table.ToSqlQuery()
             .Where(table.Age.LessValue(7))
             .ToDapperUpdate(SqliteExecutor)
-            .Set(table.ClassId.EqualToValue(1))
+            .Set(table.ClassId.AssignValue(1))
             .Execute();
         Assert.Equal(0, result);
     }
@@ -29,7 +29,7 @@ public class DapperTableUpdateTests : ExecuteTestBase
             .ToSqlQuery()
             .Where(table => table.Age.LessValue(7))
             .ToUpdate()
-            .Set(table => table.ClassId.EqualToValue(1))
+            .Set(table => table.ClassId.AssignValue(1))
             .Execute(SqliteExecutor);
         Assert.Equal(0, result);
     }

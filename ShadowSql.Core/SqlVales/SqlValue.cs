@@ -1,4 +1,5 @@
 using ShadowSql.Engines;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,7 +21,19 @@ public static class SqlValue
         return new SqlValueWraper<T>(value);
     }
     /// <summary>
-    /// 包装数组
+    /// NULL值
+    /// </summary>
+    public static readonly ISqlValue Null = new SqlValueWraper<DBNull>(DBNull.Value);
+    /// <summary>
+    /// True
+    /// </summary>
+    public static readonly ISqlValue True = new SqlValueWraper<bool>(true);
+    /// <summary>
+    /// False
+    /// </summary>
+    public static readonly ISqlValue False = new SqlValueWraper<bool>(false);
+    /// <summary>
+    /// 包装列表
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="values"></param>
@@ -50,6 +63,11 @@ public static class SqlValue
             sqlValue.Write(engine, sql);
         }
     }
+    /// <summary>
+    /// 列表包装类
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="values"></param>
     class SqlValuesWraper<T>(IEnumerable<T> values) : ISqlValue
     {
         private readonly IEnumerable<T> _values = values;

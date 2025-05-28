@@ -70,7 +70,7 @@ sequenceDiagram
 #### 1.1.1 Table
 >* 原始表对象
 >* 接口[ITable](xref:ShadowSql.Identifiers.ITable)
->* 类型为[Table](xref:ShadowSql.Identifiers.Table)、[SimpleTable](xref:ShadowSql.Tables.SimpleTable)、[TableSchema](xref:Shadow.DDL.Schemas.TableSchema)或自定义等
+>* 类型为[Table](xref:ShadowSql.Identifiers.Table)、[EmptyTable](xref:ShadowSql.Tables.EmptyTable)、[TableSchema](xref:Shadow.DDL.Schemas.TableSchema)或自定义等
 
 #### 1.1.2 TableAlias 
 >* 表别名对象

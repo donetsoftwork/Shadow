@@ -6,7 +6,7 @@
 
 ## 1. 读取一张表
 ~~~csharp
-    var table = SimpleTable.Use("Students");        
+    var table = EmptyTable.Use("Students");        
     var count = table.Count(Executor);
     var select = new TableSelect(table);
     var students = select.Get<Student>(Executor)；

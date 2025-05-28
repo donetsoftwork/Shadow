@@ -23,7 +23,10 @@ public abstract class JoinOnCoreBase<TJoinTable, TFilter>(TJoinTable root, IAlia
 {
 
     #region 配置
-    private readonly TJoinTable _root = root;
+    /// <summary>
+    /// 联表
+    /// </summary>
+    protected readonly TJoinTable _root = root;
     /// <summary>
     /// 联表
     /// </summary>

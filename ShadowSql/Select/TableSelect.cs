@@ -27,7 +27,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// </summary>
     /// <param name="table"></param>
     public TableSelect(TTable table)
-        : this(table, table)
+        : base(table, table)
     {
     }
     /// <summary>
@@ -36,7 +36,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <param name="table"></param>
     /// <param name="where"></param>
     public TableSelect(TTable table, ISqlLogic where)
-        : this(new TableFilter(table, where), table)
+        : base(new TableFilter(table, where), table)
     {
     }
     /// <summary>
@@ -44,7 +44,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// </summary>
     /// <param name="query"></param>
     public TableSelect(TableQuery<TTable> query)
-        : this(query, query.Source)
+        : base(query, query.Source)
     {
     }
     /// <summary>
@@ -52,7 +52,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// </summary>
     /// <param name="query"></param>
     public TableSelect(TableSqlQuery<TTable> query)
-        : this(query, query.Source)
+        : base(query, query.Source)
     {
     }
     /// <summary>

@@ -7,7 +7,7 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 原始表标识
 /// </summary>
-public interface ITable : IIdentifier, ITableView
+public interface ITable : IIdentifier, ITableView, IInsertTable, IUpdateTable
 {
     /// <summary>
     /// 所有列

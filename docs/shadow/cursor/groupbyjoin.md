@@ -47,8 +47,43 @@ var cursor = c.Join(p)
 // SELECT * FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] GROUP BY p.[Id] ORDER BY COUNT(*) DESC
 ~~~
 
-## 5. 按表聚合排序
-### 5.1 AggregateAsc方法
+## 5. Take
+>* Take方法是ToCursor的平替
+### 5.1 Take扩展方法
+>从sql联表分组创建游标
+~~~csharp
+GroupByMultiCursor Take(this GroupByMultiSqlQuery groupBy, int limit, int offset = 0);
+~~~
+~~~csharp
+var cursor = _db.From("Employees")
+    .SqlJoin(_db.From("Departments"))
+    .OnColumn("DepartmentId", "Id")
+    .Root
+    .SqlGroupBy("Manager")
+    .Take(10)
+    .CountAsc();
+// SELECT TOP 10 * FROM [Employees] AS t1 INNER JOIN [Departments] AS t2 ON t1.[DepartmentId]=t2.[Id] GROUP BY [Manager] ORDER BY COUNT(*)
+~~~
+
+### 5.2 Take重载扩展方法
+>从逻辑联表分组创建游标
+~~~csharp
+GroupByMultiCursor Take(this GroupByMultiQuery groupBy, int limit, int offset = 0);
+~~~
+~~~csharp
+CommentAliasTable c = new("c");
+PostAliasTable p = new("p");
+var cursor = c.Join(p)
+    .And(c.PostId.Equal(p.Id))
+    .Root
+    .GroupBy(p.Id)
+    .Take(10)
+    .CountDesc();
+// SELECT TOP 10 * FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] GROUP BY p.[Id] ORDER BY COUNT(*) DESC
+~~~
+
+## 6. 按表聚合排序
+### 6.1 AggregateAsc方法
 >* 聚合正序
 ~~~csharp
 GroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
@@ -59,7 +94,7 @@ GroupByMultiCursor AggregateAsc<TTable>(string tableName, Func<TTable, IColumn> 
 // SELECT * FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] ORDER BY t2.[Id]
 ~~~
 
-### 5.2 AggregateDesc方法
+### 6.2 AggregateDesc方法
 >* 聚合倒序
 ~~~csharp
 GroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
@@ -70,8 +105,8 @@ GroupByMultiCursor AggregateDesc<TTable>(string tableName, Func<TTable, IColumn>
 // SELECT * FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] ORDER BY t2.[Id] DESC
 ~~~
 
-## 6. 按别名表聚合排序
-### 6.1 AggregateAsc方法
+## 7. 按别名表聚合排序
+### 7.1 AggregateAsc方法
 >* 聚合正序
 ~~~csharp
 GroupByMultiCursor AggregateAsc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
@@ -82,7 +117,7 @@ GroupByMultiCursor AggregateAsc<TAliasTable>(string tableName, Func<TAliasTable,
 // SELECT * FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] ORDER BY c.[Id]
 ~~~
 
-### 6.2 AggregateDesc方法
+### 7.2 AggregateDesc方法
 >* 聚合倒序
 ~~~csharp
 GroupByMultiCursor AggregateDesc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
@@ -93,7 +128,7 @@ GroupByMultiCursor AggregateDesc<TAliasTable>(string tableName, Func<TAliasTable
 // SELECT * FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] ORDER BY c.[Pick] DESC
 ~~~
 
-## 7. 其他相关功能
+## 8. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
 >* 参看[GroupByMultiCursor](xref:ShadowSql.Cursors.GroupByMultiCursor)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)

@@ -2,6 +2,7 @@ using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using ShadowSql.Tables;
 using System;
 using System.Text;
 
@@ -21,7 +22,7 @@ public class TableUpdate(IUpdateTable table, ISqlLogic filter)
     /// <param name="tableName"></param>
     /// <param name="filter"></param>
     public TableUpdate(string tableName, ISqlLogic filter)
-        : this(new Table(tableName), filter)
+        : this(EmptyTable.Use(tableName), filter)
     {
     }
     #region 配置
@@ -68,7 +69,7 @@ public class TableUpdate(IUpdateTable table, ISqlLogic filter)
     /// <param name="filter"></param>
     /// <returns></returns>
     public static TableUpdate Create(string tableName, ISqlLogic filter)
-        => new(new Table(tableName), filter);
+        => new(EmptyTable.Use(tableName), filter);
     #region ISqlEntity
     /// <summary>
     /// 拼写sql

@@ -1,4 +1,4 @@
-﻿using ShadowSql.SqlVales;
+using ShadowSql.SqlVales;
 using System;
 
 namespace ShadowSql.Components;
@@ -41,6 +41,8 @@ public class SqlValueComponent(string trueExpression, string falseExpression, st
         if (value is bool boolValue)
             return boolValue ? _true : _false;
         else if (value is null)
+            return _null;
+        else if (value is DBNull)
             return _null;
 #pragma warning disable CS8604
         else if (value is int or long or short

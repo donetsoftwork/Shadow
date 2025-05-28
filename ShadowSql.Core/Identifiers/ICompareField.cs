@@ -1,6 +1,5 @@
-﻿using ShadowSql.Aggregates;
+using ShadowSql.Aggregates;
 using ShadowSql.Fragments;
-using ShadowSql.SqlVales;
 
 namespace ShadowSql.Identifiers;
 
@@ -29,6 +28,6 @@ public interface ICompareField : IView, ICompareView, IOrderField
 /// <summary>
 /// 比较运算字段或表达式
 /// </summary>
-public interface ICompareView : IOrderAsc, ISqlValue, ISqlEntity
+public interface ICompareView : IOrderAsc, ISqlEntity
 {
 }

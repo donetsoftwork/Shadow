@@ -45,10 +45,8 @@ var query = new UserTable()
     .ToSqlQuery()
     .Where(table => table.Id.Less("LastId"))
     .Where(table => table.Status.EqualValue(true))
-    .ToCursor()
-    .Desc(table => table.Id)
-    .Skip(10)
-    .Take(10);
+    .Take(10, 10)
+    .Desc(table => table.Id);
 // SELECT * FROM [Users] WHERE [Id]<@LastId AND [Status]=1 ORDER BY [Id] DESC OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
 
@@ -111,12 +109,12 @@ var select = table.ToSqlQuery()
 ~~~
 
 ### 10.3 分页获取
->* 调用路径:ToSqlQuery().ToCursor().ToSelect()
+>* 调用路径:ToSqlQuery().Take().ToSelect()
 ~~~csharp
 var table = new UserTable();
 var select = table.ToSqlQuery()
     .Where(table.Status.EqualValue(true))
-    .ToCursor(10, 20)
+    .Take(10, 20)
     .Asc(table.Id)
     .ToSelect()
     .Select(table.Id, table.Name);

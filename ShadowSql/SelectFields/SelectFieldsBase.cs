@@ -28,6 +28,12 @@ public abstract class SelectFieldsBase<TTarget>(TTarget target)
     #endregion
     #region GetFieldBase
     /// <summary>
+    /// 获取所有字段
+    /// </summary>
+    /// <returns></returns>
+    protected override IEnumerable<IField> GetFields()
+        => _target.Fields;
+    /// <summary>
     /// 获取字段
     /// </summary>
     /// <param name="fieldName"></param>

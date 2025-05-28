@@ -98,7 +98,7 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TTable"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static AliasTableSelect<TTable> ToSelect<TTable>(this TableAlias<TTable> table)
+    public static AliasTableSelect<TTable> ToSelect<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
         => new(table);
     /// <summary>
@@ -108,7 +108,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public static AliasTableSelect<TTable> ToSelect<TTable>(this TableAlias<TTable> table, ISqlLogic filter)
+    public static AliasTableSelect<TTable> ToSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter)
         where TTable : ITable
         => new(table, filter);
     /// <summary>

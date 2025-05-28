@@ -22,5 +22,4 @@ public abstract class AggregateFieldInfoBase(string aggregate, ICompareField tar
     public string Aggregate
         => _aggregate;
     #endregion
-
 }

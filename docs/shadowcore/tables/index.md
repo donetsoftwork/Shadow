@@ -18,10 +18,10 @@
 >* 参看[Table](./table.md)
 
 
-## 3. SimpleTable
+## 3. EmptyTable
 >* 作为表的影子(占位符)
 >* 支持select和delete等
->* 参看[SimpleTable](./simple.md)
+>* 参看[EmptyTable](./simple.md)
 
 ## 4. 别名表
 >* 作为别名表的影子(占位符)

@@ -23,26 +23,12 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static TableDelete ToDelete(this TableSqlQuery query)
-        => new((ITable)query.Source, query._filter);
-    /// <summary>
-    /// 删除
-    /// </summary>
     /// <typeparam name="TSource"></typeparam>
     /// <param name="query"></param>
     /// <returns></returns>
     public static TableDelete ToDelete<TSource>(this TableQuery<TSource> query)
         where TSource : ITable
         => new(query.Source, query._filter);
-    /// <summary>
-    /// 删除
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public static TableDelete ToDelete(this TableQuery query)
-        => new((ITable)query.Source, query._filter);
     #endregion
     #region AliasTableDelete
     /// <summary>

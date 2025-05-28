@@ -3,6 +3,7 @@ using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
+using ShadowSql.Tables;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,7 +70,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="having"></param>
     /// <param name="fields"></param>
     public GroupByQuery(string tableName, Logic having, params IField[] fields)
-        : this(having, new Table(tableName), fields)
+        : this(having, EmptyTable.Use(tableName), fields)
     {
     }
     /// <summary>
@@ -78,7 +79,7 @@ public class GroupByQuery : GroupByBase<Logic>, IDataQuery
     /// <param name="tableName"></param>
     /// <param name="fields"></param>
     public GroupByQuery(string tableName, params IField[] fields)
-        : this(new AndLogic(), new Table(tableName), fields)
+        : this(new AndLogic(), EmptyTable.Use(tableName), fields)
     {
     }
     #endregion

@@ -183,15 +183,15 @@ TQuery TableFieldNotNull<TQuery>(this TQuery query, string tableName, string Fie
 
 ## 9. 使用Field方法
 ```csharp
-var u = SimpleTable.Use("Users");
+var u = EmptyTable.Use("Users");
 var query = u.ToSqlQuery()
     .Where(u.Field("Id").GreaterEqual("LastId"))
     .Where(u => u.Field("Status").EqualValue(true));
 // SELECT * FROM [Users] WHERE [Id]>=@LastId AND [Status]=1
 ```
 ```csharp
-var query = SimpleTable.Use("Comments")
-    .SqlJoin(SimpleTable.Use("Posts"))
+var query = EmptyTable.Use("Comments")
+    .SqlJoin(EmptyTable.Use("Posts"))
     .OnColumn("PostId", "Id")
     .Root
     .Where(join => join.From("Comments").Field("Pick").Equal())

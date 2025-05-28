@@ -1,4 +1,4 @@
-﻿# ShadowSql.Dapper
+# ShadowSql.Dapper
 >* ShadowSql的Dapper扩展
 >* 用于执行ShadowSql拼接的sql
 
@@ -18,10 +18,8 @@
         .ToSqlQuery()
         .Where(table => table.Age.GreaterEqualValue(9));
     var count = query.Count(Executor);
-    var students = query.ToCursor()
+    var students = query.Take(10, 10)
         .Desc(table => table.Id)
-        .Skip(1)
-        .Take(10)
         .ToSelect()
         .Get<Student>(Executor);
 ~~~

@@ -12,6 +12,8 @@ public class DistinctCountFieldInfo(ICompareField field)
 {
     string IAggregateField.TargetName
         => _target.ViewName;
+    IAggregateFieldAlias IAggregateField.As(string alias)
+        => new DistinctCountAliasFieldInfo(_target, alias);
     #region ISqlEntity
     /// <summary>
     /// sql拼接
