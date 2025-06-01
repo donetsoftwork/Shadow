@@ -38,7 +38,7 @@ public class TableAliasTests
             .Where(p.Field("Author").LikeValue("%专家"))
             .ToUpdate()
             .Update(c)
-            .SetEqualToValue("Pick", true);
+            .SetValue("Pick", true);
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author] LIKE '%专家'", sql);
     }

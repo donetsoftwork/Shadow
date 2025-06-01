@@ -12,6 +12,21 @@ public class GroupByMultiCursorSelectTests
     static readonly ISqlEngine _engine = new MsSqlEngine();
 
     [Fact]
+    public void ToSelect()
+    {
+        var select = EmptyTable.Use("Users")
+            .SqlJoin<User, UserRole>(EmptyTable.Use("UserRoles"))
+            .On(u => u.Id, r => r.UserId)
+            .SqlGroupBy((u, r) => r.UserId)
+            .ToCursor()
+            .CountAsc()
+            .ToSelect();
+
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT t2.[UserId] FROM [Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId] ORDER BY COUNT(*)", sql);
+    }
+
+    [Fact]
     public void ToCursor()
     {
         var select = EmptyTable.Use("Users")

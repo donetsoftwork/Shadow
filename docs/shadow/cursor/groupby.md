@@ -4,13 +4,13 @@
 >* 支持对数据表类型特殊处理,增强功能、增加易用性
 
 ## 1. 接口
->[ICursor](xref:ShadowSql.Cursors.ICursor)
+>* [ICursor](xref:ShadowSql.Cursors.ICursor)
 
 ## 2. 基类
->[CursorBase](xref:ShadowSql.Cursors.CursorBase)
+>* [CursorBase](xref:ShadowSql.Cursors.CursorBase)
 
 ## 3. 类
->[GroupByTableCursor\<TTable\>](xref:ShadowSql.Cursors.GroupByTableCursor%601)
+>* [GroupByTableCursor\<TTable\>](xref:ShadowSql.Cursors.GroupByTableCursor%601)
 ~~~csharp
 class GroupByTableCursor<TTable>
     where TTable : ITable;
@@ -103,6 +103,6 @@ var cursor = new CommentTable()
 
 ## 8. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[GroupByTableCursor\<TTable\>](/api/ShadowSql.Cursors.GroupByTableCursor-1.html)的方法和扩展方法部分
+>* 参看[GroupByTableCursor\<TTable\>](xref:ShadowSql.Cursors.GroupByTableCursor%601)的方法和扩展方法部分
 >* 参看[游标简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/cursor/index.md)

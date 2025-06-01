@@ -1,7 +1,6 @@
 # 快速上手
 >* 使用表达式树是最快捷的方式
 >* Nuget引用ShadowSql.Expressions
->* 参看[表达式版](./expression/index.md)
 
 ## 1. 表达式查询
 ### 1.1 按常量查询
@@ -128,7 +127,7 @@ var select = _db.From("Users")
     .Where(u => u.Status)
     .ToSelect()
     .Select(u => new { u.Id, u.Name });
-// SELECT [Id],[Name] FROM [Users]
+// SELECT [Id],[Name] FROM [Users] WHERE [Status]=1
 ~~~
 
 ### 7.4 分页获取
@@ -142,3 +141,8 @@ var select = _db.From("Users")
     .ToSelect();
 // SELECT * FROM [Users] WHERE [Status]=1 ORDER BY [Id] OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
+
+## 9. 其他相关功能
+>* 参看[表达式版](./expression/index.md)
+>* 参看[易用版快速上手](./shadow/quick.md)
+>* 参看[精简版快速上手](./shadowcore/quick.md)

@@ -92,7 +92,7 @@ public class GroupByTableCursor<TKey, TEntity> : GroupByCursorBase
         return this;
     }
     /// <summary>
-    /// 正序
+    /// 倒序
     /// </summary>
     /// <typeparam name="TOrder">排序类型</typeparam>
     /// <param name="select">用于选择分组键的表达式</param>

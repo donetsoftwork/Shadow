@@ -329,7 +329,7 @@ public class TableVisitor : VisitSourceBase, IFieldProvider
     /// <param name="expression"></param>
     /// <param name="table"></param>
     /// <returns></returns>
-    private static LogicVisitor Where<TEntity, TParameter>(Logic logic, Expression<Func<TEntity, TParameter, bool>> expression, ITableView table)
+    internal static LogicVisitor Where<TEntity, TParameter>(Logic logic, Expression<Func<TEntity, TParameter, bool>> expression, ITableView table)
     {
         var visitor = new LogicVisitor(new TableVisitor(expression.Parameters[0], table), logic);
         visitor.Visit(expression.Body);

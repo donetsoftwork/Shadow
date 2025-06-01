@@ -78,7 +78,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="value"></param>
     /// <param name="op"></param>
     /// <returns></returns>
-    public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value, string op = "=")
+    public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value, string op)
         where TUpdate : UpdateBase, IUpdate
     {
         update.SetCore(new AssignOperation(update.GetAssignField(columnName), AssignSymbol.Get(op), SqlValue.From(value)));
@@ -92,7 +92,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="columnName"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public static TUpdate SetEqualTo<TUpdate>(this TUpdate update, string columnName, string parameter = "")
+    public static TUpdate SetAssign<TUpdate>(this TUpdate update, string columnName, string parameter = "")
         where TUpdate : UpdateBase, IUpdate
     {
         update.SetCore(CreateOperation(update, columnName, AssignSymbol.Assign, parameter));
@@ -107,7 +107,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="columnName"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static TUpdate SetEqualToValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
+    public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
         where TUpdate : UpdateBase, IUpdate
     {
         update.SetCore(new AssignOperation(update.GetAssignField(columnName), AssignSymbol.Assign, SqlValue.From(value)));

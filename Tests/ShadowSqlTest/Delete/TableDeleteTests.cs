@@ -2,6 +2,7 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
+using TestSupports;
 
 namespace ShadowSqlTest.Delete;
 
@@ -29,17 +30,5 @@ public class TableDeleteTests
             .ToDelete();
         var sql = _engine.Sql(delete);
         Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
-    }
-
-    public class StudentTable : Table
-    {
-        public StudentTable()
-            :base("Students")
-        {
-            Name = DefineColumn(nameof(Name));
-            Score = DefineColumn(nameof(Score));
-        }
-        public readonly IColumn Score;
-        new public readonly IColumn Name;
     }
 }

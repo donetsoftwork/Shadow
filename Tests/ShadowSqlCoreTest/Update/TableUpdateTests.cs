@@ -81,7 +81,7 @@ public class TableUpdateTests
     {
         var id = Column.Use("Id");
         var update = TableUpdate.Create("Users", id.EqualValue(1))
-            .SetEqualTo("Status", "DenyStatus");
+            .SetAssign("Status", "DenyStatus");
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Users] SET [Status]=@DenyStatus WHERE [Id]=1", sql);
     }
@@ -95,11 +95,11 @@ public class TableUpdateTests
         Assert.Equal("UPDATE [Students] SET [Score]+=8 WHERE [Id]=1", sql);
     }
     [Fact]
-    public void EqualToValue()
+    public void AssignValue()
     {
         var id = Column.Use("Id");
         var update = TableUpdate.Create("Students", id.EqualValue(1))
-            .SetEqualToValue("Score", 60);
+            .SetValue("Score", 60);
         var sql = _engine.Sql(update);
         Assert.Equal("UPDATE [Students] SET [Score]=60 WHERE [Id]=1", sql);
     }

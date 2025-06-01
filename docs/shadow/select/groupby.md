@@ -19,7 +19,7 @@ class GroupByTableSelect<TTable> : SelectBase<TTable>
 ~~~
 
 ## 4. ToSelect
->创建[GroupByTableSelect\<TTable\>](/api/ShadowSql.Select.GroupByTableSelect-1.html)
+>创建[GroupByTableSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableSelect%601)
 
 ### 4.1 ToSelect扩展方法
 >* 从sql分组获取

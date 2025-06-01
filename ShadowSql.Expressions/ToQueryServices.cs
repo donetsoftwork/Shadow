@@ -12,13 +12,6 @@ namespace ShadowSql.Expressions;
 public static partial class ShadowSqlServices
 {
     #region TableQuery
-    /// <summary>
-    /// 查询(And查询)
-    /// </summary>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public static TableSqlQuery<TEntity> Where<TEntity>(this ITable table)
-        => table.ToSqlQuery<TEntity>();
     #region TableQuery
     /// <summary>
     /// And查询
@@ -49,8 +42,15 @@ public static partial class ShadowSqlServices
     /// <param name="table">表对象</param>
     /// <returns></returns>
     public static TableSqlQuery<TEntity> ToSqlOrQuery<TEntity>(this ITable table)
-        => new(table);
+        => new(table, SqlQuery.CreateOrQuery());
     #endregion
+    /// <summary>
+    /// 查询(And查询)
+    /// </summary>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static TableSqlQuery<TEntity> Where<TEntity>(this ITable table)
+        => table.ToSqlQuery<TEntity>();
     #endregion
     #region AliasTableQuery
     #region Query
@@ -78,14 +78,6 @@ public static partial class ShadowSqlServices
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="table"></param>
     /// <returns></returns>
-    public static AliasTableSqlQuery<TEntity> Where<TEntity>(this IAliasTable table)
-        => table.ToSqlQuery<TEntity>();
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
-    /// <returns></returns>
     public static AliasTableSqlQuery<TEntity> ToSqlQuery<TEntity>(this IAliasTable table)
         => new(table, SqlQuery.CreateAndQuery());
     /// <summary>
@@ -97,5 +89,13 @@ public static partial class ShadowSqlServices
     public static AliasTableSqlQuery<TEntity> ToSqlOrQuery<TEntity>(this IAliasTable table)
         => new(table, SqlQuery.CreateOrQuery());
     #endregion
+    /// <summary>
+    /// And查询
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <param name="table"></param>
+    /// <returns></returns>
+    public static AliasTableSqlQuery<TEntity> Where<TEntity>(this IAliasTable table)
+        => table.ToSqlQuery<TEntity>();
     #endregion
 }

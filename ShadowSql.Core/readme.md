@@ -17,7 +17,7 @@ var query = new TableSqlQuery(table)
 ## 2. 按列名查询
 ~~~csharp
 var query = new TableSqlQuery("Users")
-    .Where(u=> u.Field("Id").Less("LastId"))
+    .Where(u => u.Field("Id").Less("LastId"))
     .Where(u => u.Field("Status").EqualValue(true));
 // SELECT * FROM [Users] WHERE [Id]<@LastId AND [Status]=1
 ~~~
@@ -65,7 +65,7 @@ var table = new UserTable();
 var query = new TableSqlQuery(table)
     .Where(table.Id.Equal());
 var update = new TableUpdate(table, query.Filter)
-    .Set(table.Status.EqualToValue(false));
+    .Set(table.Status.AssignValue(false));
 // UPDATE [Users] SET [Status]=0 WHERE [Id]=@Id
 ~~~
 

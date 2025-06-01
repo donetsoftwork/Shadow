@@ -8,10 +8,11 @@
 >* [IWhere](xref:ShadowSql.Filters.IWhere)
 
 ## 2. 类
->[TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)
+>*[TableSqlQuery\<TTable\>](xref:ShadowSql.Tables.TableSqlQuery%601)
 
 ## 3. 从表创建查询
->* 从表创建[TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)
+>* 从表创建[TableSqlQuery\<TTable\>](xref:ShadowSql.Tables.TableSqlQuery%601)
+
 ### 3.1 ToSqlQuery扩展方法
 >* 从表创建TableSqlQuery\<TTable\>的AND查询
 ```csharp
@@ -69,6 +70,6 @@ var query = new UserTable()
 
 ## 6. 其他相关功能
 >* 本组件并非只有以上功能,其他功能参看以下文档:
->* 参看[TableSqlQuery\<TTable\>](/api/ShadowSql.Tables.TableSqlQuery-1.html)的方法和扩展方法部分
+>* 参看[TableSqlQuery\<TTable\>](xref:ShadowSql.Tables.TableSqlQuery%601)的方法和扩展方法部分
 >* 参看[sql查询简介](./index.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/sqlquery/index.md)

@@ -47,6 +47,16 @@ public static partial class ShadowSqlServices
     public static TableSelect<TEntity> ToSelect<TEntity>(this ITable table, Expression<Func<TEntity, bool>> query)
         => new(table, TableVisitor.Where(table, new AndLogic(), query).Logic);
     /// <summary>
+    /// 表过滤筛选列
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TParameter"></typeparam>
+    /// <param name="table"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TableSelect<TEntity> ToSelect<TEntity, TParameter>(this ITable table, Expression<Func<TEntity, TParameter, bool>> query)
+        => new(table, TableVisitor.Where(table, new AndLogic(), query).Logic);
+    /// <summary>
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>

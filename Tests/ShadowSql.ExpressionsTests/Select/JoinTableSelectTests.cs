@@ -22,6 +22,16 @@ public class JoinTableSelectTests
         Assert.Equal("SELECT * FROM [Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId]", sql);
     }
     [Fact]
+    public void Join()
+    {
+        var select = EmptyTable.Use("Users")
+            .Join<User, UserRole>(EmptyTable.Use("UserRoles"))
+            .And((u, r) => u.Id == r.UserId)
+            .ToSelect();
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId]", sql);
+    }
+    [Fact]
     public void Select()
     {
         var select = EmptyTable.Use("Users")

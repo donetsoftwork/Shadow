@@ -1,10 +1,9 @@
 using ShadowSql;
-using ShadowSql.Assigns;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
 using ShadowSql.Queries;
-using static ShadowSqlTest.Delete.TableDeleteTests;
+using TestSupports;
 
 namespace ShadowSqlTest.Update;
 
@@ -14,6 +13,14 @@ public class TableUpdateTests
     static readonly DB _db = DB.Use("MyDB");
     //分数
     static readonly IColumn _score = Column.Use("Score");
+
+    [Fact]
+    public void ToUpdate()
+    {
+        var update = new UserTable()
+            .ToUpdate(table => table.Id.Equal())
+            .Set(table => table.Status.AssignValue(false));
+    }
 
     [Fact]
     public void Filter()
@@ -46,11 +53,22 @@ public class TableUpdateTests
     }
 
     [Fact]
-    public void TableQuery()
+    public void TableSqlQuery()
     {
         var update = new StudentTable()
             .ToSqlQuery()
             .Where(table => table.Score.LessValue(60))
+            .ToUpdate()
+            .Set(table => table.Score.AddValue(10));
+        var sql = _engine.Sql(update);
+        Assert.Equal("UPDATE [Students] SET [Score]+=10 WHERE [Score]<60", sql);
+    }
+    [Fact]
+    public void TableQuery()
+    {
+        var update = new StudentTable()
+            .ToQuery()
+            .And(table => table.Score.LessValue(60))
             .ToUpdate()
             .Set(table => table.Score.AddValue(10));
         var sql = _engine.Sql(update);

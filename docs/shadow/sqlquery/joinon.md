@@ -30,7 +30,7 @@ var joinOn = _db.From("Employees")
 ```
 
 ## 5. On扩展方法
->按字段联表
+>* 按主外键联表
 ```csharp
 JoinOnSqlQuery<LTable, RTable> On<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right)
         where LTable : ITable

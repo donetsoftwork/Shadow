@@ -48,6 +48,14 @@ public class TableLogicVisitorTests
         Assert.Equal("[Id]=[Age]", sql);
     }
     [Fact]
+    public void NotEqualsTest()
+    {
+        Expression<Func<User, bool>> expression = u => !u.Id.Equals(u.Age);
+        var visitor = TableVisitor.Where(EmptyTable.Use("Users"), new AndLogic(), expression);
+        var sql = _engine.Sql(visitor.Logic);
+        Assert.Equal("[Id]<>[Age]", sql);
+    }
+    [Fact]
     public void Contains()
     {
         var parameter = new UserParameter { Items = [1, 2, 3] };

@@ -16,12 +16,33 @@ public class TableCursorSelectTests
     public void ToSelect()
     {
         var select = _db.From("Users")
+            .ToCursor<User>(10, 20)
+            .Desc(u => u.Id)
+            .ToSelect();
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users] ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY", sql);
+    }
+    [Fact]
+    public void Select()
+    {
+        var select = _db.From("Users")
             .Take<User>(10, 20)
-            .Desc(u=>u.Id)
+            .Desc(u => u.Id)
             .ToSelect()
             .Select(u => new { u.Id, u.Name });
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT [Id],[Name] FROM [Users] ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY", sql);
+    }
+    [Fact]
+    public void Select2()
+    {
+        var select = _db.From("Users")
+            .Take<User>(10, 20)
+            .Desc(u => u.Id)
+            .ToSelect()
+            .Select(u => u.Id);
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT [Id] FROM [Users] ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY", sql);
     }
     [Fact]
     public void Filter()

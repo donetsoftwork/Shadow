@@ -8,13 +8,19 @@
   href: shadow/
 - name: 表达式版
   href: expression/
-- name: Dapper.Shadow.Core
-  href: dappercore/
-- name: Dapper.Shadow
-  href: dapper/
 - name: DDL
   href: ddl/
+- name: Dapper扩展
+  items:
+  - name: 精简版
+    href: dappercore/
+  - name: 易用版
+    href: dapper/
 - name: API
   href: api/
-- name: Github
-  href: https://github.com/donetsoftwork/Shadow
+- name: 源码
+  items:
+  - name: Github
+    href: https://github.com/donetsoftwork/Shadow
+  - name: Gitee
+    href: https://gitee.com/donetsoftwork/Shadow

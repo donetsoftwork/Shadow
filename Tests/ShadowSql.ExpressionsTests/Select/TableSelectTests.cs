@@ -13,6 +13,40 @@ public class TableSelectTests
     static readonly IDB _db = new DB("MyDb");
 
     [Fact]
+    public void ToSelect()
+    {
+        var select = _db.From("Users")
+            .ToSelect<User>();
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users]", sql);
+    }
+    [Fact]
+    public void ToSelect2()
+    {
+        var select = _db.From("Users")
+            .ToSelect<User>(u => u.Status);
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users] WHERE [Status]=1", sql);
+    }
+    [Fact]
+    public void ToSelect3()
+    {
+        var select = _db.From("Users")
+            .ToSelect<User, User>((u, p) => u.Id == p.Id);
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users] WHERE [Id]=@Id", sql);
+    }
+    [Fact]
+    public void ToSelect4()
+    {
+        var select = _db.From("Users")
+            .ToSqlQuery<User>()
+            .Where(u => u.Status)
+            .ToSelect();
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users] WHERE [Status]=1", sql);
+    }
+    [Fact]
     public void Select()
     {
         var select = _db.From("Users")

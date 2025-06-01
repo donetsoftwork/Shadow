@@ -2,7 +2,7 @@ using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
-using static ShadowSqlTest.Delete.TableDeleteTests;
+using TestSupports;
 
 namespace ShadowSqlTest.Insert;
 

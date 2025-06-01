@@ -69,6 +69,17 @@ public class GroupBySqlQueryTests
         Assert.Equal("[Comments] WHERE [Pick]>=10 GROUP BY [PostId] HAVING SUM([Pick])>100", sql);
     }
     [Fact]
+    public void HavingSum5()
+    {
+        var table = new CommentTable();
+        var groupBy = table.ToSqlQuery()
+            .Where(table.Pick.GreaterEqual())
+            .SqlGroupBy(table.PostId)
+            .Having(table.Pick.Sum().Greater("PostPick"));
+        var sql = _engine.Sql(groupBy);
+        Assert.Equal("[Comments] WHERE [Pick]>=@Pick GROUP BY [PostId] HAVING SUM([Pick])>@PostPick", sql);
+    }
+    [Fact]
     public void SqlGroupBy3()
     {
         var groupBy = new CommentTable()

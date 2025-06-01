@@ -6,10 +6,10 @@
 >* 实现了[单表更新](./table.md)和[联表更新](./multi.md)
 
 ## 1. 接口
->[IUpdate](xref:ShadowSql.Update.IUpdate)
+>* [IUpdate](xref:ShadowSql.Update.IUpdate)
 
 ## 2. 基类
->[UpdateBase](xref:ShadowSql.Update.UpdateBase)
+>* [UpdateBase](xref:ShadowSql.Update.UpdateBase)
 
 ## 3. 方法
 ### 3.1 Set
@@ -23,7 +23,7 @@ TUpdate Set<TUpdate>(this TUpdate update, IAssignInfo operation)
 ```csharp
 var table = new UserTable();
 var update = new TableUpdate(table, table.Id.Equal())
-    .Set(table.Status.EqualToValue(false));
+    .Set(table.Status.AssignValue(false));
 // UPDATE [Users] SET [Status]=0 WHERE [Id]=@Id
 ```
 
@@ -39,24 +39,24 @@ var update = TableUpdate.Create("Users", id.EqualValue(1))
 // UPDATE [Users] SET [Status]=@DenyStatus WHERE [Id]=1
 ```
 
-### 3.2 SetEqualTo扩展方法
->* SetEqualTo是SetParameter的简化
+### 3.2 SetAssign扩展方法
+>* SetAssign是SetParameter的简化
 >* op固定为=
 ```csharp
-TUpdate SetEqualTo<TUpdate>(this TUpdate update, string columnName, string parameter = "")
+TUpdate SetAssign<TUpdate>(this TUpdate update, string columnName, string parameter = "")
         where TUpdate : UpdateBase, IUpdate;
 ```
 ```csharp
 var id = Column.Use("Id");
 var update = TableUpdate.Create("Users", id.EqualValue(1))
-    .SetEqualTo("Status", "DenyStatus");
+    .SetAssign("Status", "DenyStatus");
 // UPDATE [Users] SET [Status]=@DenyStatus WHERE [Id]=1
 ```
 
 ### 3.3 SetValue扩展方法
->按值修改
+>* 按值修改
 ```csharp
-TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value, string op = "=")
+TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value, string op)
     where TUpdate : UpdateBase, IUpdate;
 ```
 ```csharp
@@ -66,17 +66,15 @@ var update = TableUpdate.Create("Students", id.EqualValue(1))
 // UPDATE [Students] SET [Score]+=8 WHERE [Id]=1
 ```
 
-### 3.4 SetEqualToValue扩展方法
->* SetEqualToValue是SetValue的简化
->* op固定为=
+### 3.4 SetValue重载扩展方法
 ```csharp
-TUpdate SetEqualToValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
+TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
     where TUpdate : UpdateBase, IUpdate;
 ```
 ```csharp
 var id = Column.Use("Id");
 var update = TableUpdate.Create("Students", id.EqualValue(1))
-    .SetEqualToValue("Score", 60);
+    .SetValue("Score", 60);
 // UPDATE [Students] SET [Score]=60 WHERE [Id]=1
 ```
 

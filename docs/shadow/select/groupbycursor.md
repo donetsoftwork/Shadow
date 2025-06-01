@@ -6,7 +6,8 @@
 >* 本组件通过[分组分页游标](../cursor/groupby.md)来分页
 
 ## 1. 接口
->[ISelect](xref:ShadowSql.Select.ISelect)
+>* [ISelect](xref:ShadowSql.Select.ISelect)
+>* [IGroupBySelect](xref:ShadowSql.Select.IGroupBySelect)
 
 ## 2. 基类
 >* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
@@ -31,7 +32,6 @@ var select = _db.From("Users")
     .ToSelect();
 // SELECT [City] FROM [Users] GROUP BY [City] ORDER BY COUNT(*) OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
-
 
 ## 5. SelectAggregate方法
 >* 聚合筛选

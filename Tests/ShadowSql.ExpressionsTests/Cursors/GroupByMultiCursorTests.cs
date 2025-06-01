@@ -48,7 +48,31 @@ public class GroupByMultiCursorTests
         Assert.Equal("[Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId] ORDER BY SUM(t1.[Age])", sql);
     }
     [Fact]
-    public void AggregateAsc()
+    public void Asc()
+    {
+        var cursor = EmptyTable.Use("Users")
+            .Join<User, UserRole>(EmptyTable.Use("UserRoles"))
+            .And((u, r) => u.Id == r.UserId)
+            .GroupBy((u, r) => r.UserId)
+            .ToCursor()
+            .Asc<UserRole, int>("UserRoles", g => g.Sum(r => r.Score));
+        var sql = _engine.Sql(cursor);
+        Assert.Equal("[Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId] ORDER BY SUM(t2.[Score])", sql);
+    }
+    [Fact]
+    public void Asc2()
+    {
+        var cursor = EmptyTable.Use("Users")
+            .Join<User, UserRole>(EmptyTable.Use("UserRoles"))
+            .And((u, r) => u.Id == r.UserId)
+            .GroupBy((u, r) => r.UserId)
+            .ToCursor()
+            .Asc<UserRole, int>(g => g.Sum(r => r.Score));
+        var sql = _engine.Sql(cursor);
+        Assert.Equal("[Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId] ORDER BY SUM([Score])", sql);
+    }
+    [Fact]
+    public void Desc()
     {
         var cursor = EmptyTable.Use("Users")
             .Join<User, UserRole>(EmptyTable.Use("UserRoles"))
@@ -60,7 +84,7 @@ public class GroupByMultiCursorTests
         Assert.Equal("[Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId] ORDER BY SUM(t2.[Score]) DESC", sql);
     }
     [Fact]
-    public void AggregateAsc2()
+    public void Desc2()
     {
         var cursor = EmptyTable.Use("Users")
             .Join<User, UserRole>(EmptyTable.Use("UserRoles"))

@@ -62,7 +62,8 @@ public static class ShadowSqlExtendServices
         return joinOnNew;
     }
     #endregion
-
+    #region IDataSqlQuery
+    #region SqlJoin
     /// <summary>
     /// 联表(创建新联表)
     /// </summary>
@@ -80,6 +81,7 @@ public static class ShadowSqlExtendServices
         joinTable.AddJoinOn(joinOn);
         return joinOn;
     }
+    #endregion
     /// <summary>
     /// 用左表联新表
     /// </summary>
@@ -112,4 +114,5 @@ public static class ShadowSqlExtendServices
         root.AddJoinOn(joinOnNew);
         return joinOnNew;
     }
+    #endregion
 }

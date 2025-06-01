@@ -1,7 +1,5 @@
 using ShadowSql.Expressions.VisitSource;
-using ShadowSql.Identifiers;
 using ShadowSql.Join;
-using ShadowSql.Logics;
 using ShadowSql.Queries;
 using System;
 using System.Linq.Expressions;
@@ -29,6 +27,20 @@ public static partial class ShadowSqlServices
         return multiTable;
     }
     /// <summary>
+    /// 指定表查询
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TParameter"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="table"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static MultiTableSqlQuery Where<TEntity, TParameter>(this MultiTableSqlQuery multiTable, string table, Expression<Func<TEntity, TParameter, bool>> query)
+    {
+        TableVisitor.Where(multiTable.From(table), multiTable._filter._complex, query);
+        return multiTable;
+    }
+    /// <summary>
     /// 直接查询(不建议对重名列查询)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
@@ -36,6 +48,19 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <returns></returns>
     public static MultiTableSqlQuery Where<TEntity>(this MultiTableSqlQuery multiTable, Expression<Func<TEntity, bool>> query)
+    {
+        TableVisitor.Where(multiTable._filter._complex, query, multiTable);
+        return multiTable;
+    }
+    /// <summary>
+    /// 直接查询(不建议对重名列查询)
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TParameter"></typeparam>
+    /// <param name="multiTable"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static MultiTableSqlQuery Where<TEntity, TParameter>(this MultiTableSqlQuery multiTable, Expression<Func<TEntity, TParameter, bool>> query)
     {
         TableVisitor.Where(multiTable._filter._complex, query, multiTable);
         return multiTable;

@@ -99,7 +99,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public TableSelect<TEntity> Select<T>(Expression<Func<TEntity, T>> select)
+    public TableSelect<TEntity> Select<TProperty>(Expression<Func<TEntity, TProperty>> select)
     {
         TableVisitor.Select(_selected, select, _target);
         return this;

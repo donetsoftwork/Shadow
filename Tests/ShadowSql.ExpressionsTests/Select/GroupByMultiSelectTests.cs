@@ -12,18 +12,28 @@ public class GroupByMultiSelectTests
     static readonly ISqlEngine _engine = new MsSqlEngine();
 
     [Fact]
-    public void ToSelect()
+    public void SqlJoin()
     {
         var select = EmptyTable.Use("Users")
             .SqlJoin<User, UserRole>(EmptyTable.Use("UserRoles"))
             .On(u => u.Id, r => r.UserId)
             .SqlGroupBy((u, r) => r.UserId)
-            .ToSelect()
-            .SelectKey()
-            .SelectCount("UserCount");
+            .ToSelect();
 
         var sql = _engine.Sql(select);
-        Assert.Equal("SELECT t2.[UserId],COUNT(*) AS UserCount FROM [Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId]", sql);
+        Assert.Equal("SELECT t2.[UserId] FROM [Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId]", sql);
+    }
+    [Fact]
+    public void Join()
+    {
+        var select = EmptyTable.Use("Users")
+            .Join<User, UserRole>(EmptyTable.Use("UserRoles"))
+            .And((u, r) => u.Id == r.UserId)
+            .GroupBy((u, r) => r.UserId)
+            .ToSelect();
+
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT t2.[UserId] FROM [Users] AS t1 INNER JOIN [UserRoles] AS t2 ON t1.[Id]=t2.[UserId] GROUP BY t2.[UserId]", sql);
     }
     [Fact]
     public void Select()

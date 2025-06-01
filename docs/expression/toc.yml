@@ -1,8 +1,27 @@
 - name: 简介
   href: index.md
-- name: 插入
-- name: 删除
-- name: 更新
-- name: 获取数据
-- name: Sql查询
-- name: 逻辑查询
+- name: 上手
+  href: quick.md
+- name: Insert
+  href: ./insert/single.md
+- name: Delete
+  href: ./delete/table.md
+- name: Update
+  href: update/table.md
+- name: Select
+  items:
+  - href: select/index.md
+  - href: select/table.md
+  - href: select/tablecursor.md
+  - href: select/join.md
+  - href: select/joincursor.md
+  - href: select/groupby.md
+  - href: select/groupbycursor.md
+  - href: select/groupbyjoin.md
+  - href: select/groupbyjoincursor.md  
+- name: 组件
+  items:
+  - href: sqlquery/
+  - href: query/
+  - name: 游标
+    href: cursor/

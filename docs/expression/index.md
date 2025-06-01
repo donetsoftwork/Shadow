@@ -131,7 +131,7 @@ var select = _db.From("Users")
     .Where(u => u.Status)
     .ToSelect()
     .Select(u => new { u.Id, u.Name });
-// SELECT [Id],[Name] FROM [Users]
+// SELECT [Id],[Name] FROM [Users] WHERE [Status]=1
 ~~~
 
 ### 7.4 分页获取
@@ -145,3 +145,4 @@ var select = _db.From("Users")
     .ToSelect();
 // SELECT * FROM [Users] WHERE [Status]=1 ORDER BY [Id] OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
+

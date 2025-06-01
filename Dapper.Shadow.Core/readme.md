@@ -41,7 +41,7 @@
     var query = new TableSqlQuery(table)
         .Where(table.Age.LessValue(7));
     var update = new TableUpdate(table, query.Filter)
-        .Set(table.ClassId.EqualToValue(1));
+        .Set(table.ClassId.AssignValue(1));
     var result = SqliteExecutor.Execute(update);
 ~~~
 

@@ -39,7 +39,7 @@
         .ToSqlQuery()
         .Where(table => table.Age.LessValue(7))
         .ToUpdate()
-        .Set(table => table.ClassId.EqualToValue(1))
+        .Set(table => table.ClassId.AssignValue(1))
         .Execute(Executor);
 ~~~
 

@@ -125,6 +125,6 @@ var table = new StudentTable();
 var result = table.ToQuery()
     .Where(table.Age.LessValue(7))
     .ToDapperUpdate(SqliteExecutor)
-    .Set(table.ClassId.EqualToValue(1))
+    .Set(table.ClassId.AssignValue(1))
     .Execute();
 ~~~

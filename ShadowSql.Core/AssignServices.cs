@@ -1,19 +1,6 @@
-using ShadowSql.Aggregates;
 using ShadowSql.Assigns;
-using ShadowSql.CompareLogics;
-using ShadowSql.Compares;
-using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
-using ShadowSql.Insert;
-using ShadowSql.Join;
-using ShadowSql.Logics;
-using ShadowSql.Orders;
-using ShadowSql.SingleSelect;
 using ShadowSql.SqlVales;
-using ShadowSql.Variants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ShadowSql;
 

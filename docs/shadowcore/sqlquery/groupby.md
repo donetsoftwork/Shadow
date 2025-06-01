@@ -10,7 +10,7 @@
 >[GroupByBase](xref:ShadowSql.GroupBy.GroupByBase)
 
 ## 3. 类
->[GroupBySqlQuery](/api/xref:ShadowSql.GroupBy.GroupBySqlQuery)
+>[GroupBySqlQuery](xref:ShadowSql.GroupBy.GroupBySqlQuery)
 
 ## 4. 方法
 ### 4.1 Create静态方法

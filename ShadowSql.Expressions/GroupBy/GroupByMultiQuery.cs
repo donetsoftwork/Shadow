@@ -35,7 +35,8 @@ public class GroupByMultiQuery<TKey>(IMultiView multiTable, IField[] fields, Log
     /// <returns></returns>
     public GroupByMultiQuery<TKey> And<TEntity>(string table, Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
-        GroupByVisitor.Having(this, _source.From(table), _filter.ToAnd(), query);
+        var visitor = GroupByVisitor.Having(this, _source.From(table), _filter.ToAnd(), query);
+        _filter = visitor.Logic;
         return this;
     }
     /// <summary>
@@ -48,7 +49,8 @@ public class GroupByMultiQuery<TKey>(IMultiView multiTable, IField[] fields, Log
     /// <returns></returns>
     public GroupByMultiQuery<TKey> And<TEntity, TParameter>(string table, Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {
-        GroupByVisitor.Having(this, _source.From(table), _filter.ToAnd(), query);
+        var visitor = GroupByVisitor.Having(this, _source.From(table), _filter.ToAnd(), query);
+        _filter = visitor.Logic;
         return this;
     }
     /// <summary>
@@ -60,7 +62,8 @@ public class GroupByMultiQuery<TKey>(IMultiView multiTable, IField[] fields, Log
     /// <returns></returns>
     public GroupByMultiQuery<TKey> Or<TEntity>(string table, Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
-        GroupByVisitor.Having(this, _source.From(table), _filter.ToOr(), query);
+        var visitor = GroupByVisitor.Having(this, _source.From(table), _filter.ToOr(), query);
+        _filter = visitor.Logic;
         return this;
     }
     /// <summary>
@@ -73,7 +76,8 @@ public class GroupByMultiQuery<TKey>(IMultiView multiTable, IField[] fields, Log
     /// <returns></returns>
     public GroupByMultiQuery<TKey> Or<TEntity, TParameter>(string table, Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {
-        GroupByVisitor.Having(this, _source.From(table), _filter.ToOr(), query);
+        var visitor = GroupByVisitor.Having(this, _source.From(table), _filter.ToOr(), query);
+        _filter = visitor.Logic;
         return this;
     }
     #endregion

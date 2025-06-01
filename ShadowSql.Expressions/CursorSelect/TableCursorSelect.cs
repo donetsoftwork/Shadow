@@ -19,7 +19,7 @@ public sealed class TableCursorSelect<TEntity>(TableCursor<TEntity> cursor)
     /// </summary>
     /// <param name="select"></param>
     /// <returns></returns>
-    public TableCursorSelect<TEntity> Select<T>(Expression<Func<TEntity, T>> select)
+    public TableCursorSelect<TEntity> Select<TProperty>(Expression<Func<TEntity, TProperty>> select)
     {
         TableVisitor.Select(_selected, select, _target);
         return this;

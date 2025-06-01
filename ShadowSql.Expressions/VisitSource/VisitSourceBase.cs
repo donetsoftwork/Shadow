@@ -86,7 +86,7 @@ public abstract class VisitSourceBase(Expression entity)
     /// <returns></returns>
     public virtual IEnumerable<IFieldView> SelectFieldsByAssignment(Expression argument, MemberInfo memberInfo)
     {
-        if (argument is MemberExpression member)
+        if (argument.NodeType == ExpressionType.MemberAccess && argument is MemberExpression member)
         {
             if (GetFieldByMember(member) is IField field)
                 yield return SelectVisitor.SelectField(field, memberInfo.Name);
@@ -95,7 +95,7 @@ public abstract class VisitSourceBase(Expression entity)
         }
         else if (GetCompareFieldByExpression(argument) is ICompareView compare)
         {
-                yield return new AliasFieldInfo(compare, memberInfo.Name);
+            yield return new AliasFieldInfo(compare, memberInfo.Name);
         }
     }
     /// <summary>
@@ -119,23 +119,36 @@ public abstract class VisitSourceBase(Expression entity)
     /// <returns></returns>
     public virtual ICompareView? GetCompareFieldByExpression(Expression expression)
     {
-        if (expression is MemberExpression member)
+        switch (expression.NodeType)
         {
-            if (GetFieldByMember(member) is IField field)
-                return field;
-            return Parameter.Use(member.Member.Name);
-        }
-        if (expression is ConstantExpression constant)
-            return LogicVisitor.GetSqlValue(constant);
-        if (expression is BinaryExpression binary)
-        {
-            if (GetCompareFieldByExpression(binary.Left) is ICompareView left
-                && GetCompareFieldByExpression(binary.Right) is ICompareView right)
-                return new ArithmeticView(left, SymbolManager.GetArithmeticSymbol(binary.NodeType), right);
-        }
-        if (expression is MethodCallExpression methodCall)
-        {
-            return GetCompareFieldByMethodCall(methodCall);
+            case ExpressionType.MemberAccess:
+                if (expression is MemberExpression member)
+                {
+                    if (GetFieldByMember(member) is IField field)
+                        return field;
+                    return Parameter.Use(member.Member.Name);
+                }
+                break;
+            case ExpressionType.Constant:
+                if (expression is ConstantExpression constant)
+                    return LogicVisitor.GetSqlValue(constant);
+                break;
+            case ExpressionType.Call:
+                if (expression is MethodCallExpression methodCall)
+                    return GetCompareFieldByMethodCall(methodCall);
+                break;
+            case ExpressionType.Convert:
+                if (expression is UnaryExpression unary)
+                    return GetCompareFieldByExpression(unary.Operand);
+                break;
+            default:
+                if (expression is BinaryExpression binary)
+                {
+                    if (GetCompareFieldByExpression(binary.Left) is ICompareView left
+                        && GetCompareFieldByExpression(binary.Right) is ICompareView right)
+                        return new ArithmeticView(left, SymbolManager.GetArithmeticSymbol(binary.NodeType), right);
+                }
+                break;
         }
         return null;
     }

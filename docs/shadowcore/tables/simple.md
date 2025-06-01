@@ -3,7 +3,6 @@
 >* 作为表的影子(占位符)
 >* 主要用于[按字段查询](../../shadow/sqlquery/fieldquery.md)
 >* 支持select和delete等
->* 不支持update和insert,进行联表后也不支持
 
 ## 1. 接口
 >* [ITable](xref:ShadowSql.Identifiers.ITable)

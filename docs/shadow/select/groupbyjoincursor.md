@@ -6,7 +6,8 @@
 >* 本组件通过[联表分组游标](../cursor/groupbyjoin.md)来分页
 
 ## 1. 接口
->[ISelect](xref:ShadowSql.Select.ISelect)
+>* [ISelect](xref:ShadowSql.Select.ISelect)
+>* [IGroupBySelect](xref:ShadowSql.Select.IGroupBySelect)
 
 ## 2. 基类
 >* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)

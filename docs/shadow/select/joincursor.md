@@ -6,7 +6,8 @@
 >* 本组件通过[联表游标](../cursor/join.md)来分页
 
 ## 1. 接口
->[ISelect](xref:ShadowSql.Select.ISelect)
+>* [ISelect](xref:ShadowSql.Select.ISelect)
+>* [IMultiSelect](xref:ShadowSql.Select.IMultiSelect)
 
 ## 2. 基类
 >* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
@@ -17,7 +18,7 @@
 ## 4. ToSelect扩展方法
 >* 从联表游标创建[MultiTableCursorSelect](xref:ShadowSql.CursorSelect.MultiTableCursorSelect)
 ~~~csharp
-MultiTableSelect ToSelect(this IMultiView table);
+MultiTableCursorSelect ToSelect(this MultiTableCursor cursor);
 ~~~
 ~~~csharp
 var select = _db.From("Employees")
@@ -94,39 +95,7 @@ var select = c.SqlJoin(p)
 // SELECT c.[Id],c.[Content] FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] ORDER BY c.[Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
 
-## 6. SelectTable扩展方法
->筛选别名表
-~~~csharp
-TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, IAliasTable aliasTable)
-        where TMultiTableSelect : MultiSelectBase;
-TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, string tableName)
-        where TMultiTableSelect : MultiSelectBase;
-~~~
-~~~csharp
-CommentAliasTable c = new("c");
-PostAliasTable p = new("p");
-var select = c.SqlJoin(p)
-    .On(c.PostId, p.Id)
-    .Root
-    .ToCursor(10, 20)
-    .Desc<CommentAliasTable>("c", c => c.Id)
-    .ToSelect()
-    .SelectTable(c);
-// SELECT c.* FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] ORDER BY c.[Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
-~~~
-~~~csharp
-var select = new Table("Comments")
-    .SqlJoin(new Table("Posts"))
-    .OnColumn("PostId", "Id")
-    .Root
-    .ToCursor(10, 20)
-    .OrderBy("t1.Id DESC")
-    .ToSelect()
-    .SelectTable("Comments");
-// SELECT t1.* FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] ORDER BY t1.Id DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
-~~~
-
-## 7. 其他相关功能
+## 6. 其他相关功能
 >* 参看[获取简介](./index.md)
 >* 参看[联表游标](../cursor/join.md)
 >* 参看[ShadowSqlCore相关文档](../../shadowcore/select/index.md)

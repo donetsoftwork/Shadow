@@ -2,7 +2,7 @@
 
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).0-alpha</Version>
+    <Version>$(VersionBase).1-alpha</Version>
     <PackageId>ShadowSql.Expressions</PackageId>
     <Description>拼接sql工具</Description>
     <PackageTags>expression;sql-builder;sql-query</PackageTags>

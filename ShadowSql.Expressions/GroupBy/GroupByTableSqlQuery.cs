@@ -53,7 +53,7 @@ public class GroupByTableSqlQuery<TKey, TEntity>
     #endregion
     #region 查询扩展
     /// <summary>
-    /// 按逻辑查询
+    /// 聚合查询
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
@@ -63,7 +63,7 @@ public class GroupByTableSqlQuery<TKey, TEntity>
         return this;
     }
     /// <summary>
-    /// 按逻辑查询
+    /// 聚合查询
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>

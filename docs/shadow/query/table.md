@@ -5,10 +5,11 @@
 >* [IDataQuery](xref:ShadowSql.Queries.IDataQuery)
 
 ## 2. 类
->[TableQuery](xref:ShadowSql.Tables.TableQuery)
+>* [TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)
 
 ## 3. 从表创建查询
->从表创建[TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)
+>* 从表创建[TableQuery\<TTable\>](xref:ShadowSql.Tables.TableQuery%601)
+
 ### 3.1 ToQuery扩展方法
 >* 从表创建TableQuery\<TTable\>的AND查询
 ```csharp

@@ -2,10 +2,10 @@
 >更新联表中某个表的数据
 
 ## 1. 接口
->[IUpdate](/api/shadowcore/update/IUpdate.html)
+>* [IUpdate](xref:ShadowSql.Update.IUpdate)
 
 ## 2. 类
->[MultiTableUpdate](/api/shadowcore/update/MultiTableUpdate.html)
+>* [MultiTableUpdate](xref:ShadowSql.Update.MultiTableUpdate)
 
 ## 3. 相关方法
 ### 3.1 ToUpdate扩展方法
@@ -21,7 +21,7 @@ var query = joinOn.Root
     .Where(p.Author.EqualValue("张三"))
     .Where(c.Pick.EqualValue(false));
 var update = query.ToUpdate()
-    .Set(c.Pick.EqualToValue(true));
+    .Set(c.Pick.AssignValue(true));
 // UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author]='张三' AND c.[Pick]=0
 ```
 
@@ -39,7 +39,7 @@ var query = joinOn.Root
     .Where("Comments", t1 => t1.Field("Pick").EqualValue(false));
 var update = query.ToUpdate()
     .Update("Comments")
-    .Set(t1 => t1.Field("Pick").EqualToValue(true));
+    .Set(t1 => t1.Field("Pick").AssignValue(true));
 // UPDATE t1 SET t1.[Pick]=1 FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t2.[Author]='张三' AND t1.[Pick]=0
 ```
 
@@ -62,7 +62,7 @@ var query = joinOn.Root
     .Where(c.Pick.EqualValue(false));
 var update = query.ToUpdate()
     .Update(c)
-    .Set(c.Pick.EqualToValue(true));
+    .Set(c.Pick.AssignValue(true));
 // UPDATE c SET c.[Pick]=1 FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id] WHERE p.[Author]='张三' AND c.[Pick]=0
 ```
 
@@ -84,6 +84,6 @@ var query = joinOn.Root
     .Where(t1.Field("Pick").EqualValue(false));
 var update = query.ToUpdate()
     .Update("Comments")
-    .Set(t1.Field("Pick").EqualToValue(true));
+    .Set(t1.Field("Pick").AssignValue(true));
 // UPDATE t1 SET t1.[Pick]=1 FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id] WHERE t2.[Author]='张三' AND t1.[Pick]=0
 ```

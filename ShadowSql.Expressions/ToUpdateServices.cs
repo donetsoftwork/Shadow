@@ -34,30 +34,40 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TParameter"></typeparam>
+    /// <param name="table"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery<TEntity> tableQuery)
-        => new(tableQuery.Source, tableQuery._filter);
+    public static TableUpdate<TEntity> ToUpdate<TEntity, TParameter>(this ITable table, Expression<Func<TEntity, TParameter, bool>> query)
+        => new(table, TableVisitor.Where(table, new AndLogic(), query).Logic);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery tableQuery)
-        => new((ITable)tableQuery.Source, tableQuery._filter);
+    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery<TEntity> query)
+        => new(query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery<TEntity> tableQuery)
-        => new(tableQuery.Source, tableQuery._filter);
+    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery query)
+        => new((ITable)query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query"></param>
     /// <returns></returns>
-    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery tableQuery)
-        => new((ITable)tableQuery.Source, tableQuery._filter);
+    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery<TEntity> query)
+        => new(query.Source, query._filter);
+    /// <summary>
+    /// 修改
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery query)
+        => new((ITable)query.Source, query._filter);
     #endregion   
 }

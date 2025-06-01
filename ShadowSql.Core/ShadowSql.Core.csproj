@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).0-alpha</Version>
+    <Version>$(VersionBase).1-alpha</Version>
     <PackageId>ShadowSql.Core</PackageId>
     <Description>拼接sql工具</Description>
     <PackageTags>sql;sql-builder;sql-query</PackageTags>
@@ -25,9 +25,6 @@
     <InternalsVisibleTo Include="ShadowSqlCoreTest" />
     <InternalsVisibleTo Include="ShadowSqlTest" />
     <InternalsVisibleTo Include="ShadowSql.ExpressionsTests" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CursorSelect\" />
   </ItemGroup>
 
 </Project>

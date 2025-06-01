@@ -1,5 +1,7 @@
 - name: 简介
   href: index.md
+- name: 上手
+  href: quick.md
 - name: Insert
 - href: insert/single.md
 - href: insert/multi.md

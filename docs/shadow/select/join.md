@@ -4,7 +4,8 @@
 >* 本组件是对ShadowSql.Core同名组件的扩展
 
 ## 1. 接口
->[ISelect](xref:ShadowSql.Select.ISelect)
+>* [ISelect](xref:ShadowSql.Select.ISelect)
+>* [IMultiSelect](xref:ShadowSql.Select.IMultiSelect)
 
 ## 2. 基类
 >* [SelectFieldsBase](xref:ShadowSql.SelectFields.SelectFieldsBase)
@@ -117,33 +118,7 @@ var select = new CommentAliasTable("c")
 // SELECT c.[Id],c.[Content] FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id]
 ~~~
 
-## 6. SelectTable扩展方法
->筛选别名表
-~~~csharp
-TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, IAliasTable aliasTable)
-        where TMultiTableSelect : MultiSelectBase;
-TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, string tableName)
-        where TMultiTableSelect : MultiSelectBase;
-~~~
-~~~csharp
-CommentAliasTable c = new("c");
-PostAliasTable p = new("p");
-var select = c.SqlJoin(p)
-    .On(c.PostId, p.Id)
-    .ToSelect()
-    .SelectTable(c);
-// SELECT c.* FROM [Comments] AS c INNER JOIN [Posts] AS p ON c.[PostId]=p.[Id]
-~~~
-~~~csharp
-var select = new Table("Comments")
-    .SqlJoin(new Table("Posts"))
-    .OnColumn("PostId", "Id")
-    .ToSelect()
-    .SelectTable("Comments");
-// SELECT t1.* FROM [Comments] AS t1 INNER JOIN [Posts] AS t2 ON t1.[PostId]=t2.[Id]
-~~~
-
-## 7. 其他相关功能
+## 6. 其他相关功能
 >* 参看[获取简介](./index.md)
 >* 参看[sql联表](../sqlquery/join.md)
 >* 参看[sql多表](../sqlquery/multi.md)

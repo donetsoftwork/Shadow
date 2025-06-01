@@ -4,6 +4,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.Expressions;
 using ShadowSql.Expressions.Tables;
 using ShadowSql.ExpressionsTests.Supports;
+using ShadowSql.Tables;
 
 namespace ShadowSql.ExpressionsTests.Delete;
 
@@ -11,6 +12,22 @@ public class TableDeleteTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
 
+    [Fact]
+    public void ToDelete()
+    {
+        var delete = EmptyTable.Use("Posts")
+            .ToDelete<Post>(p => p.Id == 1);
+        var sql = _engine.Sql(delete);
+        Assert.Equal("DELETE FROM [Posts] WHERE [Id]=1", sql);
+    }
+    [Fact]
+    public void ToDelete2()
+    {
+        var delete = EmptyTable.Use("Posts")
+            .ToDelete<Post, Post>((u, p) => u.Id == p.Id);
+        var sql = _engine.Sql(delete);
+        Assert.Equal("DELETE FROM [Posts] WHERE [Id]=@Id", sql);
+    }
     [Fact]
     public void Query()
     {

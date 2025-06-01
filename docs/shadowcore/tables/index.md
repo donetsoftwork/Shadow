@@ -14,13 +14,10 @@
 
 ## 2. Table
 >* 作为表的影子(占位符)
->* 支持select、update、insert和delete
 >* 参看[Table](./table.md)
-
 
 ## 3. EmptyTable
 >* 作为表的影子(占位符)
->* 支持select和delete等
 >* 参看[EmptyTable](./simple.md)
 
 ## 4. 别名表
@@ -31,6 +28,4 @@
 ## 5. TableSchema
 >* 作为表的影子(占位符)
 >* 主要用来支持createtable
->* 与Table一样也支持select、update、insert和delete等
 >* 参看[TableSchema](./schema.md)
-

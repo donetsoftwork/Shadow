@@ -35,7 +35,7 @@ public class MultiTableUpdateTests : ExecuteTestBase, IDisposable
 
         //var result = query.ToUpdate()
         //    .Update(s)
-        //    .Set(s.Age.EqualToValue(11))
+        //    .Set(s.Age.AssignValue(11))
         //    .Execute(SqliteExecutor);
         //Assert.True(result > 0);
 

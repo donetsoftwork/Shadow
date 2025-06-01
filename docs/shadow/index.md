@@ -102,7 +102,7 @@ sequenceDiagram
 #### 1.2.1 Select
 >* 筛选获取对象
 >* 接口[ISelect](xref:ShadowSql.Select.ISelect)
->* 类型为[TableSelect\<TTable\>](/api/ShadowSql.Select.TableSelect<TTable>)、[MultiTableSelect](/api/ShadowSql.Select.MultiTableSelect)、[GroupByTableSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableSelect%601)、[GroupByMultiSelect](xref:ShadowSql.Select.GroupByMultiSelect)、[TableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.TableCursorSelect%601)、[MultiTableCursorSelect](xref:ShadowSql.CursorSelect.MultiTableCursorSelect)、[GroupByTableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.GroupByTableCursorSelect%601)或[GroupByMultiCursorSelect](xref:ShadowSql.CursorSelect.GroupByMultiCursorSelect)等
+>* 类型为[TableSelect\<TTable\>](xref:ShadowSql.Select.TableSelect%601)、[MultiTableSelect](xref:ShadowSql.Select.MultiTableSelect)、[GroupByTableSelect\<TTable\>](xref:ShadowSql.Select.GroupByTableSelect%601)、[GroupByMultiSelect](xref:ShadowSql.Select.GroupByMultiSelect)、[TableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.TableCursorSelect%601)、[MultiTableCursorSelect](xref:ShadowSql.CursorSelect.MultiTableCursorSelect)、[GroupByTableCursorSelect\<TTable\>](xref:ShadowSql.CursorSelect.GroupByTableCursorSelect%601)或[GroupByMultiCursorSelect](xref:ShadowSql.CursorSelect.GroupByMultiCursorSelect)等
 
 #### 1.2.2 Insert
 >* 插入对象

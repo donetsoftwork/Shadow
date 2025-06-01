@@ -1,4 +1,3 @@
-using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -34,9 +33,7 @@ public abstract class VisitorBase(IFieldProvider source)
         if (members is null || arguments is null)
             return node;
         for (int i = 0; i < arguments.Count; i++)
-        {
             CheckAssignment(arguments[i], members[i]);
-        }
         return node;
     }
     #endregion
@@ -88,6 +85,43 @@ public abstract class VisitorBase(IFieldProvider source)
     {            
     }
     #endregion
+    /// <summary>
+    /// 解析BinaryExpression
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    protected override Expression VisitBinary(BinaryExpression node)
+    {
+        CheckBinary(node.NodeType, node.Left, node.Right);
+        return node;
+    }
+    /// <summary>
+    /// 处理二元表达式
+    /// </summary>
+    /// <param name="op">操作类型</param>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    protected virtual void CheckBinary(ExpressionType op, Expression left, Expression right)
+    {
+    }
+    /// <summary>
+    /// 解析UnaryExpression
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    protected override Expression VisitUnary(UnaryExpression node)
+    {
+        CheckUnary(node.NodeType, node.Operand);
+        return node;
+    }
+    /// <summary>
+    /// 处理一元表达式
+    /// </summary>
+    /// <param name="op">操作类型</param>
+    /// <param name="expression"></param>
+    protected virtual void CheckUnary(ExpressionType op, Expression expression)
+    {
+    }
     /// <summary>
     /// 解析MethodCallExpression
     /// </summary>

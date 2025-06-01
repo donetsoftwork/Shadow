@@ -1,15 +1,15 @@
 - name: 简介
   href: index.md
+- name: 上手
+  href: quick.md
 - name: Insert
 - href: insert/single.md
 - href: insert/multi.md
 - href: insert/select.md
 - name: Delete
-- href: delete/table.md
-- href: delete/multi.md
+  href: delete/table.md
 - name: Update
-- href: update/table.md
-- href: update/multi.md
+  href: update/table.md
 - name: Select
   items:
   - href: select/index.md

@@ -4,6 +4,7 @@ using ShadowSql.Expressions.Join;
 using ShadowSql.Expressions.Tables;
 using ShadowSql.Expressions.VisitSource;
 using ShadowSql.Identifiers;
+using ShadowSql.Join;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
 using System;
@@ -97,26 +98,26 @@ public static partial class ShadowSqlServices
     #endregion
     #endregion
     #region GroupByMultiQuery
-    //#region MultiTableQuery
-    ///// <summary>
-    ///// 分组查询
-    ///// </summary>
-    ///// <param name="multiTable"></param>
-    ///// <param name="fields"></param>
-    ///// <returns></returns>
-    //public static GroupByMultiQuery<Key> GroupBy<Key>(this MultiTableQuery multiTable, params IField[] fields)
-    //    => new(multiTable, fields);
-    //#endregion
-    //#region JoinTableQuery
-    ///// <summary>
-    ///// 分组查询
-    ///// </summary>
-    ///// <param name="multiTable"></param>
-    ///// <param name="fields"></param>
-    ///// <returns></returns>
-    //public static GroupByMultiQuery<Key> GroupBy<Key>(this JoinTableQuery multiTable, params IField[] fields)
-    //    => new(multiTable, fields);
-    //#endregion
+    #region MultiTableQuery
+    /// <summary>
+    /// 分组查询
+    /// </summary>
+    /// <param name="multiTable"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupByMultiQuery<Key> GroupBy<Key>(this MultiTableQuery multiTable, params IField[] fields)
+        => new(multiTable, fields);
+    #endregion
+    #region JoinTableQuery
+    /// <summary>
+    /// 分组查询
+    /// </summary>
+    /// <param name="multiTable"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupByMultiQuery<Key> GroupBy<Key>(this JoinTableQuery multiTable, params IField[] fields)
+        => new(multiTable, fields);
+    #endregion
     #region JoinOnQuery<LTable, RTable>
     /// <summary>
     /// 分组查询
@@ -187,7 +188,7 @@ public static partial class ShadowSqlServices
     /// <param name="table"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByTableQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this IAliasTable table, Expression<Func<TEntity, TKey>> select)
+    public static GroupByTableSqlQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this IAliasTable table, Expression<Func<TEntity, TKey>> select)
         => new(table, EmptyLogic.Instance, [.. TableVisitor.GetFieldsByExpression(table, select)]);
     #endregion
     #region AliasTable & where
@@ -200,7 +201,7 @@ public static partial class ShadowSqlServices
     /// <param name="where"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByTableQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this IAliasTable table, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TKey>> select)
+    public static GroupByTableSqlQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this IAliasTable table, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TKey>> select)
         => new(table, TableVisitor.Where(table, new AndLogic(), where).Logic, [.. TableVisitor.GetFieldsByExpression(table, select)]);
     #endregion    
     #region AliasTableSqlQuery
@@ -210,31 +211,31 @@ public static partial class ShadowSqlServices
     /// <param name="query"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByTableQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this AliasTableSqlQuery<TEntity> query, Expression<Func<TEntity, TKey>> select)
+    public static GroupByTableSqlQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this AliasTableSqlQuery<TEntity> query, Expression<Func<TEntity, TKey>> select)
         => new(query.Source, query._filter, [.. TableVisitor.GetFieldsByExpression(query.Source, select)]);
     #endregion
     #endregion
     #region GroupByMultiQuery
-    //#region MultiTableQuery
-    ///// <summary>
-    ///// 分组查询
-    ///// </summary>
-    ///// <param name="multiTable"></param>
-    ///// <param name="fields"></param>
-    ///// <returns></returns>
-    //public static GroupByMultiQuery<Key> SqlGroupBy<Key>(this MultiTableQuery multiTable, params IField[] fields)
-    //    => new(multiTable, fields);
-    //#endregion
-    //#region JoinTableQuery
-    ///// <summary>
-    ///// 分组查询
-    ///// </summary>
-    ///// <param name="multiTable"></param>
-    ///// <param name="fields"></param>
-    ///// <returns></returns>
-    //public static GroupByMultiQuery<Key> SqlGroupBy<Key>(this JoinTableQuery multiTable, params IField[] fields)
-    //    => new(multiTable, fields);
-    //#endregion
+    #region MultiTableQuery
+    /// <summary>
+    /// 分组查询
+    /// </summary>
+    /// <param name="multiTable"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupByMultiSqlQuery<Key> SqlGroupBy<Key>(this MultiTableQuery multiTable, params IField[] fields)
+        => new(multiTable, fields);
+    #endregion
+    #region JoinTableQuery
+    /// <summary>
+    /// 分组查询
+    /// </summary>
+    /// <param name="multiTable"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static GroupByMultiSqlQuery<Key> SqlGroupBy<Key>(this JoinTableQuery multiTable, params IField[] fields)
+        => new(multiTable, fields);
+    #endregion
     #region JoinOnSqlQuery<LTable, RTable>
     /// <summary>
     /// 分组查询
@@ -245,7 +246,7 @@ public static partial class ShadowSqlServices
     /// <param name="joinOn"></param>
     /// <param name="select"></param>
     /// <returns></returns>
-    public static GroupByMultiQuery<TKey> SqlGroupBy<TLeft, TRight, TKey>(this JoinOnSqlQuery<TLeft, TRight> joinOn, Expression<Func<TLeft, TRight, TKey>> select)
+    public static GroupByMultiSqlQuery<TKey> SqlGroupBy<TLeft, TRight, TKey>(this JoinOnSqlQuery<TLeft, TRight> joinOn, Expression<Func<TLeft, TRight, TKey>> select)
         => new(joinOn.Root, [.. JoinOnVisitor.GetFieldsByExpression(joinOn, select)]);
     #endregion
     #endregion
