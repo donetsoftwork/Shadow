@@ -1,26 +1,27 @@
+using Shadow.DDL;
+using Shadow.DDL.Schemas;
+using Shadow.DDLTests.Supports;
 using ShadowSql;
 using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.Select;
 using ShadowSql.Tables;
-using TestSupports;
 
-namespace ShadowSqlCoreTest.Cursors;
+namespace Shadow.DDLTests.Cursors;
 
 public class TableCursorTests
 {
     static readonly ISqlEngine _engine = new MsSqlEngine();
-    static readonly IDB _db = new DB("MyDb");
 
     [Fact]
     public void Cursor()
     {
+        var table = new TableSchema("Users", [], "tenant1");
         int limit = 10;
         int offset = 10;
-        var cursor = new TableCursor(_db.From("Users"))
+        var cursor = new TableCursor(table)
             .Skip(offset)
             .Take(limit);
         Assert.Equal(limit, cursor.Limit);
@@ -29,55 +30,62 @@ public class TableCursorTests
     [Fact]
     public void Where()
     {
-        var age = Column.Use("Age");
-        var query = new TableSqlQuery("Users")
+        var builder = new TableSchemaBuilder("Users", "tenant1");
+        var age = builder.DefineColumn("Age");
+        var query = new TableSqlQuery(builder.Build())
             .Where(age.GreaterValue(30));
         var cursor = new TableCursor(query);
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Users] WHERE [Age]>30", sql);
+        Assert.Equal("[tenant1].[Users] WHERE [Age]>30", sql);
     }
     [Fact]
     public void OrderBy()
     {
-        var cursor = new TableCursor(_db.From("Users"))
+        var table = new TableSchema("Users", [], "tenant1");
+        var cursor = new TableCursor(table)
             .OrderBy("Age DESC");
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Users] ORDER BY Age DESC", sql);
+        Assert.Equal("[tenant1].[Users] ORDER BY Age DESC", sql);
     }
     [Fact]
     public void Desc()
     {
-        var cursor = new TableCursor(_db.From("Users"))
+        var builder = new TableSchemaBuilder("Users", "tenant1")
+            .DefinColumns("TEXT", "Age");
+        var cursor = new TableCursor(builder.Build())
             .Desc("Age");
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Users] ORDER BY [Age] DESC", sql);
+        Assert.Equal("[tenant1].[Users] ORDER BY [Age] DESC", sql);
     }
     [Fact]
     public void Table()
     {
-        var cursor = new TableCursor(_db.From("Users"))
+        var builder = new TableSchemaBuilder("Users", "tenant1")
+            .DefinColumns("TEXT", "Age");
+        var cursor = new TableCursor(builder.Build())
             .Desc("Age")
             .Skip(20)
             .Take(10);
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Users] ORDER BY [Age] DESC", sql);
+        Assert.Equal("[tenant1].[Users] ORDER BY [Age] DESC", sql);
     }
     [Fact]
     public void SqlQuery()
     {
-        var query = new TableSqlQuery("Users")
+        var table = new TableSchema("Users", [], "tenant1");
+        var query = new TableSqlQuery(table)
             .Where("Age>30");
         var cursor = new TableCursor(query)
             .OrderBy("Id DESC")
             .Skip(20)
             .Take(10);
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Users] WHERE Age>30 ORDER BY Id DESC", sql);
+        Assert.Equal("[tenant1].[Users] WHERE Age>30 ORDER BY Id DESC", sql);
     }
     [Fact]
     public void Query()
     {
-        var table = new PostTable();
+        var table = new PostTable("Posts", "tenant1");
         var query = new TableQuery(table)
             .And(table.Author.EqualValue("张三"));
         var cursor = new TableCursor(query)
@@ -85,12 +93,12 @@ public class TableCursorTests
             .Skip(20)
             .Take(10);
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Posts] WHERE [Author]='张三' ORDER BY [Id] DESC", sql);
+        Assert.Equal("[tenant1].[Posts] WHERE [Author]='张三' ORDER BY [Id] DESC", sql);
     }
     [Fact]
     public void GroupBySqlQueryTest()
     {
-        CommentTable table = new();
+        CommentTable table = new("Comments", "tenant1");
         var query = new TableSqlQuery(table)
             .Where(table.Pick.EqualValue(true));
         var groupBy = GroupBySqlQuery.Create(query, table.PostId)
@@ -100,12 +108,12 @@ public class TableCursorTests
             .Skip(20)
             .Take(10);
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Comments] WHERE [Pick]=1 GROUP BY [PostId] HAVING COUNT(*)>10 ORDER BY [PostId]", sql);
+        Assert.Equal("[tenant1].[Comments] WHERE [Pick]=1 GROUP BY [PostId] HAVING COUNT(*)>10 ORDER BY [PostId]", sql);
     }
     [Fact]
     public void GroupByQueryTest()
     {
-        CommentTable table = new();
+        CommentTable table = new("Comments", "tenant1");
         var query = new TableQuery(table)
             .And(table.Pick.EqualValue(true));
         var groupBy = GroupByQuery.Create(query, table.PostId)
@@ -115,6 +123,6 @@ public class TableCursorTests
             .Skip(20)
             .Take(10);
         var sql = _engine.Sql(cursor);
-        Assert.Equal("[Comments] WHERE [Pick]=1 GROUP BY [PostId] HAVING COUNT(*)>10 ORDER BY [PostId]", sql);
+        Assert.Equal("[tenant1].[Comments] WHERE [Pick]=1 GROUP BY [PostId] HAVING COUNT(*)>10 ORDER BY [PostId]", sql);
     }
 }

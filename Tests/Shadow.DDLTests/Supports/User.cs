@@ -1,4 +1,4 @@
-namespace ShadowSql.ExpressionsTests.Supports;
+namespace Shadow.DDLTests.Supports;
 
 public class User
 {

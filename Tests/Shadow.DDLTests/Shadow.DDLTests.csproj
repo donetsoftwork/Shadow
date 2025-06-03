@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper.Shadow\Dapper.Shadow.csproj" />
     <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
+    <ProjectReference Include="..\..\ShadowSql.Expressions\ShadowSql.Expressions.csproj" />
     <ProjectReference Include="..\..\ShadowSql\ShadowSql.csproj" />
   </ItemGroup>
 

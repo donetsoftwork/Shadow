@@ -5,7 +5,30 @@
 
 以下以Sqlite例
 
-## 1. CreateTable
+## 1. Build
+>* 构造TableSchema对象
+>* 通过TableSchemaBuilder类的DefineIdentity、DefineColumn、DefinColumns、DefineKeys等方法来定义表的列和主键等信息
+```csharp
+var builder = new TableSchemaBuilder("Students", "tenant1")
+    .DefineIdentity("Id", "INTEGER")
+    .DefinColumns("TEXT", "Name");
+TableSchema table = builder.Build();
+```
+```csharp
+var builder = new TableSchemaBuilder("Students", "tenant1");
+builder.DefineColumn("Id", "INTEGER")
+    .ColumnType = ColumnType.Identity | ColumnType.Key;
+builder.DefineColumn("Name", "TEXT");
+TableSchema table = builder.Build();
+```
+```csharp
+var builder = new TableSchemaBuilder("user_role", "tenant1")
+    .DefineKeys("INT", "UserId", "RoleId")
+    .DefinColumns("DATETIME", "CreateTime");
+TableSchema table = builder.Build();
+```
+
+## 2. CreateTable
 ~~~csharp
     ColumnSchema id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
     ColumnSchema name = new("Name", "TEXT");
@@ -14,7 +37,7 @@
 // CREATE TABLE "Students"("Id" INTEGER PRIMARY KEY AUTOINCREMENT,"Name" TEXT)
 ~~~
 
-## 2. 搭配Dapper.Shadow建表
+## 3. 搭配Dapper.Shadow建表
 ~~~csharp
     ColumnSchema id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
     ColumnSchema name = new("Name", "TEXT");
@@ -22,13 +45,13 @@
         .ToCreate()
         .Execute(Executor);
 ~~~
-## 3. DropTable
+## 4. DropTable
 ~~~csharp
 var drop = new DropTable("Students");
 // DROP TABLE "Students"
 ~~~
 
-## 4. 搭配Dapper.Shadow删掉
+## 5. 搭配Dapper.Shadow删掉
 ~~~csharp
     var result = new StudentTable()
     .ToDrop()

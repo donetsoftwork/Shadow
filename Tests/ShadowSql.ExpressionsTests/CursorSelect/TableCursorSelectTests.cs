@@ -1,10 +1,9 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.Identifiers;
 using ShadowSql.Expressions;
 using ShadowSql.ExpressionsTests.Supports;
-using ShadowSql.Expressions.Tables;
+using ShadowSql.Identifiers;
 
 namespace ShadowSql.ExpressionsTests.CursorSelect;
 
@@ -47,12 +46,28 @@ public class TableCursorSelectTests
     [Fact]
     public void Filter()
     {
-        var select = new TableSqlQuery<User>("Users")
+        var select = _db.From("Users")
+            .ToSqlQuery<User>()
             .Where(u => u.Status)
-            .Take(10, 20)
+            .Take(10)
+            .Skip(20)
             .Desc(u => u.Id)
             .ToSelect();
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT * FROM [Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY", sql);
-    }    
+    }
+    [Fact]
+    public void Parameter()
+    {
+        var select = _db.From("Users")
+            .ToSqlQuery<User>()
+            .Where<UserParameter>((u, p) => u.Id == p.Id2 && u.Status)
+            .Take(10)
+            .Skip(20)
+            .Desc(u => u.Id)
+            .ToSelect()
+            .Select(u => new { u.Id, u.Name });
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT [Id],[Name] FROM [Users] WHERE [Id]=@Id2 AND [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY", sql);
+    }
 }

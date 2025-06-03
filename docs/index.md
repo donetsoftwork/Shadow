@@ -20,6 +20,7 @@ _layout: landing
 >* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
 >* 支持自定义表和自定义别名表拼接sql
+>* Nuget包名: ShadowSql
 >* 易用版
 
 ### 3、[表达式版](./expression/index.md)
@@ -27,11 +28,13 @@ _layout: landing
 >* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
 >* 支持表达式树拼接sql
+>* Nuget包名: ShadowSql.Expressions
 >* 表达式版
 
 ### 4、[DDL](./ddl/index.md)
 >* 用于拼写DDL的sql语句,主要是CreateTable
 >* 搭配Dapper.Shadow可以实现执行DDL操作
+>* Nuget包名: ShadowSql.DDL
 
 ### 5、两个Dapper扩展
 >* [精简版扩展](./dappercore/index.md)

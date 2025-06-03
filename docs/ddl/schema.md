@@ -2,7 +2,7 @@
 >* 作为表的影子(占位符)
 >* 主要用来支持createtable
 >* 与Table一样也支持select、update、insert和delete等
->* TableSchema[按字段查询](../../shadow/sqlquery/fieldquery.md)也是会校验的,不存在的字段会抛异常
+>* TableSchema[按字段查询](../shadow/sqlquery/fieldquery.md)也是会校验的,不存在的字段会抛异常
 >* 本文sql示例按Sqlite数据库
 
 ## 1. 接口
@@ -40,34 +40,4 @@ var drop = new DropTable("Students");
 ~~~
 
 ## 5. 其他功能与Table类似
->* 参看[Table](./table.md)
->* 实现带schema前缀表的操作
-
-~~~csharp
-UserTable table = new("Users", "tenant1");
-var query = new TableQuery(table)
-    .And(table.Status.EqualValue(true));
-var cursor = new TableCursor(query, 10, 20)
-    .Desc(table.Id);
-var select = new CursorSelect(cursor)
-    .Select(table.Id, table.Name);
-// MsSql生成sql: SELECT [Id],[Name] FROM [tenant1].[Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
-~~~
-~~~csharp
-public class UserTable(string tableName = "Users", string schema = "")
-    : TableSchema(tableName, [Defines.Id, Defines.Name, Defines.Status], schema)
-{
-    #region Columns
-    public readonly ColumnSchema Id = Defines.Id;
-    new public readonly ColumnSchema Name  = Defines.Name;
-    public readonly ColumnSchema Status = Defines.Status;
-    #endregion
-
-    class Defines
-    {
-        public static readonly ColumnSchema Id = new("Id") { ColumnType = ColumnType.Key };
-        public static readonly ColumnSchema Name = new("Name");
-        public static readonly ColumnSchema Status = new("Status");
-    }
-}
-~~~
+>* 参看[Table](../shadowcore/tables/table.md)

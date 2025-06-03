@@ -15,7 +15,7 @@ var drop = new DropTable("Students");
 
 ## 4. 搭配Dapper.Shadow删表
 ~~~csharp
-    var result = new StudentTable()
+var result = new StudentTable()
     .ToDrop()
     .Execute(Executor);
 ~~~

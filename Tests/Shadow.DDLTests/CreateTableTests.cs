@@ -31,6 +31,29 @@ namespace Shadow.DDLTests
                 .Execute(SqliteExecutor);
             Assert.Equal(0, result);
         }
+        [Fact]
+        public void Build()
+        {
+            var builder = new TableSchemaBuilder("Students", "tenant1")
+                .DefineIdentity("Id", "INTEGER")
+                .DefinColumns("TEXT", "Name");
+            TableSchema table = builder.Build();
+            CreateTable create = new(table);
+            var sql = SqliteExecutor.Engine.Sql(create);
+            Assert.Equal("CREATE TABLE \"tenant1\".\"Students\"(\"Id\" INTEGER AUTOINCREMENT,\"Name\" TEXT)", sql);
+        }
+        [Fact]
+        public void Build2()
+        {
+            var builder = new TableSchemaBuilder("Students", "tenant1");
+            builder.DefineColumn("Id", "INTEGER")
+                .ColumnType = ColumnType.Identity | ColumnType.Key;
+            builder.DefineColumn("Name", "TEXT");
+            TableSchema table = builder.Build();
+            CreateTable create = new(table);
+            var sql = SqliteExecutor.Engine.Sql(create);
+            Assert.Equal("CREATE TABLE \"tenant1\".\"Students\"(\"Id\" INTEGER PRIMARY KEY AUTOINCREMENT,\"Name\" TEXT)", sql);
+        }
 
         void IDisposable.Dispose()
             => DropStudentsTable();

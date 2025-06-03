@@ -1,23 +1,25 @@
 - name: 上手
-  href: quick.md
+  href: ./quick.md
 - name: 简介
-  href: introduction.md
+  href: ./introduction.md
+- name: 选型
+  href: ./how.md
 - name: 精简版
-  href: shadowcore/
+  href: ./shadowcore/
 - name: 易用版
-  href: shadow/
+  href: ./shadow/
 - name: 表达式版
-  href: expression/
+  href: ./expression/
 - name: DDL
-  href: ddl/
+  href: ./ddl/
 - name: Dapper扩展
   items:
   - name: 精简版
-    href: dappercore/
+    href: ./dappercore/
   - name: 易用版
-    href: dapper/
+    href: ./dapper/
 - name: API
-  href: api/
+  href: ./api/
 - name: 源码
   items:
   - name: Github

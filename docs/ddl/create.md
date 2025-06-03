@@ -12,9 +12,9 @@
     ColumnSchema name = new("Name", "TEXT");
     TableSchema table = new("Students", [id, name]);
     CreateTable create = new(table);
+// CREATE TABLE "Students"("Id" INTEGER PRIMARY KEY AUTOINCREMENT,"Name" TEXT)
 ~~~
->
->CREATE TABLE "Students"("Id" INTEGER PRIMARY KEY AUTOINCREMENT,"Name" TEXT)
+
 
 ## 4. 搭配Dapper.Shadow建表
 ~~~csharp

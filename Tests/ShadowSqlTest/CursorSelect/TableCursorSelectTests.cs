@@ -27,7 +27,7 @@ public class TableCursorSelectTests
         var select = new UserTable()
             .ToSqlQuery()
             .Where(table => table.Status.EqualValue(true))
-            .ToCursor(10, 20)
+            .Take(10, 20)
             .Asc(table => table.Id)
             .ToSelect()
             .Select(table => [table.Id, table.Name]);
