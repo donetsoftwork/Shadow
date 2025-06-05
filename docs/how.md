@@ -13,19 +13,20 @@
 |DDL|Shadow.DDL|Shadow.DDL|ShadowSql.Core|15K(+147K)|拼接CreateTable、表Schema支持|
 |Dapper|Dapper|Dapper|无|240K|执行sql、类型Mapping|
 |精简版扩展|Dapper.Shadow.Core|ShadowSql.Dapper.Core|ShadowSql.Core和Dapper|17K(+387K)|执行ShadowSql.Core拼接的sql|
-|易用版扩展|Dapper.Shadow|ShadowSql.Dapper|ShadowSql.Core、ShadowSql和Dapper|35K(+483K)|执行ShadowSql拼接的sql|
+|易用版扩展|Dapper.Shadow|ShadowSql.Dapper|ShadowSql.Dapper.Core、ShadowSql.Core、ShadowSql和Dapper|35K(+500K)|执行ShadowSql拼接的sql|
 
-## 二、如果选型
+## 二、如何选型
 >* 主要看个人或团队偏好
 
 ### 1. 偏好Lambda选表达式版
 >* 表达式树是Lambda的影子,可以生成委托,但这里只解析表达式树
 >* 表达式版提供类EF的查询体验
 >* 表达式树会用到反射,性能上会有点损耗,对比带来的便利性完全是可以接受的
->* 如果使用参数查询并缓存sql服用,完全可以忽略这个性能损耗,甚至可以忽略整个拼写sql的性能消耗
+>* 如果使用参数查询并缓存sql复用,完全可以忽略这个性能损耗,甚至可以忽略整个拼写sql的性能消耗
 >* 表达式版搭配Dapper.Shadow.Core或者直接搭配Dapper甚至ADO.NET使用
 
 #### 1.1 EFCore示例
+>* ShadowSql不含EFCore的功能,这个示例是为了和表达式版对比
 ~~~csharp
 var query = context.Set<User>("Users")
     .Where(u => u.Status)
@@ -163,5 +164,5 @@ var select = new TableSchema("Users", [], "tenant1")
 
 ### 5. 易用版和表达式版一般不一起使用
 >* 易用版和表达式版有同名类和方法,在不同命名空间
->* 同一个类引用命名空间ShadowSql和ShadowSql.Expressions调用某些方法会报不明确引用错误
+>* 同一个类引用命名空间ShadowSql和ShadowSql.Expressions调用某些方法可能会报不明确引用错误
 >* 同一项目一个类用易用版,另一个类用表达式版是可行的
