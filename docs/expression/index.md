@@ -1,10 +1,13 @@
-# ShadowSql.Expressions
+# 表达式版
 >* .net拼接sql工具
 >* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等,可扩展其他数据库方言的支持
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
 >* 在ShadowSql.Core项目基础上,增加表达式树的支持
 >* 支持表达式树拼接sql
 >* Nuget包名: ShadowSql.Expressions
+
+> [!NOTE]
+> 本项目文档未特殊说明的示例sql,默认使用MsSql,并非只支持MsSql
 
 ## 1. 表达式查询
 ### 1.1 按常量查询

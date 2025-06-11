@@ -118,7 +118,7 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
         return NewField(fieldName);
     }
     /// <summary>
-    /// 确认倒叙
+    /// 确认倒序
     /// </summary>
     /// <param name="fieldName"></param>
     /// <returns></returns>

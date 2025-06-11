@@ -1,0 +1,8 @@
+### YamlMime:ManagedReference
+
+apiRules:
+  - exclude:
+      uidRegex: ^System\.Object\.*
+  - exclude:
+    hasAttribute:
+      uid: System.ObsoleteAttribute

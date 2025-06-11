@@ -5,4 +5,5 @@
 >* TableSchema实现了ITable,精简版相关功能都适用
 >* 还可以和易用版或表达式版组合使用
 
->注:本项目文档未特殊说明的示例sql,默认使用Sqlite,并非只支持Sqlite
+> [!NOTE]
+> 本项目文档未特殊说明的示例sql,默认使用Sqlite,并非只支持Sqlite

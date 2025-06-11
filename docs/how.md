@@ -25,8 +25,10 @@
 >* 如果使用参数查询并缓存sql复用,完全可以忽略这个性能损耗,甚至可以忽略整个拼写sql的性能消耗
 >* 表达式版搭配Dapper.Shadow.Core或者直接搭配Dapper甚至ADO.NET使用
 
-#### 1.1 EFCore示例
->* ShadowSql不含EFCore的功能,这个示例是为了和表达式版对比
+
+#### 1.1 对比EFCore
+#### [EFCore](#tab/ef)
+> ShadowSql不含EFCore的功能,这个示例是为了和表达式版对比
 ~~~csharp
 var query = context.Set<User>("Users")
     .Where(u => u.Status)
@@ -36,34 +38,21 @@ var query = context.Set<User>("Users")
     .Select(u => new { u.Id, u.Name });
 ~~~
 
-#### 1.2 表达式版示例
->* 表达式版可以写出与EFCore类似的代码
-~~~csharp
-var select = db.From("Users")
-    .ToSqlQuery<User>()
-    .Where(u => u.Status)
-    .Take(10)
-    .Skip(20)
-    .Desc(u => u.Id)
-    .ToSelect()
-    .Select(u => new { u.Id, u.Name });
-~~~
+#### [表达式版](#tab/expression)
+> 表达式版可以写出与EFCore类似的代码
+[!code-csharp[](../Tests/ShadowSql.ExpressionsTests/CursorSelect/TableCursorSelectTests.cs#Filter)]
 
-#### 1.3 表达式版参数化查询示例
->* 表达式版可以写出与EFCore类似的代码
-~~~csharp
-var select = _db.From("Users")
-    .ToSqlQuery<User>()
-    .Where<UserParameter>((u, p) => u.Id == p.Id2 && u.Status)
-    .Take(10)
-    .Skip(20)
-    .Desc(u => u.Id)
-    .ToSelect()
-    .Select(u => new { u.Id, u.Name });
-// MsSql生成sql: SELECT [Id],[Name] FROM [Users] WHERE [Id]=@Id2 AND [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
-~~~
+---
 
-#### 1.4 表达式版更多功能
+#### 1.2 表达式版参数化查询示例
+> 表达式版可以写出与EFCore类似的代码
+>
+[!code-csharp[](../Tests/ShadowSql.ExpressionsTests/CursorSelect/TableCursorSelectTests.cs#Parameter)]
+>
+> [!tip]
+> MsSql: SELECT [Id],[Name] FROM [Users] WHERE [Id]=@Id2 AND [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
+
+#### 1.3 表达式版更多功能
 >* 参看[表达式版简介](./expression/index.md)
 
 ### 2. 偏好链式查询选易用版
@@ -81,8 +70,10 @@ var select = new UserTable()
     .Asc(table => table.Id)
     .ToSelect()
     .Select(table => [table.Id, table.Name]);
-// MsSql生成sql: SELECT [Id],[Name] FROM [Users] WHERE [Id]=@Id2 AND [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
+> 
+> [!tip]
+> MsSql: SELECT [Id],[Name] FROM [Users] WHERE [Id]=@Id2 AND [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 
 #### 2.2 易用版更多功能
 >* 参看[易用版版简介](./shadow/index.md)
@@ -118,8 +109,10 @@ var select = new CursorSelect(cursor)
     ColumnSchema name = new("Name", "TEXT");
     TableSchema table = new("Students", [id, name]);
     CreateTable create = new(table);
-// Sqlite生成sql: CREATE TABLE "Students"("Id" INTEGER PRIMARY KEY AUTOINCREMENT,"Name" TEXT)
 ~~~
+> 
+> [!tip]
+> Sqlite: CREATE TABLE "Students"("Id" INTEGER PRIMARY KEY AUTOINCREMENT,"Name" TEXT)
 
 #### 4.2 表Schema查询示例
 ~~~csharp
@@ -130,8 +123,11 @@ var cursor = new TableCursor(query, 10, 20)
     .Desc(table.Id);
 var select = new CursorSelect(cursor)
     .Select(table.Id, table.Name);
-// MsSql生成sql: SELECT [Id],[Name] FROM [tenant1].[Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
+> 
+> [!tip]
+> MsSql: SELECT [Id],[Name] FROM [tenant1].[Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
+
 ~~~csharp
 public class UserTable(string tableName = "Users", string schema = "")
     : TableSchema(tableName, [Defines.Id, Defines.Name, Defines.Status], schema)
@@ -159,8 +155,10 @@ var select = new TableSchema("Users", [], "tenant1")
     .Take(10, 20)
     .Desc(u => u.Id)
     .ToSelect();
-// MsSql生成sql: SELECT * FROM [tenant1].[Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 ~~~
+> 
+> [!tip]
+> MsSql: SELECT * FROM [tenant1].[Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY
 
 ### 5. 易用版和表达式版一般不一起使用
 >* 易用版和表达式版有同名类和方法,在不同命名空间

@@ -15,8 +15,10 @@
           ],
           "exclude": [ "Benchmarks/*", "Tests/*" ]
         }
+
       ],
-      "dest": "api"
+      "dest": "api",
+      "filter": "filterConfig.yml"
     }
   ],
   "build": {
@@ -38,6 +40,7 @@
     "template": [
       "default",
       "default(zh-cn)",
+      "templates/chinese",
       "modern",
       "template"
     ],

@@ -1,12 +1,12 @@
-# ShadowSql
+# 易用版
 >* .net拼接sql工具
 >* 支持多种数据库,包括MsSql,MySql,Oracle,Sqlite,Postgres等,可扩展其他数据库方言的支持
 >* 整个sql拼写只使用1个StringBuilder,减少字符串碎片生成
 >* 在ShadowSql.Core项目基础上,进行泛型扩展和增强
 >* Nuget包名: ShadowSql
->* 易用版
 
->注:本项目文档未特殊说明的示例sql,默认使用MsSql,并非只支持MsSql
+> [!NOTE]
+> 本项目文档未特殊说明的示例sql,默认使用MsSql,并非只支持MsSql
 
 ## 1. 以下是各功能的序列总图
 >* 示意组件和功能之间的调用关系
