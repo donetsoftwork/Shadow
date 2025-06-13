@@ -11,7 +11,8 @@
             "ShadowSql.Expressions/ShadowSql.Expressions.csproj",
             "Dapper.Shadow.Core/Dapper.Shadow.Core.csproj",
             "Dapper.Shadow/Dapper.Shadow.csproj",
-            "Shadow.DDL/Shadow.DDL.csproj"
+            "Shadow.DDL/Shadow.DDL.csproj",
+            "filterConfig.yml"
           ],
           "exclude": [ "Benchmarks/*", "Tests/*" ]
         }
