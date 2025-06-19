@@ -235,6 +235,7 @@ public class LogicVisitor(IFieldProvider source, Logic logic)
     private static void CheckInLogic(Logic logic, IField field, Expression right, bool not = false)
     {
         if (right is MemberExpression parameter)
+            case ExpressionType.MemberAccess:
         {
             logic.AddLogic(new CompareLogic(field, not ? CompareSymbol.NotIn : CompareSymbol.In, Parameter.Use(parameter.Member.Name)));
         }
