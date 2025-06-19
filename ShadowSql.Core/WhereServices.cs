@@ -17,7 +17,7 @@ public static partial class ShadowSqlCoreServices
     /// 按原始sql查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <param name="conditions"></param>
     /// <returns></returns>
     public static Query Where<Query>(this Query query, params IEnumerable<string> conditions)
@@ -30,8 +30,8 @@ public static partial class ShadowSqlCoreServices
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Where<Query>(this Query query, AtomicLogic logic)
         where Query : IDataSqlQuery, IWhere
@@ -45,8 +45,8 @@ public static partial class ShadowSqlCoreServices
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Where<Query>(this Query query, Func<ITableView, AtomicLogic> logic)
         where Query : IDataSqlQuery, IWhere

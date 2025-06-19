@@ -8,21 +8,21 @@ namespace Dapper.Shadow.Update;
 /// <summary>
 /// 修改别名表
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="table"></param>
-/// <param name="filter"></param>
-public class DapperAliasTableUpdate<TTable>(IExecutor executor, AliasUpdateTable<TTable> table, ISqlLogic filter)
-    : AliasTableUpdate<TTable>(table, filter), IDapperExecute
+/// <param name="executor">执行器</param>
+/// <param name="aliasTable">别名表</param>
+/// <param name="filter">过滤条件</param>
+public class DapperAliasTableUpdate<TTable>(IExecutor executor, AliasUpdateTable<TTable> aliasTable, ISqlLogic filter)
+    : AliasTableUpdate<TTable>(aliasTable, filter), IDapperExecute
     where TTable : ITable
 {
     /// <summary>
     /// 修改别名表
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    public DapperAliasTableUpdate(IExecutor executor, IAliasTable<TTable> table, ISqlLogic filter)
-        : this(executor, new AliasUpdateTable<TTable>(table), filter)
+    /// <param name="executor">执行器</param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="filter">过滤条件</param>
+    public DapperAliasTableUpdate(IExecutor executor, IAliasTable<TTable> aliasTable, ISqlLogic filter)
+        : this(executor, new AliasUpdateTable<TTable>(aliasTable), filter)
     {
     }
     #region 配置

@@ -19,7 +19,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// 表筛选列
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     internal TableSelect(ITableView view, ITableView table)
         : base(view, table)
     {
@@ -28,7 +28,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableSelect(ITable table)
         : base(table, table)
     {
@@ -36,8 +36,8 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     public TableSelect(ITable table, ISqlLogic where)
         : base(new TableFilter(table, where), table)
     {
@@ -45,7 +45,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public TableSelect(TableQuery<TEntity> query)
         : base(query, query.Source)
     {
@@ -53,7 +53,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public TableSelect(TableSqlQuery<TEntity> query)
         : base(query, query.Source)
     {
@@ -63,7 +63,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableSelect(IAliasTable table)
         : base(table, table)
     {
@@ -71,8 +71,8 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     public TableSelect(IAliasTable table, ISqlLogic where)
         : base(new TableFilter(table, where), table)
     {
@@ -80,7 +80,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public TableSelect(AliasTableQuery<TEntity> query)
         : base(query, query.Source)
     {
@@ -88,7 +88,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public TableSelect(AliasTableSqlQuery<TEntity> query)
         : base(query, query.Source)
     {
@@ -97,7 +97,7 @@ public sealed class TableSelect<TEntity> : SelectBase<ITableView, ITableView>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableSelect<TEntity> Select<TProperty>(Expression<Func<TEntity, TProperty>> select)
     {

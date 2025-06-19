@@ -9,8 +9,8 @@ namespace ShadowSql.Update;
 /// <summary>
 /// 修改别名表
 /// </summary>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class AliasTableUpdate<TTable>(AliasUpdateTable<TTable> table, ISqlLogic filter)
     : UpdateBase<AliasUpdateTable<TTable>>(table)
     where TTable : ITable
@@ -18,8 +18,8 @@ public class AliasTableUpdate<TTable>(AliasUpdateTable<TTable> table, ISqlLogic 
     /// <summary>
     /// 修改别名表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     public AliasTableUpdate(IAliasTable<TTable> table, ISqlLogic filter)
         : this(new AliasUpdateTable<TTable>(table), filter)
     {
@@ -36,21 +36,13 @@ public class AliasTableUpdate<TTable>(AliasUpdateTable<TTable> table, ISqlLogic 
         => _filter;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写Update子句
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteUpdate(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteUpdate(engine, sql);
         sql.Append(_source.Alias);
     }
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(" FROM ");

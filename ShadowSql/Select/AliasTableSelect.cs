@@ -17,33 +17,33 @@ public sealed class AliasTableSelect<TTable>
     /// <summary>
     /// 别名表筛选列
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="target"></param>
-    internal AliasTableSelect(ITableView source, IAliasTable<TTable> target)
-        : base(source, target)
+    /// <param name="view"></param>
+    /// <param name="aliasTable">别名表</param>
+    internal AliasTableSelect(ITableView view, IAliasTable<TTable> aliasTable)
+        : base(view, aliasTable)
     {
     }
     /// <summary>
     /// 别名表筛选列
     /// </summary>
-    /// <param name="source"></param>
-    public AliasTableSelect(IAliasTable<TTable> source)
-        : this(source, source)
+    /// <param name="aliasTable">别名表</param>
+    public AliasTableSelect(IAliasTable<TTable> aliasTable)
+        : this(aliasTable, aliasTable)
     {
     }
     /// <summary>
     /// 别名表筛选列
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="where"></param>
-    public AliasTableSelect(IAliasTable<TTable> source, ISqlLogic where)
-        : this(new TableFilter(source, where), source)
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="where">查询条件</param>
+    public AliasTableSelect(IAliasTable<TTable> aliasTable, ISqlLogic where)
+        : this(new TableFilter(aliasTable, where), aliasTable)
     {
     }
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public AliasTableSelect(AliasTableSqlQuery<TTable> query)
         : this(query, query.Source)
     {
@@ -51,7 +51,7 @@ public sealed class AliasTableSelect<TTable>
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public AliasTableSelect(AliasTableQuery<TTable> query)
         : this(query, query.Source)
     {

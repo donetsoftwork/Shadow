@@ -8,19 +8,19 @@ namespace Dapper.Shadow.Select;
 /// GroupBy别名表后再筛选列
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="groupBy"></param>
-/// <param name="target"></param>
-public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByView groupBy, IAliasTable<TTable> target)
-    : GroupBySelectBase<IGroupByView, IAliasTable<TTable>>(groupBy, groupBy, target)
+/// <param name="executor">执行器</param>
+/// <param name="groupBy">分组查询</param>
+/// <param name="aliasTable">别名表</param>
+public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByView groupBy, IAliasTable<TTable> aliasTable)
+    : GroupBySelectBase<IGroupByView, IAliasTable<TTable>>(groupBy, groupBy, aliasTable)
     , IDapperSelect
     where TTable : ITable
 {
     /// <summary>
     /// GroupBy别名表后再筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="groupBy"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="groupBy">分组查询</param>
     public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableSqlQuery<TTable> groupBy)
         : this(executor, groupBy, groupBy._source)
     {
@@ -28,8 +28,8 @@ public class DapperGroupByAliasTableSelect<TTable>(IExecutor executor, IGroupByV
     /// <summary>
     /// GroupBy别名表后再筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="groupBy"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="groupBy">分组查询</param>
     public DapperGroupByAliasTableSelect(IExecutor executor, GroupByAliasTableQuery<TTable> groupBy)
         : this(executor, groupBy, groupBy._source)
     {

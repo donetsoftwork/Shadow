@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Queries;
 using System.Text;
 
@@ -18,14 +18,10 @@ public sealed class EmptyLogic : ISqlLogic
     public readonly static EmptyLogic Instance = new();
 
     #region ISqlLogic
-    /// <summary>
-    /// 空逻辑不参与sql拼写
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public bool TryWrite(ISqlEngine engine, StringBuilder sql)
         => false;
+    /// <inheritdoc/>
     ISqlLogic ISqlLogic.Not()
         => this;
     /// <summary>
@@ -40,7 +36,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static EmptyLogic operator &(EmptyLogic logic, EmptyLogic other)
@@ -49,7 +45,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AtomicLogic operator &(EmptyLogic logic, AtomicLogic other)
@@ -58,7 +54,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 与逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static AtomicLogic operator &(AtomicLogic other, EmptyLogic logic)
         => other;
@@ -67,7 +63,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IAndLogic operator &(EmptyLogic logic, IAndLogic other)
@@ -76,7 +72,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IAndLogic operator &(IAndLogic other, EmptyLogic logic)
     //    => other;
@@ -85,7 +81,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AndLogic operator &(EmptyLogic logic, AndLogic other)
@@ -94,7 +90,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 与逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static AndLogic operator &(AndLogic other, EmptyLogic logic)
         => other;
@@ -103,7 +99,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(EmptyLogic logic, ComplexAndLogic other)
@@ -112,7 +108,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 与逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(ComplexAndLogic other, EmptyLogic logic)
         => other;
@@ -121,7 +117,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static SqlAndQuery operator &(EmptyLogic logic, SqlAndQuery other)
@@ -130,7 +126,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static SqlAndQuery operator &(SqlAndQuery other, EmptyLogic logic)
     //    => other;
@@ -139,7 +135,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IAndLogic operator &(EmptyLogic logic, IOrLogic other)
@@ -148,7 +144,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IAndLogic operator &(IOrLogic other, EmptyLogic logic)
     //  => other.ToAnd();
@@ -157,7 +153,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(EmptyLogic logic, OrLogic other)
@@ -166,7 +162,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 与逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Logic operator &(OrLogic other, EmptyLogic logic)
       => other.ToAndCore();
@@ -175,7 +171,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(EmptyLogic logic, ComplexOrLogic other)
@@ -184,7 +180,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 与逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Logic operator &(ComplexOrLogic other, EmptyLogic logic)
       => other.ToAndCore();
@@ -193,7 +189,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static SqlAndQuery operator &(EmptyLogic logic, SqlOrQuery other)
@@ -202,7 +198,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static SqlAndQuery operator &(SqlOrQuery other, EmptyLogic logic)
     //  => other.ToAnd();
@@ -212,7 +208,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static EmptyLogic operator |(EmptyLogic logic, EmptyLogic other)
@@ -221,7 +217,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AtomicLogic operator |(EmptyLogic logic, AtomicLogic other)
@@ -230,7 +226,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 或逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static AtomicLogic operator |(AtomicLogic other, EmptyLogic logic)
         => other;
@@ -239,7 +235,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IOrLogic operator |(EmptyLogic logic, IAndLogic other)
@@ -248,7 +244,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IOrLogic operator |(IAndLogic other, EmptyLogic logic)
     //    => other.ToOr();
@@ -257,7 +253,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(EmptyLogic logic, AndLogic other)
@@ -266,7 +262,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 或逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Logic operator |(AndLogic other, EmptyLogic logic)
         => other.ToOrCore();
@@ -275,7 +271,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(EmptyLogic logic, ComplexAndLogic other)
@@ -284,7 +280,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 或逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Logic operator |(ComplexAndLogic other, EmptyLogic logic)
         => other.ToOrCore();
@@ -293,7 +289,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static SqlOrQuery operator |(EmptyLogic logic, SqlAndQuery other)
@@ -302,7 +298,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static SqlOrQuery operator |(SqlAndQuery other, EmptyLogic logic)
     //    => other.ToOr();
@@ -311,7 +307,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IOrLogic operator |(EmptyLogic logic, IOrLogic other)
@@ -320,7 +316,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IOrLogic operator |(IOrLogic other, EmptyLogic logic)
     //    => other;
@@ -329,7 +325,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static OrLogic operator |(EmptyLogic logic, OrLogic other)
@@ -338,7 +334,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 或逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static OrLogic operator |(OrLogic other, EmptyLogic logic)
         => other;
@@ -347,7 +343,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexOrLogic operator |(EmptyLogic logic, ComplexOrLogic other)
@@ -356,7 +352,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// 或逻辑
     /// </summary>
     /// <param name="other"></param>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static ComplexOrLogic operator |(ComplexOrLogic other, EmptyLogic logic)
         => other;
@@ -365,7 +361,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static SqlOrQuery operator |(EmptyLogic logic, SqlOrQuery other)
@@ -374,7 +370,7 @@ public sealed class EmptyLogic : ISqlLogic
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static SqlOrQuery operator |(SqlOrQuery other, EmptyLogic logic)
     //    => other;
@@ -384,7 +380,7 @@ public sealed class EmptyLogic : ISqlLogic
     /// <summary>
     /// 反逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static EmptyLogic operator !(EmptyLogic logic)
         => logic;

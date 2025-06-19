@@ -11,16 +11,16 @@ namespace ShadowSql.Update;
 /// <summary>
 /// 修改表
 /// </summary>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class TableUpdate(IUpdateTable table, ISqlLogic filter)
     : UpdateBase, IUpdate
 {
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="filter"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="filter">过滤条件</param>
     public TableUpdate(string tableName, ISqlLogic filter)
         : this(EmptyTable.Use(tableName), filter)
     {
@@ -46,18 +46,11 @@ public class TableUpdate(IUpdateTable table, ISqlLogic filter)
         => _filter;
     #endregion
     #region UpdateBase
-    /// <summary>
-    /// 拼写数据源sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _table.Write(engine, sql);
-    /// <summary>
-    /// 获取赋值字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
     internal override IAssignView GetAssignField(string fieldName)
         => _table.GetAssignField(fieldName)
         ?? throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
@@ -65,18 +58,13 @@ public class TableUpdate(IUpdateTable table, ISqlLogic filter)
     /// <summary>
     /// 按表名修改
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="filter"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="filter">过滤条件</param>
     /// <returns></returns>
     public static TableUpdate Create(string tableName, ISqlLogic filter)
         => new(EmptyTable.Use(tableName), filter);
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         WriteUpdate(engine, sql);

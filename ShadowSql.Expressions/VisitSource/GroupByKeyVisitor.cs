@@ -9,7 +9,7 @@ namespace ShadowSql.Expressions.VisitSource;
 /// <summary>
 /// 从分组键获取字段
 /// </summary>
-/// <param name="groupBy"></param>
+/// <param name="groupBy">分组查询</param>
 /// <param name="entity"></param>
 public class GroupByKeyVisitor(IGroupByView groupBy, Expression entity)
     : VisitSourceBase(entity), IFieldProvider
@@ -31,25 +31,17 @@ public class GroupByKeyVisitor(IGroupByView groupBy, Expression entity)
         => _groupBy.Fields;
     #endregion
     #region IFieldProvider
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IEnumerable<IField> GetFieldsByMember(MemberExpression member)
         => GetKeyByMember(_groupBy, _entity, member);
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IField? GetFieldByName(string fieldName)
         => _groupBy.GetField(fieldName);
     #endregion
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <param name="entity"></param>
     /// <param name="member"></param>
     /// <returns></returns>
@@ -70,8 +62,8 @@ public class GroupByKeyVisitor(IGroupByView groupBy, Expression entity)
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="T"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public static IEnumerable<IField> GetKeys<TKey, T>(IGroupByView groupBy, Expression<Func<TKey, T>> expression)
     {
@@ -87,9 +79,9 @@ public class GroupByKeyVisitor(IGroupByView groupBy, Expression entity)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="fields"></param>
-    /// <param name="select"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fields">字段</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SelectVisitor Select<TEntity, T>(IGroupByView groupBy, List<IFieldView> fields, Expression<Func<TEntity, T>> select)
     {

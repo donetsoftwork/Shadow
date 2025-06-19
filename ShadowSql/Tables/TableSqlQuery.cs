@@ -9,8 +9,8 @@ namespace ShadowSql.Tables;
 /// <summary>
 /// sql查询表
 /// </summary>
-/// <param name="table"></param>
-/// <param name="query"></param>
+/// <param name="table">表</param>
+/// <param name="query">查询</param>
 public class TableSqlQuery<TTable>(TTable table, SqlQuery query)
     : DataFilterBase<TTable, SqlQuery>(table, query), IDataSqlQuery, IWhere
     where TTable : ITable
@@ -19,7 +19,7 @@ public class TableSqlQuery<TTable>(TTable table, SqlQuery query)
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableSqlQuery<TTable> Where(Func<TTable, AtomicLogic> query)
     {
@@ -29,7 +29,7 @@ public class TableSqlQuery<TTable>(TTable table, SqlQuery query)
     /// <summary>
     /// 查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableSqlQuery<TTable> Apply(Func<SqlQuery, TTable, SqlQuery> query)
     {

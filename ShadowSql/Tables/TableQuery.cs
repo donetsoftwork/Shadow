@@ -10,8 +10,8 @@ namespace ShadowSql.Tables;
 /// 逻辑查询表
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class TableQuery<TTable>(TTable table, Logic filter)
     : DataFilterBase<TTable, Logic>(table, filter), IDataQuery
     where TTable : ITable
@@ -19,16 +19,16 @@ public class TableQuery<TTable>(TTable table, Logic filter)
     /// <summary>
     /// 逻辑查询表
     /// </summary>
-    /// <param name="source"></param>
-    public TableQuery(TTable source)
-        : this(source, new AndLogic())
+    /// <param name="table">表</param>
+    public TableQuery(TTable table)
+        : this(table, new AndLogic())
     {
     }
     #region 扩展查询
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TTable> And(Func<TTable, AtomicLogic> query)
     {
@@ -38,7 +38,7 @@ public class TableQuery<TTable>(TTable table, Logic filter)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TTable> Or(Func<TTable, AtomicLogic> query)
     {
@@ -48,7 +48,7 @@ public class TableQuery<TTable>(TTable table, Logic filter)
     /// <summary>
     /// 查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TTable> Apply(Func<Logic, TTable, Logic> query)
     {

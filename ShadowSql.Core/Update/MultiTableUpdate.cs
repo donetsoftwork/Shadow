@@ -10,7 +10,7 @@ namespace ShadowSql.Update;
 /// <summary>
 /// 多表(联表)修改
 /// </summary>
-/// <param name="multiTable"></param>
+/// <param name="multiTable">多表(联表)</param>
 public class MultiTableUpdate(IMultiView multiTable)
     : UpdateBase, IUpdate
 {
@@ -42,21 +42,14 @@ public class MultiTableUpdate(IMultiView multiTable)
         throw new ArgumentException("被修改的表不存在", nameof(Table));
     }
     #region UpdateBase
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(" FROM ");
         _multiTable.Write(engine, sql);
     }
-    /// <summary>
-    /// 获取赋值字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
     internal override IAssignView GetAssignField(string fieldName)
         => CheckTable()
             .GetAssignField(fieldName)
@@ -66,7 +59,7 @@ public class MultiTableUpdate(IMultiView multiTable)
     /// 修改
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public MultiTableUpdate Set<TAliasTable>(Func<TAliasTable, IAssignInfo> operation)
         where TAliasTable : IAliasTable
@@ -75,11 +68,7 @@ public class MultiTableUpdate(IMultiView multiTable)
         return this;
     }
     #region ISqlEntity
-    /// <summary>
-    /// 拼写Update子句
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteUpdate(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteUpdate(engine, sql);

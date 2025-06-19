@@ -8,12 +8,12 @@ namespace Dapper.Shadow.Cursors;
 /// <summary>
 /// 多联表范围筛选
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int limit, int offset)
-    : MultiTableCursor(source, limit, offset)
+/// <param name="executor">执行器</param>
+/// <param name="multiView">多(联)表</param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
+public class DapperMultiTableCursor(IExecutor executor, IMultiView multiView, int limit, int offset)
+    : MultiTableCursor(multiView, limit, offset)
 {
     #region 配置
     private readonly IExecutor _executor = executor;
@@ -28,8 +28,8 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int l
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperMultiTableCursor Asc<TAliasTable>(string tableName, Func<TAliasTable, IOrderView> select)
         where TAliasTable : IAliasTable
@@ -41,8 +41,8 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int l
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperMultiTableCursor Desc<TAliasTable>(string tableName, Func<TAliasTable, IOrderAsc> select)
         where TAliasTable : IAliasTable
@@ -57,8 +57,8 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int l
     /// 正序
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperMultiTableCursor Asc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
@@ -74,8 +74,8 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView source, int l
     /// 倒序
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperMultiTableCursor Desc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable

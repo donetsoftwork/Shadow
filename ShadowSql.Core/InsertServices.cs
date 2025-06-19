@@ -16,7 +16,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="value"></param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TInsert Insert<TInsert>(this TInsert insert, IInsertValue value)
         where TInsert : SingleInsertBase, ISingleInsert
@@ -29,7 +29,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     /// <returns></returns>
     public static TInsert InsertColumn<TInsert>(this TInsert insert, IColumn column)
         where TInsert : SingleInsertBase, ISingleInsert
@@ -39,7 +39,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="columns"></param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TInsert InsertColumns<TInsert>(this TInsert insert, params IEnumerable<IColumn> columns)
         where TInsert : SingleInsertBase, ISingleInsert
@@ -64,7 +64,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="value"></param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TInsert Insert<TInsert>(this TInsert insert, IInsertValues value)
         where TInsert : MultiInsertBase, IMultiInsert
@@ -79,7 +79,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="columns"></param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TInsert Insert<TInsert>(this TInsert insert, params IEnumerable<IColumn> columns)
         where TInsert : SelectInsertBase, ISelectInsert
@@ -93,7 +93,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TInsert"></typeparam>
     /// <param name="insert"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static TInsert Insert<TInsert>(this TInsert insert, params IEnumerable<string> columnNames)
         where TInsert : SelectInsertBase, ISelectInsert

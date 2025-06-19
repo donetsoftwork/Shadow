@@ -11,7 +11,7 @@ namespace ShadowSql.Expressions.Visit;
 /// <summary>
 /// 单条插入表达式解析
 /// </summary>
-/// <param name="table"></param>
+/// <param name="table">表</param>
 /// <param name="items"></param>
 public class SingleInsertVisitor(ITable table, List<IInsertValue> items)
     : ExpressionVisitor
@@ -19,7 +19,7 @@ public class SingleInsertVisitor(ITable table, List<IInsertValue> items)
     /// <summary>
     /// 单条插入表达式解析
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public SingleInsertVisitor(ITable table)
         : this(table, [])
     {
@@ -55,7 +55,7 @@ public class SingleInsertVisitor(ITable table, List<IInsertValue> items)
     /// <summary>
     /// 处理赋值
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <param name="info"></param>
     protected virtual void CheckAssignment(Expression expression, MemberInfo info)
     {
@@ -65,18 +65,35 @@ public class SingleInsertVisitor(ITable table, List<IInsertValue> items)
     #endregion
     private static ISqlValue? GetValue(Expression expression)
     {
-        if (expression is ConstantExpression constant)
-            return LogicVisitor.GetSqlValue(constant);
-        if (expression is MemberExpression member)
-            return Parameter.Use(member.Member.Name);
+        switch (expression.NodeType)
+        {
+            case ExpressionType.MemberAccess:
+                if (expression is MemberExpression member)
+                {
+                    if (member.Expression is ConstantExpression)
+                        return LogicVisitor.GetSqlValue(Expression.Lambda(member).Compile().DynamicInvoke());
+                    return Parameter.Use(member.Member.Name);
+                }
+                break;
+            case ExpressionType.Constant:
+                if (expression is ConstantExpression constant)
+                    return LogicVisitor.GetSqlValue(constant.Value);
+                break;
+            case ExpressionType.Convert:
+                if (expression is UnaryExpression unary)
+                    return GetValue(unary.Operand);
+                break;
+            default:
+                break;
+        }
         return null;
     }
     /// <summary>
     /// 解析表达式
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SingleInsertVisitor Insert<TEntity>(ITable table, Expression<Func<TEntity>> select)
     {
@@ -89,8 +106,8 @@ public class SingleInsertVisitor(ITable table, List<IInsertValue> items)
     /// </summary>
     /// <typeparam name="TParameter"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SingleInsertVisitor Insert<TParameter, TEntity>(ITable table, Expression<Func<TParameter, TEntity>> select)
     {

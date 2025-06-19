@@ -17,7 +17,7 @@ public static partial class ShadowSqlCoreServices
     /// 切换为And
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static Query ToAnd<Query>(this Query query)
         where Query : IDataSqlQuery
@@ -31,7 +31,7 @@ public static partial class ShadowSqlCoreServices
     /// 切换为Or
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static Query ToOr<Query>(this Query query)
         where Query : IDataSqlQuery
@@ -45,8 +45,8 @@ public static partial class ShadowSqlCoreServices
     /// 应用sql查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="where"></param>
+    /// <param name="query">查询</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static Query Apply<Query>(this Query query, Func<SqlQuery, SqlQuery> where)
         where Query : IDataSqlQuery
@@ -58,8 +58,8 @@ public static partial class ShadowSqlCoreServices
     /// 应用sql查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="where"></param>
+    /// <param name="query">查询</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static Query Apply<Query>(this Query query, Func<SqlQuery, ITableView, SqlQuery> where)
         where Query : IDataSqlQuery
@@ -76,8 +76,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query And<Query>(this Query query, AtomicLogic logic)
         where Query : FilterBase, IDataQuery
@@ -89,8 +89,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query And<Query>(this Query query, AndLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -101,8 +101,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query And<Query>(this Query query, ComplexAndLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -113,8 +113,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query And<Query>(this Query query, OrLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -125,8 +125,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query And<Query>(this Query query, ComplexOrLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -137,8 +137,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query And<Query>(this Query query, Logic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -151,8 +151,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query Or<Query>(this Query query, AtomicLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -163,8 +163,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query Or<Query>(this Query query, AndLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -175,8 +175,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query Or<Query>(this Query query, ComplexAndLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -187,8 +187,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query Or<Query>(this Query query, OrLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -199,8 +199,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query Or<Query>(this Query query, ComplexOrLogic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -211,8 +211,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     public static Query Or<Query>(this Query query, Logic logic)
         where Query : FilterBase, IDataQuery
     {
@@ -227,8 +227,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query And<Query>(this Query query, Func<ITableView, AtomicLogic> logic)
         where Query : FilterBase, IDataQuery
@@ -240,8 +240,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算嵌套或逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query And<Query>(this Query query, Func<ITableView, OrLogic> logic)
         where Query : FilterBase, IDataQuery
@@ -255,8 +255,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Or<Query>(this Query query, Func<ITableView, AtomicLogic> logic)
         where Query : FilterBase, IDataQuery
@@ -268,8 +268,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算嵌套与逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Or<Query>(this Query query, Func<ITableView, AndLogic> logic)
         where Query : FilterBase, IDataQuery
@@ -283,8 +283,8 @@ public static partial class ShadowSqlCoreServices
     /// 应用逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Apply<Query>(this Query query, Func<Logic, Logic> logic)
         where Query : FilterBase, IDataQuery
@@ -296,8 +296,8 @@ public static partial class ShadowSqlCoreServices
     /// 应用逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Apply<Query>(this Query query, Func<Logic, ITableView,  Logic> logic)
         where Query : FilterBase, IDataQuery

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
@@ -11,11 +11,11 @@ namespace ShadowSql.SingleSelect;
 /// <summary>
 /// 计数选择
 /// </summary>
-/// <param name="source"></param>
-public class CountSelect(ITableView source) : ISingleSelect
+/// <param name="view"></param>
+public class CountSelect(ITableView view) : ISingleSelect
 {
     #region 配置
-    private readonly ITableView _source = source;
+    private readonly ITableView _source = view;
     /// <summary>
     /// 数据源
     /// </summary>
@@ -36,6 +36,7 @@ public class CountSelect(ITableView source) : ISingleSelect
     }
     #endregion
     #region ISqlEntity
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => engine.Select(sql, this);
     #endregion

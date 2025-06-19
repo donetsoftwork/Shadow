@@ -26,7 +26,7 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="fields"></param>
+    /// <param name="fields">字段</param>
     internal void SelectCore(params IEnumerable<IFieldView> fields)
     {
         foreach (var field in fields)
@@ -35,7 +35,7 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     internal void SelectCore(IFieldView field)
     {
         _selected.Add(field);
@@ -43,7 +43,7 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="columns"></param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     internal void SelectCore(params IEnumerable<string> columns)
     {
@@ -70,7 +70,7 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 构建列信息
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     internal IFieldView CheckField(string fieldName)
     {
         if (GetField(fieldName) is IField field)
@@ -86,8 +86,8 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 拼写筛选字段列表
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <param name="appended"></param>
     /// <returns></returns>
     protected virtual bool WriteSelectedCore(ISqlEngine engine, StringBuilder sql, bool appended)
@@ -95,9 +95,9 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
     /// <summary>
     /// 拼写筛选字段列表
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="fields"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="fields">字段</param>
     /// <param name="appended"></param>
     /// <returns></returns>
     protected static bool WriteSelectFields(ISqlEngine engine, StringBuilder sql, IEnumerable<IFieldView> fields, bool appended)

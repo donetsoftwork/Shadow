@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -8,9 +8,9 @@ namespace ShadowSql.FieldInfos;
 /// 别名字段信息
 /// </summary>
 /// <param name="statement"></param>
-/// <param name="alias"></param>
-public class RawFieldAliasInfo(string statement, string alias)
-     : IdentifierBase(alias), IFieldAlias
+/// <param name="aliasName">别名</param>
+public class RawFieldAliasInfo(string statement, string aliasName)
+     : IdentifierBase(aliasName), IFieldAlias
 {
     private readonly string _statement = statement;
     /// <summary>
@@ -23,20 +23,17 @@ public class RawFieldAliasInfo(string statement, string alias)
     /// </summary>
     public string Statement
         => _statement;
-
+    /// <inheritdoc/>
     string IView.ViewName
         => _name;
+    /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => Column.Use(_name);
-    IFieldAlias IFieldView.As(string alias)
-        => new RawFieldAliasInfo(_statement, alias);
+    /// <inheritdoc/>
+    IFieldAlias IFieldView.As(string aliasName)
+        => new RawFieldAliasInfo(_statement, aliasName);
     #region ISqlEntity
-    /// <summary>
-    /// sql拼接
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(_statement);

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using System.Collections.Generic;
 using System.Text;
@@ -57,18 +57,10 @@ public class SqlConditionLogic : AtomicLogic, ISqlLogic
         => _fragment.Count;
     #endregion
     #region AtomicLogicBase
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
         => _fragment.TryWrite(engine, sql);
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
     {
         return _fragment.Count switch
@@ -78,6 +70,7 @@ public class SqlConditionLogic : AtomicLogic, ISqlLogic
         };
     }
     #endregion
+    /// <inheritdoc/>
     ISqlLogic ISqlLogic.Not()
     {
         return _fragment.Count switch

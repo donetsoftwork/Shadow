@@ -14,16 +14,16 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
-    /// <param name="target"></param>
-    internal GroupByMultiSelect(IGroupByView groupBy, IMultiView target)
-        : base(groupBy, groupBy, target)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="multiView">多(联)表</param>
+    internal GroupByMultiSelect(IGroupByView groupBy, IMultiView multiView)
+        : base(groupBy, groupBy, multiView)
     {
     }
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByMultiSelect(GroupByMultiSqlQuery groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -31,7 +31,7 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByMultiSelect(GroupByMultiQuery groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -42,8 +42,8 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// 聚合筛选
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IAggregateFieldAlias> select)
         where TAliasTable : IAliasTable
@@ -55,8 +55,8 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// 聚合筛选
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IEnumerable<IAggregateFieldAlias>> select)
         where TAliasTable : IAliasTable
@@ -70,9 +70,9 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
     /// 聚合筛选(先定位再聚合)
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
-    /// <param name="aggregate"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
+    /// <param name="aggregate">聚合</param>
     /// <returns></returns>
     public GroupByMultiSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable

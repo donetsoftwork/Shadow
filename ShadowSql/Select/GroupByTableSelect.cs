@@ -19,7 +19,7 @@ public class GroupByTableSelect<TTable> : GroupBySelectBase<IGroupByView, TTable
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByTableSelect(GroupByTableSqlQuery<TTable> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -27,7 +27,7 @@ public class GroupByTableSelect<TTable> : GroupBySelectBase<IGroupByView, TTable
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByTableSelect(GroupByTableQuery<TTable> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -35,7 +35,7 @@ public class GroupByTableSelect<TTable> : GroupBySelectBase<IGroupByView, TTable
     /// <summary>
     /// 聚合筛选
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByTableSelect<TTable> SelectAggregate(Func<TTable, IAggregateFieldAlias> select)
     {

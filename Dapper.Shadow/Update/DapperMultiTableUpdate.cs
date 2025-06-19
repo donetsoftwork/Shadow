@@ -6,8 +6,8 @@ namespace Dapper.Shadow.Update;
 /// <summary>
 /// 多表(联表)修改
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="multiTable"></param>
+/// <param name="executor">执行器</param>
+/// <param name="multiTable">多表(联表)</param>
 public class DapperMultiTableUpdate(IExecutor executor, IMultiView multiTable)
     : MultiTableUpdate(multiTable), IDapperExecute
 {

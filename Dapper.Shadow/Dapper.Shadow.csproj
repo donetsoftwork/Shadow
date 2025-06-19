@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+    <Version>$(VersionBase).3-alpha</Version>
     <PackageId>ShadowSql.Dapper</PackageId>
     <Description>ShadowSql的Dapper扩展</Description>
     <PackageTags>sql;sql-builder;sql-query;dapper;orm</PackageTags>

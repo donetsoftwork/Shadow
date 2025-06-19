@@ -10,10 +10,10 @@ namespace ShadowSql.Select;
 /// 多表筛选基类
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
-/// <param name="source"></param>
-/// <param name="target"></param>
-public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target)
-    : SelectBase<TSource, IMultiView>(source, target), IMultiSelect, ISelect
+/// <param name="view"></param>
+/// <param name="multiView">多(联)表</param>
+public abstract class MultiSelectBase<TSource>(TSource view, IMultiView multiView)
+    : SelectBase<TSource, IMultiView>(view, multiView), IMultiSelect, ISelect
     where TSource : ITableView
 {
     #region 配置
@@ -28,8 +28,8 @@ public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     internal void SelectCore<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
@@ -43,8 +43,8 @@ public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target
     /// 筛选多列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     internal void SelectCore<TTable>(string tableName, Func<TTable, IEnumerable<IColumn>> select)
         where TTable : ITable
@@ -60,13 +60,7 @@ public abstract class MultiSelectBase<TSource>(TSource source, IMultiView target
     }
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 写入筛选字段
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="appended"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override bool WriteSelectedCore(ISqlEngine engine, StringBuilder sql, bool appended)
     {
         foreach (var table in _selectTables)

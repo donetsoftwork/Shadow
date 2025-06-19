@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 
 namespace ShadowSql.Previews;
 
@@ -10,7 +10,7 @@ public class LogicPreview : LogicPreviewBase
     /// <summary>
     /// 复合逻辑展开
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     public LogicPreview(Logic logic)
     {
         _logic = logic;
@@ -27,7 +27,7 @@ public class LogicPreview : LogicPreviewBase
     /// <summary>
     /// 展开两个
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     private bool ExpandTwo(Logic logic)
     {

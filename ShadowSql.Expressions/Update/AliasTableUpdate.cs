@@ -13,16 +13,16 @@ namespace ShadowSql.Expressions.Update;
 /// <summary>
 /// 修改别名表
 /// </summary>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class AliasTableUpdate<TEntity>(AliasUpdateTable table, ISqlLogic filter)
     : ExpressionUpdateBase<AliasUpdateTable>(table)
 {
     /// <summary>
     /// 修改别名表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     public AliasTableUpdate(IAliasTable<ITable> table, ISqlLogic filter)
         : this(new AliasUpdateTable(table), filter)
     {
@@ -50,21 +50,13 @@ public class AliasTableUpdate<TEntity>(AliasUpdateTable table, ISqlLogic filter)
         return this;
     }
     #region ISqlEntity
-    /// <summary>
-    /// 拼写Update子句
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteUpdate(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteUpdate(engine, sql);
         sql.Append(_source.Alias);
     }
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(" FROM ");

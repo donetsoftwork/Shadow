@@ -14,42 +14,42 @@ public class TableCursor : CursorBase, ICursor
     /// <summary>
     /// 表视图范围筛选游标
     /// </summary>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    /// <param name="source"></param>
-    internal TableCursor(int limit, int offset, ITableView source)
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    /// <param name="view"></param>
+    internal TableCursor(int limit, int offset, ITableView view)
         : base(limit, offset)
     {
-        _source = source;
+        _source = view;
     }
     /// <summary>
     /// 表范围筛选游标
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public TableCursor(ITable source, int limit = 0, int offset = 0)
-        : this(limit, offset, source)
+    /// <param name="table">表</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public TableCursor(ITable table, int limit = 0, int offset = 0)
+        : this(limit, offset, table)
     {
     }
     /// <summary>
     /// 别名表范围筛选游标
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public TableCursor(IAliasTable source, int limit = 0, int offset = 0)
-        : this(limit, offset, source)
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public TableCursor(IAliasTable aliasTable, int limit = 0, int offset = 0)
+        : this(limit, offset, aliasTable)
     {
     }
     /// <summary>
     /// 查询再范围筛选游标
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public TableCursor(IDataFilter source, int limit = 0, int offset = 0)
-        : this(limit, offset, source)
+    /// <param name="view"></param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public TableCursor(IDataFilter view, int limit = 0, int offset = 0)
+        : this(limit, offset, view)
     {
     }
     #region 配置
@@ -64,11 +64,13 @@ public class TableCursor : CursorBase, ICursor
         => _source;
     #endregion
     #region ICursor
+    /// <inheritdoc/>
     ICursor ICursor.Take(int limit)
     {
         TakeCore(limit);
         return this;
     }
+    /// <inheritdoc/>
     ICursor ICursor.Skip(int offset)
     {
         SkipCore(offset);
@@ -76,41 +78,21 @@ public class TableCursor : CursorBase, ICursor
     }
     #endregion
     #region TableViewBase
-    /// <summary>
-    /// 所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
         => _source.Fields;
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => _source.GetField(fieldName);
-    /// <summary>
-    /// 获取比较字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override ICompareField GetCompareField(string fieldName)
         => _source.GetCompareField(fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField NewField(string fieldName)
          => _source.NewField(fieldName);
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <exception cref="System.NotImplementedException"></exception>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         _source.Write(engine, sql);

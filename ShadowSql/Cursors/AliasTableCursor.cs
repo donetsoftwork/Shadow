@@ -10,12 +10,12 @@ namespace ShadowSql.Cursors;
 /// 别名表范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-/// <param name="where"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLogic where, int limit, int offset)
-    : CursorBase<IAliasTable<TTable>>(source, limit, offset)
+/// <param name="aliasTable">别名表</param>
+/// <param name="where">查询条件</param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
+public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> aliasTable, ISqlLogic where, int limit, int offset)
+    : CursorBase<IAliasTable<TTable>>(aliasTable, limit, offset)
     where TTable : ITable
 {
     #region 配置
@@ -25,7 +25,7 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
     /// </summary>
     public ISqlLogic Where
         => _where;
-    private readonly TTable _table = source.Target;
+    private readonly TTable _table = aliasTable.Target;
     /// <summary>
     /// 原始表
     /// </summary>
@@ -36,7 +36,7 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public AliasTableCursor<TTable> Asc(Func<IAliasTable, IOrderView> select)
     {
@@ -46,7 +46,7 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public AliasTableCursor<TTable> Desc(Func<IAliasTable, IOrderAsc> select)
     {
@@ -56,7 +56,7 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public AliasTableCursor<TTable> Asc(Func<TTable, IColumn> select)
     {
@@ -69,7 +69,7 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public AliasTableCursor<TTable> Desc(Func<TTable, IColumn> select)
     {
@@ -78,14 +78,9 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
         if (prefixField is not null)
             DescCore(prefixField);
         return this;
-    }    
+    }
     #endregion
-    /// <summary>
-    /// 拼写数据源(表)sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteSource(engine, sql);
@@ -94,8 +89,8 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> source, ISqlLog
     /// <summary>
     /// 筛选条件可选
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     private void WriteFilter(ISqlEngine engine, StringBuilder sql)
     {
         var point = sql.Length;

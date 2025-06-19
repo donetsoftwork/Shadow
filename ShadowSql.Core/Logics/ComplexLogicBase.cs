@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Previews;
 using System.Collections.Generic;
 using System.Text;
@@ -24,18 +24,10 @@ public abstract class ComplexLogicBase(LogicSeparator separator, List<AtomicLogi
     /// <param name="other"></param>
     internal void AddOther(ComplexLogicBase other)
         => _others.Add(other);
-    /// <summary>
-    /// 子逻辑预览
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override IPreview<AtomicLogic> Preview()
         => new ComplexLogicPreview(this);
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         var appended = base.TryWrite(engine, sql);

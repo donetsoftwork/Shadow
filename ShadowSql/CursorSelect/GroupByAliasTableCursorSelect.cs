@@ -8,7 +8,7 @@ namespace ShadowSql.CursorSelect;
 /// GroupBy别名表后再范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public sealed class GroupByAliasTableCursorSelect<TTable>(GroupByAliasTableCursor<TTable> cursor)
     : GroupCursorBySelectBase<IAliasTable<TTable>>(cursor, cursor.Source, cursor.AliasTable)
     where TTable : ITable

@@ -22,8 +22,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, params IField[] fields)
         where TTable : ITable
@@ -31,8 +31,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, Func<TTable, IField[]> select)
         where TTable : ITable
@@ -40,8 +40,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -52,9 +52,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, ISqlLogic where, params IField[] fields)
         where TTable : ITable
@@ -63,9 +63,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, Func<TTable, ISqlLogic> where, Func<TTable, IField[]> select)
         where TTable : ITable
@@ -74,9 +74,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TTable table, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -86,8 +86,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="fields"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IField[] fields)
         where TTable : ITable
@@ -95,8 +95,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="select"></param>
+    /// <param name="query">查询</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, Func<TTable, IField[]> select)
         where TTable : ITable
@@ -104,8 +104,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -118,16 +118,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="fields"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableQuery<ITable> GroupBy(this TableQuery query, params IField[] fields)
         => new((ITable)query.Source, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableQuery<ITable> GroupBy(this TableQuery query, params IEnumerable<string> columnNames)
     {
@@ -141,61 +141,61 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, params IField[] fields)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> aliasTable, params IField[] fields)
         where TTable : ITable
-        => new(table, EmptyLogic.Instance, fields);
+        => new(aliasTable, EmptyLogic.Instance, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, Func<TTable, IColumn[]> select)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> aliasTable, Func<TTable, IColumn[]> select)
         where TTable : ITable
-        => new(table, EmptyLogic.Instance, [.. select(table.Target).Select(table.Prefix)]);
+        => new(aliasTable, EmptyLogic.Instance, [.. select(aliasTable.Target).Select(aliasTable.Prefix)]);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, params IEnumerable<string> columnNames)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> aliasTable, params IEnumerable<string> columnNames)
         where TTable : ITable
-        => new(table, EmptyLogic.Instance, [.. table.Fields(columnNames)]);
+        => new(aliasTable, EmptyLogic.Instance, [.. aliasTable.Fields(columnNames)]);
     #endregion
     #region TableAlias & ISqlLogic
     /// <summary>
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IField[] fields)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> aliasTable, ISqlLogic where, params IField[] fields)
         where TTable : ITable
-        => new(table, where, fields);
+        => new(aliasTable, where, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
-    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IEnumerable<string> columnNames)
+    public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> aliasTable, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable
-        => new(table, where, [.. table.Fields(columnNames)]);
+        => new(aliasTable, where, [.. aliasTable.Fields(columnNames)]);
     #endregion
     #region AliasTableQuery
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="fields"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this AliasTableQuery<TTable> query, params IField[] fields)
         where TTable : ITable
@@ -203,8 +203,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="select"></param>
+    /// <param name="query">查询</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this AliasTableQuery<TTable> query, Func<TTable, IColumn[]> select)
         where TTable : ITable
@@ -215,8 +215,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this AliasTableQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -231,16 +231,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="fields"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByMultiQuery GroupBy(this MultiTableQuery multiTable, params IField[] fields)
         => new(multiTable, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByMultiQuery GroupBy(this MultiTableQuery multiTable, params IEnumerable<string> columnNames)
         => new(multiTable, [.. multiTable.Fields(columnNames)]);
@@ -249,16 +249,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="fields"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByMultiQuery GroupBy(this JoinTableQuery multiTable, params IField[] fields)
         => new(multiTable, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByMultiQuery GroupBy(this JoinTableQuery multiTable, params IEnumerable<string> columnNames)
         => new(multiTable, [.. multiTable.Fields(columnNames)]);
@@ -269,8 +269,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="select"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByMultiQuery GroupBy<TLeft, TRight>(this AliasJoinOnQuery<TLeft, TRight> joinOn, Func<TLeft, TRight, IField[]> select)
         where TLeft : IAliasTable<ITable>
@@ -281,8 +281,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="select"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByMultiQuery GroupBy<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn, Func<LTable, RTable, IColumn[]> select)
         where LTable : ITable
@@ -297,8 +297,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, params IField[] fields)
         where TTable : ITable
@@ -306,8 +306,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, Func<TTable, IField[]> select)
         where TTable : ITable
@@ -315,8 +315,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -327,9 +327,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, ISqlLogic where, params IField[] fields)
         where TTable : ITable
@@ -338,9 +338,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, Func<TTable, ISqlLogic> where, Func<TTable, IField[]> select)
         where TTable : ITable
@@ -349,9 +349,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TTable table, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -361,8 +361,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="fields"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, params IField[] fields)
         where TTable : ITable
@@ -370,8 +370,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="select"></param>
+    /// <param name="query">查询</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, Func<TTable, IField[]> select)
         where TTable : ITable
@@ -379,8 +379,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -393,16 +393,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="fields"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<ITable> SqlGroupBy(this TableSqlQuery query, params IField[] fields)
         => new((ITable)query.Source, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<ITable> SqlGroupBy(this TableSqlQuery query, params IEnumerable<string> columnNames)
     {
@@ -416,8 +416,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, params IField[] fields)
         where TTable : ITable
@@ -425,8 +425,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, Func<TTable, IColumn[]> select)
         where TTable : ITable
@@ -434,8 +434,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -446,9 +446,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IField[] fields)
         where TTable : ITable
@@ -457,9 +457,9 @@ public static partial class ShadowSqlServices
     /// 分组查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, ISqlLogic where, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -469,8 +469,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="fields"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this AliasTableSqlQuery<TTable> query, params IField[] fields)
         where TTable : ITable
@@ -480,8 +480,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="select"></param>
+    /// <param name="query">查询</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this AliasTableSqlQuery<TTable> query, Func<TTable, IColumn[]> select)
         where TTable : ITable
@@ -492,8 +492,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this AliasTableSqlQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
@@ -508,16 +508,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="fields"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByMultiSqlQuery SqlGroupBy(this MultiTableSqlQuery multiTable, params IField[] fields)
         => new(multiTable, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByMultiSqlQuery SqlGroupBy(this MultiTableSqlQuery multiTable, params IEnumerable<string> columnNames)
         => new(multiTable, [.. multiTable.Fields(columnNames)]);
@@ -526,16 +526,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="fields"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByMultiSqlQuery SqlGroupBy(this JoinTableSqlQuery multiTable, params IField[] fields)
         => new(multiTable, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupByMultiSqlQuery SqlGroupBy(this JoinTableSqlQuery multiTable, params IEnumerable<string> columnNames)
         => new(multiTable, [.. multiTable.Fields(columnNames)]);
@@ -546,8 +546,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="select"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByMultiSqlQuery SqlGroupBy<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, TRight, IPrefixField[]> select)
         where TLeft : IAliasTable<ITable>
@@ -558,8 +558,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="select"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static GroupByMultiSqlQuery SqlGroupBy<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, RTable, IColumn[]> select)
         where LTable : ITable

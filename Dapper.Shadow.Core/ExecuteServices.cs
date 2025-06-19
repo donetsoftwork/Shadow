@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 using System.Threading.Tasks;
 
 namespace Dapper.Shadow;
@@ -13,8 +13,8 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 执行
     /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="param"></param>
+    /// <param name="sql">sql</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Execute(this IDapperExecute sql, object? param = null)
         => sql.Executor.Execute(sql, param);
@@ -23,8 +23,8 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 异步执行
     /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="param"></param>
+    /// <param name="sql">sql</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<int> ExecuteAsync(this IDapperExecute sql, object? param = null)
         => sql.Executor.ExecuteAsync(sql, param);
@@ -35,9 +35,9 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 执行
     /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="sql">sql</param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Execute(this IExecuteSql sql, IExecutor executor, object? param = null)
         => executor.Execute(sql, param);    
@@ -46,9 +46,9 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 异步执行
     /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="sql">sql</param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<int> ExecuteAsync(this IExecuteSql sql, IExecutor executor, object? param = null)
         => executor.ExecuteAsync(sql, param);

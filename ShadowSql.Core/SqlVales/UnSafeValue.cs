@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
 
 namespace ShadowSql.SqlVales;
@@ -9,12 +9,7 @@ namespace ShadowSql.SqlVales;
 /// <param name="val"></param>
 public class UnSafeValue(string val) : StringValue(val)
 {
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override void Write(ISqlEngine engine, StringBuilder sql)
     {
         //需要转义(防sql注入)

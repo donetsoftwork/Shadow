@@ -27,29 +27,19 @@ public class OrderByVisitor(IFieldProvider source, List<IOrderAsc> fields)
     public List<IOrderAsc> Fields
         => _fields;
     #endregion
-    /// <summary>
-    /// 处理属性
-    /// </summary>
-    /// <param name="member"></param>
+    /// <inheritdoc/>
     protected override void CheckMember(MemberExpression member)
     {
         if (_source.GetCompareFieldByExpression(member) is IOrderAsc field)
             _fields.Add(field);
     }
-    /// <summary>
-    /// 处理赋值
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <param name="info"></param>
+    /// <inheritdoc/>
     protected override void CheckAssignment(Expression expression, MemberInfo info)
     {
         if (_source.GetCompareFieldByExpression(expression) is IOrderAsc field)
             _fields.Add(field);
     }
-    /// <summary>
-    /// 处理方法调用
-    /// </summary>
-    /// <param name="method"></param>
+    /// <inheritdoc/>
     protected override void CheckMethodCall(MethodCallExpression method)
     {
         if (_source.GetCompareFieldByMethodCall(method) is IOrderAsc field)

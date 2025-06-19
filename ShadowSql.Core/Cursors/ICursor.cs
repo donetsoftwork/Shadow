@@ -18,13 +18,13 @@ public interface ICursor : ITableView
     /// <summary>
     /// 获取数量
     /// </summary>
-    /// <param name="limit"></param>
+    /// <param name="limit">筛选数量</param>
     /// <returns></returns>
     ICursor Take(int limit);
     /// <summary>
     /// 跳过数量
     /// </summary>
-    /// <param name="offset"></param>
+    /// <param name="offset">跳过数量</param>
     /// <returns></returns>
     ICursor Skip(int offset);
 }

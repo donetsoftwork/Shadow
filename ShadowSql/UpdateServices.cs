@@ -15,7 +15,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 获取被修改字段
     /// </summary>
-    /// <param name="aliasTable"></param>
+    /// <param name="aliasTable">别名表</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<IPrefixField> GetAssignFields<TTable>(this IAliasTable<TTable> aliasTable)

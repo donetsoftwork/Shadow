@@ -10,8 +10,8 @@ namespace ShadowSql.SelectFields;
 /// 筛选字段基类
 /// </summary>
 /// <typeparam name="TTarget"></typeparam>
-/// <param name="target"></param>
-public abstract class SelectFieldsBase<TTarget>(TTarget target)
+/// <param name="view"></param>
+public abstract class SelectFieldsBase<TTarget>(TTarget view)
     : SelectFieldsBase, ISelectFields
     where TTarget : ITableView
 {
@@ -19,7 +19,7 @@ public abstract class SelectFieldsBase<TTarget>(TTarget target)
     /// <summary>
     /// 筛选对象
     /// </summary>
-    internal readonly TTarget _target = target;
+    internal readonly TTarget _target = view;
     /// <summary>
     /// 筛选对象
     /// </summary>
@@ -27,30 +27,21 @@ public abstract class SelectFieldsBase<TTarget>(TTarget target)
         => _target;
     #endregion
     #region GetFieldBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
         => _target.Fields;
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => _target.GetField(fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField NewField(string fieldName)
         => _target.NewField(fieldName);
     #endregion
     #region ISelectFields
+    /// <inheritdoc/>
     bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
         => WriteSelectedCore(engine, sql, false);
+    /// <inheritdoc/>
     IEnumerable<IColumn> ISelectFields.ToColumns()
         => ToColumnsCore();
     #endregion

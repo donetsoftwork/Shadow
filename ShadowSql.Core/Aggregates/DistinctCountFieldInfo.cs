@@ -4,23 +4,18 @@ using System.Text;
 
 namespace ShadowSql.Aggregates;
 
-/// <summary>
-/// 去重统计字段信息
-/// </summary>
+/// <inheritdoc />
 public class DistinctCountFieldInfo(ICompareField field)
     : DistinctCountFieldInfoBase(field), IAggregateField
 {
+    /// <inheritdoc/>
     string IAggregateField.TargetName
         => _target.ViewName;
+    /// <inheritdoc/>
     IAggregateFieldAlias IAggregateField.As(string alias)
         => new DistinctCountAliasFieldInfo(_target, alias);
     #region ISqlEntity
-    /// <summary>
-    /// sql拼接
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(AggregateConstants.Count)

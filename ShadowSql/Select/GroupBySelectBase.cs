@@ -11,11 +11,11 @@ namespace ShadowSql.Select;
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
 /// <typeparam name="TGroupSource"></typeparam>
-/// <param name="source"></param>
-/// <param name="target"></param>
+/// <param name="view"></param>
+/// <param name="groupBy">分组查询</param>
 /// <param name="groupSource"></param>
-public abstract class GroupBySelectBase<TSource, TGroupSource>(TSource source, IGroupByView target, TGroupSource groupSource)
-    : SelectBase<TSource, IGroupByView>(source, target), IGroupBySelect, ISelect
+public abstract class GroupBySelectBase<TSource, TGroupSource>(TSource view, IGroupByView groupBy, TGroupSource groupSource)
+    : SelectBase<TSource, IGroupByView>(view, groupBy), IGroupBySelect, ISelect
     where TSource : ITableView
     where TGroupSource : ITableView
 {
@@ -33,17 +33,11 @@ public abstract class GroupBySelectBase<TSource, TGroupSource>(TSource source, I
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     protected void SelectAggregateCore(Func<TGroupSource, IAggregateFieldAlias> select)
         => SelectCore(select(_groupSource));
-    /// <summary>
-    /// 拼写筛选字段列表
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="appended"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override bool WriteSelectedCore(ISqlEngine engine, StringBuilder sql, bool appended)
     {
         if(base.WriteSelectedCore(engine, sql, appended))

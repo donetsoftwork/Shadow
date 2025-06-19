@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Logics;
 using ShadowSql.Previews;
 using System.Collections.Generic;
@@ -128,18 +128,10 @@ public abstract class SqlQuery(ComplexLogicBase complex, SqlConditionLogic condi
     /// </summary>
     /// <returns></returns>
     public abstract SqlQuery CopyQuery();
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     ISqlLogic ISqlLogic.Not()
         => throw new System.NotImplementedException("由子类实现");
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         bool appended = _complex.TryWrite(engine, sql);

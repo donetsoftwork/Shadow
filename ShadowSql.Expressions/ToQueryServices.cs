@@ -47,7 +47,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 查询(And查询)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static TableSqlQuery<TEntity> Where<TEntity>(this ITable table)
         => table.ToSqlQuery<TEntity>();
@@ -58,7 +58,7 @@ public static partial class ShadowSqlServices
     /// And查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableQuery<TEntity> ToQuery<TEntity>(this IAliasTable table)
         => new(table, new AndLogic());
@@ -66,7 +66,7 @@ public static partial class ShadowSqlServices
     /// Or查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableQuery<TEntity> ToOrQuery<TEntity>(this IAliasTable table)
         => new(table, new OrLogic());
@@ -76,7 +76,7 @@ public static partial class ShadowSqlServices
     /// And查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSqlQuery<TEntity> ToSqlQuery<TEntity>(this IAliasTable table)
         => new(table, SqlQuery.CreateAndQuery());
@@ -84,7 +84,7 @@ public static partial class ShadowSqlServices
     /// Or查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSqlQuery<TEntity> ToSqlOrQuery<TEntity>(this IAliasTable table)
         => new(table, SqlQuery.CreateOrQuery());
@@ -93,7 +93,7 @@ public static partial class ShadowSqlServices
     /// And查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSqlQuery<TEntity> Where<TEntity>(this IAliasTable table)
         => table.ToSqlQuery<TEntity>();

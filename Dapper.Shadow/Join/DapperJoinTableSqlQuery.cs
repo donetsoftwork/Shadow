@@ -6,8 +6,8 @@ namespace Dapper.Shadow.Join;
 /// <summary>
 /// Dapper联表查询
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="filter"></param>
+/// <param name="executor">执行器</param>
+/// <param name="filter">过滤条件</param>
 public class DapperJoinTableSqlQuery(IExecutor executor, SqlQuery filter)
     : JoinTableSqlQuery(filter), IDapperSource
 {

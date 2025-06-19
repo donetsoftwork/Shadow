@@ -9,8 +9,8 @@ namespace Dapper.Shadow.CursorSelect;
 /// GroupBy别名表后再范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="cursor"></param>
+/// <param name="executor">执行器</param>
+/// <param name="cursor">游标</param>
 public class DapperGroupByAliasTableCursorSelect<TTable>(IExecutor executor, GroupByAliasTableCursor<TTable> cursor)
     : GroupCursorBySelectBase<IAliasTable<TTable>>(cursor, cursor.Source, cursor.AliasTable)
     , IDapperSelect

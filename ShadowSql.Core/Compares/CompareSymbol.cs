@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using System;
 using System.Text;
@@ -48,7 +48,7 @@ public sealed class CompareSymbol : ISqlEntity
     /// <summary>
     /// 获取操作符
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public static CompareSymbol Get(string operation)
         => _manager.Value.Get(operation);
@@ -133,12 +133,7 @@ public sealed class CompareSymbol : ISqlEntity
     public static CompareSymbol NotExists
         => _manager.Value.NotExists;
     #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
         => sql.Append(_operation);
     /// <summary>

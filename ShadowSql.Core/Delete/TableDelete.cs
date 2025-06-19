@@ -10,16 +10,16 @@ namespace ShadowSql.Delete;
 /// <summary>
 /// 表数据删除
 /// </summary>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class TableDelete(ITable table, ISqlLogic filter)
     : IDelete
 {
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="filter"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="filter">过滤条件</param>
     public TableDelete(string tableName, ISqlLogic filter)
         : this(EmptyTable.Use(tableName), filter)
     {
@@ -45,12 +45,7 @@ public class TableDelete(ITable table, ISqlLogic filter)
         => _filter;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.DeletePrefix(sql);

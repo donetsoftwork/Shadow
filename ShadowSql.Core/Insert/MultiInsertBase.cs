@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System;
 using System.Collections.Generic;
@@ -24,15 +24,15 @@ public abstract class MultiInsertBase(List<IInsertValues> items)
     /// <summary>
     /// 增加插入值
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">值</param>
     internal void Add(IInsertValues value)
         => _items.Add(value);
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="table">表</param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <exception cref="InvalidOperationException"></exception>
     protected void WriteInsert(IInsertTable table, ISqlEngine engine, StringBuilder sql)
     {

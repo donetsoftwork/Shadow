@@ -2,7 +2,6 @@
 >* 简单表(列为空)
 >* 作为表的影子(占位符)
 >* 主要用于[按字段查询](../../shadow/sqlquery/fieldquery.md)
->* 支持select和delete等
 
 ## 1. 接口
 >* [ITable](xref:ShadowSql.Identifiers.ITable)

@@ -10,17 +10,17 @@ namespace ShadowSql.Expressions.GroupBy;
 /// <summary>
 /// 对MultiQuery进行分组查询
 /// </summary>
-/// <param name="multiTable"></param>
-/// <param name="fields"></param>
-/// <param name="filter"></param>
+/// <param name="multiTable">多表(联表)</param>
+/// <param name="fields">字段</param>
+/// <param name="filter">过滤条件</param>
 public class GroupByMultiSqlQuery<TKey>(IMultiView multiTable, IField[] fields, SqlQuery filter)
     : GroupBySqlQueryBase<IMultiView>(multiTable, fields, filter)
 {
     /// <summary>
     /// 对多表进行分组查询
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="fields"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="fields">字段</param>
     public GroupByMultiSqlQuery(IMultiView multiTable, IField[] fields)
         : this(multiTable, fields, SqlQuery.CreateAndQuery())
     {
@@ -30,8 +30,8 @@ public class GroupByMultiSqlQuery<TKey>(IMultiView multiTable, IField[] fields, 
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByMultiSqlQuery<TKey> Having<TEntity>(string table, Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
@@ -43,8 +43,8 @@ public class GroupByMultiSqlQuery<TKey>(IMultiView multiTable, IField[] fields, 
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TParameter"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByMultiSqlQuery<TKey> Having<TEntity, TParameter>(string table, Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {
@@ -55,7 +55,7 @@ public class GroupByMultiSqlQuery<TKey>(IMultiView multiTable, IField[] fields, 
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByMultiSqlQuery<TKey> Having<TEntity>(Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
@@ -67,7 +67,7 @@ public class GroupByMultiSqlQuery<TKey>(IMultiView multiTable, IField[] fields, 
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TParameter"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByMultiSqlQuery<TKey> Having<TEntity, TParameter>(Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {

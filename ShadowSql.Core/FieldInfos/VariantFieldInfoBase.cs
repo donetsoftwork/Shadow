@@ -7,8 +7,8 @@ namespace ShadowSql.FieldInfos;
 /// <summary>
 /// 字段变形
 /// </summary>
-/// <param name="target"></param>
-public abstract class VariantFieldInfoBase<TField>(TField target)
+/// <param name="field">字段</param>
+public abstract class VariantFieldInfoBase<TField>(TField field)
     : ISqlEntity
     where TField : ISqlEntity
 {
@@ -16,7 +16,7 @@ public abstract class VariantFieldInfoBase<TField>(TField target)
     /// <summary>
     /// 被去重的字段
     /// </summary>
-    protected readonly TField _target = target;
+    protected readonly TField _target = field;
     /// <summary>
     /// 被去重的字段
     /// </summary>
@@ -26,9 +26,10 @@ public abstract class VariantFieldInfoBase<TField>(TField target)
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected abstract void WriteCore(ISqlEngine engine, StringBuilder sql);
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteCore(engine, sql);
 }

@@ -23,9 +23,9 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 分组sql查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="having"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="having">分组查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(ITable table, SqlQuery having, params IField[] fields)
         : this(having, table, fields)
     {
@@ -33,8 +33,8 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 分组sql查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(ITable table, params IField[] fields)
         : this(SqlQuery.CreateAndQuery(), table, fields)
     {
@@ -44,9 +44,9 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 分组sql查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="having"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="having">分组查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(IAliasTable table, SqlQuery having, params IField[] fields)
         : this(having, table, fields)
     {
@@ -54,8 +54,8 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 分组sql查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(IAliasTable table, IField[] fields)
         : this(SqlQuery.CreateAndQuery(), table, fields)
     {
@@ -65,9 +65,9 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 分组sql查询
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="having"></param>
-    /// <param name="fields"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="having">分组查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(string tableName, SqlQuery having, params IField[] fields)
         : this(having, EmptyTable.Use(tableName), fields)
     {
@@ -75,8 +75,8 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 分组sql查询
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="fields"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(string tableName, params IField[] fields)
         : this(SqlQuery.CreateAndQuery(), EmptyTable.Use(tableName), fields)
     {
@@ -86,9 +86,9 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 查询后再分组
     /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="having"></param>
-    /// <param name="fields"></param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="having">分组查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(IDataFilter filter, SqlQuery having, params IField[] fields)
         : this(having, filter, fields)
     {
@@ -96,8 +96,8 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 查询后再分组
     /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="fields"></param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="fields">字段</param>
     public GroupBySqlQuery(IDataFilter filter, params IField[] fields)
         : this(SqlQuery.CreateAndQuery(), filter, fields)
     {
@@ -108,9 +108,7 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// 数据源表
     /// </summary>
     protected readonly ITableView _source;
-    /// <summary>
-    /// 数据源表
-    /// </summary>
+    /// <inheritdoc/>
     public override ITableView Source
         => _source;
     #endregion
@@ -119,16 +117,16 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(ITable table, params IField[] fields)
         => new(table, fields);
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(ITable table, params IEnumerable<string> columnNames)
         => new(table, [.. table.Fields(columnNames)]);
@@ -137,16 +135,16 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(IAliasTable table, params IField[] fields)
         => new(table, fields);
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="table">表</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(IAliasTable table, params IEnumerable<string> columnNames)
         => new(table, [.. table.Fields(columnNames)]);
@@ -155,16 +153,16 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="fields"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(string tableName, params IField[] fields)
         => new(tableName, fields);
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(string tableName, params IEnumerable<string> columnNames)
         => new(tableName, [.. columnNames.Select(Column.Use)]);
@@ -173,31 +171,28 @@ public class GroupBySqlQuery : GroupByBase<SqlQuery>, IDataSqlQuery
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="fields"></param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(IDataFilter filter, params IField[] fields)
         => new(filter, fields);
     /// <summary>
     /// 创建分组查询
     /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="columnNames"></param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="columnNames">列名</param>
     /// <returns></returns>
     public static GroupBySqlQuery Create(IDataFilter filter, params IEnumerable<string> columnNames)
         => new(filter, [.. filter.Source.Fields(columnNames)]);
     #endregion
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 输出数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion
     #region IDataSqlQuery
+    /// <inheritdoc/>
     SqlQuery IDataSqlQuery.Query
     {
         get => _filter;

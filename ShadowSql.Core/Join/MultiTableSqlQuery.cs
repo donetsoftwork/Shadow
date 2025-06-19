@@ -22,8 +22,8 @@ public class MultiTableSqlQuery(SqlQuery query)
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public MultiTableSqlQuery Apply<TAliasTable>(string tableName, Func<SqlQuery, TAliasTable, SqlQuery> query)
         where TAliasTable : IAliasTable

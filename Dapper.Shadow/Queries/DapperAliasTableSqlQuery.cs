@@ -10,11 +10,11 @@ namespace Dapper.Shadow.Queries;
 /// Dapper查询别名表
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="table"></param>
-/// <param name="query"></param>
-public class DapperAliasTableSqlQuery<TTable>(IExecutor executor, IAliasTable<TTable> table, SqlQuery query)
-    : AliasTableSqlQuery<TTable>(table, query), IDapperSource
+/// <param name="executor">执行器</param>
+/// <param name="aliasTable">别名表</param>
+/// <param name="query">查询</param>
+public class DapperAliasTableSqlQuery<TTable>(IExecutor executor, IAliasTable<TTable> aliasTable, SqlQuery query)
+    : AliasTableSqlQuery<TTable>(aliasTable, query), IDapperSource
     where TTable : ITable
 {
     #region 配置
@@ -29,8 +29,8 @@ public class DapperAliasTableSqlQuery<TTable>(IExecutor executor, IAliasTable<TT
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public DapperAliasTableSqlQuery<TTable> Where(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {

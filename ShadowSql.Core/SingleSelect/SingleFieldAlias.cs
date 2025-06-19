@@ -8,17 +8,12 @@ namespace ShadowSql.SingleSelect;
 /// <summary>
 /// 子查询字段别名
 /// </summary>
-/// <param name="target"></param>
-/// <param name="alias"></param>
-public class SingleFieldAlias(ISingleSelect target, string alias)
-    : SqlAlias<ISingleSelect>(target, alias), IFieldAlias
+/// <param name="select">筛选</param>
+/// <param name="aliasName">别名</param>
+public class SingleFieldAlias(ISingleSelect select, string aliasName)
+    : SqlAlias<ISingleSelect>(select, aliasName), IFieldAlias
 {
-    /// <summary>
-    /// sql拼接
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append('(');
@@ -27,12 +22,14 @@ public class SingleFieldAlias(ISingleSelect target, string alias)
         engine.ColumnAs(sql, _name);
     }
     #region IFieldView
+    /// <inheritdoc/>
     string IView.ViewName
         => _name;
+    /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => Column.Use(_name);
-
-    IFieldAlias IFieldView.As(string alias)
-        => new SingleFieldAlias(_target, alias);
+    /// <inheritdoc/>
+    IFieldAlias IFieldView.As(string aliasName)
+        => new SingleFieldAlias(_target, aliasName);
     #endregion
 }

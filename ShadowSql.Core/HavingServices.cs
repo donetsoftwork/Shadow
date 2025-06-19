@@ -20,7 +20,7 @@ public static partial class ShadowSqlCoreServices
     /// 按原始sql查询
     /// </summary>
     /// <typeparam name="TGroupBy"></typeparam>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <param name="conditions"></param>
     /// <returns></returns>
     public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, params IEnumerable<string> conditions)
@@ -35,8 +35,8 @@ public static partial class ShadowSqlCoreServices
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TGroupBy"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="logic"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, AtomicLogic logic)
         where TGroupBy : GroupByBase, IDataSqlQuery
@@ -48,8 +48,8 @@ public static partial class ShadowSqlCoreServices
     /// Where
     /// </summary>
     /// <typeparam name="TGroupBy"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="query"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TGroupBy Having<TGroupBy>(this TGroupBy groupBy, Func<IGroupByView, AtomicLogic> query)
         where TGroupBy : GroupByBase, IDataSqlQuery
@@ -64,10 +64,10 @@ public static partial class ShadowSqlCoreServices
     /// 按列名聚合
     /// </summary>
     /// <typeparam name="TGroupBy"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="aggregate"></param>
-    /// <param name="columnName"></param>
-    /// <param name="query"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TGroupBy HavingAggregate<TGroupBy>(this TGroupBy groupBy, string aggregate, string columnName, Func<IAggregateField, AtomicLogic> query)
         where TGroupBy : GroupByBase, IDataSqlQuery
@@ -81,8 +81,8 @@ public static partial class ShadowSqlCoreServices
     /// 按SqlQuery查询
     /// </summary>
     /// <typeparam name="TGroupBy"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="query"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TGroupBy Apply<TGroupBy>(this TGroupBy groupBy, Func<SqlQuery, IGroupByView, SqlQuery> query)
         where TGroupBy : GroupByBase, IDataSqlQuery
@@ -98,8 +98,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query And<Query>(this Query query, Func<IGroupByView, AtomicLogic> logic)
         where Query : GroupByBase, IDataQuery
@@ -111,8 +111,8 @@ public static partial class ShadowSqlCoreServices
     /// 与运算嵌套或逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query And<Query>(this Query query, Func<IGroupByView, OrLogic> logic)
         where Query : GroupByBase, IDataQuery
@@ -126,8 +126,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Or<Query>(this Query query, Func<IGroupByView, AtomicLogic> logic)
         where Query : GroupByBase, IDataQuery
@@ -139,8 +139,8 @@ public static partial class ShadowSqlCoreServices
     /// 或运算嵌套与逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Or<Query>(this Query query, Func<IGroupByView, AndLogic> logic)
         where Query : GroupByBase, IDataQuery
@@ -153,8 +153,8 @@ public static partial class ShadowSqlCoreServices
     /// 应用逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="logic"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Query Apply<Query>(this Query groupBy, Func<Logic, IGroupByView,  Logic> logic)
         where Query : GroupByBase, IDataQuery

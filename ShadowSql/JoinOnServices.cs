@@ -20,9 +20,9 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<LTable, RTable> On<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right)
         where LTable : ITable
@@ -33,10 +33,10 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
     /// <param name="compare"></param>
-    /// <param name="right"></param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<LTable, RTable> On<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, CompareSymbol compare, Func<RTable, IColumn> right)
         where LTable : ITable
@@ -54,10 +54,10 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<LTable, RTable> On<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right,  Func<IPrefixField, IPrefixField, AtomicLogic> query)
         where LTable : ITable
@@ -76,9 +76,9 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IPrefixField> left, Func<TRight, IPrefixField> right)
         where TLeft : IAliasTable<ITable>
@@ -89,10 +89,10 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
     /// <param name="compare"></param>
-    /// <param name="right"></param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, IPrefixField> left, CompareSymbol compare, Func<TRight, IPrefixField> right)
         where TLeft : IAliasTable<ITable>
@@ -103,8 +103,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static AliasJoinOnSqlQuery<TLeft, TRight> On<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<TLeft, TRight, AtomicLogic> query)
         where TLeft : IAliasTable<ITable>
@@ -116,8 +116,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static AliasJoinOnSqlQuery<TLeft, TRight> Apply<TLeft, TRight>(this AliasJoinOnSqlQuery<TLeft, TRight> joinOn, Func<SqlQuery, TLeft, TRight, SqlQuery> query)
         where TLeft : IAliasTable<ITable>
@@ -132,9 +132,9 @@ public static partial class ShadowSqlServices
     /// 查询左表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="columnName"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TJoinOn WhereLeft<TJoinOn>(this TJoinOn joinOn, string columnName, Func<ICompareView, AtomicLogic> query)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -147,9 +147,9 @@ public static partial class ShadowSqlServices
     /// 查询右表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="columnName"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TJoinOn WhereRight<TJoinOn>(this TJoinOn joinOn, string columnName, Func<ICompareView, AtomicLogic> query)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -164,9 +164,9 @@ public static partial class ShadowSqlServices
     /// 查询左表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="columnName"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TJoinOn ApplyLeft<TJoinOn>(this TJoinOn joinOn, string columnName, Func<Logic, ICompareView, Logic> query)
         where TJoinOn : JoinOnBase, IJoinOn, IDataQuery
@@ -179,9 +179,9 @@ public static partial class ShadowSqlServices
     /// 查询右表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="columnName"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TJoinOn ApplyRight<TJoinOn>(this TJoinOn joinOn, string columnName, Func<Logic, ICompareView, Logic> query)
         where TJoinOn : JoinOnBase, IJoinOn, IDataQuery
@@ -197,10 +197,10 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <param name="logic"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static JoinOnQuery<LTable, RTable> Apply<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn, Func<LTable, IColumn> left, Func<RTable, IColumn> right, Func<Logic, IPrefixField, IPrefixField, Logic> logic)
         where LTable : ITable
@@ -218,8 +218,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="logic"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static AliasJoinOnQuery<TLeft, TRight> Apply<TLeft, TRight>(this AliasJoinOnQuery<TLeft, TRight> joinOn, Func<Logic, TLeft, TRight, Logic> logic)
         where TLeft : IAliasTable<ITable>

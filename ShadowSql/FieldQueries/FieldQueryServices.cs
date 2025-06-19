@@ -20,10 +20,10 @@ public static partial class FieldQueryServices
     /// 对字段进行参数化查询
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Id]=@LastId
@@ -43,10 +43,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
-    /// <param name="op"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
+    /// <param name="op">操作</param>
     /// <returns></returns>
     /// <example>
     /// [Id]>100
@@ -65,9 +65,9 @@ public static partial class FieldQueryServices
     /// 字段等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Id]=@ParentId
@@ -87,9 +87,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Id]=100
@@ -108,9 +108,9 @@ public static partial class FieldQueryServices
     /// 字段不等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Status]&lt;>@FailStatus
@@ -130,9 +130,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Status]&lt;>0
@@ -151,9 +151,9 @@ public static partial class FieldQueryServices
     /// 字段大于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Score]>@AvgScore
@@ -173,9 +173,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Score]>60
@@ -194,9 +194,9 @@ public static partial class FieldQueryServices
     /// 字段小于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Score]&lt;@AvgScore
@@ -216,9 +216,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Score]&lt;60
@@ -237,9 +237,9 @@ public static partial class FieldQueryServices
     /// 字段大于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Score]>=@AvgScore
@@ -259,9 +259,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Score]>=60
@@ -280,9 +280,9 @@ public static partial class FieldQueryServices
     /// 字段小于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Score]&lt;=@AvgScore
@@ -302,9 +302,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Score]&lt;=60
@@ -324,9 +324,9 @@ public static partial class FieldQueryServices
     /// 字段包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Id] IN @Ids
@@ -346,9 +346,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     /// <example>
     /// [Id] IN (1,3,5)
@@ -367,9 +367,9 @@ public static partial class FieldQueryServices
     /// 字段不包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Id] NOT IN @Ids
@@ -389,9 +389,9 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     /// <example>
     /// [Id] NOT IN (1,3,5)
@@ -410,8 +410,8 @@ public static partial class FieldQueryServices
     /// 字段是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     /// <example>
     /// [Score] IS NULL
@@ -430,8 +430,8 @@ public static partial class FieldQueryServices
     /// 字段不是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     /// <example>
     /// [Score] IS NOT NULL
@@ -450,9 +450,9 @@ public static partial class FieldQueryServices
     /// 字段匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Title] LIKE @KeyWord
@@ -471,9 +471,9 @@ public static partial class FieldQueryServices
     /// 字段匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Name] LIKE '张%'
@@ -492,9 +492,9 @@ public static partial class FieldQueryServices
     /// 字段不匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <example>
     /// [Title] NOT LIKE @KeyWord
@@ -513,9 +513,9 @@ public static partial class FieldQueryServices
     /// 字段不匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <example>
     /// [Name] NOT LIKE '张%'
@@ -534,10 +534,10 @@ public static partial class FieldQueryServices
     /// 字段在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <example>
     /// [Id] BETWEEN @IdBegin AND @IdEnd
@@ -559,10 +559,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <example>
     /// [Id] BETWEEN 11 AND 19
@@ -581,10 +581,10 @@ public static partial class FieldQueryServices
     /// 字段不在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <example>
     /// [Id] NOT BETWEEN @IdBegin AND @IdEnd
@@ -606,10 +606,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <example>
     /// [Id] NOT BETWEEN 11 AND 19
@@ -630,15 +630,15 @@ public static partial class FieldQueryServices
     /// 按字段查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="compare"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
-    public static Query TableField<Query>(this Query query, string tableName, string fieldName, Func<ICompareField, AtomicLogic> compare)
+    public static Query TableField<Query>(this Query query, string tableName, string fieldName, Func<ICompareField, AtomicLogic> logic)
         where Query : MultiTableBase, IDataSqlQuery
     {
-        query.Query.AddLogic(compare(query.From(tableName).GetCompareField(fieldName)));
+        query.Query.AddLogic(logic(query.From(tableName).GetCompareField(fieldName)));
         return query;
     }
     #endregion
@@ -647,11 +647,11 @@ public static partial class FieldQueryServices
     /// 对字段进行参数化查询
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldParameter<TQuery>(this TQuery query, string tableName, string fieldName, string op = "=", string parameter = "")
         where TQuery : IMultiView, IDataSqlQuery
@@ -664,11 +664,11 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
-    /// <param name="op"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
+    /// <param name="op">操作</param>
     /// <returns></returns>
     public static TQuery TableFieldValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value, string op = "=")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -680,10 +680,10 @@ public static partial class FieldQueryServices
     /// 字段等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldEqual<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -696,10 +696,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldEqualValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -711,10 +711,10 @@ public static partial class FieldQueryServices
     /// 字段不等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldNotEqual<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -727,10 +727,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldNotEqualValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -742,10 +742,10 @@ public static partial class FieldQueryServices
     /// 字段大于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldGreater<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -758,10 +758,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldGreaterValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -773,10 +773,10 @@ public static partial class FieldQueryServices
     /// 字段小于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldLess<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -789,10 +789,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldLessValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -804,10 +804,10 @@ public static partial class FieldQueryServices
     /// 字段大于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldGreaterEqual<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -820,10 +820,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldGreaterEqualValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -835,10 +835,10 @@ public static partial class FieldQueryServices
     /// 字段小于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldLessEqual<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -851,10 +851,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldLessEqualValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -867,10 +867,10 @@ public static partial class FieldQueryServices
     /// 字段包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldIn<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -883,10 +883,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     public static TQuery TableFieldInValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, params IEnumerable<TValue> values)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -898,10 +898,10 @@ public static partial class FieldQueryServices
     /// 字段不包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldNotIn<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -914,10 +914,10 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     public static TQuery TableFieldNotInValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, params IEnumerable<TValue> values)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -929,9 +929,9 @@ public static partial class FieldQueryServices
     /// 字段是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public static TQuery TableFieldIsNull<TQuery>(this TQuery query, string tableName, string fieldName)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -943,9 +943,9 @@ public static partial class FieldQueryServices
     /// 字段不是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public static TQuery TableFieldNotNull<TQuery>(this TQuery query, string tableName, string fieldName)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -957,10 +957,10 @@ public static partial class FieldQueryServices
     /// 字段匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldLike<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -972,10 +972,10 @@ public static partial class FieldQueryServices
     /// 字段匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldLikeValue<TQuery>(this TQuery query, string tableName, string fieldName, string value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -987,10 +987,10 @@ public static partial class FieldQueryServices
     /// 字段不匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TQuery TableFieldNotLike<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -1002,10 +1002,10 @@ public static partial class FieldQueryServices
     /// 字段不匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TQuery TableFieldNotLikeValue<TQuery>(this TQuery query, string tableName, string fieldName, string value)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -1017,11 +1017,11 @@ public static partial class FieldQueryServices
     /// 字段在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     public static TQuery TableFieldBetween<TQuery>(this TQuery query, string tableName, string fieldName, string begin = "", string end = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -1036,11 +1036,11 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     public static TQuery TableFieldBetweenValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue begin, TValue end)
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -1052,11 +1052,11 @@ public static partial class FieldQueryServices
     /// 字段不在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     public static TQuery TableFieldNotBetween<TQuery>(this TQuery query, string tableName, string fieldName, string begin = "", string end = "")
         where TQuery : MultiTableBase, IDataSqlQuery
@@ -1071,11 +1071,11 @@ public static partial class FieldQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="fieldName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="fieldName">字段名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     public static TQuery TableFieldNotBetweenValue<TQuery, TValue>(this TQuery query, string tableName, string fieldName, TValue begin, TValue end)
         where TQuery : MultiTableBase, IDataSqlQuery

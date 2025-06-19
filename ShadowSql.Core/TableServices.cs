@@ -13,8 +13,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 定位到表
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static IAliasTable From(this IMultiView multiTable, string tableName)
@@ -24,8 +24,8 @@ public static partial class ShadowSqlCoreServices
     /// 定位到别名表
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static IAliasTable<TTable> Alias<TTable>(this IMultiView multiTable, string tableName)
@@ -35,8 +35,8 @@ public static partial class ShadowSqlCoreServices
     /// 定位到成员别名表
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TAliasTable From<TAliasTable>(this IMultiView multiTable, string tableName)
@@ -53,18 +53,18 @@ public static partial class ShadowSqlCoreServices
     /// 别名表
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="alias"></param>
+    /// <param name="table">表</param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public static TableAlias<TTable> As<TTable>(this TTable table, string alias)
+    public static TableAlias<TTable> As<TTable>(this TTable table, string aliasName)
         where TTable : ITable
-        => new(table, alias);
+        => new(table, aliasName);
     /// <summary>
     /// 定义列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TTable DefineColums<TTable>(this TTable table, params IEnumerable<string> columns)
         where TTable : Table
@@ -77,8 +77,8 @@ public static partial class ShadowSqlCoreServices
     /// 添加列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TTable AddColums<TTable>(this TTable table, params IEnumerable<IColumn> columns)
         where TTable : Table
@@ -91,8 +91,8 @@ public static partial class ShadowSqlCoreServices
     /// 忽略插入的列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TTable IgnoreInsert<TTable>(this TTable table, params IEnumerable<IColumn> columns)
         where TTable : Table
@@ -105,8 +105,8 @@ public static partial class ShadowSqlCoreServices
     /// 忽略插入的列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TTable IgnoreInsert<TTable>(this TTable table, params IEnumerable<string> columns)
         where TTable : Table
@@ -122,8 +122,8 @@ public static partial class ShadowSqlCoreServices
     /// 忽略修改的列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TTable IgnoreUpdate<TTable>(this TTable table, params IEnumerable<IColumn> columns)
         where TTable : Table
@@ -136,8 +136,8 @@ public static partial class ShadowSqlCoreServices
     /// 忽略修改的列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     public static TTable IgnoreUpdate<TTable>(this TTable table, params IEnumerable<string> columns)
         where TTable : Table

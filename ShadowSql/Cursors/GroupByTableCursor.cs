@@ -15,25 +15,25 @@ public class GroupByTableCursor<TTable> : GroupByCursorBase
     /// <summary>
     /// 表分组后范围筛选
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public GroupByTableCursor(GroupByTableQuery<TTable> source, int limit, int offset)
-        : this(source, source._source, limit, offset)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public GroupByTableCursor(GroupByTableQuery<TTable> groupBy, int limit, int offset)
+        : this(groupBy, groupBy._source, limit, offset)
     {
     }
     /// <summary>
     /// 表分组后范围筛选
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public GroupByTableCursor(GroupByTableSqlQuery<TTable> source, int limit, int offset)
-        : this(source, source._source, limit, offset)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public GroupByTableCursor(GroupByTableSqlQuery<TTable> groupBy, int limit, int offset)
+        : this(groupBy, groupBy._source, limit, offset)
     {
     }
-    private GroupByTableCursor(IGroupByView source, TTable table, int limit, int offset)
-        : base(source, limit, offset)
+    private GroupByTableCursor(IGroupByView groupBy, TTable table, int limit, int offset)
+        : base(groupBy, limit, offset)
     {
         _table = table;
     }

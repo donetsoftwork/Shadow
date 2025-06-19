@@ -14,7 +14,7 @@ namespace ShadowSql.Expressions.VisitSource;
 /// <summary>
 /// 分组表达式解析
 /// </summary>
-/// <param name="groupBy"></param>
+/// <param name="groupBy">分组查询</param>
 /// <param name="source"></param>
 /// <param name="entity"></param>
 public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression entity)
@@ -23,7 +23,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <summary>
     /// 分组表达式解析
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <param name="entity"></param>
     public GroupByVisitor(IGroupByView groupBy, Expression entity)
         : this(groupBy, groupBy.Source, entity)
@@ -48,11 +48,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     public const string KEYNAME = nameof(Key);
     #endregion
     #region IFieldProvider
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IEnumerable<IField> GetFieldsByMember(MemberExpression member)
     {
         if (member.Expression == _entity)
@@ -65,19 +61,11 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
         }
         return [];
     }
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IField? GetFieldByName(string fieldName)
         => _groupBy.GetField(fieldName);
     #endregion
-    /// <summary>
-    /// 从聚合方法中获取源表字段
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     private IField? GetSourceFieldByExpression(Expression expression)
     {
         if (expression is LambdaExpression method)
@@ -85,11 +73,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
         return null;
     }
     #region IField
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IField? GetFieldByExpression(Expression expression)
     {
         if (expression == _entity)
@@ -107,11 +91,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
         }
         return null;
     }
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IEnumerable<IField> GetFieldsByExpression(Expression expression)
     {
         if (expression == _entity)
@@ -131,12 +111,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     }
     #endregion
     #region IFieldView
-    /// <summary>
-    /// 从参数中筛选
-    /// </summary>
-    /// <param name="argument"></param>
-    /// <param name="memberInfo"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IEnumerable<IFieldView> SelectFieldsByAssignment(Expression argument, MemberInfo memberInfo)
     {
         if (argument is MethodCallExpression method)
@@ -179,18 +154,10 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
             yield return new AliasFieldInfo(compare, memberInfo.Name);
         }
     }
-    /// <summary>
-    /// 从方法调用中获取比较字段
-    /// </summary>
-    /// <param name="methodCall"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override ICompareView? GetCompareFieldByMethodCall(MethodCallExpression methodCall)
         => GetAggregateField(methodCall);
-    /// <summary>
-    /// 从属性中筛选
-    /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IEnumerable<IFieldView> SelectFieldsByMember(MemberExpression member)
     {
         var fieldName = member.Member.Name;
@@ -222,11 +189,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     }
     #endregion
     #region ICompareView
-    /// <summary>
-    /// 获取比较字段
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override ICompareView? GetCompareFieldByExpression(Expression expression)
     {
         if (expression is MethodCallExpression method)
@@ -330,9 +293,9 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="fields"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fields">字段</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public static SelectVisitor Select<TKey, TEntity, T>(IGroupByView groupBy, List<IFieldView> fields, Expression<Func<IGrouping<TKey, TEntity>, T>> expression)
     {
@@ -346,14 +309,14 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="T"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="source"></param>
-    /// <param name="fields"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="view"></param>
+    /// <param name="fields">字段</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
-    internal static SelectVisitor Select<TKey, TEntity, T>(IGroupByView groupBy, ITableView source, List<IFieldView> fields, Expression<Func<IGrouping<TKey, TEntity>, T>> expression)
+    internal static SelectVisitor Select<TKey, TEntity, T>(IGroupByView groupBy, ITableView view, List<IFieldView> fields, Expression<Func<IGrouping<TKey, TEntity>, T>> expression)
     {
-        var visitor = new SelectVisitor(new GroupByVisitor(groupBy, source, expression.Parameters[0]), fields);
+        var visitor = new SelectVisitor(new GroupByVisitor(groupBy, view, expression.Parameters[0]), fields);
         visitor.Visit(expression.Body);
         return visitor;
     }
@@ -364,8 +327,8 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// </summary>
     /// <typeparam name="TKey">分组键类型</typeparam>
     /// <typeparam name="TEntity">源对象类型</typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="logic"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="expression">查询表达式</param>
     /// <returns></returns>
     public static LogicVisitor Having<TKey, TEntity>(IGroupByView groupBy, Logic logic, Expression<Func<IGrouping<TKey, TEntity>, bool>> expression)
@@ -380,8 +343,8 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <typeparam name="TKey">分组键类型</typeparam>
     /// <typeparam name="TEntity">源对象类型</typeparam>
     /// <typeparam name="TParameter">参数类型</typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="logic"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="expression">查询表达式</param>
     /// <returns></returns>
     public static LogicVisitor Having<TKey, TEntity, TParameter>(IGroupByView groupBy, Logic logic, Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> expression)
@@ -397,10 +360,10 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="table"></param>
-    /// <param name="logic"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="table">表</param>
+    /// <param name="logic">查询逻辑</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     internal static LogicVisitor Having<TKey, TEntity>(IGroupByView groupBy, ITableView table, Logic logic, Expression<Func<IGrouping<TKey, TEntity>, bool>> expression)
     {
@@ -414,10 +377,10 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TParameter"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="table"></param>
-    /// <param name="logic"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="table">表</param>
+    /// <param name="logic">查询逻辑</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     internal static LogicVisitor Having<TKey, TEntity, TParameter>(IGroupByView groupBy, ITableView table, Logic logic, Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> expression)
     {
@@ -432,9 +395,9 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     ///// </summary>
     ///// <typeparam name="TKey"></typeparam>
     ///// <typeparam name="TOrder"></typeparam>
-    ///// <param name="groupBy"></param>
-    ///// <param name="fields"></param>
-    ///// <param name="expression"></param>
+    ///// <param name="groupBy">分组查询</param>
+    ///// <param name="fields">字段</param>
+    ///// <param name="expression">表达式</param>
     ///// <returns></returns>
     //public static OrderByVisitor OrderBy<TKey, TOrder>(IGroupByView groupBy, ICollection<IOrderAsc> fields, Expression<Func<TKey, TOrder>> expression)
     //{
@@ -448,9 +411,9 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TOrder"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="fields"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fields">字段</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public static OrderByVisitor OrderBy<TKey, TEntity, TOrder>(IGroupByView groupBy, List<IOrderAsc> fields, Expression<Func<IGrouping<TKey, TEntity>, TOrder>> expression)
     {
@@ -464,14 +427,14 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TOrder"></typeparam>
-    /// <param name="groupBy"></param>
-    /// <param name="source"></param>
-    /// <param name="fields"></param>
-    /// <param name="expression"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="view"></param>
+    /// <param name="fields">字段</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
-    internal static OrderByVisitor OrderBy<TKey, TEntity, TOrder>(IGroupByView groupBy, ITableView source, List<IOrderAsc> fields, Expression<Func<IGrouping<TKey, TEntity>, TOrder>> expression)
+    internal static OrderByVisitor OrderBy<TKey, TEntity, TOrder>(IGroupByView groupBy, ITableView view, List<IOrderAsc> fields, Expression<Func<IGrouping<TKey, TEntity>, TOrder>> expression)
     {
-        var visitor = new OrderByVisitor(new GroupByVisitor(groupBy, source, expression.Parameters[0]), fields);
+        var visitor = new OrderByVisitor(new GroupByVisitor(groupBy, view, expression.Parameters[0]), fields);
         visitor.Visit(expression.Body);
         return visitor;
     }
@@ -480,35 +443,35 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <summary>
     /// 获取源表字段
     /// </summary>
-    /// <param name="groupBy"></param>
-    /// <param name="source"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="view"></param>
     /// <param name="entity"></param>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
-    public static IField? GetSourceFieldByExpression(IGroupByView groupBy, ITableView source, Expression entity, Expression expression)
+    public static IField? GetSourceFieldByExpression(IGroupByView groupBy, ITableView view, Expression entity, Expression expression)
     {
         if (entity == expression)
             return TableVisitor.GetField(groupBy.Source.Fields);
         if (expression is MemberExpression member)
-            return GetSourceFieldByMember(groupBy, source, entity, member);
+            return GetSourceFieldByMember(groupBy, view, entity, member);
         return null;
     }
     /// <summary>
     /// 获取源表字段
     /// </summary>
-    /// <param name="groupBy"></param>
-    /// <param name="source"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="view"></param>
     /// <param name="entity"></param>
     /// <param name="member"></param>
     /// <returns></returns>
-    public static IField? GetSourceFieldByMember(IGroupByView groupBy, ITableView source, Expression entity, MemberExpression member)
+    public static IField? GetSourceFieldByMember(IGroupByView groupBy, ITableView view, Expression entity, MemberExpression member)
     {
         if (member.Expression == entity)
         {
             var fieldName = member.Member.Name;
             if (fieldName == KEYNAME)
                 return TableVisitor.GetField(groupBy.Fields);
-            return TableVisitor.GetFieldByName(source, fieldName);
+            return TableVisitor.GetFieldByName(view, fieldName);
         }
         return null;
     }
@@ -518,9 +481,9 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     ///// <summary>
     ///// 获取源表字段
     ///// </summary>
-    ///// <param name="groupBy"></param>
+    ///// <param name="groupBy">分组查询</param>
     ///// <param name="entity"></param>
-    ///// <param name="expression"></param>
+    ///// <param name="expression">表达式</param>
     ///// <returns></returns>
     //public static IEnumerable<IField> GetSourceFieldsByExpression(IGroupByView groupBy, Expression entity, Expression expression)
     //{
@@ -533,7 +496,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     ///// <summary>
     ///// 获取源表字段
     ///// </summary>
-    ///// <param name="groupBy"></param>
+    ///// <param name="groupBy">分组查询</param>
     ///// <param name="entity"></param>
     ///// <param name="member"></param>
     ///// <returns></returns>

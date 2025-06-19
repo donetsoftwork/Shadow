@@ -34,19 +34,19 @@ public interface IAliasTable : IView, ITableView
     /// <summary>
     /// 获取前缀字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     IPrefixField? GetPrefixField(string fieldName);
     /// <summary>
     /// 获取前缀字段
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     /// <returns></returns>
     IPrefixField? GetPrefixField(IField field);
     /// <summary>
     /// 构造新前缀字段
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     /// <returns></returns>
     IPrefixField NewPrefixField(IColumn column);
 }

@@ -79,9 +79,9 @@ public abstract class VisitorBase(IFieldProvider source)
     /// <summary>
     /// 处理赋值
     /// </summary>
-    /// <param name="expression"></param>
-    /// <param name="info"></param>
-    protected virtual void CheckAssignment(Expression expression,  MemberInfo info)
+    /// <param name="expression">表达式</param>
+    /// <param name="memberInfo"></param>
+    protected virtual void CheckAssignment(Expression expression,  MemberInfo memberInfo)
     {            
     }
     #endregion
@@ -99,8 +99,8 @@ public abstract class VisitorBase(IFieldProvider source)
     /// 处理二元表达式
     /// </summary>
     /// <param name="op">操作类型</param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     protected virtual void CheckBinary(ExpressionType op, Expression left, Expression right)
     {
     }
@@ -118,7 +118,7 @@ public abstract class VisitorBase(IFieldProvider source)
     /// 处理一元表达式
     /// </summary>
     /// <param name="op">操作类型</param>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     protected virtual void CheckUnary(ExpressionType op, Expression expression)
     {
     }

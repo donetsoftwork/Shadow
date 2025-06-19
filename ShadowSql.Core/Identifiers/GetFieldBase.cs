@@ -18,21 +18,22 @@ public abstract class GetFieldBase : ISqlEntity
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     protected abstract IField? GetField(string fieldName);
     /// <summary>
     /// 构造新字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     protected abstract IField NewField(string fieldName);
     #region ISqlEntity
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected abstract void WriteCore(ISqlEngine engine, StringBuilder sql);
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteCore(engine, sql);
     #endregion

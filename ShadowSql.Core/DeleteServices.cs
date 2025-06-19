@@ -13,7 +13,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TDelete"></typeparam>
     /// <param name="delete"></param>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static TDelete Delete<TDelete>(this TDelete delete, string tableName)
         where TDelete : MultiTableDelete
@@ -27,7 +27,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TDelete"></typeparam>
     /// <param name="delete"></param>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static TDelete Delete<TDelete>(this TDelete delete, IAliasTable table)
         where TDelete : MultiTableDelete

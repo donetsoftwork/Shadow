@@ -7,18 +7,18 @@ namespace Dapper.Shadow.Select;
 /// <summary>
 /// GroupBy后再筛选列
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="groupBy"></param>
-/// <param name="target"></param>
-public class DapperGroupByMultiSelect(IExecutor executor, IGroupByView groupBy, IMultiView target)
-    : GroupByMultiSelectBase<IGroupByView>(groupBy, groupBy, target)
+/// <param name="executor">执行器</param>
+/// <param name="groupBy">分组查询</param>
+/// <param name="multiView">多(联)表</param>
+public class DapperGroupByMultiSelect(IExecutor executor, IGroupByView groupBy, IMultiView multiView)
+    : GroupByMultiSelectBase<IGroupByView>(groupBy, groupBy, multiView)
     , IDapperSelect
 {
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="groupBy"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="groupBy">分组查询</param>
     public DapperGroupByMultiSelect(IExecutor executor, GroupByMultiSqlQuery groupBy)
         :this(executor, groupBy, groupBy._source)
     {
@@ -26,8 +26,8 @@ public class DapperGroupByMultiSelect(IExecutor executor, IGroupByView groupBy, 
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="groupBy"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="groupBy">分组查询</param>
     public DapperGroupByMultiSelect(IExecutor executor, GroupByMultiQuery groupBy)
         : this(executor, groupBy, groupBy._source)
     {

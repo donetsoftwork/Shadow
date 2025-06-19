@@ -9,10 +9,10 @@ namespace Shadow.DDL.Schemas;
 /// <summary>
 /// 数据库
 /// </summary>
-/// <param name="engine"></param>
-/// <param name="name"></param>
-public class DBSchema(ISqlEngine engine, string name = "")
-    : Identifier(name), IDB
+/// <param name="engine">数据库引擎</param>
+/// <param name="dbName">数据库名</param>
+public class DBSchema(ISqlEngine engine, string dbName = "")
+    : Identifier(dbName), IDB
 {
     private readonly ISqlEngine _engine = engine;
     private readonly Dictionary<string, TableSchema> _tables = [];
@@ -29,7 +29,7 @@ public class DBSchema(ISqlEngine engine, string name = "")
     /// <summary>
     /// 添加表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public void AddTable(TableSchema table)
     {
         var sqlName = _engine.Sql(table);

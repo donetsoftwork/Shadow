@@ -12,7 +12,7 @@ namespace ShadowSql.CursorSelect;
 /// <summary>
 /// GroupBy后再范围(分页)及列筛选
 /// </summary>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public sealed class GroupByMultiCursorSelect(GroupByMultiCursor cursor)
     : GroupByMultiSelectBase<ICursor>(cursor, cursor.Source, cursor.MultiTable)
 {
@@ -20,8 +20,8 @@ public sealed class GroupByMultiCursorSelect(GroupByMultiCursor cursor)
     /// <summary>
     /// 拼写分页sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
         => engine.SelectCursor(sql, this, _source);
     #endregion
@@ -31,8 +31,8 @@ public sealed class GroupByMultiCursorSelect(GroupByMultiCursor cursor)
     /// 聚合筛选
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursorSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IAggregateFieldAlias> select)
         where TAliasTable : IAliasTable
@@ -44,8 +44,8 @@ public sealed class GroupByMultiCursorSelect(GroupByMultiCursor cursor)
     /// 聚合筛选
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursorSelect SelectAggregate<TAliasTable>(string tableName, Func<TAliasTable, IEnumerable<IAggregateFieldAlias>> select)
         where TAliasTable : IAliasTable
@@ -59,9 +59,9 @@ public sealed class GroupByMultiCursorSelect(GroupByMultiCursor cursor)
     /// 聚合筛选(先定位再聚合)
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
-    /// <param name="aggregate"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
+    /// <param name="aggregate">聚合</param>
     /// <returns></returns>
     public GroupByMultiCursorSelect SelectAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable

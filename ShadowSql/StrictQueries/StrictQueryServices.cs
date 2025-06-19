@@ -20,10 +20,10 @@ public static partial class StrictQueryServices
     /// 对列进行参数化查询
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -44,10 +44,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
-    /// <param name="op"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
+    /// <param name="op">操作</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -67,9 +67,9 @@ public static partial class StrictQueryServices
     /// 列等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -90,9 +90,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -112,9 +112,9 @@ public static partial class StrictQueryServices
     /// 列不等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -135,9 +135,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -157,9 +157,9 @@ public static partial class StrictQueryServices
     /// 列大于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -180,9 +180,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -202,9 +202,9 @@ public static partial class StrictQueryServices
     /// 列小于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -225,9 +225,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -247,9 +247,9 @@ public static partial class StrictQueryServices
     /// 列大于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -270,9 +270,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -292,9 +292,9 @@ public static partial class StrictQueryServices
     /// 列小于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -315,9 +315,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -338,9 +338,9 @@ public static partial class StrictQueryServices
     /// 列包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -361,9 +361,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -383,9 +383,9 @@ public static partial class StrictQueryServices
     /// 列不包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -406,9 +406,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -428,8 +428,8 @@ public static partial class StrictQueryServices
     /// 列是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -449,8 +449,8 @@ public static partial class StrictQueryServices
     /// 列不是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -470,9 +470,9 @@ public static partial class StrictQueryServices
     /// 列匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -492,9 +492,9 @@ public static partial class StrictQueryServices
     /// 列匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -514,9 +514,9 @@ public static partial class StrictQueryServices
     /// 列不匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -536,9 +536,9 @@ public static partial class StrictQueryServices
     /// 列不匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -558,10 +558,10 @@ public static partial class StrictQueryServices
     /// 列在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -584,10 +584,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -607,10 +607,10 @@ public static partial class StrictQueryServices
     /// 列不在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -633,10 +633,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <example>
@@ -658,16 +658,16 @@ public static partial class StrictQueryServices
     /// 按列查询
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="compare"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static Query TableStrict<Query>(this Query query, string tableName, string columnName, Func<IField, AtomicLogic> compare)
+    public static Query TableStrict<Query>(this Query query, string tableName, string columnName, Func<IField, AtomicLogic> logic)
         where Query : MultiTableBase, IDataSqlQuery
     {
-        query.Query.AddLogic(compare(query.From(tableName).Strict(columnName)));
+        query.Query.AddLogic(logic(query.From(tableName).Strict(columnName)));
         return query;
     }
     #endregion
@@ -676,11 +676,11 @@ public static partial class StrictQueryServices
     /// 对列进行参数化查询
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictParameter<TQuery>(this TQuery query, string tableName, string columnName, string op = "=", string parameter = "")
@@ -694,11 +694,11 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
-    /// <param name="op"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
+    /// <param name="op">操作</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value, string op = "=")
@@ -711,10 +711,10 @@ public static partial class StrictQueryServices
     /// 列等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -728,10 +728,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
@@ -744,10 +744,10 @@ public static partial class StrictQueryServices
     /// 列不等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -761,10 +761,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
@@ -777,10 +777,10 @@ public static partial class StrictQueryServices
     /// 列大于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictGreater<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -794,10 +794,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictGreaterValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
@@ -810,10 +810,10 @@ public static partial class StrictQueryServices
     /// 列小于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictLess<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -827,10 +827,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictLessValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
@@ -843,10 +843,10 @@ public static partial class StrictQueryServices
     /// 列大于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictGreaterEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -860,10 +860,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictGreaterEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
@@ -876,10 +876,10 @@ public static partial class StrictQueryServices
     /// 列小于等于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictLessEqual<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -893,10 +893,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictLessEqualValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue value)
@@ -910,10 +910,10 @@ public static partial class StrictQueryServices
     /// 列包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictIn<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -927,10 +927,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, params IEnumerable<TValue> values)
@@ -943,10 +943,10 @@ public static partial class StrictQueryServices
     /// 列不包含于参数
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotIn<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -960,10 +960,10 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="values"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotInValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, params IEnumerable<TValue> values)
@@ -976,9 +976,9 @@ public static partial class StrictQueryServices
     /// 列是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictIsNull<TQuery>(this TQuery query, string tableName, string columnName)
@@ -991,9 +991,9 @@ public static partial class StrictQueryServices
     /// 列不是null
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotNull<TQuery>(this TQuery query, string tableName, string columnName)
@@ -1006,10 +1006,10 @@ public static partial class StrictQueryServices
     /// 列匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictLike<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -1022,10 +1022,10 @@ public static partial class StrictQueryServices
     /// 列匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictLikeValue<TQuery>(this TQuery query, string tableName, string columnName, string value)
@@ -1038,10 +1038,10 @@ public static partial class StrictQueryServices
     /// 列不匹配参数模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotLike<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
@@ -1054,10 +1054,10 @@ public static partial class StrictQueryServices
     /// 列不匹配值模式
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotLikeValue<TQuery>(this TQuery query, string tableName, string columnName, string value)
@@ -1070,11 +1070,11 @@ public static partial class StrictQueryServices
     /// 列在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictBetween<TQuery>(this TQuery query, string tableName, string columnName, string begin = "", string end = "")
@@ -1090,11 +1090,11 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictBetweenValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue begin, TValue end)
@@ -1107,11 +1107,11 @@ public static partial class StrictQueryServices
     /// 列不在两参数之前
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotBetween<TQuery>(this TQuery query, string tableName, string columnName, string begin = "", string end = "")
@@ -1127,11 +1127,11 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="tableName"></param>
-    /// <param name="columnName"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="query">查询</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="columnName">列名</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static TQuery TableStrictNotBetweenValue<TQuery, TValue>(this TQuery query, string tableName, string columnName, TValue begin, TValue end)
@@ -1146,9 +1146,9 @@ public static partial class StrictQueryServices
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="view"></param>
-    /// <param name="columnName"></param>
-    /// <param name="op"></param>
-    /// <param name="value"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="op">操作</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     private static AtomicLogic CheckValue<TValue>(ITableView view, string columnName, CompareSymbol op, TValue value)
@@ -1173,9 +1173,9 @@ public static partial class StrictQueryServices
     /// 检查参数
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="columnName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     private static AtomicLogic CheckParameter(ITableView view, string columnName, CompareSymbol op, string parameter)
@@ -1190,9 +1190,9 @@ public static partial class StrictQueryServices
     /// 创建比较逻辑
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="columnName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
     private static CompareLogic CreateCompareLogic(ITableView view, string columnName, CompareSymbol op, string parameter)

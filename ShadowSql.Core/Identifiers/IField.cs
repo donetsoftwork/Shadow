@@ -14,7 +14,7 @@ public interface IPrefixField : IField
     /// <summary>
     /// 匹配字段
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     /// <returns></returns>
     bool IsMatch(IField field);
 }
@@ -35,9 +35,9 @@ public interface IFieldView : IView, IMatch, ISqlEntity
     /// <summary>
     /// 别名
     /// </summary>
-    /// <param name="alias"></param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    IFieldAlias As(string alias);
+    IFieldAlias As(string aliasName);
 }
 ///// <summary>
 ///// 去重字段统计

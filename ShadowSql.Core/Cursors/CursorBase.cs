@@ -9,8 +9,8 @@ namespace ShadowSql.Cursors;
 /// <summary>
 /// 范围筛选基类
 /// </summary>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
 public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
 {
     #region 配置
@@ -41,20 +41,20 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
     /// <summary>
     /// 跳过数量
     /// </summary>
-    /// <param name="offset"></param>
+    /// <param name="offset">跳过数量</param>
     internal void SkipCore(int offset)
         => _offset += offset;
     /// <summary>
     /// 获取数量
     /// </summary>
-    /// <param name="limit"></param>
+    /// <param name="limit">筛选数量</param>
     internal void TakeCore(int limit)
         => _limit = limit;
     #region IOrderField
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     internal void AscCore(IOrderView field)
     {
         _fields.Add(field);
@@ -62,7 +62,7 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     internal void DescCore(IOrderAsc field)
     {
         _fields.Add(field.Desc());
@@ -109,7 +109,7 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
     /// <summary>
     /// 确认正序
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     protected IOrderView CheckAsc(string fieldName)
     {
@@ -120,7 +120,7 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
     /// <summary>
     /// 确认倒序
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     protected IOrderView CheckDesc(string fieldName)
     {
@@ -131,8 +131,8 @@ public abstract class CursorBase(int limit, int offset) : TableViewBase, ICursor
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected bool WriteOrderBy(ISqlEngine engine, StringBuilder sql)
     {

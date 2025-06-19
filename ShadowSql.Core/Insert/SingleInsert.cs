@@ -10,7 +10,7 @@ namespace ShadowSql.Insert;
 /// <summary>
 /// 插入单条
 /// </summary>
-/// <param name="table"></param>
+/// <param name="table">表</param>
 /// <param name="items"></param>
 public class SingleInsert(IInsertTable table, List<IInsertValue> items)
     : SingleInsertBase(items), ISingleInsert
@@ -18,7 +18,7 @@ public class SingleInsert(IInsertTable table, List<IInsertValue> items)
     /// <summary>
     /// 插入单条
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public SingleInsert(IInsertTable table)
         : this(table, [])
     { 
@@ -26,7 +26,7 @@ public class SingleInsert(IInsertTable table, List<IInsertValue> items)
     /// <summary>
     /// 插入单条
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public SingleInsert(string tableName)
     : this(EmptyTable.Use(tableName), [])
     {
@@ -42,6 +42,7 @@ public class SingleInsert(IInsertTable table, List<IInsertValue> items)
     public IInsertTable Table
         => _table;
     #endregion
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteInsert(_table, engine, sql);
 }

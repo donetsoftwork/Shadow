@@ -8,17 +8,17 @@ namespace ShadowSql.Expressions.Select;
 /// <summary>
 /// 多联表视图筛选列
 /// </summary>
-/// <param name="source"></param>
-/// <param name="multiTable"></param>
-public class MultiTableSelect(ITableView source, IMultiView multiTable)
-    : MultiSelectBase<ITableView>(source, multiTable)
+/// <param name="view"></param>
+/// <param name="multiTable">多表(联表)</param>
+public class MultiTableSelect(ITableView view, IMultiView multiTable)
+    : MultiSelectBase<ITableView>(view, multiTable)
 {
     /// <summary>
     /// 多联表视图筛选列
     /// </summary>
-    /// <param name="source"></param>
-    public MultiTableSelect(IMultiView source)
-        : this(source, source)
+    /// <param name="multiView">多(联)表</param>
+    public MultiTableSelect(IMultiView multiView)
+        : this(multiView, multiView)
     {
     }
     /// <summary>
@@ -26,8 +26,8 @@ public class MultiTableSelect(ITableView source, IMultiView multiTable)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableSelect Select<TEntity, TProperty>(string tableName, Expression<Func<TEntity, TProperty>> select)
     {

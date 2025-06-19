@@ -20,9 +20,9 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="columnName"></param>
-    /// <param name="op"></param>
-    /// <param name="parameter"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="op">操作</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TUpdate Set<TUpdate>(this TUpdate update, string columnName, string op = "=", string parameter = "")
         where TUpdate : UpdateBase, IUpdate
@@ -35,8 +35,8 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="field"></param>
-    /// <param name="op"></param>
+    /// <param name="field">字段</param>
+    /// <param name="op">操作</param>
     /// <returns></returns>
     public static TUpdate Set<TUpdate>(this TUpdate update, IAssignView field, string op = "=")
         where TUpdate : UpdateBase, IUpdate
@@ -49,7 +49,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="fields"></param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     public static TUpdate SetFields<TUpdate>(this TUpdate update, params IEnumerable<IAssignView> fields)
         where TUpdate : UpdateBase, IUpdate
@@ -74,9 +74,9 @@ public static partial class ShadowSqlCoreServices
     /// <typeparam name="TUpdate"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="update"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
-    /// <param name="op"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
+    /// <param name="op">操作</param>
     /// <returns></returns>
     public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value, string op)
         where TUpdate : UpdateBase, IUpdate
@@ -89,8 +89,8 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="columnName"></param>
-    /// <param name="parameter"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static TUpdate SetAssign<TUpdate>(this TUpdate update, string columnName, string parameter = "")
         where TUpdate : UpdateBase, IUpdate
@@ -104,8 +104,8 @@ public static partial class ShadowSqlCoreServices
     /// <typeparam name="TUpdate"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="update"></param>
-    /// <param name="columnName"></param>
-    /// <param name="value"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static TUpdate SetValue<TUpdate, TValue>(this TUpdate update, string columnName, TValue value)
         where TUpdate : UpdateBase, IUpdate
@@ -121,7 +121,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public static TUpdate Set<TUpdate>(this TUpdate update, IAssignInfo operation)
         where TUpdate : UpdateBase, IUpdate
@@ -151,7 +151,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TMultiUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static MultiTableUpdate Update<TMultiUpdate>(this TMultiUpdate update, string tableName)
         where TMultiUpdate : MultiTableUpdate
@@ -164,7 +164,7 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="TMultiUpdate"></typeparam>
     /// <param name="update"></param>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static TMultiUpdate Update<TMultiUpdate>(this TMultiUpdate update, IAliasTable<ITable> table)
         where TMultiUpdate : MultiTableUpdate
@@ -176,8 +176,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 获取被修改字段
     /// </summary>
-    /// <param name="aliasTable"></param>
-    /// <param name="fieldName"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     public static IAssignView? GetAssignField<TTable>(this IAliasTable<TTable> aliasTable, string fieldName)

@@ -13,24 +13,20 @@ namespace ShadowSql.Expressions.CursorSelect;
 /// <summary>
 /// GroupBy后再范围(分页)及列筛选
 /// </summary>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public sealed class GroupByMultiCursorSelect<TKey>(GroupByMultiCursor<TKey> cursor)
     : GroupByMultiSelectBase<ICursor>(cursor, cursor.Source, cursor.MultiTable)
 {
 
     #region ISqlEntity
-    /// <summary>
-    /// 拼写分页sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
         => engine.SelectCursor(sql, this, _source);
     #endregion
     /// <summary>
     /// 筛选分组列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursorSelect<TKey> Select<TProperty>(Expression<Func<TKey, TProperty>> select)
     {
@@ -40,7 +36,7 @@ public sealed class GroupByMultiCursorSelect<TKey>(GroupByMultiCursor<TKey> curs
     /// <summary>
     /// 从聚合筛选
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursorSelect<TKey> Select<TEntity, TProperty>(Expression<Func<IGrouping<TKey, TEntity>, TProperty>> select)
     {
@@ -52,8 +48,8 @@ public sealed class GroupByMultiCursorSelect<TKey>(GroupByMultiCursor<TKey> curs
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursorSelect<TKey> Select<TEntity, TProperty>(string table, Expression<Func<IGrouping<TKey, TEntity>, TProperty>> select)
     {

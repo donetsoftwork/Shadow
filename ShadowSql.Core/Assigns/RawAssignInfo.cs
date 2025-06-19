@@ -17,7 +17,7 @@ public class RawAssignInfo(string assignInfo) : IAssignInfo
     /// </summary>
     public string AssignInfo 
         => _assignInfo;
-
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => sql.Append(_assignInfo);
     /// <summary>

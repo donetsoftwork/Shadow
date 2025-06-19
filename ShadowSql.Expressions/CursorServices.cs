@@ -12,8 +12,8 @@ public static partial class ShadowSqlServices
     ///// 聚合正序
     ///// </summary>
     ///// <typeparam name="TGroupByCursor"></typeparam>
-    ///// <param name="cursor"></param>
-    ///// <param name="select"></param>
+    ///// <param name="cursor">游标</param>
+    ///// <param name="select">筛选</param>
     ///// <returns></returns>
     //public static TGroupByCursor AggregateAsc<TGroupByCursor>(this TGroupByCursor cursor, Func<IGroupByView, IAggregateField> select)
     //    where TGroupByCursor : GroupByCursorBase
@@ -25,8 +25,8 @@ public static partial class ShadowSqlServices
     ///// 聚合倒序
     ///// </summary>
     ///// <typeparam name="TGroupByCursor"></typeparam>
-    ///// <param name="cursor"></param>
-    ///// <param name="select"></param>
+    ///// <param name="cursor">游标</param>
+    ///// <param name="select">筛选</param>
     ///// <returns></returns>
     //public static TGroupByCursor AggregateDesc<TGroupByCursor>(this TGroupByCursor cursor, Func<IGroupByView, IAggregateField> select)
     //    where TGroupByCursor : GroupByCursorBase
@@ -38,7 +38,7 @@ public static partial class ShadowSqlServices
     /// 计数正序
     /// </summary>
     /// <typeparam name="TGroupByCursor"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static TGroupByCursor CountAsc<TGroupByCursor>(this TGroupByCursor cursor)
         where TGroupByCursor : GroupByCursorBase
@@ -50,7 +50,7 @@ public static partial class ShadowSqlServices
     /// 计数倒序
     /// </summary>
     /// <typeparam name="TGroupByCursor"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static TGroupByCursor CountDesc<TGroupByCursor>(this TGroupByCursor cursor)
         where TGroupByCursor : GroupByCursorBase

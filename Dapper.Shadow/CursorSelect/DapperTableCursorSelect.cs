@@ -8,8 +8,8 @@ namespace Dapper.Shadow.CursorSelect;
 /// 表范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="cursor"></param>
+/// <param name="executor">执行器</param>
+/// <param name="cursor">游标</param>
 public sealed class DapperTableCursorSelect<TTable>(IExecutor executor, TableCursor<TTable> cursor)
     : CursorSelectBase<TTable>(cursor, cursor.Source)
     , IDapperSelect

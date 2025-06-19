@@ -17,8 +17,8 @@ public static partial class ShadowSqlServices
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, Func<IMultiView, AtomicLogic> query)
         where TMultiTable : MultiTableBase, IDataSqlQuery
@@ -30,9 +30,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable Where<TMultiTable>(this TMultiTable multiTable, string tableName, Func<IAliasTable, AtomicLogic> query)
         where TMultiTable : MultiTableBase, IDataSqlQuery
@@ -44,10 +44,10 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableSqlQuery Where<TTable>(this MultiTableSqlQuery multiTable, string tableName, Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
         where TTable : ITable
@@ -65,9 +65,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static JoinTableSqlQuery Apply<TAliasTable>(this JoinTableSqlQuery multiTable, string tableName, Func<SqlQuery, TAliasTable, SqlQuery> query)
         where TAliasTable : IAliasTable
@@ -79,9 +79,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableSqlQuery Apply<TAliasTable>(this MultiTableSqlQuery multiTable, string tableName, Func<SqlQuery, TAliasTable, SqlQuery> query)
         where TAliasTable : IAliasTable
@@ -95,9 +95,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable Apply<TMultiTable>(this TMultiTable multiTable, string tableName, Func<SqlQuery, IAliasTable, SqlQuery> query)
         where TMultiTable : MultiTableBase, IDataSqlQuery
@@ -115,9 +115,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="logic"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static TMultiTable Apply<TMultiTable>(this TMultiTable multiTable, string tableName, Func<Logic, IAliasTable, Logic> logic)
         where TMultiTable : MultiTableBase, IDataQuery
@@ -131,9 +131,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static JoinTableQuery Apply<TAliasTable>(this JoinTableQuery multiTable, string tableName, Func<Logic, TAliasTable, Logic> query)
         where TAliasTable : IAliasTable
@@ -145,9 +145,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableQuery Apply<TAliasTable>(this MultiTableQuery multiTable, string tableName, Func<Logic, TAliasTable, Logic> query)
         where TAliasTable : IAliasTable

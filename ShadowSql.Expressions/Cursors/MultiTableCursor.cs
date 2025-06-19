@@ -8,18 +8,18 @@ namespace ShadowSql.Expressions.Cursors;
 /// <summary>
 /// 多联表范围筛选游标
 /// </summary>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
-    : CursorBase<IMultiView>(source, limit, offset)
+/// <param name="multiView">多(联)表</param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
+public class MultiTableCursor(IMultiView multiView, int limit = 0, int offset = 0)
+    : CursorBase<IMultiView>(multiView, limit, offset)
 {
     #region 排序
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursor Asc<TEntity, TProperty>(string tableName, Expression<Func<TEntity, TProperty>> select)
     {
@@ -31,8 +31,8 @@ public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursor Desc<TEntity, TProperty>(string tableName, Expression<Func<TEntity, TProperty>> select)
     {

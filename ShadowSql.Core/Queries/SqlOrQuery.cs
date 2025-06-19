@@ -40,11 +40,7 @@ public class SqlOrQuery : SqlQuery, ISqlLogic
     public ComplexOrLogic Complex
         => (ComplexOrLogic)_complex;
     #region Or查询
-    /// <summary>
-    /// Or查询
-    /// </summary>
-    /// <param name="conditions"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     /// <example>
     /// <code>
     /// query.Or("Id=@Id", "Status=@Status");
@@ -55,11 +51,7 @@ public class SqlOrQuery : SqlQuery, ISqlLogic
         AddConditions(conditions);
         return this;
     }
-    /// <summary>
-    /// Or查询
-    /// </summary>
-    /// <param name="atomic"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override SqlOrQuery Or(AtomicLogic atomic)
     {
         AddLogic(atomic);
@@ -67,10 +59,7 @@ public class SqlOrQuery : SqlQuery, ISqlLogic
     }
     #endregion
     #region SqlQuery
-    /// <summary>
-    /// 复制查询
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override SqlQuery CopyQuery()
         => this.Copy();
     /// <summary>
@@ -79,10 +68,7 @@ public class SqlOrQuery : SqlQuery, ISqlLogic
     /// <returns></returns>
     public override SqlAndQuery ToAnd()
         => new(this.MergeToAnd(new ComplexAndLogic()));
-    /// <summary>
-    /// Or
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override SqlOrQuery ToOr()
         => this;
     #endregion

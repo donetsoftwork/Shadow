@@ -2,7 +2,6 @@ using ShadowSql.Compares;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.SqlVales;
 using System.Text;
 
 namespace ShadowSql.CompareLogics;
@@ -15,9 +14,9 @@ public class BetweenLogic : CompareLogic
     /// <summary>
     /// BETWEEN(AND)条件
     /// </summary>
-    /// <param name="field"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="field">字段</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     public BetweenLogic(ICompareView field, ICompareView begin, ICompareView end)
         : this(field, CompareSymbol.Between, begin, end)
     {
@@ -25,10 +24,10 @@ public class BetweenLogic : CompareLogic
     /// <summary>
     /// BETWEEN(AND)条件
     /// </summary>
-    /// <param name="field"></param>
-    /// <param name="op"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
+    /// <param name="field">字段</param>
+    /// <param name="op">操作</param>
+    /// <param name="begin">范围开始</param>
+    /// <param name="end">范围结束</param>
     protected BetweenLogic(ICompareView field, CompareSymbol op, ICompareView begin, ICompareView end)
         : base(field, op, begin)
     {
@@ -43,12 +42,7 @@ public class BetweenLogic : CompareLogic
     /// </summary>
     public ICompareView End 
         => _end;
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         _field.Write(engine, sql);
@@ -58,10 +52,7 @@ public class BetweenLogic : CompareLogic
         _end.Write(engine, sql);
         return true;
     }
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
     {
         return new NotBetweenLogic(_field, _value, _end);

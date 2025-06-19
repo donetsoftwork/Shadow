@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace ShadowSql.Logics;
 
@@ -23,97 +23,50 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
         : base(LogicSeparator.And, items, others)
     {
     }
-    #region 配置
-    #endregion
     #region Logic
     #region 与逻辑
-    /// <summary>
-    /// 与逻辑
-    /// </summary>
-    /// <param name="atomic"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic And(AtomicLogic atomic)
         => this.AndCore(atomic);
-    /// <summary>
-    /// 与逻辑
-    /// </summary>
-    /// <param name="and"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic And(AndLogic and)
         => this.AndCore(and);
-    /// <summary>
-    /// 与逻辑
-    /// </summary>
-    /// <param name="and"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic And(ComplexAndLogic and)
         => this.AndCore(and);
-    /// <summary>
-    /// 与逻辑
-    /// </summary>
-    /// <param name="or"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic And(OrLogic or)
         => this.AndCore(or);
-    /// <summary>
-    /// 与逻辑
-    /// </summary>
-    /// <param name="or"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic And(ComplexOrLogic or)
         => this.AndCore(or);
     #endregion
     #region 或逻辑
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="atomic"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic Or(AtomicLogic atomic)
         => this.OrCore(atomic);
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="or"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic Or(OrLogic or)
         => this.OrCore(or);
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="or"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic Or(ComplexOrLogic or)
         => this.OrCore(or);
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="and"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic Or(AndLogic and)
         => this.OrCore(and);
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="and"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic Or(ComplexAndLogic and)
         => this.OrCore(and);
     #endregion
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic ToAnd()
         => this;
-    /// <summary>
-    /// 转化为Or查询
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override Logic ToOr()
         => this.ToOrCore();
     #endregion
     #region Not
+    /// <inheritdoc/>
     ISqlLogic ISqlLogic.Not()
         => this.NotLogic();
     #endregion
@@ -123,7 +76,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(ComplexAndLogic logic, AtomicLogic other)
@@ -133,7 +86,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(ComplexAndLogic logic, AndLogic other)
@@ -143,7 +96,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(ComplexAndLogic logic, ComplexAndLogic other)
@@ -153,7 +106,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(ComplexAndLogic logic, OrLogic other)
@@ -163,7 +116,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(ComplexAndLogic logic, ComplexOrLogic other)
@@ -173,7 +126,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(ComplexAndLogic logic, Logic other)
@@ -185,7 +138,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(ComplexAndLogic logic, AtomicLogic other)
@@ -195,7 +148,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(ComplexAndLogic logic, OrLogic other)
@@ -205,7 +158,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexOrLogic operator |(ComplexAndLogic logic, ComplexOrLogic other)
@@ -215,7 +168,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexOrLogic operator |(ComplexAndLogic logic, AndLogic other)
@@ -225,7 +178,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexOrLogic operator |(ComplexAndLogic logic, ComplexAndLogic other)
@@ -235,7 +188,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(ComplexAndLogic logic, Logic other)
@@ -246,7 +199,7 @@ public class ComplexAndLogic : ComplexLogicBase, IAndLogic, ISqlLogic
     /// <summary>
     /// 反逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static ComplexOrLogic operator !(ComplexAndLogic logic)
         => logic.Not();

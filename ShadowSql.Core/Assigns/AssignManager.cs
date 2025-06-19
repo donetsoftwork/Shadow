@@ -16,8 +16,8 @@ public class AssignManager
     /// <param name="mul"></param>
     /// <param name="div"></param>
     /// <param name="mod"></param>
-    /// <param name="and"></param>
-    /// <param name="or"></param>
+    /// <param name="and">与逻辑</param>
+    /// <param name="or">或逻辑</param>
     /// <param name="xor"></param>
     internal AssignManager(
     AssignSymbol equal
@@ -97,7 +97,7 @@ public class AssignManager
     /// <summary>
     /// 添加
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <param name="compare"></param>
     private void TryAdd(string operation, AssignSymbol compare)
     {
@@ -108,7 +108,7 @@ public class AssignManager
     /// <summary>
     /// 获取
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public AssignSymbol Get(string operation)
     {

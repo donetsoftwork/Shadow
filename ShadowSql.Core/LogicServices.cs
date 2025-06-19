@@ -14,7 +14,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this Logic logic, Logic other)
@@ -34,7 +34,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this AtomicLogic logic, Logic other)
@@ -44,7 +44,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this AndLogic logic, Logic other)
@@ -64,7 +64,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this ComplexAndLogic logic, Logic other)
@@ -84,7 +84,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this OrLogic logic, Logic other)
@@ -104,7 +104,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this ComplexOrLogic logic, Logic other)
@@ -126,7 +126,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this Logic logic, Logic other)
@@ -146,7 +146,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this AtomicLogic logic, Logic other)
@@ -156,7 +156,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this OrLogic logic, Logic other)
@@ -176,7 +176,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this ComplexOrLogic logic, Logic other)
@@ -196,7 +196,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this AndLogic logic, Logic other)
@@ -216,7 +216,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this ComplexAndLogic logic, Logic other)
@@ -237,7 +237,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// MergeTo
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static Logic MergeTo(this Logic logic, Logic other)

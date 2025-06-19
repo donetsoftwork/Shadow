@@ -45,37 +45,22 @@ public abstract class SelectBase<TSource, TTarget>(TSource source, TTarget targe
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     internal void SelectCore(Func<TTarget, IFieldView> select)
         => SelectCore(select(_target));
     #region GetFieldBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
         => _source.Fields;
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => _source.GetField(fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField NewField(string fieldName)
         => _source.NewField(fieldName);
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
         => engine.Select(sql, this);
     #endregion

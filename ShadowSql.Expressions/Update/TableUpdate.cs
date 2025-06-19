@@ -13,8 +13,8 @@ namespace ShadowSql.Expressions.Update;
 /// 更新表
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class TableUpdate<TEntity>(ITable table, ISqlLogic filter)
     : ExpressionUpdateBase<ITable>(table)
 {
@@ -41,12 +41,7 @@ public class TableUpdate<TEntity>(ITable table, ISqlLogic filter)
         return this;
     }
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         WriteUpdate(engine, sql);

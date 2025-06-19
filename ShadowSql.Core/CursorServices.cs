@@ -1,4 +1,4 @@
-﻿using ShadowSql.Cursors;
+using ShadowSql.Cursors;
 using ShadowSql.Identifiers;
 using System;
 using System.Collections.Generic;
@@ -14,8 +14,8 @@ public static partial class ShadowSqlCoreServices
     /// 游标跳过数量
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="offset"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="offset">跳过数量</param>
     /// <returns></returns>
     public static TCursor Skip<TCursor>(this TCursor cursor, int offset)
         where TCursor : CursorBase
@@ -27,8 +27,8 @@ public static partial class ShadowSqlCoreServices
     /// 游标获取数量
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="limit"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="limit">筛选数量</param>
     /// <returns></returns>
     public static TCursor Take<TCursor>(this TCursor cursor, int limit)
         where TCursor : CursorBase
@@ -41,8 +41,8 @@ public static partial class ShadowSqlCoreServices
     /// 正序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="field"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="field">字段</param>
     public static TCursor Asc<TCursor>(this TCursor cursor, IOrderView field)
         where TCursor : CursorBase
     {
@@ -53,7 +53,7 @@ public static partial class ShadowSqlCoreServices
     /// 正序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <param name="fieldNames"></param>
     /// <returns></returns>
     public static TCursor Asc<TCursor>(this TCursor cursor, params IEnumerable<string> fieldNames)
@@ -66,8 +66,8 @@ public static partial class ShadowSqlCoreServices
     /// 倒序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="field"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="field">字段</param>
     public static TCursor Desc<TCursor>(this TCursor cursor, IOrderAsc field)
         where TCursor : CursorBase
     {
@@ -78,7 +78,7 @@ public static partial class ShadowSqlCoreServices
     /// 倒序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <param name="fieldNames"></param>
     /// <returns></returns>
     public static TCursor Desc<TCursor>(this TCursor cursor, params IEnumerable<string> fieldNames)
@@ -91,7 +91,7 @@ public static partial class ShadowSqlCoreServices
     /// 添加排序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <param name="orderBy"></param>
     /// <returns></returns>
     public static TCursor OrderBy<TCursor>(this TCursor cursor, string orderBy)
@@ -105,8 +105,8 @@ public static partial class ShadowSqlCoreServices
     /// 正序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="select"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static TCursor Asc<TCursor>(this TCursor cursor, Func<ITableView, IOrderView> select)
         where TCursor : CursorBase, ICursor
@@ -118,8 +118,8 @@ public static partial class ShadowSqlCoreServices
     /// 倒序
     /// </summary>
     /// <typeparam name="TCursor"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="select"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="select">筛选</param>
     public static TCursor Desc<TCursor>(this TCursor cursor, Func<ITableView, IOrderAsc> select)
         where TCursor : CursorBase, ICursor
     {

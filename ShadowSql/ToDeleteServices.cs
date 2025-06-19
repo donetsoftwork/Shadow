@@ -15,7 +15,7 @@ public static partial class ShadowSqlServices
     /// 删除
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableDelete ToDelete<TSource>(this TableSqlQuery<TSource> query)
         where TSource : ITable
@@ -24,7 +24,7 @@ public static partial class ShadowSqlServices
     /// 删除
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableDelete ToDelete<TSource>(this TableQuery<TSource> query)
         where TSource : ITable
@@ -34,7 +34,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static AliasTableDelete ToDelete<TSource>(this AliasTableSqlQuery<TSource> query)
         where TSource : ITable
@@ -42,7 +42,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static AliasTableDelete ToDelete<TSource>(this AliasTableQuery<TSource> query)
         where TSource : ITable

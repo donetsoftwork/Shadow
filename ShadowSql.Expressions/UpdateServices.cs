@@ -21,7 +21,7 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="update"></param>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public static MultiTableUpdate Set<TEntity>(this MultiTableUpdate update, Expression<Func<TEntity, TEntity>> operation)
     {
@@ -32,7 +32,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 获取被修改字段
     /// </summary>
-    /// <param name="aliasTable"></param>
+    /// <param name="aliasTable">别名表</param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<IPrefixField> GetAssignFields<TTable>(this IAliasTable<TTable> aliasTable)

@@ -10,10 +10,10 @@ namespace ShadowSql.GroupBy;
 /// <summary>
 /// 对Table进行分组查询
 /// </summary>
-/// <param name="table"></param>
-/// <param name="where"></param>
-/// <param name="fields"></param>
-/// <param name="having"></param>
+/// <param name="table">表</param>
+/// <param name="where">查询条件</param>
+/// <param name="fields">字段</param>
+/// <param name="having">分组查询条件</param>
 public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IField[] fields, Logic having)
     : GroupByQueryBase<TTable>(table, fields, having)
     where TTable : ITable
@@ -21,9 +21,9 @@ public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IField[] f
     /// <summary>
     /// 对TableQuery进行分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupByTableQuery(TTable table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, new AndLogic())
     {
@@ -40,8 +40,8 @@ public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IField[] f
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="aggregate"></param>
-    /// <param name="query"></param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableQuery<TTable> Apply(Func<TTable, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
     {
@@ -53,8 +53,8 @@ public class GroupByTableQuery<TTable>(TTable table, ISqlLogic where, IField[] f
     /// <summary>
     /// 数据源拼写(+WHERE)
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
     {

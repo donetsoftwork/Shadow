@@ -13,7 +13,7 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 插入
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static DapperSingleInsert<TTable> ToDapperInsert<TTable>(this TTable table)
         where TTable : IDapperTable, IInsertTable
@@ -23,7 +23,7 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 插入多条
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static DapperMultiInsert<TTable> ToDapperMultiInsert<TTable>(this TTable table)
         where TTable : IDapperTable, IInsertTable
@@ -34,8 +34,8 @@ public static partial class DapperShadowServices
     /// 插入Select
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static DapperSelectInsert<TTable> ToDapperInsert<TTable>(this TTable table, ISelect select)
         where TTable : IDapperTable, IInsertTable
@@ -44,8 +44,8 @@ public static partial class DapperShadowServices
     /// 插入Select
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="select"></param>
-    /// <param name="table"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static DapperSelectInsert<TTable> DapperInsertTo<TTable>(this ISelect select, TTable table)
       where TTable : IDapperTable, IInsertTable

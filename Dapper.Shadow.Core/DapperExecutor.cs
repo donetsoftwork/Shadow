@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
@@ -11,8 +11,8 @@ namespace Dapper.Shadow;
 /// <summary>
 /// Dapper执行器
 /// </summary>
-/// <param name="engine"></param>
-/// <param name="connection"></param>
+/// <param name="engine">数据库引擎</param>
+/// <param name="connection">数据库连接</param>
 /// <param name="buffered"></param>
 /// <param name="capacity"></param>
 public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool buffered = true, int capacity = 128)
@@ -108,7 +108,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// 执行
     /// </summary>
     /// <param name="entity"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual int Execute(ISqlEntity entity, object? param = null)
         => Execute(_engine.Sql(entity, _capacity), param);
@@ -119,7 +119,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="entity"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual T? ExecuteScalar<T>(ISqlEntity entity, object? param = null)
         => ExecuteScalar<T>(_engine.Sql(entity, _capacity), param);
@@ -129,7 +129,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// 计数
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual T? Count<T>(ITableView view, object? param = null)
         => ExecuteScalar<T>(_engine.CountSql(view, _capacity), param);
@@ -139,7 +139,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// 异步计数
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual Task<T?> CountAsync<T>(ITableView view, object? param = null)
         => ExecuteScalarAsync<T>(_engine.CountSql(view, _capacity), param);
@@ -149,7 +149,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// 异步执行
     /// </summary>
     /// <param name="entity"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual Task<int> ExecuteAsync(ISqlEntity entity, object? param = null)
         => ExecuteAsync(_engine.Sql(entity, _capacity), param);
@@ -160,7 +160,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="entity"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual Task<T?> ExecuteScalarAsync<T>(ISqlEntity entity, object? param = null)
         => ExecuteScalarAsync<T>(_engine.Sql(entity, _capacity), param);
@@ -171,7 +171,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="entity"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual IEnumerable<T> Query<T>(ISqlEntity entity, object? param = null)
         => Query<T>(_engine.Sql(entity, _capacity), param);
@@ -180,7 +180,7 @@ public class DapperExecutor(ISqlEngine engine, IDbConnection connection, bool bu
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="entity"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public virtual T? QueryFirstOrDefault<T>(ISqlEntity entity, object? param = null)
         => QueryFirstOrDefault<T>(_engine.Sql(entity, _capacity), param);

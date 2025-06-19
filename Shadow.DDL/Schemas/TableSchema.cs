@@ -11,11 +11,11 @@ namespace Shadow.DDL.Schemas;
 /// <summary>
 /// 表
 /// </summary>
-/// <param name="name"></param>
-/// <param name="columns"></param>
+/// <param name="tableName">表名</param>
+/// <param name="columns">列</param>
 /// <param name="schema"></param>
-public class TableSchema(string name, ColumnSchema[] columns, string schema = "")
-    : Identifier(name), ITable, IInsertTable, IUpdateTable, ISqlEntity
+public class TableSchema(string tableName, ColumnSchema[] columns, string schema = "")
+    : Identifier(tableName), ITable, IInsertTable, IUpdateTable, ISqlEntity
 {
     private readonly string _schema = schema;
     private readonly ColumnSchema[] _columns = columns;
@@ -44,7 +44,7 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
     /// <summary>
     /// 查找字段
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     public ColumnSchema? GetColumn(string columName)
     {
@@ -52,12 +52,7 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
             ?? Table.GetFieldWithTablePrefix(_name, _columns, columName);
     }
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         if (!string.IsNullOrEmpty(_schema))
@@ -67,29 +62,28 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         }
         engine.Identifier(sql, _name);
     }
-
+    /// <inheritdoc/>
     IColumn? ITable.GetColumn(string columName)
         => GetColumn(columName);
-
+    /// <inheritdoc/>
     IField? ITableView.GetField(string fieldName)
         => GetColumn(fieldName);
+    /// <inheritdoc/>
     ICompareField ITableView.GetCompareField(string fieldName)
     {
         if (GetColumn(fieldName) is ColumnSchema column)
             return column;
         throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     }
+    /// <inheritdoc/>
     IField ITableView.NewField(string fieldName)
         => Column.Use(fieldName);
     #endregion
     #region ITable
+    /// <inheritdoc/>
     IEnumerable<IColumn> IInsertTable.InsertColumns
         => _insertColumns;
-    /// <summary>
-    /// 获取插入列
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     IColumn? IInsertTable.GetInsertColumn(string columnName)
     {
         if (GetColumn(columnName) is ColumnSchema column)
@@ -99,8 +93,10 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         }
         return null;
     }
+    /// <inheritdoc/>
     IEnumerable<IAssignView> IUpdateTable.AssignFields
         => _updateColumns;
+    /// <inheritdoc/>
     IAssignView? IUpdateTable.GetAssignField(string fieldName)
     {
         if (GetColumn(fieldName) is ColumnSchema column)
@@ -110,8 +106,10 @@ public class TableSchema(string name, ColumnSchema[] columns, string schema = ""
         }
         return null;
     }
+    /// <inheritdoc/>
     IEnumerable<IColumn> ITable.Columns
         => _columns;
+    /// <inheritdoc/>
     IEnumerable<IField> ITableView.Fields
         => _columns;
     #endregion

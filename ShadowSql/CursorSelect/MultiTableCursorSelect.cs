@@ -8,7 +8,7 @@ namespace ShadowSql.CursorSelect;
 /// <summary>
 /// 多表视图范围(分页)及列筛选
 /// </summary>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public class MultiTableCursorSelect(MultiTableCursor cursor)
     : MultiCursorSelectBase(cursor, cursor.Source)
 {
@@ -16,8 +16,8 @@ public class MultiTableCursorSelect(MultiTableCursor cursor)
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursorSelect Select<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
@@ -29,8 +29,8 @@ public class MultiTableCursorSelect(MultiTableCursor cursor)
     /// 筛选多列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursorSelect Select<TTable>(string tableName, Func<TTable, IEnumerable<IColumn>> select)
         where TTable : ITable
@@ -44,8 +44,8 @@ public class MultiTableCursorSelect(MultiTableCursor cursor)
     /// 筛选列
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     public MultiTableCursorSelect Select<TAliasTable>(string tableName, Func<TAliasTable, IFieldView> select)
         where TAliasTable : IAliasTable
     {
@@ -56,8 +56,8 @@ public class MultiTableCursorSelect(MultiTableCursor cursor)
     /// 筛选多列
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     public MultiTableCursorSelect Select<TAliasTable>(string tableName, Func<TAliasTable, IEnumerable<IFieldView>> select)
         where TAliasTable : IAliasTable
     {

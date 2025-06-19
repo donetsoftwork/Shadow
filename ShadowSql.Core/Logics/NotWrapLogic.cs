@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
 
 namespace ShadowSql.Logics;
@@ -26,8 +26,8 @@ public class NotWrapLogic(AtomicLogic target)
     /// 拼写sql
     /// 复合条件被否定需要加小括号
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {

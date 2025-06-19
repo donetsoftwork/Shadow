@@ -6,10 +6,10 @@ namespace ShadowSql.Aggregates;
 /// <summary>
 /// 聚合字段信息
 /// </summary>
-/// <param name="aggregate"></param>
-/// <param name="target"></param>
-public abstract class AggregateFieldInfoBase(string aggregate, ICompareField target)
-    : VariantFieldInfoBase<ICompareField>(target)
+/// <param name="aggregate">聚合</param>
+/// <param name="field">字段</param>
+public abstract class AggregateFieldInfoBase(string aggregate, ICompareField field)
+    : VariantFieldInfoBase<ICompareField>(field)
 {
     #region 配置
     /// <summary>

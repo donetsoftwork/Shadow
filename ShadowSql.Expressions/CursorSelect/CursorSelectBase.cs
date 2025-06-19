@@ -16,11 +16,7 @@ public abstract class CursorSelectBase<TTarget>(ICursor source, TTarget target)
     where TTarget : ITableView
 {
     #region ISqlEntity
-    /// <summary>
-    /// 拼写分页sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
         => engine.SelectCursor(sql, this, _source);
     #endregion

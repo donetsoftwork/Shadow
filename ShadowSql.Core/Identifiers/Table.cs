@@ -8,9 +8,9 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 表名对象
 /// </summary>
-/// <param name="name"></param>
-public class Table(string name)
-    : Identifier(name), ITable, IInsertTable, IUpdateTable
+/// <param name="tableName">表名</param>
+public class Table(string tableName)
+    : Identifier(tableName), ITable, IInsertTable, IUpdateTable
 {
     #region 配置
     private readonly Dictionary<string, IColumn> _columns = new(StringComparer.OrdinalIgnoreCase);
@@ -74,7 +74,7 @@ public class Table(string name)
     /// <summary>
     /// 查找列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     public IColumn? GetColumn(string columName)
     {
@@ -86,7 +86,7 @@ public class Table(string name)
     /// <summary>
     /// 定义列
     /// </summary>
-    /// <param name="columnName"></param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     public IColumn DefineColumn(string columnName)
     {
@@ -108,7 +108,7 @@ public class Table(string name)
     /// <summary>
     /// 添加列
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     public void AddColumn(IColumn column)
     {
         var columnName = column.ViewName;
@@ -130,7 +130,7 @@ public class Table(string name)
     /// <summary>
     /// 忽略插入的列
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     public void AddInsertIgnore(IColumn column)
     {
         if (_insertIgnores.Contains(column))
@@ -149,7 +149,7 @@ public class Table(string name)
     //    /// <summary>
     //    /// 忽略插入的列
     //    /// </summary>
-    //    /// <param name="columns"></param>
+    //    /// <param name="columns">列</param>
     //    /// <returns></returns>
     //    public Table IgnoreInsert(params IEnumerable<IColumn> columns)
     //    {
@@ -175,7 +175,7 @@ public class Table(string name)
     /// <summary>
     /// 忽略修改的列
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     public void AddUpdateIgnore(IColumn column)
     {
         if (_updateIgnores.Contains(column))
@@ -196,9 +196,9 @@ public class Table(string name)
     /// 获取含表名前缀的列
     /// </summary>
     /// <typeparam name="TField"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="fields"></param>
-    /// <param name="columName"></param>
+    /// <param name="table">表</param>
+    /// <param name="fields">字段</param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     internal static TField? GetFieldWithTablePrefix<TField>(string table, IEnumerable<TField> fields, string columName)
         where TField : class, IField
@@ -213,8 +213,8 @@ public class Table(string name)
     /// <summary>
     /// 判断是否含表名前缀
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="columName"></param>
+    /// <param name="table">表</param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     public static bool CheckTablePrefix(string table, string columName)
     {
@@ -224,13 +224,10 @@ public class Table(string name)
             && columName[prefixIndex] == '.';
     }
     #region ITable
+    /// <inheritdoc/>
     IEnumerable<IColumn> IInsertTable.InsertColumns
         => InsertColumns;
-    /// <summary>
-    /// 获取插入列
-    /// </summary>
-    /// <param name="columnName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     IColumn? IInsertTable.GetInsertColumn(string columnName)
     {
         if (GetColumn(columnName) is IColumn column)
@@ -241,8 +238,10 @@ public class Table(string name)
         }
         return Column.Use(columnName);
     }
+    /// <inheritdoc/>
     IEnumerable<IAssignView> IUpdateTable.AssignFields
         => UpdateColumns;
+    /// <inheritdoc/>
     IAssignView? IUpdateTable.GetAssignField(string fieldName)
     {
         if (GetColumn(fieldName) is IColumn column)
@@ -255,17 +254,16 @@ public class Table(string name)
     }
     #endregion
     #region ITableView
+    /// <inheritdoc/>
     IEnumerable<IField> ITableView.Fields
         => Columns;
-    /// <summary>
-    /// 查找列
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     IField? ITableView.GetField(string fieldName)
         => GetColumn(fieldName);
+    /// <inheritdoc/>
     ICompareField ITableView.GetCompareField(string fieldName)
         => GetColumn(fieldName) ?? Column.Use(fieldName);
+    /// <inheritdoc/>
     IField ITableView.NewField(string fieldName)
         => Column.Use(fieldName);
     #endregion

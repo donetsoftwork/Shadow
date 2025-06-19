@@ -21,7 +21,7 @@ public static class SqlValueService
     /// 包装为数据库值
     /// </summary>
     /// <param name="type"></param>
-    /// <param name="value"></param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static ISqlValue From(Type type, object? value)
         => GetFrom(type)
@@ -29,11 +29,11 @@ public static class SqlValueService
     /// <summary>
     /// 包装列表
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="itemType"></param>
     /// <param name="objects"></param>
     /// <returns></returns>
-    public static ISqlValue Values(Type type, IEnumerable objects)
-        => GetValues(type)
+    public static ISqlValue Values(Type itemType, IEnumerable objects)
+        => GetValues(itemType)
             .Invoke(objects);
     private static Func<object?, ISqlValue> GetFrom(Type type)
     {
@@ -61,9 +61,9 @@ public static class SqlValueService
         }
         return func;
     }
-    private static Func<IEnumerable, ISqlValue> GetValues(Type type)
+    private static Func<IEnumerable, ISqlValue> GetValues(Type itemType)
     {
-        if (_valuesCacher.TryGetValue(type, out Func<IEnumerable, ISqlValue>? func))
+        if (_valuesCacher.TryGetValue(itemType, out Func<IEnumerable, ISqlValue>? func))
             return func;
 #if NET9_0_OR_GREATER
         lock (_valuesLock)
@@ -71,10 +71,10 @@ public static class SqlValueService
         lock (_valuesCacher)
 #endif
         {
-            if (_valuesCacher.TryGetValue(type, out func))
+            if (_valuesCacher.TryGetValue(itemType, out func))
                 return func;
-            func = CreateValuesFunc(type);
-            _valuesCacher.TryAdd(type, func);
+            func = CreateValuesFunc(itemType);
+            _valuesCacher.TryAdd(itemType, func);
         }
         return func;
     }
@@ -98,16 +98,16 @@ public static class SqlValueService
     /// <summary>
     /// Expression调用SqlValue.Values
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="itemType"></param>
     /// <returns></returns>
-    private static Func<IEnumerable, ISqlValue> CreateValuesFunc(Type type)
+    private static Func<IEnumerable, ISqlValue> CreateValuesFunc(Type itemType)
     {
         // 创建参数表达式
         ParameterExpression param = Expression.Parameter(typeof(IEnumerable), "values");
-        var valuesType = typeof(IEnumerable<>).MakeGenericType(type);
+        var valuesType = typeof(IEnumerable<>).MakeGenericType(itemType);
         // 创建对泛型方法的引用
-        MethodInfo method = typeof(SqlValue).GetMethod(nameof(SqlValue.Values))!.MakeGenericMethod(valuesType);
-        var value = Expression.Convert(param, type);
+        MethodInfo method = typeof(SqlValue).GetMethod(nameof(SqlValue.Values))!.MakeGenericMethod(itemType);
+        var value = Expression.Convert(param, valuesType);
         // 创建调用表达式
         Expression callExpr = Expression.Call(null, method, value);
         // 编译表达式为委托

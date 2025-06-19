@@ -12,14 +12,14 @@ namespace ShadowSql.Expressions.CursorSelect;
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public class GroupByTableCursorSelect<TKey, TEntity>(GroupByTableCursor<TKey, TEntity> cursor)
     : GroupCursorBySelectBase<ITableView>(cursor, cursor.Source, cursor.Table)
 {
     /// <summary>
     /// 筛选分组列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByTableCursorSelect<TKey, TEntity> Select<TProperty>(Expression<Func<TKey, TProperty>> select)
     {
@@ -29,7 +29,7 @@ public class GroupByTableCursorSelect<TKey, TEntity>(GroupByTableCursor<TKey, TE
     /// <summary>
     /// 从聚合筛选
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByTableCursorSelect<TKey, TEntity> Select<TProperty>(Expression<Func<IGrouping<TKey, TEntity>, TProperty>> select)
     {

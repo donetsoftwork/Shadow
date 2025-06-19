@@ -8,7 +8,7 @@ namespace ShadowSql.Fragments;
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 /// <param name="target"></param>
-/// <param name="prefix"></param>
+/// <param name="prefix">前缀</param>
 public class PrefixFragment<TEntity>(TEntity target, params string[] prefix)
    : ISqlEntity
    where TEntity : ISqlEntity
@@ -31,12 +31,7 @@ public class PrefixFragment<TEntity>(TEntity target, params string[] prefix)
     /// </summary>
     public string[] Prefix
         => _prefix;
-    /// <summary>
-    /// 字符拼接
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public virtual void Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.ConcatPrefix(_target, sql, _prefix);

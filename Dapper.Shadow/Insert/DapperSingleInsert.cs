@@ -8,8 +8,8 @@ namespace Dapper.Shadow.Insert;
 /// 单条插入
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="table"></param>
+/// <param name="executor">执行器</param>
+/// <param name="table">表</param>
 public class DapperSingleInsert<TTable>(IExecutor executor, TTable table)
     : SingleInsert<TTable>(table)
     , IDapperExecute
@@ -26,7 +26,7 @@ public class DapperSingleInsert<TTable>(IExecutor executor, TTable table)
     /// <summary>
     /// 增加插入值
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperSingleInsert<TTable> Insert(Func<TTable, IInsertValue> select)
     {

@@ -16,16 +16,16 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="target"></param>
-    internal TableSelect(ITableView source, TTable target)
-        : base(source, target)
+    /// <param name="view"></param>
+    /// <param name="table">表</param>
+    internal TableSelect(ITableView view, TTable table)
+        : base(view, table)
     {
     }
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableSelect(TTable table)
         : base(table, table)
     {
@@ -33,8 +33,8 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     public TableSelect(TTable table, ISqlLogic where)
         : base(new TableFilter(table, where), table)
     {
@@ -42,7 +42,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public TableSelect(TableQuery<TTable> query)
         : base(query, query.Source)
     {
@@ -50,7 +50,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     public TableSelect(TableSqlQuery<TTable> query)
         : base(query, query.Source)
     {
@@ -58,7 +58,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableSelect<TTable> Select(Func<TTable, IFieldView> select)
     {
@@ -68,7 +68,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableSelect<TTable> Select(Func<TTable, IEnumerable<IFieldView>> select)
     {

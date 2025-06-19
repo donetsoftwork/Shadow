@@ -18,12 +18,7 @@ public class DescView(IOrderAsc asc)
     public IOrderAsc Asc
         => _asc;
 
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
     {
         _asc.Write(engine, sql);

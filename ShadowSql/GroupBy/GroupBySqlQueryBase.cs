@@ -9,10 +9,10 @@ namespace ShadowSql.GroupBy;
 /// 分组sql查询基类
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
-/// <param name="source"></param>
-/// <param name="fields"></param>
-/// <param name="having"></param>
-public abstract class GroupBySqlQueryBase<TSource>(TSource source, IField[] fields, SqlQuery having)
+/// <param name="view"></param>
+/// <param name="fields">字段</param>
+/// <param name="having">分组查询条件</param>
+public abstract class GroupBySqlQueryBase<TSource>(TSource view, IField[] fields, SqlQuery having)
     : GroupByBase<SqlQuery>(fields, having), IDataSqlQuery
     where TSource : ITableView
 {
@@ -20,7 +20,7 @@ public abstract class GroupBySqlQueryBase<TSource>(TSource source, IField[] fiel
     /// <summary>
     /// 数据源表
     /// </summary>
-    internal readonly TSource _source = source;
+    internal readonly TSource _source = view;
     /// <summary>
     /// 分组数据源表
     /// </summary>
@@ -28,11 +28,7 @@ public abstract class GroupBySqlQueryBase<TSource>(TSource source, IField[] fiel
         => _source;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 输出数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion

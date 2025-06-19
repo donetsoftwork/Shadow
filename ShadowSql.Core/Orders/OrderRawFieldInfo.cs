@@ -26,12 +26,7 @@ public sealed class RawOrderByInfo : Identifier, IOrderView
     /// </summary>
     private static readonly CacheService<RawOrderByInfo> _cacher = new(static statement => new RawOrderByInfo(statement));
 
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
         => sql.Append(_name);
 }

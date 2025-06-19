@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Generators;
 using ShadowSql.SqlVales;
 using ShadowSql.Engines;
@@ -14,17 +14,17 @@ namespace Dapper.Shadow;
 /// <summary>
 /// 参数化上线文
 /// </summary>
-/// <param name="engine"></param>
+/// <param name="engine">数据库引擎</param>
 /// <param name="parameterGenerator"></param>
-/// <param name="param"></param>
+/// <param name="param">参数</param>
 public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameterGenerator, object? param = null)
     : ISqlValueComponent, ISqlEngine
 {
     /// <summary>
     /// 参数化上线文
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="param"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="param">参数</param>
     public ParametricContext(ISqlEngine engine, object? param = null)
         : this(engine, new IdIncrementGenerator("p"), param)
     {
@@ -45,7 +45,7 @@ public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameter
         => _parameters;
     ISelectComponent ISqlEngine.SelectComponent
         => _engine.SelectComponent;
-    ISqlValueComponent ISqlEngine.SqlValeComponent
+    ISqlValueComponent ISqlEngine.SqlValueComponent
         => this;
     IPluginProvider? ISqlEngine.PluginProvider
         => _engine.PluginProvider;

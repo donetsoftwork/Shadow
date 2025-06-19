@@ -13,25 +13,25 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <summary>
     /// 多(联)表分组后范围筛选
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public GroupByMultiCursor(GroupByMultiQuery source, int limit, int offset)
-        : this(source, source._source, limit, offset)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public GroupByMultiCursor(GroupByMultiQuery groupBy, int limit, int offset)
+        : this(groupBy, groupBy._source, limit, offset)
     {
     }
     /// <summary>
     /// 多(联)表分组后范围筛选
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public GroupByMultiCursor(GroupByMultiSqlQuery source, int limit, int offset)
-        : this(source, source._source, limit, offset)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public GroupByMultiCursor(GroupByMultiSqlQuery groupBy, int limit, int offset)
+        : this(groupBy, groupBy._source, limit, offset)
     {
     }
-    private GroupByMultiCursor(IGroupByView source, IMultiView multiTable, int limit, int offset)
-        : base(source, limit, offset)
+    private GroupByMultiCursor(IGroupByView groupBy, IMultiView multiTable, int limit, int offset)
+        : base(groupBy, limit, offset)
     {
         _multiTable = multiTable;
     }
@@ -52,8 +52,8 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursor AggregateAsc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
         where TAliasTable : IAliasTable
@@ -65,8 +65,8 @@ public class GroupByMultiCursor : GroupByCursorBase
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiCursor AggregateDesc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
         where TAliasTable : IAliasTable

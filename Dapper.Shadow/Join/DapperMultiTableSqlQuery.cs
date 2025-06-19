@@ -9,8 +9,8 @@ namespace Dapper.Shadow.Join;
 /// <summary>
 /// 多表查询
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="filter"></param>
+/// <param name="executor">执行器</param>
+/// <param name="filter">过滤条件</param>
 public class DapperMultiTableSqlQuery(IExecutor executor, SqlQuery filter)
     : MultiTableSqlQuery(filter), IDapperSource
 {
@@ -26,8 +26,8 @@ public class DapperMultiTableSqlQuery(IExecutor executor, SqlQuery filter)
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public DapperMultiTableSqlQuery Apply<TAliasTable>(string tableName, Func<SqlQuery, TAliasTable, SqlQuery> query)
         where TAliasTable : IAliasTable

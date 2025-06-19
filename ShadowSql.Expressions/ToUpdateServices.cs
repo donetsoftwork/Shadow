@@ -18,16 +18,16 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this ITable table, ISqlLogic where)
         => new(table, where);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this ITable table, Expression<Func<TEntity, bool>> query)
         => new(table, TableVisitor.Where(table, new AndLogic(), query).Logic);
@@ -36,36 +36,36 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TParameter"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity, TParameter>(this ITable table, Expression<Func<TEntity, TParameter, bool>> query)
         => new(table, TableVisitor.Where(table, new AndLogic(), query).Logic);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery<TEntity> query)
         => new(query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery query)
         => new((ITable)query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery<TEntity> query)
         => new(query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery query)
         => new((ITable)query.Source, query._filter);

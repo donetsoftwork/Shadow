@@ -13,7 +13,7 @@ namespace ShadowSql.SubQueries;
 /// 子查询逻辑(EXISTS/NOT EXISTS)基类
 /// </summary>
 /// <param name="source"></param>
-/// <param name="op"></param>
+/// <param name="op">操作</param>
 public abstract class ExistsLogicBase(ITableView source, CompareSymbol op)
     : SubLogicBase(op), ISelect
 {
@@ -33,21 +33,20 @@ public abstract class ExistsLogicBase(ITableView source, CompareSymbol op)
     //public override ISelect Select
     //    => this;
     #endregion
-    /// <summary>
-    /// 拼写右侧子查询
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSub(ISqlEngine engine, StringBuilder sql)
         => engine.Select(sql, this);
     #region ISelect
+    /// <inheritdoc/>
     bool ISelectFields.WriteSelected(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append('*');
         return true;
     }
+    /// <inheritdoc/>
     IEnumerable<IColumn> ISelectFields.ToColumns()
         => _source.Fields.Select(f => f.ToColumn());
+    /// <inheritdoc/>
     IEnumerable<IFieldView> ISelectFields.Selected
         => _source.Fields;
     #endregion

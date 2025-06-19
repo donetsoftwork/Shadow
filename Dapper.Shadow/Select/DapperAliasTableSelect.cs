@@ -10,38 +10,38 @@ namespace Dapper.Shadow.Select;
 /// 别名表筛选列
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="source"></param>
-/// <param name="target"></param>
-public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView source, IAliasTable<TTable> target)
-    : SelectBase<ITableView, IAliasTable<TTable>>(source, target)
+/// <param name="executor">执行器</param>
+/// <param name="view"></param>
+/// <param name="aliasTable">别名表</param>
+public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView view, IAliasTable<TTable> aliasTable)
+    : SelectBase<ITableView, IAliasTable<TTable>>(view, aliasTable)
     , IDapperSelect
     where TTable : ITable
 {
     /// <summary>
     /// 别名表筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="source"></param>
-    public DapperAliasTableSelect(IExecutor executor, IAliasTable<TTable> source)
-        : this(executor, source, source)
+    /// <param name="executor">执行器</param>
+    /// <param name="aliasTable">别名表</param>
+    public DapperAliasTableSelect(IExecutor executor, IAliasTable<TTable> aliasTable)
+        : this(executor, aliasTable, aliasTable)
     {
     }
     /// <summary>
     /// 别名表筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="source"></param>
-    /// <param name="where"></param>
-    public DapperAliasTableSelect(IExecutor executor, IAliasTable<TTable> source, ISqlLogic where)
-        : this(executor, new TableFilter(source, where), source)
+    /// <param name="executor">执行器</param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="where">查询条件</param>
+    public DapperAliasTableSelect(IExecutor executor, IAliasTable<TTable> aliasTable, ISqlLogic where)
+        : this(executor, new TableFilter(aliasTable, where), aliasTable)
     {
     }
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="query"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="query">查询</param>
     public DapperAliasTableSelect(IExecutor executor, AliasTableSqlQuery<TTable> query)
         : this(executor, query, query.Source)
     {
@@ -49,8 +49,8 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView sourc
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="query"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="query">查询</param>
     public DapperAliasTableSelect(IExecutor executor, AliasTableQuery<TTable> query)
         : this(executor, query, query.Source)
     {

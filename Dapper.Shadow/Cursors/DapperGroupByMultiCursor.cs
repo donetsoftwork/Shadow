@@ -10,12 +10,12 @@ namespace Dapper.Shadow.Cursors;
 /// <summary>
 /// 多(联)表分组后范围筛选
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery source, int limit, int offset)
-    : GroupByMultiCursor(source, limit, offset)
+/// <param name="executor">执行器</param>
+/// <param name="groupBy">分组查询</param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
+public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery groupBy, int limit, int offset)
+    : GroupByMultiCursor(groupBy, limit, offset)
 {
     #region 配置
     private readonly IExecutor _executor = executor;
@@ -30,8 +30,8 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery s
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperGroupByMultiCursor AggregateAsc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
         where TAliasTable : IAliasTable
@@ -43,8 +43,8 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery s
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     new public DapperGroupByMultiCursor AggregateDesc<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> select)
         where TAliasTable : IAliasTable

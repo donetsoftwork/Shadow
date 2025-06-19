@@ -1,4 +1,4 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.SingleSelect;
@@ -8,15 +8,12 @@ namespace ShadowSql.SubQueries;
 /// <summary>
 /// IN子查询逻辑
 /// </summary>
-/// <param name="field"></param>
-/// <param name="select"></param>
+/// <param name="field">字段</param>
+/// <param name="select">筛选</param>
 public class SubInLogic(ICompareView field, ISingleSelect select)
     : FieldSubLogicBase(field, CompareSymbol.In, select)
 {
-    /// <summary>
-    /// 反逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
         => new SubNotInLogic(_field, _singleSelect);
 }
@@ -24,15 +21,12 @@ public class SubInLogic(ICompareView field, ISingleSelect select)
 /// <summary>
 /// NOT IN子查询逻辑
 /// </summary>
-/// <param name="field"></param>
-/// <param name="select"></param>
+/// <param name="field">字段</param>
+/// <param name="select">筛选</param>
 public class SubNotInLogic(ICompareView field, ISingleSelect select)
     : FieldSubLogicBase(field, CompareSymbol.NotIn, select)
 {
-    /// <summary>
-    /// 反逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
         => new SubInLogic(_field, _singleSelect);
 }

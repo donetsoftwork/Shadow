@@ -1,4 +1,4 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Engines;
 using ShadowSql.Logics;
 using System.Text;
@@ -8,7 +8,7 @@ namespace ShadowSql.SubQueries;
 /// <summary>
 /// 子查询逻辑(EXISTS/NOT EXISTS)
 /// </summary>
-/// <param name="op"></param>
+/// <param name="op">操作</param>
 public abstract class SubLogicBase(CompareSymbol op)
     : AtomicLogic
 {
@@ -29,8 +29,8 @@ public abstract class SubLogicBase(CompareSymbol op)
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     public virtual void Write(ISqlEngine engine, StringBuilder sql)
     {
@@ -41,12 +41,7 @@ public abstract class SubLogicBase(CompareSymbol op)
     }
     #endregion
     #region AtomicLogic
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         Write(engine, sql);

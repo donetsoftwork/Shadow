@@ -7,11 +7,11 @@ namespace Dapper.Shadow.SingleSelect;
 /// <summary>
 /// Dapper表筛选单列
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="source"></param>
-/// <param name="singleField"></param>
-public class DapperTableSingleSelect(IExecutor executor, ITableView source, IFieldView singleField)
-    : TableSingleSelect(source, singleField)
+/// <param name="executor">执行器</param>
+/// <param name="view"></param>
+/// <param name="singleField">单列</param>
+public class DapperTableSingleSelect(IExecutor executor, ITableView view, IFieldView singleField)
+    : TableSingleSelect(view, singleField)
     , IDapperSingleSelect
 {    
     #region 配置
@@ -26,9 +26,9 @@ public class DapperTableSingleSelect(IExecutor executor, ITableView source, IFie
 /// <summary>
 /// Dapper游标单列选择
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="cursor"></param>
-/// <param name="singleField"></param>
+/// <param name="executor">执行器</param>
+/// <param name="cursor">游标</param>
+/// <param name="singleField">单列</param>
 public sealed class DapperCursorSingleSelect(IExecutor executor, ICursor cursor, IFieldView singleField)
     : CursorSingleSelect(cursor, singleField)
     , IDapperSingleSelect

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ public interface ISingleInsert : IInsert
     ///// <summary>
     ///// 插入单值
     ///// </summary>
-    ///// <param name="value"></param>
+    ///// <param name="value">值</param>
     //void InsertCore(IInsertValue value);
 }
 
@@ -44,7 +44,7 @@ public interface IMultiInsert : IInsert
     ///// <summary>
     ///// 插入多值
     ///// </summary>
-    ///// <param name="value"></param>
+    ///// <param name="value">值</param>
     //void InsertCore(IInsertValues value);
 }
 

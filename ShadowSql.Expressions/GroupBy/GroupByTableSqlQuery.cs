@@ -26,9 +26,9 @@ public class GroupByTableSqlQuery<TKey, TEntity>
     /// <summary>
     /// 对表进行分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupByTableSqlQuery(ITable table, ISqlLogic where, IField[] fields)
         :this(table, where, fields, SqlQuery.CreateAndQuery())
     {
@@ -36,9 +36,9 @@ public class GroupByTableSqlQuery<TKey, TEntity>
     /// <summary>
     /// 对别名表进行分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupByTableSqlQuery(IAliasTable table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, SqlQuery.CreateAndQuery())
     {
@@ -55,7 +55,7 @@ public class GroupByTableSqlQuery<TKey, TEntity>
     /// <summary>
     /// 聚合查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableSqlQuery<TKey, TEntity> Having(Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
@@ -65,7 +65,7 @@ public class GroupByTableSqlQuery<TKey, TEntity>
     /// <summary>
     /// 聚合查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableSqlQuery<TKey, TEntity> Having<TParameter>(Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {
@@ -75,10 +75,10 @@ public class GroupByTableSqlQuery<TKey, TEntity>
     #endregion
     #region ISqlEntity
     /// <summary>
-    /// 数据源拼写(+WHERE)
+    /// 分组数据源拼写(+WHERE)
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
     {

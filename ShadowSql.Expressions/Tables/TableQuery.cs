@@ -19,8 +19,8 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 逻辑查询表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     public TableQuery(ITable table, Logic filter)
         : base(table, filter)
     {
@@ -28,7 +28,7 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 逻辑查询表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableQuery(ITable table)
         : base(table, new AndLogic())
     {
@@ -36,7 +36,7 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 逻辑查询表
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public TableQuery(string tableName)
         : base(EmptyTable.Use(tableName), new AndLogic())
     {
@@ -52,7 +52,7 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TEntity> And(Expression<Func<TEntity, bool>> query)
     {
@@ -63,7 +63,7 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TEntity> Or(Expression<Func<TEntity, bool>> query)
     {
@@ -76,7 +76,7 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TEntity> And<TParameter>(Expression<Func<TEntity, TParameter, bool>> query)
     {
@@ -87,7 +87,7 @@ public class TableQuery<TEntity>
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableQuery<TEntity> Or<TParameter>(Expression<Func<TEntity, TParameter, bool>> query)
     {

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Select;
 
 namespace ShadowSql.SingleSelect;

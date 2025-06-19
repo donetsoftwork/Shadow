@@ -17,8 +17,8 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     public TableSqlQuery(ITable table, SqlQuery query)
         : this(query, table)
     {
@@ -26,7 +26,7 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableSqlQuery(ITable table)
         : this(SqlQuery.CreateAndQuery(), table)
     {
@@ -36,8 +36,8 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="query"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="query">查询</param>
     public TableSqlQuery(string tableName, SqlQuery query)
         : this(query, EmptyTable.Use(tableName))
     {
@@ -45,7 +45,7 @@ public class TableSqlQuery : DataFilterBase<SqlQuery>, IDataSqlQuery, IWhere
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public TableSqlQuery(string tableName)
         : this(SqlQuery.CreateAndQuery(), EmptyTable.Use(tableName))
     {

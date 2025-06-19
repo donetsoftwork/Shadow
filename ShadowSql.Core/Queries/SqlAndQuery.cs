@@ -40,11 +40,7 @@ public class SqlAndQuery : SqlQuery, ISqlLogic
     public ComplexAndLogic Complex
         => (ComplexAndLogic)_complex;
     #region And查询
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <param name="conditions"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     /// <example>
     /// <code>
     /// query.And("Id=@Id", "Status=@Status");
@@ -55,11 +51,7 @@ public class SqlAndQuery : SqlQuery, ISqlLogic
         AddConditions(conditions);
         return this;
     }
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <param name="atomic"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override SqlAndQuery And(AtomicLogic atomic)
     {
         AddLogic(atomic);
@@ -67,16 +59,10 @@ public class SqlAndQuery : SqlQuery, ISqlLogic
     }
     #endregion
     #region SqlQuery
-    /// <summary>
-    /// 复制查询
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override SqlQuery CopyQuery()
         => this.Copy();
-    /// <summary>
-    /// And查询
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override SqlAndQuery ToAnd()
         => this;
     /// <summary>

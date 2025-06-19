@@ -25,9 +25,9 @@ public interface IAggregateField : IAggregate, ICompareView
     /// <summary>
     /// 聚合别名(select使用)
     /// </summary>
-    /// <param name="alias"></param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    IAggregateFieldAlias As(string alias);
+    IAggregateFieldAlias As(string aliasName);
 }
 /// <summary>
 /// 聚合列别名

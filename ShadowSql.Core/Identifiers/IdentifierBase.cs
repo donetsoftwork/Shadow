@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using System.Text;
 
@@ -36,11 +36,12 @@ public class IdentifierBase(string name)
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     internal virtual void Write(ISqlEngine engine, StringBuilder sql)
         => engine.Identifier(sql, _name);
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => Write(engine, sql);
     #endregion

@@ -9,8 +9,8 @@ namespace ShadowSql.Update;
 /// 修改基类
 /// </summary>
 /// <typeparam name="TSource"></typeparam>
-/// <param name="source"></param>
-public abstract class UpdateBase<TSource>(TSource source)
+/// <param name="table">表</param>
+public abstract class UpdateBase<TSource>(TSource table)
     : UpdateBase, IUpdate
     where TSource : IUpdateTable
 {
@@ -18,7 +18,7 @@ public abstract class UpdateBase<TSource>(TSource source)
     /// <summary>
     /// 源表
     /// </summary>
-    internal TSource _source = source;
+    internal TSource _source = table;
     /// <summary>
     /// 源表
     /// </summary>
@@ -26,25 +26,18 @@ public abstract class UpdateBase<TSource>(TSource source)
         => _source;
     #endregion  
     #region ISqlEntity   
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion    
     #region UpdateBase
-    /// <summary>
-    /// 获取赋值字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override IAssignView GetAssignField(string fieldName)
         => _source.GetAssignField(fieldName)
         ?? throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     #endregion
     #region IUpdate
+    /// <inheritdoc/>
     IUpdateTable IUpdate.Table
         => _source;
     #endregion

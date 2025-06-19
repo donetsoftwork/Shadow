@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
 
 namespace ShadowSql.Logics;
@@ -20,12 +20,7 @@ public class NotLogic(AtomicLogic target)
     public ISqlLogic Target 
         => _target;
     #region AtomicLogic
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         var point = sql.Length;

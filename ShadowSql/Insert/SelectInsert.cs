@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
@@ -12,9 +12,9 @@ namespace ShadowSql.Insert;
 /// 插入Select子查询
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="table"></param>
-/// <param name="columns"></param>
-/// <param name="select"></param>
+/// <param name="table">表</param>
+/// <param name="columns">列</param>
+/// <param name="select">筛选</param>
 public class SelectInsert<TTable>(TTable table, List<IColumn> columns, ISelect select)
     : SelectInsertBase(columns, select), ISelectInsert
     where TTable : IInsertTable
@@ -22,8 +22,8 @@ public class SelectInsert<TTable>(TTable table, List<IColumn> columns, ISelect s
     /// <summary>
     /// 插入Select子查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     public SelectInsert(TTable table, ISelect select)
         : this(table, [], select)
     {
@@ -50,6 +50,7 @@ public class SelectInsert<TTable>(TTable table, List<IColumn> columns, ISelect s
         Add(select(_table));
         return this;
     }
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteInsert(_table, engine, sql);
 }

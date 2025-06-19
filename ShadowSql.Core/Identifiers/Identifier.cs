@@ -1,9 +1,9 @@
-﻿namespace ShadowSql.Identifiers;
+namespace ShadowSql.Identifiers;
 
 /// <summary>
 /// sql标识符
 /// </summary>
-/// <param name="name"></param>
+/// <param name="name">标识名</param>
 public class Identifier(string name)
     : IdentifierBase(name), IIdentifier
 {
@@ -19,10 +19,10 @@ public class Identifier(string name)
     /// 别名匹配
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="alias"></param>
+    /// <param name="aliasName">别名</param>
     /// <param name="other"></param>
     /// <returns></returns>
-    public static bool AliasMatch(string name, string alias, string other)
-        => Match(alias, other)
+    public static bool AliasMatch(string name, string aliasName, string other)
+        => Match(aliasName, other)
         || Match(name, other);
 }

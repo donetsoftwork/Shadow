@@ -16,16 +16,12 @@ public class AssignSymbol : ISqlEntity
     protected AssignSymbol()
     {
     }
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     public virtual void Write(ISqlEngine engine, StringBuilder sql)
         => sql.Append('=');
     #region Manager
     /// <summary>
-    /// 
+    /// 符号
     /// </summary>
     public virtual string Operation
         => "=";
@@ -94,25 +90,20 @@ public class AssignSymbol : ISqlEntity
     /// <summary>
     /// 获取操作符
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public static AssignSymbol Get(string operation)
         => _manager.Value.Get(operation);
     #endregion
 
+    /// <inheritdoc />
     class ComplexSymbol(string operation) : AssignSymbol
     {
         private readonly string _operation = operation;
-        /// <summary>
-        /// 符号
-        /// </summary>
+        /// <inheritdoc/>
         public override string Operation
             => _operation;
-        /// <summary>
-        /// 拼写sql
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="sql"></param>
+        /// <inheritdoc/>
         public override void Write(ISqlEngine engine, StringBuilder sql)
         {
             sql.Append(_operation);

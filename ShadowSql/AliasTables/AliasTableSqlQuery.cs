@@ -10,14 +10,14 @@ namespace ShadowSql.AliasTables;
 /// sql查询别名表
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="table"></param>
-/// <param name="query"></param>
-public class AliasTableSqlQuery<TTable>(IAliasTable<TTable> table, SqlQuery query)
-    : DataFilterBase<IAliasTable<TTable>, SqlQuery>(table, query), IDataSqlQuery, IWhere
+/// <param name="aliasTable">别名表</param>
+/// <param name="query">查询</param>
+public class AliasTableSqlQuery<TTable>(IAliasTable<TTable> aliasTable, SqlQuery query)
+    : DataFilterBase<IAliasTable<TTable>, SqlQuery>(aliasTable, query), IDataSqlQuery, IWhere
     where TTable : ITable
 {
     #region 配置
-    private readonly TTable _table = table.Target;
+    private readonly TTable _table = aliasTable.Target;
     /// <summary>
     /// 原始表
     /// </summary>
@@ -28,8 +28,8 @@ public class AliasTableSqlQuery<TTable>(IAliasTable<TTable> table, SqlQuery quer
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableSqlQuery<TTable> Where(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
@@ -40,11 +40,12 @@ public class AliasTableSqlQuery<TTable>(IAliasTable<TTable> table, SqlQuery quer
     /// <summary>
     /// 增加前缀
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     protected IPrefixField Prefix(Func<TTable, IColumn> select)
         => _source.Prefix(select(_table));
     #region IDataQuery
+    /// <inheritdoc/>
     SqlQuery IDataSqlQuery.Query
     {
         get => _filter;

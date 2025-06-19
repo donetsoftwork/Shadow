@@ -22,21 +22,21 @@ public sealed class TableCursor<TEntity> : CursorBase<ITableView>
     /// <summary>
     /// 表范围筛选游标
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="where"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public TableCursor(ITable source, ISqlLogic where, int limit, int offset)
-        : this(where, source, limit, offset) { }
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public TableCursor(ITable table, ISqlLogic where, int limit, int offset)
+        : this(where, table, limit, offset) { }
     /// <summary>
     /// 别名表范围筛选游标
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="where"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public TableCursor(IAliasTable source, ISqlLogic where, int limit, int offset)
-        : this(where, source, limit, offset) { }
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public TableCursor(IAliasTable aliasTable, ISqlLogic where, int limit, int offset)
+        : this(where, aliasTable, limit, offset) { }
     #region 配置
     private readonly ISqlLogic _where;
     /// <summary>
@@ -49,7 +49,7 @@ public sealed class TableCursor<TEntity> : CursorBase<ITableView>
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableCursor<TEntity> Asc<TProperty>(Expression<Func<TEntity, TProperty>> select)
     {
@@ -61,7 +61,7 @@ public sealed class TableCursor<TEntity> : CursorBase<ITableView>
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableCursor<TEntity> Desc<TProperty>(Expression<Func<TEntity, TProperty>> select)
     {
@@ -71,12 +71,7 @@ public sealed class TableCursor<TEntity> : CursorBase<ITableView>
         return this;
     }
     #endregion
-    /// <summary>
-    /// 拼写数据源(表)sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteSource(engine, sql);
@@ -85,8 +80,8 @@ public sealed class TableCursor<TEntity> : CursorBase<ITableView>
     /// <summary>
     /// 筛选条件可选
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     private bool WriteFilter(ISqlEngine engine, StringBuilder sql)
     {
         var point = sql.Length;

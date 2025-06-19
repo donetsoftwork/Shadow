@@ -35,7 +35,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 查询(And查询)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static TableSqlQuery<TTable> Where<TTable>(this TTable table)
         where TTable : ITable
@@ -64,7 +64,7 @@ public static partial class ShadowSqlServices
     /// And查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableQuery<TTable> ToQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
@@ -73,7 +73,7 @@ public static partial class ShadowSqlServices
     /// Or查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableQuery<TTable> ToOrQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
@@ -84,7 +84,7 @@ public static partial class ShadowSqlServices
     /// And查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSqlQuery<TTable> Where<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
@@ -93,7 +93,7 @@ public static partial class ShadowSqlServices
     /// And查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSqlQuery<TTable> ToSqlQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
@@ -106,7 +106,7 @@ public static partial class ShadowSqlServices
     /// Or查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSqlQuery<TTable> ToSqlOrQuery<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable

@@ -1,4 +1,4 @@
-﻿using Dapper.Shadow.Delete;
+using Dapper.Shadow.Delete;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -16,9 +16,9 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete(this ITable table, ISqlLogic where, IExecutor executor)
         => new(executor, table, where);
@@ -26,8 +26,8 @@ public static partial class DapperShadowServices
     /// 删除
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
         where TTable : IDapperTable
@@ -35,18 +35,18 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
-    public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> tableQuery)
+    public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> query)
         where TSource : IDapperTable
-        => new(tableQuery.Source.Executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
+        => new(query.Source.Executor, query.Source, ((IDataFilter)query).Filter);
     /// <summary>
     /// 删除
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TTable>(this TTable table, Func<TTable, ISqlLogic> query, IExecutor executor)
         where TTable : ITable
@@ -54,29 +54,29 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="tableQuery"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
-    public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> tableQuery, IExecutor executor)
+    public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> query, IExecutor executor)
         where TSource : ITable
-        => new(executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
+        => new(executor, query.Source, ((IDataFilter)query).Filter);
     #endregion
     #region MultiTableDelete
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="executor"></param>
+    /// <param name="multiView">多(联)表</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
-    public static DapperMultiTableDelete ToDapperDelete(this IMultiView view, IExecutor executor)
-        => new(executor, view);
+    public static DapperMultiTableDelete ToDapperDelete(this IMultiView multiView, IExecutor executor)
+        => new(executor, multiView);
     #endregion
     #region TruncateTable
     /// <summary>
     /// 清空表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTruncateTable ToDapperTruncate(this ITable table, IExecutor executor)
         => new(executor, table);

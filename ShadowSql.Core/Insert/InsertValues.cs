@@ -6,8 +6,8 @@ namespace ShadowSql.Insert;
 /// <summary>
 /// 被插入多值
 /// </summary>
-/// <param name="column"></param>
-/// <param name="values"></param>
+/// <param name="column">列</param>
+/// <param name="values">值</param>
 public class InsertValues(IColumn column, params ISqlValue[] values)
     : IInsertValues
 {

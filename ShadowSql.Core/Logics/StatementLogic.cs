@@ -29,7 +29,7 @@ public sealed class StatementLogic : AtomicLogic
     {
         var len = NotStatementLogic.CheckNotLength(statement);
         if (len > 0)
-            return NotStatementLogic.Use(statement.Substring(len));
+            return NotStatementLogic.Use(statement[len..]);
         return Use(statement);
     }
 
@@ -46,21 +46,13 @@ public sealed class StatementLogic : AtomicLogic
     private static readonly CacheService<StatementLogic> _cacher = new(static statement => new StatementLogic(statement));
 
     #region AtomicLogic
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(_statement);
         return true;
     }
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
         => NotStatementLogic.Use(_statement);
     #endregion

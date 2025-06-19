@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -9,8 +9,8 @@ namespace ShadowSql.Delete;
 /// <summary>
 /// 表数据删除
 /// </summary>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class AliasTableDelete(IAliasTable table, ISqlLogic filter)
     : IDelete
 {
@@ -35,12 +35,7 @@ public class AliasTableDelete(IAliasTable table, ISqlLogic filter)
         => _filter;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.DeletePrefix(sql);

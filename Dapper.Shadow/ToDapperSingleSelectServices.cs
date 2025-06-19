@@ -22,8 +22,8 @@ public static partial class DapperShadowServices
     /// 表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="singleField"></param>
+    /// <param name="table">表</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this TTable table, IFieldView singleField)
         where TTable : IDapperTable
@@ -32,9 +32,9 @@ public static partial class DapperShadowServices
     /// 表过滤筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    /// <param name="singleField"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this TTable table, ISqlLogic filter, IFieldView singleField)
         where TTable : IDapperTable
@@ -43,8 +43,8 @@ public static partial class DapperShadowServices
     /// 表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="singleField"></param>
+    /// <param name="query">查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this DapperTableSqlQuery<TTable> query, IFieldView singleField)
         where TTable : ITable
@@ -53,8 +53,8 @@ public static partial class DapperShadowServices
     /// 表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="singleField"></param>
+    /// <param name="query">查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this TableSqlQuery<TTable> query, IFieldView singleField)
         where TTable : IDapperTable
@@ -63,8 +63,8 @@ public static partial class DapperShadowServices
     /// 表范围筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="singleField"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperCursorSingleSelect ToDapperSingle<TTable>(this TableCursor<TTable> cursor, IFieldView singleField)
         where TTable : IDapperTable
@@ -75,29 +75,29 @@ public static partial class DapperShadowServices
     /// 别名表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="singleField"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
-    public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> table, IFieldView singleField)
+    public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> aliasTable, IFieldView singleField)
         where TTable : IDapperTable
-        => new(table.Target.Executor, table, singleField);
+        => new(aliasTable.Target.Executor, aliasTable, singleField);
     /// <summary>
     /// 别名表过滤筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    /// <param name="singleField"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
-    public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, IFieldView singleField)
+    public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> aliasTable, ISqlLogic filter, IFieldView singleField)
         where TTable : IDapperTable
-        => new(table.Target.Executor, new TableFilter(table, filter), singleField);
+        => new(aliasTable.Target.Executor, new TableFilter(aliasTable, filter), singleField);
     /// <summary>
     /// 别名表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="singleField"></param>
+    /// <param name="query">查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this AliasTableSqlQuery<TTable> query, IFieldView singleField)
         where TTable : IDapperTable
@@ -106,8 +106,8 @@ public static partial class DapperShadowServices
     /// 别名表筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="singleField"></param>
+    /// <param name="query">查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this DapperAliasTableSqlQuery<TTable> query, IFieldView singleField)
         where TTable : ITable
@@ -116,8 +116,8 @@ public static partial class DapperShadowServices
     /// 别名表范围筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="singleField"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperCursorSingleSelect ToDapperSingle<TTable>(this AliasTableCursor<TTable> cursor, IFieldView singleField)
         where TTable : IDapperTable
@@ -128,18 +128,18 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
-    /// <param name="singleField"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
-    public static DapperTableSingleSelect ToDapperSingle<TTable>(this DapperGroupByTableSqlQuery<TTable> source, IFieldView singleField)
+    public static DapperTableSingleSelect ToDapperSingle<TTable>(this DapperGroupByTableSqlQuery<TTable> groupBy, IFieldView singleField)
         where TTable : IDapperTable
-        => new(source.Executor, source, singleField);
+        => new(groupBy.Executor, groupBy, singleField);
     /// <summary>
     /// GroupBy后再范围(分页)及单列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="singleField"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperCursorSingleSelect ToDapperSingle<TTable>(this GroupByTableCursor<TTable> cursor, IFieldView singleField)
         where TTable : IDapperTable
@@ -150,18 +150,18 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选单列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
-    /// <param name="singleField"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
-    public static DapperTableSingleSelect ToDapperSingle<TTable>(this DapperGroupByAliasTableSqlQuery<TTable> source, IFieldView singleField)
+    public static DapperTableSingleSelect ToDapperSingle<TTable>(this DapperGroupByAliasTableSqlQuery<TTable> groupBy, IFieldView singleField)
         where TTable : IDapperTable
-        => new(source.Executor, source, singleField);
+        => new(groupBy.Executor, groupBy, singleField);
     /// <summary>
     /// GroupBy别名表后再范围(分页)及单列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="singleField"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperCursorSingleSelect ToDapperSingle<TTable>(this GroupByAliasTableCursor<TTable> cursor, IFieldView singleField)
         where TTable : IDapperTable
@@ -173,24 +173,24 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 多表筛选列
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="singleField"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle(this DapperMultiTableSqlQuery multiTable, IFieldView singleField)
         => new(multiTable.Executor, multiTable, singleField);
     /// <summary>
     /// 联表筛选单列
     /// </summary>
-    /// <param name="joinTable"></param>
-    /// <param name="singleField"></param>
+    /// <param name="joinTable">联表</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle(this DapperJoinTableSqlQuery joinTable, IFieldView singleField)
         => new(joinTable.Executor, joinTable, singleField);
     /// <summary>
     /// 多(联)表筛选单列
     /// </summary>
-    /// <param name="cursor"></param>
-    /// <param name="singleField"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperCursorSingleSelect ToDapperSingle(this DapperMultiTableCursor cursor, IFieldView singleField)
         => new(cursor.Executor, cursor, singleField);
@@ -199,16 +199,16 @@ public static partial class DapperShadowServices
     /// <summary>
     /// GroupBy后再筛选单列
     /// </summary>
-    /// <param name="groupBy"></param>
-    /// <param name="singleField"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle(this DapperGroupByMultiSqlQuery groupBy, IFieldView singleField)
         => new(groupBy.Executor, groupBy, singleField);
     /// <summary>
     /// GroupBy后再范围(分页)及单列筛选
     /// </summary>
-    /// <param name="cursor"></param>
-    /// <param name="singleField"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="singleField">单列</param>
     /// <returns></returns>
     public static DapperCursorSingleSelect ToDapperSingle(this DapperGroupByMultiCursor cursor, IFieldView singleField)
         => new(cursor.Executor, cursor, singleField);

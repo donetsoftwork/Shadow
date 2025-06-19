@@ -9,14 +9,14 @@ namespace ShadowSql.Delete;
 /// <summary>
 /// 清空表
 /// </summary>
-/// <param name="table"></param>
+/// <param name="table">表</param>
 public class TruncateTable(ITable table)
     : IExecuteSql
 {
     /// <summary>
     /// 清空表
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public TruncateTable(string tableName)
         : this(EmptyTable.Use(tableName))
     {
@@ -29,21 +29,16 @@ public class TruncateTable(ITable table)
     public ITable Table 
         => _table;
     #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
         => WriteTruncateTable(engine, sql, _table);
 
     /// <summary>
     /// TRUNCATE TABLE
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="table"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static void WriteTruncateTable(ISqlEngine engine, StringBuilder sql, ITable table)
     {
@@ -53,9 +48,9 @@ public class TruncateTable(ITable table)
     /// <summary>
     /// TRUNCATE TABLE
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="tableName"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static void WriteTruncateTable(ISqlEngine engine, StringBuilder sql, string tableName)
     {

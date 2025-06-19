@@ -15,16 +15,16 @@ public sealed class GroupByMultiSelect<TKey> : GroupByMultiSelectBase<IGroupByVi
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
-    /// <param name="target"></param>
-    internal GroupByMultiSelect(IGroupByView groupBy, IMultiView target)
-        : base(groupBy, groupBy, target)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="multiView">多(联)表</param>
+    internal GroupByMultiSelect(IGroupByView groupBy, IMultiView multiView)
+        : base(groupBy, groupBy, multiView)
     {
     }
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByMultiSelect(GroupByMultiSqlQuery<TKey> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -32,7 +32,7 @@ public sealed class GroupByMultiSelect<TKey> : GroupByMultiSelectBase<IGroupByVi
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByMultiSelect(GroupByMultiQuery<TKey> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -40,7 +40,7 @@ public sealed class GroupByMultiSelect<TKey> : GroupByMultiSelectBase<IGroupByVi
     /// <summary>
     /// 筛选分组列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiSelect<TKey> Select<TProperty>(Expression<Func<TKey, TProperty>> select)
     {
@@ -50,7 +50,7 @@ public sealed class GroupByMultiSelect<TKey> : GroupByMultiSelectBase<IGroupByVi
     /// <summary>
     /// 从聚合筛选
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiSelect<TKey> Select<TEntity, TProperty>(Expression<Func<IGrouping<TKey, TEntity>, TProperty>> select)
     {
@@ -62,8 +62,8 @@ public sealed class GroupByMultiSelect<TKey> : GroupByMultiSelectBase<IGroupByVi
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByMultiSelect<TKey> Select<TEntity, TProperty>(string table, Expression<Func<IGrouping<TKey, TEntity>, TProperty>> select)
     {

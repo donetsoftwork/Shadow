@@ -17,11 +17,11 @@ namespace ShadowSql.Join;
 /// <typeparam name="LTable"></typeparam>
 /// <typeparam name="RTable"></typeparam>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="root"></param>
-/// <param name="left"></param>
-/// <param name="right"></param>
-/// <param name="filter"></param>
-public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFilter>(TJoinTable root, TLeft left, TRight right, TFilter filter)
+/// <param name="joinTable">联表</param>
+/// <param name="left">左</param>
+/// <param name="right">右</param>
+/// <param name="filter">过滤条件</param>
+public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFilter>(TJoinTable joinTable, TLeft left, TRight right, TFilter filter)
     : JoinOnBase, IJoinOn, IMultiView, IDataFilter
     where TJoinTable : IJoinTable
     where TLeft : IAliasTable<LTable>
@@ -35,7 +35,7 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     /// <summary>
     /// 联表
     /// </summary>
-    protected readonly TJoinTable _root = root;
+    protected readonly TJoinTable _root = joinTable;
     /// <summary>
     /// 联表
     /// </summary>
@@ -74,53 +74,37 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     internal TFilter _filter = filter;
     #endregion
     #region Column
-    /// <summary>
-    /// 获取左边列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IPrefixField? GetLeftField(string columName)
         => _left.GetPrefixField(columName);
-    /// <summary>
-    /// 获取右边列
-    /// </summary>
-    /// <param name="columName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IPrefixField? GetRightField(string columName)
         => _source.GetPrefixField(columName);
     #endregion
     #region Field
-    /// <summary>
-    /// 获取右边字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IField LeftField(string fieldName)
         => _left.Field(fieldName);
-    /// <summary>
-    /// 获取右边字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IField RightField(string fieldName)
         => _source.Field(fieldName);
     #endregion
     #region IJoinOn
+    /// <inheritdoc/>
     IJoinTable IJoinOn.Root
         => _root;
+    /// <inheritdoc/>
     IAliasTable IJoinOn.Left
         => _left;
+    /// <inheritdoc/>
     IAliasTable IJoinOn.JoinSource
         => _source;
+    /// <inheritdoc/>
     ISqlLogic IJoinOn.On
         => _filter;
     #endregion
     #region IMultiTable
-    /// <summary>
-    /// 获取联表成员
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IAliasTable? GetMember(string name)
     {
         if (_source.IsMatch(name))
@@ -134,42 +118,29 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     /// <summary>
     /// 应用过滤
     /// </summary>
-    /// <param name="filter"></param>
+    /// <param name="filter">过滤条件</param>
     internal void ApplyFilter(Func<TFilter, TFilter> filter)
         => _filter = filter(_filter);
     #endregion
     #region IDataFilter
+    /// <inheritdoc/>
     ITableView IDataFilter.Source
         => this;
+    /// <inheritdoc/>
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
     #region FilterBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
        => _prefixFields;
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => GetPrefixField(fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField NewField(string fieldName)
         => _source.NewField(fieldName);
-    /// <summary>
-    /// 获取比较字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override ICompareField GetCompareField(string fieldName)
     {
         return _source.GetPrefixField(fieldName)
@@ -178,19 +149,10 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     }
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写联接右表
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteRightSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
-    /// <summary>
-    /// 拼写联表条件
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
         => _filter.TryWrite(engine, sql);
     #endregion

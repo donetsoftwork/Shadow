@@ -8,44 +8,44 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表俩俩关联查询
 /// </summary>
-/// <param name="root"></param>
-/// <param name="left"></param>
-/// <param name="right"></param>
-/// <param name="onQuery"></param>
-public class JoinOnQuery(JoinTableQuery root, IAliasTable left, IAliasTable right, Logic onQuery)
-    : JoinOnCoreBase<JoinTableQuery, Logic>(root, left, right, onQuery), IDataQuery
+/// <param name="joinTable">联表</param>
+/// <param name="left">左</param>
+/// <param name="right">右</param>
+/// <param name="onQuery">联表逻辑</param>
+public class JoinOnQuery(JoinTableQuery joinTable, IAliasTable left, IAliasTable right, Logic onQuery)
+    : JoinOnCoreBase<JoinTableQuery, Logic>(joinTable, left, right, onQuery), IDataQuery
 {
     /// <summary>
     /// 联表俩俩关联查询
     /// </summary>
-    /// <param name="root"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    public JoinOnQuery(JoinTableQuery root, IAliasTable left, IAliasTable right)
-        : this(root, left, right, new AndLogic())
+    /// <param name="joinTable">联表</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    public JoinOnQuery(JoinTableQuery joinTable, IAliasTable left, IAliasTable right)
+        : this(joinTable, left, right, new AndLogic())
     {
     }
     #region Create
     /// <summary>
     /// 联表查询
     /// </summary>
-    /// <param name="t1"></param>
-    /// <param name="t2"></param>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
     /// <returns></returns>
-    public static JoinOnQuery Create(string t1, string t2)
-        => Create(EmptyTable.Use(t1), EmptyTable.Use(t2));
+    public static JoinOnQuery Create(string left, string right)
+        => Create(EmptyTable.Use(left), EmptyTable.Use(right));
     /// <summary>
     /// 联表查询
     /// </summary>
-    /// <param name="t1"></param>
-    /// <param name="t2"></param>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
     /// <returns></returns>
-    public static JoinOnQuery Create<TTable>(TTable t1, TTable t2)
+    public static JoinOnQuery Create<TTable>(TTable left, TTable right)
         where TTable : ITable
     {
         var joinTable = new JoinTableQuery();
-        var a1 = joinTable.CreateMember(t1);
-        var a2 = joinTable.CreateMember(t2);
+        var a1 = joinTable.CreateMember(left);
+        var a2 = joinTable.CreateMember(right);
         var joinOn = new JoinOnQuery(joinTable, a1, a2);
         joinTable.AddJoinOn(joinOn);
         return joinOn;
@@ -53,15 +53,15 @@ public class JoinOnQuery(JoinTableQuery root, IAliasTable left, IAliasTable righ
     /// <summary>
     /// 联表查询
     /// </summary>
-    /// <param name="t1"></param>
-    /// <param name="t2"></param>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
     /// <returns></returns>
-    public static JoinOnQuery Create(IAliasTable t1, IAliasTable t2)
+    public static JoinOnQuery Create(IAliasTable left, IAliasTable right)
     {
         var joinTable = new JoinTableQuery();
-        joinTable.AddMemberCore(t1);
-        joinTable.AddMemberCore(t2);
-        var joinOn = new JoinOnQuery(joinTable, t1, t2);
+        joinTable.AddMemberCore(left);
+        joinTable.AddMemberCore(right);
+        var joinOn = new JoinOnQuery(joinTable, left, right);
         joinTable.AddJoinOn(joinOn);
         return joinOn;
     }

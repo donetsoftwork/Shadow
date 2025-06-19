@@ -9,9 +9,9 @@ namespace ShadowSql.CompareLogics;
 /// <summary>
 /// 比较逻辑
 /// </summary>
-/// <param name="field"></param>
-/// <param name="op"></param>
-/// <param name="value"></param>
+/// <param name="field">字段</param>
+/// <param name="op">操作</param>
+/// <param name="value">值</param>
 public class CompareLogic(ICompareView field, CompareSymbol op, ICompareView value)
     : CompareLogicBase(field, op)
 {
@@ -25,33 +25,15 @@ public class CompareLogic(ICompareView field, CompareSymbol op, ICompareView val
     /// </summary>
     public ICompareView Value
         => _value;
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
         => new CompareLogic(_field, _operation.Not(), _value);
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         _field.Write(engine, sql);
         _operation.Write(engine, sql);
         _value.Write(engine, sql);
         return true;
-        //var point = sql.Length;
-        //if (_field.Write(engine, sql))
-        //{
-        //    _operation.Write(engine, sql);
-        //    if (_value.Write(engine, sql))
-        //        return true;
-        //}
-        ////回滚
-        //sql.Length = point;
-        //return false;
     }
 }

@@ -10,11 +10,11 @@ namespace Dapper.Shadow.GroupBy;
 /// 对Table进行分组查询
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="table"></param>
-/// <param name="where"></param>
-/// <param name="fields"></param>
-/// <param name="having"></param>
+/// <param name="executor">执行器</param>
+/// <param name="table">表</param>
+/// <param name="where">查询条件</param>
+/// <param name="fields">字段</param>
+/// <param name="having">分组查询条件</param>
 public class DapperGroupByTableQuery<TTable>(IExecutor executor, TTable table, ISqlLogic where, IField[] fields, Logic having)
     : GroupByTableQuery<TTable>(table, where, fields, having)
     , IDapperSource
@@ -32,8 +32,8 @@ public class DapperGroupByTableQuery<TTable>(IExecutor executor, TTable table, I
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="aggregate"></param>
-    /// <param name="query"></param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public GroupByTableQuery<TTable> Apply(Func<TTable, IAggregateField> aggregate, Func<Logic, IAggregateField, Logic> query)
     {

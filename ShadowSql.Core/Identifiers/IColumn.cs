@@ -8,7 +8,7 @@ public interface IColumn : IField, IIdentifier
     ///// <summary>
     ///// 增加前缀
     ///// </summary>
-    ///// <param name="prefix"></param>
+    ///// <param name="prefix">前缀</param>
     ///// <returns></returns>
     //IPrefixField GetPrefixColumn(params string[] prefix);
 }
@@ -25,7 +25,7 @@ public interface IColumn : IField, IIdentifier
 //    /// <summary>
 //    /// 匹配列
 //    /// </summary>
-//    /// <param name="column"></param>
+//    /// <param name="column">列</param>
 //    /// <returns></returns>
 //    bool IsMatch(IColumn column);
 //    ///// <summary>

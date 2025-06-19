@@ -8,9 +8,9 @@ namespace ShadowSql.Variants;
 /// </summary>
 /// <typeparam name="TFragment"></typeparam>
 /// <param name="target"></param>
-/// <param name="alias"></param>
-public abstract class SqlAlias<TFragment>(TFragment target, string alias)
-    : IdentifierBase(alias), IView
+/// <param name="aliasName">别名</param>
+public abstract class SqlAlias<TFragment>(TFragment target, string aliasName)
+    : IdentifierBase(aliasName), IView
     where TFragment : ISqlEntity
 {  
     /// <summary>
@@ -27,6 +27,7 @@ public abstract class SqlAlias<TFragment>(TFragment target, string alias)
     /// </summary>
     public string Alias
         => _name;
+    /// <inheritdoc/>
 
     string IView.ViewName
         => _name;

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Text;
@@ -22,8 +22,8 @@ public interface ISelectFields
     /// <summary>
     /// 输出被筛选列
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     bool WriteSelected(ISqlEngine engine, StringBuilder sql);
 }

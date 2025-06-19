@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 
 namespace ShadowSql;
 
@@ -15,7 +15,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AndLogic And(this AtomicLogic logic, AtomicLogic other)
@@ -26,7 +26,7 @@ public static partial class ShadowSqlCoreServices
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IAndLogic And(this AtomicLogic logic, IAndLogic other)
@@ -36,7 +36,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AndLogic And(this AtomicLogic logic, AndLogic other)
@@ -46,7 +46,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic And(this AtomicLogic logic, ComplexAndLogic other)
@@ -56,7 +56,7 @@ public static partial class ShadowSqlCoreServices
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IAndLogic And(this AtomicLogic logic, IOrLogic other)
@@ -65,7 +65,7 @@ public static partial class ShadowSqlCoreServices
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IAndLogic And(this IOrLogic other, AtomicLogic logic)
     //    => other.ToAnd()
@@ -75,7 +75,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this AtomicLogic logic, OrLogic other)
@@ -85,7 +85,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic And(this AtomicLogic logic, ComplexOrLogic other)
@@ -97,7 +97,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static OrLogic Or(this AtomicLogic logic, AtomicLogic other)
@@ -108,7 +108,7 @@ public static partial class ShadowSqlCoreServices
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IOrLogic Or(this AtomicLogic logic, IAndLogic other)
@@ -117,7 +117,7 @@ public static partial class ShadowSqlCoreServices
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IOrLogic Or(this IAndLogic other, AtomicLogic logic)
     //  => other.ToOr()
@@ -127,7 +127,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this AtomicLogic logic, AndLogic other)
@@ -137,7 +137,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic Or(this AtomicLogic logic, ComplexAndLogic other)
@@ -147,7 +147,7 @@ public static partial class ShadowSqlCoreServices
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IOrLogic Or(this AtomicLogic logic, IOrLogic other)
@@ -157,7 +157,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static OrLogic Or(this AtomicLogic logic, OrLogic other)
@@ -167,7 +167,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexOrLogic Or(this AtomicLogic logic, ComplexOrLogic other)

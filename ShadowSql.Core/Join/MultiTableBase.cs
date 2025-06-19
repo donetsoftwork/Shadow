@@ -14,7 +14,7 @@ namespace ShadowSql.Join;
 /// 多(联)表基类
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="filter"></param>
+/// <param name="filter">过滤条件</param>
 public abstract class MultiTableBase<TFilter>(TFilter filter)
     : MultiTableBase, IDataFilter, ITableView
     where TFilter : ISqlLogic
@@ -26,18 +26,15 @@ public abstract class MultiTableBase<TFilter>(TFilter filter)
     internal TFilter _filter = filter;
     #endregion
     #region IDataFilter
+    /// <inheritdoc/>
     ITableView IDataFilter.Source
         => this;
+    /// <inheritdoc/>
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写过滤条件
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
         => _filter.TryWrite(engine, sql);
     #endregion
@@ -91,7 +88,7 @@ public abstract class MultiTableBase
     /// <summary>
     /// 添加表成员
     /// </summary>
-    /// <param name="aliasTable"></param>
+    /// <param name="aliasTable">别名表</param>
     internal void AddMemberCore(IAliasTable aliasTable)
         => _tables.Add(aliasTable);
     #endregion
@@ -99,7 +96,7 @@ public abstract class MultiTableBase
     /// <summary>
     /// 获取联表成员
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public IAliasTable? GetMember(string tableName)
         => _tables.FirstOrDefault(m => m.IsMatch(tableName));
@@ -107,7 +104,7 @@ public abstract class MultiTableBase
     /// <summary>
     /// 获取列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     public IPrefixField? GetPrefixField(string columName)
     {
@@ -124,73 +121,28 @@ public abstract class MultiTableBase
     /// </summary>
     public IEnumerable<IPrefixField> PrefixFields
         => _tables.SelectMany(m => m.PrefixFields);
-    #endregion
-    ///// <summary>
-    ///// 获取比较列
-    ///// </summary>
-    ///// <param name="fieldName"></param>
-    ///// <returns></returns>
-    //internal override ICompareField GetCompareField(string fieldName)
-    //{
-    //    if (GetPrefixField(fieldName) is ICompareField prefixField)
-    //        return prefixField;
-    //    return GetField(fieldName);
-    //}
-    //#region ITableView
-    ///// <summary>
-    ///// 获取所有列
-    ///// </summary>
-    ///// <returns></returns>
-    //protected override IEnumerable<IColumn> GetFields()
-    //    => PrefixFields;
-    ///// <summary>
-    ///// 获取列
-    ///// </summary>
-    ///// <param name="columName"></param>
-    ///// <returns></returns>
-    //public override IColumn? GetColumn(string columName)
-    //    => GetPrefixField(columName);
-    //#endregion
+    #endregion    
     #region FilterBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
         => _tables.SelectMany(m => m.PrefixFields);
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => GetPrefixField(fieldName);
-    /// <summary>
-    /// 获取比较字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override ICompareField GetCompareField(string fieldName)
     {
         if(GetPrefixField(fieldName) is IPrefixField field)
             return field;
         return Column.Use(fieldName);
     }
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField NewField(string fieldName)
         => Column.Use(fieldName);
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写多表数据源sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
+    /// <exception cref="InvalidOperationException"></exception>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         if (_tables.Count == 0)

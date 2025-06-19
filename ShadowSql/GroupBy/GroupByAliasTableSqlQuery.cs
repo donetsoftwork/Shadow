@@ -3,7 +3,6 @@ using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using ShadowSql.Variants;
 using System;
 using System.Text;
 
@@ -13,22 +12,22 @@ namespace ShadowSql.GroupBy;
 /// 对别名表分组
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-/// <param name="where"></param>
-/// <param name="fields"></param>
-/// <param name="having"></param>
-public class GroupByAliasTableSqlQuery<TTable>(IAliasTable<TTable> source, ISqlLogic where, IField[] fields, SqlQuery having)
-    : GroupBySqlQueryBase<IAliasTable<TTable>>(source, fields, having)
+/// <param name="aliasTable">别名表</param>
+/// <param name="where">查询条件</param>
+/// <param name="fields">字段</param>
+/// <param name="having">分组查询条件</param>
+public class GroupByAliasTableSqlQuery<TTable>(IAliasTable<TTable> aliasTable, ISqlLogic where, IField[] fields, SqlQuery having)
+    : GroupBySqlQueryBase<IAliasTable<TTable>>(aliasTable, fields, having)
     where TTable : ITable
 {
     /// <summary>
     /// 对TableQuery进行分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
-    public GroupByAliasTableSqlQuery(IAliasTable<TTable> table, ISqlLogic where, IField[] fields)
-        : this(table, where, fields, SqlQuery.CreateAndQuery())
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
+    public GroupByAliasTableSqlQuery(IAliasTable<TTable> aliasTable, ISqlLogic where, IField[] fields)
+        : this(aliasTable, where, fields, SqlQuery.CreateAndQuery())
     {
     }
     #region 配置
@@ -49,9 +48,9 @@ public class GroupByAliasTableSqlQuery<TTable>(IAliasTable<TTable> source, ISqlL
     /// <summary>
     /// 按聚合逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="aggregate"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByAliasTableSqlQuery<TTable> HavingAggregate(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
@@ -63,8 +62,8 @@ public class GroupByAliasTableSqlQuery<TTable>(IAliasTable<TTable> source, ISqlL
     /// <summary>
     /// 数据源拼写(+WHERE)
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
     {

@@ -6,10 +6,12 @@ namespace Shadow.DDL;
 /// <summary>
 /// 构造表架构
 /// </summary>
-public class TableSchemaBuilder(string name, string schema = "")
+/// <param name="tableName">表名</param>
+/// <param name="schema"></param>
+public class TableSchemaBuilder(string tableName, string schema = "")
 {
     #region 配置
-    private readonly string _name = name;
+    private readonly string _name = tableName;
     private readonly string _schema = schema;
     private readonly List<ColumnSchema> _columns = [];
     /// <summary>
@@ -31,8 +33,8 @@ public class TableSchemaBuilder(string name, string schema = "")
     /// <summary>
     /// 定义列
     /// </summary>
-    /// <param name="columnName"></param>
-    /// <param name="sqlType"></param>
+    /// <param name="columnName">列名</param>
+    /// <param name="sqlType">数据库字段类型</param>
     /// <returns></returns>
     public ColumnSchema DefineColumn(string columnName, string sqlType = "INT")
     {
@@ -43,8 +45,8 @@ public class TableSchemaBuilder(string name, string schema = "")
     /// <summary>
     /// 定义主键
     /// </summary>
-    /// <param name="sqlType"></param>
-    /// <param name="columnName"></param>
+    /// <param name="sqlType">数据库字段类型</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     public TableSchemaBuilder DefinColumns(string sqlType, params IEnumerable<string> columnName)
     {
@@ -55,8 +57,8 @@ public class TableSchemaBuilder(string name, string schema = "")
     /// <summary>
     /// 定义主键
     /// </summary>
-    /// <param name="sqlType"></param>
-    /// <param name="columnName"></param>
+    /// <param name="sqlType">数据库字段类型</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     public TableSchemaBuilder DefineKeys(string sqlType, params IEnumerable<string> columnName)
     {
@@ -67,8 +69,8 @@ public class TableSchemaBuilder(string name, string schema = "")
     /// <summary>
     /// 定义主键
     /// </summary>
-    /// <param name="sqlType"></param>
-    /// <param name="columnName"></param>
+    /// <param name="sqlType">数据库字段类型</param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     public TableSchemaBuilder DefineIdentity(string columnName, string sqlType = "INT")
     {

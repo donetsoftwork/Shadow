@@ -14,7 +14,7 @@ public static class SymbolManager
     /// <summary>
     /// 转换为算术运算符
     /// </summary>
-    /// <param name="symbol"></param>
+    /// <param name="symbol">操作符</param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
     public static ArithmeticSymbol GetArithmeticSymbol(ExpressionType symbol)
@@ -35,7 +35,7 @@ public static class SymbolManager
     /// <summary>
     /// 转换为比较运算符
     /// </summary>
-    /// <param name="symbol"></param>
+    /// <param name="symbol">操作符</param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
     public static CompareSymbol GetCompareSymbol(ExpressionType symbol)
@@ -54,7 +54,7 @@ public static class SymbolManager
     /// <summary>
     /// 转换为赋值运算符
     /// </summary>
-    /// <param name="symbol"></param>
+    /// <param name="symbol">操作符</param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
     public static AssignSymbol GetAssignSymbol(ExpressionType symbol)

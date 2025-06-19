@@ -1,4 +1,4 @@
-﻿using Shadow.DDL.Schemas;
+using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
 using System.Text;
 
@@ -12,9 +12,9 @@ public class DefineMySqlColumComponent : IDefineColumComponent
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="column"></param>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="column">列</param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     public void WriteColumnSchema(ColumnSchema column, ISqlEngine engine, StringBuilder sql)
     {
         engine.Identifier(sql, column.Name);

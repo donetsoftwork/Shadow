@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,7 +35,7 @@ public interface IExecutor
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="view"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     T? Count<T>(ITableView view, object? param = null);
     #endregion
@@ -45,7 +45,7 @@ public interface IExecutor
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="view"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     Task<T?> CountAsync<T>(ITableView view, object? param = null);
     #endregion

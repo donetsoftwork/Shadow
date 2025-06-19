@@ -28,20 +28,21 @@ public abstract class UpdateBase : ISqlEntity
     /// <summary>
     /// 添加修改信息
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     internal void SetCore(IAssignInfo operation)
     {
         _assignInfos.Add(operation);
     }
     #endregion
     #region ISqlEntity
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteCore(engine, sql);
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected virtual void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
@@ -52,15 +53,15 @@ public abstract class UpdateBase : ISqlEntity
     /// <summary>
     /// 拼写Update子句
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected virtual void WriteUpdate(ISqlEngine engine, StringBuilder sql)
         => engine.UpdatePrefix(sql);
     /// <summary>
     /// 拼写Set子句
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <exception cref="InvalidOperationException"></exception>
     protected void WriteSet(ISqlEngine engine, StringBuilder sql)
     {
@@ -80,14 +81,14 @@ public abstract class UpdateBase : ISqlEntity
     /// <summary>
     /// 拼写数据源
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected abstract void WriteSource(ISqlEngine engine, StringBuilder sql);
     #endregion
     /// <summary>
     /// 获取赋值字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     internal abstract IAssignView GetAssignField(string fieldName);
 }

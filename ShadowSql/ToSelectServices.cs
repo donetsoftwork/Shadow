@@ -22,7 +22,7 @@ public static partial class ShadowSqlServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static TableSelect<TTable> ToSelect<TTable>(this TTable table)
         where TTable : ITable
@@ -31,8 +31,8 @@ public static partial class ShadowSqlServices
     /// 表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     /// <returns></returns>
     public static TableSelect<TTable> ToSelect<TTable>(this TTable table, ISqlLogic filter)
         where TTable : ITable
@@ -41,8 +41,8 @@ public static partial class ShadowSqlServices
     /// 表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     /// <returns></returns>
     public static TableSelect<TTable> ToSelect<TTable>(this TTable table, Func<TTable, ISqlLogic> filter)
         where TTable : ITable
@@ -51,7 +51,7 @@ public static partial class ShadowSqlServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableSelect<TTable> ToSelect<TTable>(this TableQuery<TTable> query)
         where TTable : ITable
@@ -59,7 +59,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableSelect<ITable> ToSelect(this TableQuery query)
         => new(query, (ITable)query.Source);
@@ -67,7 +67,7 @@ public static partial class ShadowSqlServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableSelect<TTable> ToSelect<TTable>(this TableSqlQuery<TTable> query)
         where TTable : ITable
@@ -75,7 +75,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableSelect<ITable> ToSelect(this TableSqlQuery query)
         => new(query, (ITable)query.Source);
@@ -85,7 +85,7 @@ public static partial class ShadowSqlServices
     /// 表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static TableCursorSelect<TTable> ToSelect<TTable>(this TableCursor<TTable> cursor)
         where TTable : ITable
@@ -96,7 +96,7 @@ public static partial class ShadowSqlServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static AliasTableSelect<TTable> ToSelect<TTable>(this IAliasTable<TTable> table)
         where TTable : ITable
@@ -105,8 +105,8 @@ public static partial class ShadowSqlServices
     /// 别名表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     /// <returns></returns>
     public static AliasTableSelect<TTable> ToSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter)
         where TTable : ITable
@@ -115,7 +115,7 @@ public static partial class ShadowSqlServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static AliasTableSelect<TTable> ToSelect<TTable>(this AliasTableSqlQuery<TTable> query)
         where TTable : ITable
@@ -124,7 +124,7 @@ public static partial class ShadowSqlServices
     /// 别名表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static AliasTableCursorSelect<TTable> ToSelect<TTable>(this AliasTableCursor<TTable> cursor)
         where TTable : ITable
@@ -134,14 +134,14 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static MultiTableSelect ToSelect(this IMultiView table)
         => new(table);
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static MultiTableSelect ToSelect(this IJoinOn table)
         => new(table.Root);
@@ -150,7 +150,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static MultiTableCursorSelect ToSelect(this MultiTableCursor cursor)
         => new(cursor);
@@ -160,27 +160,27 @@ public static partial class ShadowSqlServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <returns></returns>
-    public static GroupByTableSelect<TTable> ToSelect<TTable>(this GroupByTableSqlQuery<TTable> source)
+    public static GroupByTableSelect<TTable> ToSelect<TTable>(this GroupByTableSqlQuery<TTable> groupBy)
         where TTable : ITable
-        => new(source);
+        => new(groupBy);
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <returns></returns>
-    public static GroupByTableSelect<TTable> ToSelect<TTable>(this GroupByTableQuery<TTable> source)
+    public static GroupByTableSelect<TTable> ToSelect<TTable>(this GroupByTableQuery<TTable> groupBy)
         where TTable : ITable
-        => new(source);
+        => new(groupBy);
     #endregion
     #region GroupByTableCursorSelect
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static GroupByTableCursorSelect<TTable> ToSelect<TTable>(this GroupByTableCursor<TTable> cursor)
         where TTable : ITable
@@ -191,16 +191,16 @@ public static partial class ShadowSqlServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="source"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <returns></returns>
-    public static GroupByAliasTableSelect<TTable> ToSelect<TTable>(this GroupByAliasTableSqlQuery<TTable> source)
+    public static GroupByAliasTableSelect<TTable> ToSelect<TTable>(this GroupByAliasTableSqlQuery<TTable> groupBy)
         where TTable : ITable
-        => new(source);
+        => new(groupBy);
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static GroupByAliasTableCursorSelect<TTable> ToSelect<TTable>(this GroupByAliasTableCursor<TTable> cursor)
         where TTable : ITable
@@ -210,14 +210,14 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <returns></returns>
     public static GroupByMultiSelect ToSelect(this GroupByMultiSqlQuery groupBy)
         => new(groupBy);
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <returns></returns>
     public static GroupByMultiSelect ToSelect(this GroupByMultiQuery groupBy)
         => new(groupBy);
@@ -226,7 +226,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static GroupByMultiCursorSelect ToSelect(this GroupByMultiCursor cursor)
         => new(cursor);

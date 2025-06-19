@@ -1,11 +1,11 @@
-﻿using System.Threading;
+using System.Threading;
 
 namespace ShadowSql.Generators;
 
 /// <summary>
 /// Id自增标识生成器
 /// </summary>
-/// <param name="prefix"></param>
+/// <param name="prefix">前缀</param>
 /// <param name="id"></param>
 /// <param name="step"></param>
 public class IdIncrementGenerator(string prefix, int id = 0, int step = 1)

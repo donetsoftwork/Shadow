@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Collections.Generic;
 using System.Text;
 
@@ -71,18 +71,13 @@ public sealed class JoinFragment : ISqlFragment
         }
     }
     #region ISqlFragment
-    /// <summary>
-    /// 拼接片段
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="builder"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     bool ISqlFragment.TryWrite(ISqlEngine engine, StringBuilder builder)
         => TryWrite(engine, builder, false);
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
+    /// <param name="engine">数据库引擎</param>
     /// <param name="builder"></param>
     /// <param name="appended"></param>
     /// <returns></returns>

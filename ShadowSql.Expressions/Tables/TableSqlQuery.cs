@@ -19,8 +19,8 @@ public class TableSqlQuery<TEntity>
     /// <summary>
     /// sql查询表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     public TableSqlQuery(ITable table, SqlQuery query)
         : base(table, query)
     { 
@@ -28,7 +28,7 @@ public class TableSqlQuery<TEntity>
     /// <summary>
     /// sql查询表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableSqlQuery(ITable table)
         : base(table, SqlQuery.CreateAndQuery())
     {
@@ -36,7 +36,7 @@ public class TableSqlQuery<TEntity>
     /// <summary>
     /// sql查询表
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public TableSqlQuery(string tableName)
         : base(EmptyTable.Use(tableName), SqlQuery.CreateAndQuery())
     {
@@ -53,7 +53,7 @@ public class TableSqlQuery<TEntity>
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableSqlQuery<TEntity> Where(Expression<Func<TEntity, bool>> query)
     {
@@ -63,7 +63,7 @@ public class TableSqlQuery<TEntity>
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public TableSqlQuery<TEntity> Where<TParameter>(Expression<Func<TEntity, TParameter, bool>> query)
     {

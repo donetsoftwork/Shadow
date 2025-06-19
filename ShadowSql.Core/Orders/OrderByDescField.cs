@@ -14,16 +14,11 @@ public class OrderByDescField : Identifier, IOrderDesc
     /// 降序
     /// </summary>
     public const string Desc = " DESC";
-    private OrderByDescField(string name)
-        : base(name)
+    private OrderByDescField(string fieldName)
+        : base(fieldName)
     {
     }
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
     {
         base.Write(engine, sql);

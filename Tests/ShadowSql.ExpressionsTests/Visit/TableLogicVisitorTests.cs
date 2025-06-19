@@ -14,12 +14,21 @@ public class TableLogicVisitorTests
     static readonly ISqlEngine _engine = new MsSqlEngine();
 
     [Fact]
-    public void Executor()
+    public void Constant()
     {      
         Expression<Func<User, bool>> expression = u => u.Name.Equals("张三") && (u.Age == 10 || u.Belief == null);
         var visitor = TableVisitor.Where(EmptyTable.Use("Users"), new AndLogic(), expression);
         var sql = _engine.Sql(visitor.Logic);
         Assert.Equal("[Name]='张三' AND ([Age]=10 OR [Belief] IS NULL)", sql);
+    }
+    [Fact]
+    public void Constant2()
+    {
+        int id = 1;
+        Expression<Func<User, bool>> expression = u => u.Id == id;
+        var visitor = TableVisitor.Where(EmptyTable.Use("Users"), new AndLogic(), expression);
+        var sql = _engine.Sql(visitor.Logic);
+        Assert.Equal("[Id]=1", sql);
     }
     [Fact]
     public void Expression()
@@ -63,5 +72,14 @@ public class TableLogicVisitorTests
         var visitor = TableVisitor.Where(EmptyTable.Use("Users"), new AndLogic(), expression);
         var sql = _engine.Sql(visitor.Logic);
         Assert.Equal("[Id] IN @Items", sql);
+    }
+    [Fact]
+    public void Contains2()
+    {
+        int[] items = [1, 2, 3];
+        Expression<Func<User, bool>> expression = u => items.Contains(u.Id);
+        var visitor = TableVisitor.Where(EmptyTable.Use("Users"), new AndLogic(), expression);
+        var sql = _engine.Sql(visitor.Logic);
+        Assert.Equal("[Id] IN (1,2,3)", sql);
     }
 }

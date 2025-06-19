@@ -17,7 +17,7 @@ public static partial class ShadowSqlServicess
     /// 筛选列
     /// </summary>
     /// <typeparam name="TSelect"></typeparam>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <param name="action"></param>
     /// <returns></returns>
     public static TSelect Apply<TSelect>(this TSelect select, Action<TSelect> action)
@@ -31,20 +31,20 @@ public static partial class ShadowSqlServicess
     /// 筛选计数
     /// </summary>
     /// <typeparam name="TSelect"></typeparam>
-    /// <param name="select"></param>
-    /// <param name="alias"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public static TSelect SelectCount<TSelect>(this TSelect select, string alias = "Count")
+    public static TSelect SelectCount<TSelect>(this TSelect select, string aliasName = "Count")
         where TSelect : SelectFieldsBase, IGroupBySelect
     {
-        select.SelectCore(CountAliasFieldInfo.Use(alias));
+        select.SelectCore(CountAliasFieldInfo.Use(aliasName));
         return select;
     }
     /// <summary>
     /// 筛选分组字段
     /// </summary>
     /// <typeparam name="TSelect"></typeparam>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static TSelect SelectGroupBy<TSelect>(this TSelect select)
         where TSelect : SelectFieldsBase, IGroupBySelect
@@ -56,8 +56,8 @@ public static partial class ShadowSqlServicess
     /// 聚合筛选
     /// </summary>
     /// <typeparam name="TSelect"></typeparam>
-    /// <param name="select"></param>
-    /// <param name="aggregate"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="aggregate">聚合</param>
     /// <returns></returns>
     public static TSelect SelectAggregate<TSelect>(this TSelect select, Func<IGroupByView, IAggregateFieldAlias> aggregate)
         where TSelect : SelectFieldsBase, IGroupBySelect

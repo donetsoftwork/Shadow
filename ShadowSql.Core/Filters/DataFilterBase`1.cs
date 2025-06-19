@@ -10,9 +10,9 @@ namespace ShadowSql.Filters;
 /// 数据筛选基类
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="source"></param>
-/// <param name="filter"></param>
-public abstract class DataFilterBase<TFilter>(ITableView source, TFilter filter)
+/// <param name="view"></param>
+/// <param name="filter">过滤条件</param>
+public abstract class DataFilterBase<TFilter>(ITableView view, TFilter filter)
     : FilterBase, ITableView, IDataFilter
     where TFilter : ISqlLogic
 {
@@ -20,7 +20,7 @@ public abstract class DataFilterBase<TFilter>(ITableView source, TFilter filter)
     /// <summary>
     /// 数据源表
     /// </summary>
-    protected readonly ITableView _source = source;
+    protected readonly ITableView _source = view;
     /// <summary>
     /// 数据源表
     /// </summary>
@@ -37,54 +37,32 @@ public abstract class DataFilterBase<TFilter>(ITableView source, TFilter filter)
         => _filter;
     #endregion
     #region IDataFilter
+    /// <inheritdoc/>
     ITableView IDataFilter.Source
         => _source;
+    /// <inheritdoc/>
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
     #region FilterBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
         => _source.Fields;
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => _source.GetField(fieldName);
-    /// <summary>
-    /// 获取比较字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override ICompareField GetCompareField(string fieldName)
         => _source.GetCompareField(fieldName);
-    /// <summary>
-    /// 构造新字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField NewField(string fieldName)
         => _source.NewField(fieldName);
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写数据源(表)sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
-    /// <summary>
-    /// 筛选条件可选
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
         => _filter.TryWrite(engine, sql);
     #endregion

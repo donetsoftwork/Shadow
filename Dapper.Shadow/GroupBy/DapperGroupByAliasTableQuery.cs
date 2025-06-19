@@ -1,7 +1,6 @@
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.Variants;
 
 namespace Dapper.Shadow.GroupBy;
 
@@ -9,13 +8,13 @@ namespace Dapper.Shadow.GroupBy;
 /// 对别名表分组
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="source"></param>
-/// <param name="where"></param>
-/// <param name="fields"></param>
-/// <param name="having"></param>
-public class DapperGroupByAliasTableQuery<TTable>(IExecutor executor, IAliasTable<TTable> source, ISqlLogic where, IField[] fields, Logic having)
-    : GroupByAliasTableQuery<TTable>(source, where, fields, having)
+/// <param name="executor">执行器</param>
+/// <param name="aliasTable">别名表</param>
+/// <param name="where">查询条件</param>
+/// <param name="fields">字段</param>
+/// <param name="having">分组查询条件</param>
+public class DapperGroupByAliasTableQuery<TTable>(IExecutor executor, IAliasTable<TTable> aliasTable, ISqlLogic where, IField[] fields, Logic having)
+    : GroupByAliasTableQuery<TTable>(aliasTable, where, fields, having)
     , IDapperSource
     where TTable : ITable
 {

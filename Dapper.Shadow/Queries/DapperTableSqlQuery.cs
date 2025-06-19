@@ -10,9 +10,9 @@ namespace Dapper.Shadow.Queries;
 /// Dapper查询表
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="table"></param>
-/// <param name="query"></param>
+/// <param name="executor">执行器</param>
+/// <param name="table">表</param>
+/// <param name="query">查询</param>
 public class DapperTableSqlQuery<TTable>(IExecutor executor, TTable table, SqlQuery query)
     : TableSqlQuery<TTable>(table, query), IDapperSource
      where TTable : ITable
@@ -29,7 +29,7 @@ public class DapperTableSqlQuery<TTable>(IExecutor executor, TTable table, SqlQu
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public DapperTableSqlQuery<TTable> Where(Func<TTable, AtomicLogic> query)
     {
@@ -39,7 +39,7 @@ public class DapperTableSqlQuery<TTable>(IExecutor executor, TTable table, SqlQu
     /// <summary>
     /// 查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public DapperTableSqlQuery<TTable> Apply(Func<SqlQuery, TTable, SqlQuery> query)
     {

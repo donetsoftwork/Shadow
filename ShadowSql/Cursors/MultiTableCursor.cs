@@ -6,19 +6,19 @@ namespace ShadowSql.Cursors;
 /// <summary>
 /// 多联表范围筛选游标
 /// </summary>
-/// <param name="source"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
-    : CursorBase<IMultiView>(source, limit, offset)
+/// <param name="multiView">多(联)表</param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
+public class MultiTableCursor(IMultiView multiView, int limit = 0, int offset = 0)
+    : CursorBase<IMultiView>(multiView, limit, offset)
 {
     #region 功能
     #region TAliasTable
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursor Asc<TAliasTable>(string tableName, Func<TAliasTable, IOrderView> select)
         where TAliasTable : IAliasTable
@@ -30,8 +30,8 @@ public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursor Desc<TAliasTable>(string tableName, Func<TAliasTable, IOrderAsc> select)
         where TAliasTable : IAliasTable
@@ -46,8 +46,8 @@ public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
     /// 正序
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursor Asc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
@@ -63,8 +63,8 @@ public class MultiTableCursor(IMultiView source, int limit = 0, int offset = 0)
     /// 倒序
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableCursor Desc<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable

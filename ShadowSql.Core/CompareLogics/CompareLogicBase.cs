@@ -1,4 +1,4 @@
-﻿using ShadowSql.Compares;
+using ShadowSql.Compares;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 
@@ -7,8 +7,8 @@ namespace ShadowSql.CompareLogics;
 /// <summary>
 /// 字段操作基类
 /// </summary>
-/// <param name="field"></param>
-/// <param name="op"></param>
+/// <param name="field">字段</param>
+/// <param name="op">操作</param>
 public abstract class CompareLogicBase(ICompareView field, CompareSymbol op)
     : AtomicLogic/*, ICompareLogic*/
 {

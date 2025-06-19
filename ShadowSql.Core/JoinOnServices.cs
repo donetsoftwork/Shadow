@@ -20,7 +20,7 @@ public static partial class ShadowSqlCoreServices
     /// 内联
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <returns></returns>
     public static TjoinOn AsInnerJoin<TjoinOn>(this TjoinOn joinOn)
         where TjoinOn : JoinOnBase
@@ -32,7 +32,7 @@ public static partial class ShadowSqlCoreServices
     /// 外联
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <returns></returns>
     public static TjoinOn AsOuterJoin<TjoinOn>(this TjoinOn joinOn)
         where TjoinOn : JoinOnBase
@@ -44,7 +44,7 @@ public static partial class ShadowSqlCoreServices
     /// 左联
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <returns></returns>
     public static TjoinOn AsLeftJoin<TjoinOn>(this TjoinOn joinOn)
         where TjoinOn : JoinOnBase
@@ -56,7 +56,7 @@ public static partial class ShadowSqlCoreServices
     /// 右联
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <returns></returns>
     public static TjoinOn AsRightJoin<TjoinOn>(this TjoinOn joinOn)
         where TjoinOn : JoinOnBase
@@ -70,8 +70,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用左表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery LeftTableJoin(this JoinOnQuery joinOn, IAliasTable table)
     {
@@ -84,8 +84,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用左表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery LeftTableJoin(this JoinOnQuery joinOn, ITable table)
     {
@@ -98,8 +98,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用左表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="tableName"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static JoinOnQuery LeftTableJoin(this JoinOnQuery joinOn, string tableName)
         => LeftTableJoin(joinOn, EmptyTable.Use(tableName));
@@ -108,8 +108,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用右表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery RightTableJoin(this JoinOnQuery joinOn, IAliasTable table)
     {
@@ -122,8 +122,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用右表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery RightTableJoin(this JoinOnQuery joinOn, ITable table)
     {
@@ -136,8 +136,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用右表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="tableName"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static JoinOnQuery RightTableJoin(this JoinOnQuery joinOn, string tableName)
         => RightTableJoin(joinOn, EmptyTable.Use(tableName));
@@ -147,10 +147,10 @@ public static partial class ShadowSqlCoreServices
     /// 按列查询
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <param name="logic"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static TJoinOn Apply<TJoinOn>(this TJoinOn joinOn, string left, string right, Func<Logic, ICompareView, ICompareView, Logic> logic)
         where TJoinOn: JoinOnBase, IDataQuery
@@ -167,7 +167,7 @@ public static partial class ShadowSqlCoreServices
     /// 按原始sql查询
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <param name="conditions"></param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, params IEnumerable<string> conditions)
@@ -182,8 +182,8 @@ public static partial class ShadowSqlCoreServices
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="logic"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static TjoinOn On<TjoinOn>(this TjoinOn joinOn, AtomicLogic logic)
         where TjoinOn : JoinOnBase, IDataSqlQuery
@@ -195,8 +195,8 @@ public static partial class ShadowSqlCoreServices
     /// On
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TjoinOn On<TjoinOn>(this TjoinOn joinOn, Func<IJoinOn, AtomicLogic> query)
         where TjoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -208,8 +208,8 @@ public static partial class ShadowSqlCoreServices
     /// On
     /// </summary>
     /// <typeparam name="TjoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TjoinOn On<TjoinOn>(this TjoinOn joinOn, Func<IAliasTable, IAliasTable, AtomicLogic> query)
         where TjoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -223,8 +223,8 @@ public static partial class ShadowSqlCoreServices
     /// 按SqlQuery查询
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="query"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TJoinOn Apply<TJoinOn>(this TJoinOn joinOn, Func<SqlQuery, TJoinOn, SqlQuery> query)
         where TJoinOn : JoinOnBase, IDataSqlQuery, IJoinOn
@@ -239,9 +239,9 @@ public static partial class ShadowSqlCoreServices
     /// 按列联表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IColumn left, IColumn right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -250,10 +250,10 @@ public static partial class ShadowSqlCoreServices
     /// 按列联表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
     /// <param name="compare"></param>
-    /// <param name="right"></param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IColumn left, CompareSymbol compare, IColumn right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -268,9 +268,9 @@ public static partial class ShadowSqlCoreServices
     /// 按列联表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixField left, IPrefixField right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -279,10 +279,10 @@ public static partial class ShadowSqlCoreServices
     /// 按列联表
     /// </summary>
     /// <typeparam name="TJoinOn"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="left"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="left">左</param>
     /// <param name="compare"></param>
-    /// <param name="right"></param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static TJoinOn On<TJoinOn>(this TJoinOn joinOn, IPrefixField left, CompareSymbol compare, IPrefixField right)
         where TJoinOn : JoinOnBase, IJoinOn, IDataSqlQuery
@@ -293,7 +293,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 对列进行联表查询
     /// </summary>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <param name="leftColumn"></param>
     /// <param name="rightColumn"></param>
     /// <returns></returns>
@@ -303,9 +303,9 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 对列进行联表查询
     /// </summary>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     /// <param name="leftColumn"></param>
-    /// <param name="op"></param>
+    /// <param name="op">操作</param>
     /// <param name="rightColumn"></param>
     /// <returns></returns>
     public static TJoinOn OnColumn<TJoinOn>(this TJoinOn joinOn, string leftColumn, string op, string rightColumn)
@@ -316,8 +316,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用左表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery LeftTableJoin(this JoinOnSqlQuery joinOn, IAliasTable table)
     {
@@ -330,8 +330,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用左表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery LeftTableJoin(this JoinOnSqlQuery joinOn, ITable table)
     {
@@ -344,8 +344,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用左表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="tableName"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static JoinOnSqlQuery LeftTableJoin(this JoinOnSqlQuery joinOn, string tableName)
         => LeftTableJoin(joinOn, EmptyTable.Use(tableName));
@@ -354,8 +354,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用右表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery RightTableJoin(this JoinOnSqlQuery joinOn, IAliasTable table)
     {
@@ -368,8 +368,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用右表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery RightTableJoin(this JoinOnSqlQuery joinOn, ITable table)
     {
@@ -382,8 +382,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 用右表联新表
     /// </summary>
-    /// <param name="joinOn"></param>
-    /// <param name="tableName"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public static JoinOnSqlQuery RightTableJoin(this JoinOnSqlQuery joinOn, string tableName)
         => RightTableJoin(joinOn, EmptyTable.Use(tableName));
@@ -392,7 +392,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 应用sql查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <param name="on"></param>
     /// <returns></returns>
     public static JoinOnSqlQuery Apply(this JoinOnSqlQuery query, Func<SqlQuery, IAliasTable, IAliasTable,  SqlQuery> on)

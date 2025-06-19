@@ -10,22 +10,22 @@ namespace ShadowSql.AliasTables;
 /// 逻辑查询别名表
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="table"></param>
-/// <param name="filter"></param>
-public class AliasTableQuery<TTable>(IAliasTable<TTable> table, Logic filter)
-    : DataFilterBase<IAliasTable<TTable>, Logic>(table, filter), IDataQuery
+/// <param name="aliasTable">别名表</param>
+/// <param name="filter">过滤条件</param>
+public class AliasTableQuery<TTable>(IAliasTable<TTable> aliasTable, Logic filter)
+    : DataFilterBase<IAliasTable<TTable>, Logic>(aliasTable, filter), IDataQuery
     where TTable : ITable
 {
     /// <summary>
     /// 逻辑查询别名表
     /// </summary>
-    /// <param name="table"></param>
-    public AliasTableQuery(IAliasTable<TTable> table)
-        : this(table, new AndLogic())
+    /// <param name="aliasTable">别名表</param>
+    public AliasTableQuery(IAliasTable<TTable> aliasTable)
+        : this(aliasTable, new AndLogic())
     {
     }
     #region 配置
-    private readonly TTable _table = table.Target;
+    private readonly TTable _table = aliasTable.Target;
     /// <summary>
     /// 原始表
     /// </summary>
@@ -36,8 +36,8 @@ public class AliasTableQuery<TTable>(IAliasTable<TTable> table, Logic filter)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
@@ -47,8 +47,8 @@ public class AliasTableQuery<TTable>(IAliasTable<TTable> table, Logic filter)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
@@ -59,11 +59,12 @@ public class AliasTableQuery<TTable>(IAliasTable<TTable> table, Logic filter)
     /// <summary>
     /// 增加前缀
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     protected IPrefixField Prefix(Func<TTable, IColumn> select)
         => _source.Prefix(select(_table));
     #region IDataQuery
+    /// <inheritdoc/>
     Logic IDataQuery.Logic
     {
         get => _filter;

@@ -10,9 +10,7 @@ namespace ShadowSql.Arithmetic;
 /// </summary>
 public sealed class ArithmeticSymbol : ISqlEntity
 {
-    /// <summary>
-    /// 算术运算符
-    /// </summary>
+    /// <inheritdoc />
     private ArithmeticSymbol(char operation)
     {
         _operation = operation;
@@ -28,15 +26,11 @@ public sealed class ArithmeticSymbol : ISqlEntity
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     internal void WriteCore(ISqlEngine engine, StringBuilder sql)
         => sql.Append(_operation);
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteCore(engine, sql);
     #region Manager
@@ -75,7 +69,7 @@ public sealed class ArithmeticSymbol : ISqlEntity
     /// <summary>
     /// 获取操作符
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public static ArithmeticSymbol Get(string operation)
     {

@@ -76,22 +76,14 @@ public class NotStatementLogic : AtomicLogic
     private static readonly CacheService<AtomicLogic> _cacher = new(static statement => new NotStatementLogic(statement));
 
     #region AtomicLogic
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
         engine.LogicNot(sql);
         sql.Append(_statement);
         return true;
     }
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override AtomicLogic Not()
         => StatementLogic.Use(_statement);
     #endregion

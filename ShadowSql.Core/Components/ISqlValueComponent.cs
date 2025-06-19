@@ -1,4 +1,4 @@
-﻿using ShadowSql.SqlVales;
+using ShadowSql.SqlVales;
 
 namespace ShadowSql.Components;
 
@@ -11,7 +11,7 @@ public interface ISqlValueComponent
     /// 获取数据库值
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="value"></param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     ISqlValue SqlValue<T>(T value);
 }

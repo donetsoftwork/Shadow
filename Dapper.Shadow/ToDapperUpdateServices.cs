@@ -17,8 +17,8 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, ISqlLogic where)
         where TTable : IDapperTable, IUpdateTable
@@ -26,8 +26,8 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
         where TTable : IDapperTable, IUpdateTable
@@ -35,11 +35,11 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
-    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
+    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> query)
         where TTable : IDapperTable, IUpdateTable
-        => new(tableQuery.Source.Executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
+        => new(query.Source.Executor, query.Source, ((IDataFilter)query).Filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>
@@ -56,9 +56,9 @@ public static partial class DapperShadowServices
     /// 修改
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, ISqlLogic where, IExecutor executor)
         where TTable : IUpdateTable
@@ -66,9 +66,9 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TTable table, Func<TTable, ISqlLogic> query, IExecutor executor)
         where TTable : IUpdateTable
@@ -76,19 +76,19 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
-    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> tableQuery, IExecutor executor)
+    public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable, IUpdateTable
-        => new(executor, tableQuery.Source, ((IDataFilter)tableQuery).Filter);
+        => new(executor, query.Source, ((IDataFilter)query).Filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>
     /// 修改
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="executor"></param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperMultiTableUpdate ToDapperUpdate(this IMultiView view, IExecutor executor)
         => new(executor, view);

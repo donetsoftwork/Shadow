@@ -9,22 +9,22 @@ namespace ShadowSql.Delete;
 /// <summary>
 /// 多表(联表)数据删除
 /// </summary>
-/// <param name="multiTable"></param>
-/// <param name="target"></param>
-public class MultiTableDelete(IMultiView multiTable, IAliasTable target)
+/// <param name="multiTable">多表(联表)</param>
+/// <param name="aliasTable">别名表</param>
+public class MultiTableDelete(IMultiView multiTable, IAliasTable aliasTable)
     : IDelete
 {
     /// <summary>
     /// 多表(联表)数据删除
     /// </summary>
-    /// <param name="multiTable"></param>
+    /// <param name="multiTable">多表(联表)</param>
     public MultiTableDelete(IMultiView multiTable)
         : this(multiTable, multiTable.Tables.First())
     { 
     }
     #region 配置
     private readonly IMultiView _multiTable = multiTable;
-    internal IAliasTable _source = target;
+    internal IAliasTable _source = aliasTable;
     /// <summary>
     /// 被删除表
     /// </summary>
@@ -41,12 +41,7 @@ public class MultiTableDelete(IMultiView multiTable, IAliasTable target)
         => _source;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         engine.DeletePrefix(sql);

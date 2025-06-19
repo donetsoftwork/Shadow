@@ -9,19 +9,19 @@ namespace Dapper.Shadow.Select;
 /// Dapper表筛选列
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="source"></param>
-/// <param name="target"></param>
-public class DapperTableSelect<TTable>(IExecutor executor, ITableView source, TTable target)
-    : SelectBase<ITableView, TTable>(source, target)
+/// <param name="executor">执行器</param>
+/// <param name="view"></param>
+/// <param name="table">表</param>
+public class DapperTableSelect<TTable>(IExecutor executor, ITableView view, TTable table)
+    : SelectBase<ITableView, TTable>(view, table)
     , IDapperSelect
     where TTable : ITable
 {
     /// <summary>
     /// Dapper表筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="table"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="table">表</param>
     public DapperTableSelect(IExecutor executor, TTable table)
         : this(executor, table, table)
     {
@@ -29,9 +29,9 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView source, TT
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     public DapperTableSelect(IExecutor executor, TTable table, ISqlLogic where)
         : this(executor, new TableFilter(table, where), table)
     {
@@ -39,8 +39,8 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView source, TT
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="query"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="query">查询</param>
     public DapperTableSelect(IExecutor executor, TableSqlQuery<TTable> query)
         : this(executor, query, query.Source)
     {
@@ -48,8 +48,8 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView source, TT
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="query"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="query">查询</param>
     public DapperTableSelect(IExecutor executor, TableQuery<TTable> query)
         : this(executor, query, query.Source)
     {

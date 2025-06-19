@@ -16,8 +16,8 @@ public static class ShadowSqlExtendServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static JoinOnQuery<TLeft, TRight> Join<TLeft, TRight>(this IAliasTable left, IAliasTable right)
     {
@@ -35,8 +35,8 @@ public static class ShadowSqlExtendServices
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
     /// <typeparam name="TOther"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery<TLeft, TOther> LeftTableJoin<TLeft, TRight, TOther>(this JoinOnQuery<TLeft, TRight> joinOn, IAliasTable table)
     {
@@ -51,8 +51,8 @@ public static class ShadowSqlExtendServices
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
     /// <typeparam name="TOther"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery<TRight, TOther> RightTableJoin<TLeft, TRight, TOther>(this JoinOnQuery<TLeft, TRight> joinOn, IAliasTable table)
     {
@@ -69,8 +69,8 @@ public static class ShadowSqlExtendServices
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<TLeft, TRight> SqlJoin<TLeft, TRight>(this IAliasTable left, IAliasTable right)
     {
@@ -88,8 +88,8 @@ public static class ShadowSqlExtendServices
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
     /// <typeparam name="TOther"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<TLeft, TOther> LeftTableJoin<TLeft, TRight, TOther>(this JoinOnSqlQuery<TLeft, TRight> joinOn, IAliasTable table)
     {
@@ -104,8 +104,8 @@ public static class ShadowSqlExtendServices
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
     /// <typeparam name="TOther"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<TRight, TOther> RightTableJoin<TLeft, TRight, TOther>(this JoinOnSqlQuery<TLeft, TRight> joinOn, IAliasTable table)
     {

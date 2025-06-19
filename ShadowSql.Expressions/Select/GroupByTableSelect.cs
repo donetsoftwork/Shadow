@@ -21,7 +21,7 @@ public class GroupByTableSelect<TKey, TEntity> : GroupBySelectBase<IGroupByView,
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByTableSelect(GroupByTableSqlQuery<TKey, TEntity> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -29,7 +29,7 @@ public class GroupByTableSelect<TKey, TEntity> : GroupBySelectBase<IGroupByView,
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByTableSelect(GroupByTableQuery<TKey, TEntity> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -37,7 +37,7 @@ public class GroupByTableSelect<TKey, TEntity> : GroupBySelectBase<IGroupByView,
     /// <summary>
     /// 筛选分组列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByTableSelect<TKey, TEntity> Select<TProperty>(Expression<Func<TKey, TProperty>> select)
     {
@@ -47,7 +47,7 @@ public class GroupByTableSelect<TKey, TEntity> : GroupBySelectBase<IGroupByView,
     /// <summary>
     /// 从聚合筛选
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByTableSelect<TKey, TEntity> Select<TProperty>(Expression<Func<IGrouping<TKey, TEntity>, TProperty>> select)
     {

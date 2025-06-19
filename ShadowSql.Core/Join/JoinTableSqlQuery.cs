@@ -7,7 +7,7 @@ namespace ShadowSql.Join;
 /// <summary>
 /// 联表查询
 /// </summary>
-/// <param name="filter"></param>
+/// <param name="filter">过滤条件</param>
 public class JoinTableSqlQuery(SqlQuery filter)
     : JoinTableBase<SqlQuery>(filter), IDataSqlQuery, IWhere
 {

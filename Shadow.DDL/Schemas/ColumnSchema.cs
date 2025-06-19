@@ -7,10 +7,10 @@ namespace Shadow.DDL.Schemas;
 /// <summary>
 /// 列定义
 /// </summary>
-/// <param name="name"></param>
-/// <param name="sqlType"></param>
-public class ColumnSchema(string name, string sqlType = "INT")
-    : ColumnBase(name), IColumn
+/// <param name="columnName">列</param>
+/// <param name="sqlType">数据库字段类型</param>
+public class ColumnSchema(string columnName, string sqlType = "INT")
+    : ColumnBase(columnName), IColumn
 {
     private readonly string _sqlType = sqlType.ToUpperInvariant();
     /// <summary>
@@ -62,21 +62,21 @@ public class ColumnSchema(string name, string sqlType = "INT")
     /// <summary>
     /// 获取主键
     /// </summary>
-    /// <param name="fields"></param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetKeys(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & ColumnType.Key) == ColumnType.Key);
     /// <summary>
     /// 获取插入列
     /// </summary>
-    /// <param name="fields"></param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetInsertColumns(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & InsertIgnoreType) == ColumnType.Empty);
     /// <summary>
     /// 获取修改列
     /// </summary>
-    /// <param name="fields"></param>
+    /// <param name="fields">字段</param>
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
         => fields.Where(o => (o.ColumnType & UpdateIgnoreType) == ColumnType.Empty);

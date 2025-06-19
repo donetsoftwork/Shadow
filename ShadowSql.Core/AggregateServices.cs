@@ -13,7 +13,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 字段去重统计
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     /// <returns></returns>
     public static DistinctCountFieldInfo DistinctCount(this ICompareField field)
         => new(field);
@@ -44,8 +44,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 聚合
     /// </summary>
-    /// <param name="field"></param>
-    /// <param name="aggregate"></param>
+    /// <param name="field">字段</param>
+    /// <param name="aggregate">聚合</param>
     /// <returns></returns>
     public static IAggregateField Aggregate(this ICompareField field, string aggregate)
         => field.AggregateTo(aggregate);
@@ -54,81 +54,81 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="view"></param>
+    /// <param name="groupBy">分组查询</param>
     /// <returns></returns>
-    public static CountFieldInfo Count(this IGroupByView view)
+    public static CountFieldInfo Count(this IGroupByView groupBy)
         => CountFieldInfo.Instance;
     /// <summary>
     /// 计数聚合
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="field"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
-    public static DistinctCountFieldInfo DistinctCount(this IGroupByView view, string field)
-        => new(view.Source.GetCompareField(field));
+    public static DistinctCountFieldInfo DistinctCount(this IGroupByView groupBy, string fieldName)
+        => new(groupBy.Source.GetCompareField(fieldName));
     /// <summary>
     /// 最大值聚合
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="field"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
-    public static IAggregateField Sum(this IGroupByView view, string field)
-        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Sum);
+    public static IAggregateField Sum(this IGroupByView groupBy, string fieldName)
+        => groupBy.Source.GetCompareField(fieldName).AggregateTo(AggregateConstants.Sum);
     /// <summary>
     /// 均值聚合
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="field"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
-    public static IAggregateField Avg(this IGroupByView view, string field)
-        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Avg);
+    public static IAggregateField Avg(this IGroupByView groupBy, string fieldName)
+        => groupBy.Source.GetCompareField(fieldName).AggregateTo(AggregateConstants.Avg);
     /// <summary>
     /// 最大值聚合
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="field"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
-    public static IAggregateField Max(this IGroupByView view, string field)
-        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Max);
+    public static IAggregateField Max(this IGroupByView groupBy, string fieldName)
+        => groupBy.Source.GetCompareField(fieldName).AggregateTo(AggregateConstants.Max);
     /// <summary>
     /// 最小值聚合
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="field"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
-    public static IAggregateField Min(this IGroupByView view, string field)
-        => view.Source.GetCompareField(field).AggregateTo(AggregateConstants.Min);
+    public static IAggregateField Min(this IGroupByView groupBy, string fieldName)
+        => groupBy.Source.GetCompareField(fieldName).AggregateTo(AggregateConstants.Min);
     /// <summary>
     /// 聚合
     /// </summary>
-    /// <param name="view"></param>
-    /// <param name="aggregate"></param>
-    /// <param name="field"></param>
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
-    public static IAggregateField Aggregate(this IGroupByView view, string aggregate, string field)
-        => view.Source.GetCompareField(field).AggregateTo(aggregate);
+    public static IAggregateField Aggregate(this IGroupByView groupBy, string aggregate, string fieldName)
+        => groupBy.Source.GetCompareField(fieldName).AggregateTo(aggregate);
     #endregion
     #region IAliasTable<TTable>
     ///// <summary>
     ///// 聚合
     ///// </summary>
     ///// <typeparam name="TTable"></typeparam>
-    ///// <param name="alias"></param>
-    ///// <param name="select"></param>
-    ///// <param name="aggregate"></param>
+    ///// <param name="aliasTable"></param>
+    ///// <param name="select">筛选</param>
+    ///// <param name="aggregate">聚合</param>
     ///// <returns></returns>
-    //public static IAggregateField Aggregate<TTable>(this IAliasTable<TTable> alias, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
+    //public static IAggregateField Aggregate<TTable>(this IAliasTable<TTable> aliasTable, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     //    where TTable : ITable
-    //    => aggregate(alias.Prefix(select(alias.Target)));
+    //    => aggregate(aliasTable.Prefix(select(aliasTable.Target)));
     #endregion
     #region IMultiView
     ///// <summary>
     ///// 聚合
     ///// </summary>
     ///// <typeparam name="TAliasTable"></typeparam>
-    ///// <param name="multiTable"></param>
-    ///// <param name="tableName"></param>
-    ///// <param name="aggregate"></param>
+    ///// <param name="multiTable">多表(联表)</param>
+    ///// <param name="tableName">表名</param>
+    ///// <param name="aggregate">聚合</param>
     ///// <returns></returns>
     //public static IAggregateField Aggregate<TAliasTable>(this IMultiView multiTable, string tableName, Func<TAliasTable, IAggregateField> aggregate)
     //    where TAliasTable : IAliasTable
@@ -136,9 +136,9 @@ public static partial class ShadowSqlCoreServices
     ///// <summary>
     ///// 聚合
     ///// </summary>
-    ///// <param name="multiTable"></param>
-    ///// <param name="tableName"></param>
-    ///// <param name="aggregate"></param>
+    ///// <param name="multiTable">多表(联表)</param>
+    ///// <param name="tableName">表名</param>
+    ///// <param name="aggregate">聚合</param>
     ///// <returns></returns>
     //public static IAggregateField Aggregate(this IMultiView multiTable, string tableName, Func<IAliasTable, IAggregateField> aggregate)
     //    => aggregate(multiTable.From(tableName));
@@ -146,10 +146,10 @@ public static partial class ShadowSqlCoreServices
     ///// 聚合
     ///// </summary>
     ///// <typeparam name="TTable"></typeparam>
-    ///// <param name="multiTable"></param>
-    ///// <param name="tableName"></param>
-    ///// <param name="select"></param>
-    ///// <param name="aggregate"></param>
+    ///// <param name="multiTable">多表(联表)</param>
+    ///// <param name="tableName">表名</param>
+    ///// <param name="select">筛选</param>
+    ///// <param name="aggregate">聚合</param>
     ///// <returns></returns>
     //public static IAggregateField Aggregate<TTable>(this IMultiView multiTable, string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate)
     //    where TTable : ITable

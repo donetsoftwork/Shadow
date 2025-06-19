@@ -15,7 +15,7 @@ public static partial class ShadowSqlCoreServices
     /// 添加表成员
     /// </summary>
     /// <typeparam name="MultiTable"></typeparam>
-    /// <param name="multiTable"></param>
+    /// <param name="multiTable">多表(联表)</param>
     /// <param name="aliasTables"></param>
     /// <returns></returns>
     public static MultiTable AddMembers<MultiTable>(this MultiTable multiTable, params IEnumerable<IAliasTable> aliasTables)
@@ -29,7 +29,7 @@ public static partial class ShadowSqlCoreServices
     /// 添加表成员
     /// </summary>
     /// <typeparam name="MultiTable"></typeparam>
-    /// <param name="multiTable"></param>
+    /// <param name="multiTable">多表(联表)</param>
     /// <param name="tables"></param>
     /// <returns></returns>
     public static MultiTable AddMembers<MultiTable>(this MultiTable multiTable, params IEnumerable<ITable> tables)
@@ -43,7 +43,7 @@ public static partial class ShadowSqlCoreServices
     /// 添加表成员
     /// </summary>
     /// <typeparam name="MultiTable"></typeparam>
-    /// <param name="multiTable"></param>
+    /// <param name="multiTable">多表(联表)</param>
     /// <param name="tableNames"></param>
     /// <returns></returns>
     public static MultiTable AddMembers<MultiTable>(this MultiTable multiTable, params IEnumerable<string> tableNames)
@@ -62,8 +62,8 @@ public static partial class ShadowSqlCoreServices
     /// </summary>
     /// <typeparam name="MultiTable"></typeparam>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static TableAlias<TTable> CreateMember<MultiTable, TTable>(this MultiTable multiTable, TTable table)
         where MultiTable : MultiTableBase, IMultiView

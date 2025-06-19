@@ -18,8 +18,8 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     public TableQuery(ITable table, Logic filter)
         : this(filter, table)
     {
@@ -27,7 +27,7 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public TableQuery(ITable table)
         : this(new AndLogic(), table)
     {
@@ -37,8 +37,8 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="filter"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="filter">过滤条件</param>
     public TableQuery(string tableName, Logic filter)
         : this(filter, EmptyTable.Use(tableName))
     {
@@ -46,7 +46,7 @@ public class TableQuery : DataFilterBase<Logic>, IDataQuery
     /// <summary>
     /// 查询表
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public TableQuery(string tableName)
         : this(new AndLogic(), EmptyTable.Use(tableName))
     {

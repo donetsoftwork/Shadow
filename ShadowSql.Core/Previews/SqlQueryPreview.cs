@@ -1,4 +1,4 @@
-﻿using ShadowSql.Logics;
+using ShadowSql.Logics;
 
 namespace ShadowSql.Previews;
 
@@ -16,9 +16,7 @@ public class SqlQueryPreview(SqlConditionLogic conditions, ComplexLogicBase logi
     /// </summary>
     public SqlConditionLogic Conditions
         => _conditions;
-    /// <summary>
-    /// 初始化
-    /// </summary>
+    /// <inheritdoc/>
     protected override void Init()
     {
         if (_conditions.ItemsCount > 0)

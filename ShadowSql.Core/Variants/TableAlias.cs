@@ -41,29 +41,20 @@ public class TableAlias<TTable>
     /// <summary>
     /// 添加列
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     public IPrefixField AddColumn(IColumn column)
     {
         var prefixField = new PrefixField(column, _tablePrefix);
         _prefixFields.Add(prefixField);
         return prefixField;
     }
-    /// <summary>
-    /// sql拼写
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="builder"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder builder)
     {
         _target.Write(engine, builder);
         engine.TableAs(builder, _name);
     }
-    /// <summary>
-    /// 是否匹配
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override bool IsMatch(string name)
     {
         return base.IsMatch(name)
@@ -72,7 +63,7 @@ public class TableAlias<TTable>
     /// <summary>
     /// 获取列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     internal IPrefixField? GetPrefixField(string columName)
     {
@@ -85,27 +76,35 @@ public class TableAlias<TTable>
     /// <summary>
     /// 获取列
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="field">字段</param>
     /// <returns></returns>
     internal IPrefixField? GetPrefixField(IField field)
         => _prefixFields.FirstOrDefault(c => c.IsMatch(field));
     #region IAliasTable
+    /// <inheritdoc/>
     ITable IAliasTable.Target
         => _target;
+    /// <inheritdoc/>
     IPrefixField? IAliasTable.GetPrefixField(string fieldName)
         => GetPrefixField(fieldName);
+    /// <inheritdoc/>
     IPrefixField? IAliasTable.GetPrefixField(IField field)
         => GetPrefixField(field);
     #endregion
     #region ITableView
+    /// <inheritdoc/>
     IEnumerable<IField> ITableView.Fields
         => _prefixFields;
+    /// <inheritdoc/>
     ICompareField ITableView.GetCompareField(string fieldName)
         => GetPrefixField(fieldName) ?? new PrefixField(Column.Use(fieldName), _tablePrefix);
+    /// <inheritdoc/>
     IField? ITableView.GetField(string fieldName)
         => GetPrefixField(fieldName);
+    /// <inheritdoc/>
     IField ITableView.NewField(string fieldName)
         => new PrefixField(Column.Use(fieldName), _tablePrefix);
+    /// <inheritdoc/>
     IPrefixField IAliasTable.NewPrefixField(IColumn column)
         => new PrefixField(column, _tablePrefix);
     #endregion

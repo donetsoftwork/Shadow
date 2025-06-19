@@ -24,7 +24,7 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TTable table)
         where TTable : IDapperTable
@@ -33,8 +33,8 @@ public static partial class DapperShadowServices
     /// 表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TTable table, ISqlLogic filter)
         where TTable : IDapperTable
@@ -43,7 +43,7 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TableSqlQuery<TTable> query)
         where TTable : IDapperTable
@@ -52,7 +52,7 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TableQuery<TTable> query)
         where TTable : IDapperTable
@@ -61,7 +61,7 @@ public static partial class DapperShadowServices
     /// 表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static DapperTableCursorSelect<TTable> ToDapperSelect<TTable>(this TableCursor<TTable> cursor)
         where TTable : IDapperTable
@@ -72,17 +72,17 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
+    /// <param name="aliasTable">别名表</param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> aliasTable)
         where TTable : IDapperTable
-        => new(table.Target.Executor, table);
+        => new(aliasTable.Target.Executor, aliasTable);
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter)
         where TTable : IDapperTable
@@ -91,7 +91,7 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this AliasTableSqlQuery<TTable> query)
         where TTable : IDapperTable
@@ -100,7 +100,7 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this AliasTableQuery<TTable> query)
         where TTable : IDapperTable
@@ -109,7 +109,7 @@ public static partial class DapperShadowServices
     /// 别名表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static DapperAliasTableCursorSelect<TTable> ToDapperSelect<TTable>(this AliasTableCursor<TTable> cursor)
         where TTable : IDapperTable
@@ -120,7 +120,7 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this GroupByTableSqlQuery<TTable> query)
         where TTable : IDapperTable
@@ -129,7 +129,7 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this GroupByTableQuery<TTable> query)
         where TTable : IDapperTable
@@ -138,7 +138,7 @@ public static partial class DapperShadowServices
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static DapperGroupByTableCursorSelect<TTable> ToDapperSelect<TTable>(this GroupByTableCursor<TTable> cursor)
         where TTable : IDapperTable
@@ -149,7 +149,7 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableSqlQuery<TTable> query)
         where TTable : IDapperTable
@@ -158,7 +158,7 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableQuery<TTable> query)
         where TTable : IDapperTable
@@ -167,7 +167,7 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableCursorSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableCursor<TTable> cursor)
         where TTable : IDapperTable
@@ -180,7 +180,7 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this DapperTableSqlQuery<TTable> query)
         where TTable : ITable
@@ -189,7 +189,7 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this DapperTableQuery<TTable> query)
         where TTable : ITable
@@ -200,7 +200,7 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this DapperAliasTableSqlQuery<TTable> query)
         where TTable : ITable
@@ -209,7 +209,7 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this DapperAliasTableQuery<TTable> query)
         where TTable : ITable
@@ -219,28 +219,28 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 多表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperMultiTableSelect ToDapperSelect(this DapperMultiTableSqlQuery query)
         => new(query.Executor, query);
     /// <summary>
     /// 联表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperMultiTableSelect ToDapperSelect(this DapperJoinTableSqlQuery query)
         => new(query.Executor, query);
     /// <summary>
     /// 联表筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperMultiTableSelect ToDapperSelect(this DapperJoinTableQuery query)
         => new(query.Executor, query);
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static DapperMultiTableCursorSelect ToDapperSelect(this DapperMultiTableCursor cursor)
         => new(cursor.Executor, cursor);
@@ -250,7 +250,7 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this DapperGroupByTableSqlQuery<TTable> query)
         where TTable : ITable
@@ -259,7 +259,7 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this DapperGroupByTableQuery<TTable> query)
         where TTable : ITable
@@ -270,7 +270,7 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this DapperGroupByAliasTableSqlQuery<TTable> query)
         where TTable : ITable
@@ -279,7 +279,7 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this DapperGroupByAliasTableQuery<TTable> query)
         where TTable : ITable
@@ -289,21 +289,21 @@ public static partial class DapperShadowServices
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByMultiSelect ToDapperSelect(this DapperGroupByMultiSqlQuery query)
         => new(query.Executor, query);
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static DapperGroupByMultiSelect ToDapperSelect(this DapperGroupByMultiQuery query)
         => new(query.Executor, query);
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="cursor"></param>
+    /// <param name="cursor">游标</param>
     /// <returns></returns>
     public static DapperGroupByMultiCursorSelect ToDapperSelect(this DapperGroupByMultiCursor cursor)
         => new(cursor.Executor, cursor);
@@ -315,8 +315,8 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TTable table, IExecutor executor)
         where TTable : ITable
@@ -325,9 +325,9 @@ public static partial class DapperShadowServices
     /// 表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    /// <param name="executor"></param>
+    /// <param name="table">表</param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TTable table, ISqlLogic filter, IExecutor executor)
         where TTable : ITable
@@ -336,8 +336,8 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -346,8 +346,8 @@ public static partial class DapperShadowServices
     /// 表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TableQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -356,8 +356,8 @@ public static partial class DapperShadowServices
     /// 表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="executor"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperTableCursorSelect<TTable> ToDapperSelect<TTable>(this TableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
@@ -368,29 +368,29 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="executor"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, IExecutor executor)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> aliasTable, IExecutor executor)
         where TTable : ITable
-        => new(executor, table);
+        => new(executor, aliasTable);
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="filter"></param>
-    /// <param name="executor"></param>
+    /// <param name="aliasTable">别名表</param>
+    /// <param name="filter">过滤条件</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
-    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter, IExecutor executor)
+    public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> aliasTable, ISqlLogic filter, IExecutor executor)
         where TTable : ITable
-        => new(executor, table, filter);
+        => new(executor, aliasTable, filter);
     /// <summary>
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this AliasTableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -399,8 +399,8 @@ public static partial class DapperShadowServices
     /// 别名表筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this AliasTableQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -409,8 +409,8 @@ public static partial class DapperShadowServices
     /// 别名表范围筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="executor"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperAliasTableCursorSelect<TTable> ToDapperSelect<TTable>(this AliasTableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
@@ -420,16 +420,16 @@ public static partial class DapperShadowServices
     /// <summary>
     /// 多表筛选列
     /// </summary>
-    /// <param name="multiTable"></param>
-    /// <param name="executor"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperMultiTableSelect ToDapperSelect(this IMultiView multiTable, IExecutor executor)
         => new(executor, multiTable);
     /// <summary>
     /// 多(联)表筛选列
     /// </summary>
-    /// <param name="cursor"></param>
-    /// <param name="executor"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperMultiTableCursorSelect ToDapperSelect(this MultiTableCursor cursor, IExecutor executor)
         => new(executor, cursor);
@@ -439,8 +439,8 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this GroupByTableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -449,8 +449,8 @@ public static partial class DapperShadowServices
     /// GroupBy后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByTableSelect<TTable> ToDapperSelect<TTable>(this GroupByTableQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -459,8 +459,8 @@ public static partial class DapperShadowServices
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="executor"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByTableCursorSelect<TTable> ToDapperSelect<TTable>(this GroupByTableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
@@ -471,8 +471,8 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -481,8 +481,8 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再筛选列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableQuery<TTable> query, IExecutor executor)
         where TTable : ITable
@@ -491,8 +491,8 @@ public static partial class DapperShadowServices
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="cursor"></param>
-    /// <param name="executor"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByAliasTableCursorSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableCursor<TTable> cursor, IExecutor executor)
         where TTable : ITable
@@ -502,24 +502,24 @@ public static partial class DapperShadowServices
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByMultiSelect ToDapperSelect(this GroupByMultiSqlQuery query, IExecutor executor)
         => new(executor, query);
     /// <summary>
     /// GroupBy后再筛选列
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="executor"></param>
+    /// <param name="query">查询</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByMultiSelect ToDapperSelect(this GroupByMultiQuery query, IExecutor executor)
         => new(executor, query);
     /// <summary>
     /// GroupBy后再范围(分页)及列筛选
     /// </summary>
-    /// <param name="cursor"></param>
-    /// <param name="executor"></param>
+    /// <param name="cursor">游标</param>
+    /// <param name="executor">执行器</param>
     /// <returns></returns>
     public static DapperGroupByMultiCursorSelect ToDapperSelect(this GroupByMultiCursor cursor, IExecutor executor)
         => new(executor, cursor);

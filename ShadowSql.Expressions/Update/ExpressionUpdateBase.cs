@@ -26,25 +26,19 @@ public abstract class ExpressionUpdateBase<TTable>(TTable source)
         => _source;
     #endregion  
     #region ISqlEntity   
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
         => _source.Write(engine, sql);
     #endregion    
     #region UpdateBase
-    /// <summary>
-    /// 获取赋值字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
+    /// <exception cref="ArgumentException"></exception>
     internal override IAssignView GetAssignField(string fieldName)
         => _source.GetAssignField(fieldName)
         ?? throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     #endregion
     #region IUpdate
+    /// <inheritdoc/>
     IUpdateTable IUpdate.Table
         => _source;
     #endregion

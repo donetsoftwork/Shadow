@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -7,19 +7,13 @@ namespace ShadowSql.SingleSelect;
 /// <summary>
 /// 子查询作为字段
 /// </summary>
-/// <param name="target"></param>
-public class SingleField(ISingleSelect target)
+/// <param name="select">筛选</param>
+public class SingleField(ISingleSelect select)
     : IFieldView
 {
-    /// <summary>
-    /// 拼写sql(子查询需要加小括号)
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
     {
-
         sql.Append('(');
         _target.Write(engine, sql);
         sql.Append(')');
@@ -27,15 +21,15 @@ public class SingleField(ISingleSelect target)
     /// <summary>
     /// 子查询字段别名
     /// </summary>
-    /// <param name="alias"></param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public SingleFieldAlias As(string alias)
-        => new(_target, alias);
+    public SingleFieldAlias As(string aliasName)
+        => new(_target, aliasName);
     #region 配置
     /// <summary>
     /// 被包裹片段
     /// </summary>
-    private readonly ISingleSelect _target = target;
+    private readonly ISingleSelect _target = select;
     /// <summary>
     /// 被包裹片段
     /// </summary>
@@ -43,14 +37,17 @@ public class SingleField(ISingleSelect target)
         => _target;
     #endregion
     #region IFieldView
+    /// <inheritdoc/>
     string IView.ViewName
         => _target.SingleField.ViewName;
+    /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => _target.SingleField.ToColumn();
-
+    /// <inheritdoc/>
     bool IMatch.IsMatch(string name)
         => _target.SingleField.IsMatch(name);
-    IFieldAlias IFieldView.As(string alias)
-        => As(alias);
+    /// <inheritdoc/>
+    IFieldAlias IFieldView.As(string aliasName)
+        => As(aliasName);
     #endregion
 }

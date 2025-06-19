@@ -7,9 +7,9 @@ namespace ShadowSql.Tables;
 /// <summary>
 /// 表数据过滤
 /// </summary>
-/// <param name="source"></param>
-/// <param name="filter"></param>
-public class TableFilter(ITableView source, ISqlLogic filter)
-    : DataFilterBase<ISqlLogic>(source, filter)
+/// <param name="view"></param>
+/// <param name="filter">过滤条件</param>
+public class TableFilter(ITableView view, ISqlLogic filter)
+    : DataFilterBase<ISqlLogic>(view, filter)
 {
 }

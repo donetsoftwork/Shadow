@@ -16,21 +16,21 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <summary>
     /// 别名表分组后范围筛选
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public GroupByAliasTableCursor(GroupByAliasTableQuery<TTable> source, int limit, int offset)
-        : this(source, source._source, source._source.Target, limit, offset)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public GroupByAliasTableCursor(GroupByAliasTableQuery<TTable> groupBy, int limit, int offset)
+        : this(groupBy, groupBy._source, groupBy._source.Target, limit, offset)
     {
     }
     /// <summary>
     /// 别名表分组后范围筛选
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    public GroupByAliasTableCursor(GroupByAliasTableSqlQuery<TTable> source, int limit, int offset)
-        : this(source, source._source, source._source.Target, limit, offset)
+    /// <param name="groupBy">分组查询</param>
+    /// <param name="limit">筛选数量</param>
+    /// <param name="offset">跳过数量</param>
+    public GroupByAliasTableCursor(GroupByAliasTableSqlQuery<TTable> groupBy, int limit, int offset)
+        : this(groupBy, groupBy._source, groupBy._source.Target, limit, offset)
     {
     }
     private GroupByAliasTableCursor(IGroupByView groupBy, IAliasTable<TTable> aliasTable, TTable table, int limit, int offset)

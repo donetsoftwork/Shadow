@@ -1,4 +1,4 @@
-﻿using ShadowSql.Delete;
+using ShadowSql.Delete;
 using ShadowSql.Identifiers;
 
 namespace Dapper.Shadow.Delete;
@@ -6,8 +6,8 @@ namespace Dapper.Shadow.Delete;
 /// <summary>
 /// 清空表
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="table"></param>
+/// <param name="executor">执行器</param>
+/// <param name="table">表</param>
 public class DapperTruncateTable(IExecutor executor, ITable table)
     : TruncateTable(table), IDapperExecute
 {

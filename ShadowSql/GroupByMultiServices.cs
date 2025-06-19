@@ -17,10 +17,10 @@
 //    /// </summary>
 //    /// <typeparam name="TGroupByMulti"></typeparam>
 //    /// <typeparam name="TTable"></typeparam>
-//    /// <param name="groupBy"></param>
-//    /// <param name="tableName"></param>
-//    /// <param name="aggregate"></param>
-//    /// <param name="query"></param>
+//    /// <param name="groupBy">分组查询</param>
+//    /// <param name="tableName">表名</param>
+//    /// <param name="aggregate">聚合</param>
+//    /// <param name="query">查询</param>
 //    /// <returns></returns>
 //    public static TGroupByMulti HavingAggregate<TGroupByMulti, TTable>(TGroupByMulti groupBy, string tableName, Func<IAliasTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
 //        where TGroupByMulti : GroupByMultiSqlQuery
@@ -34,11 +34,11 @@
 //    /// </summary>
 //    /// <typeparam name="TGroupByMulti"></typeparam>
 //    /// <typeparam name="TTable"></typeparam>
-//    /// <param name="groupBy"></param>
-//    /// <param name="tableName"></param>
-//    /// <param name="select"></param>
-//    /// <param name="aggregate"></param>
-//    /// <param name="query"></param>
+//    /// <param name="groupBy">分组查询</param>
+//    /// <param name="tableName">表名</param>
+//    /// <param name="select">筛选</param>
+//    /// <param name="aggregate">聚合</param>
+//    /// <param name="query">查询</param>
 //    /// <returns></returns>
 //    public static TGroupByMulti HavingAggregate<TGroupByMulti, TTable>(TGroupByMulti groupBy, string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
 //        where TGroupByMulti : GroupByMultiSqlQuery
@@ -55,10 +55,10 @@
 //    /// </summary>
 //    /// <typeparam name="TGroupByMulti"></typeparam>
 //    /// <typeparam name="TTable"></typeparam>
-//    /// <param name="groupBy"></param>
-//    /// <param name="tableName"></param>
-//    /// <param name="aggregate"></param>
-//    /// <param name="query"></param>
+//    /// <param name="groupBy">分组查询</param>
+//    /// <param name="tableName">表名</param>
+//    /// <param name="aggregate">聚合</param>
+//    /// <param name="query">查询</param>
 //    /// <returns></returns>
 //    public static TGroupByMulti And<TGroupByMulti, TTable>(TGroupByMulti groupBy, string tableName, Func<IAliasTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
 //        where TGroupByMulti : GroupByMultiQuery
@@ -72,10 +72,10 @@
 //    /// </summary>
 //    /// <typeparam name="TGroupByMulti"></typeparam>
 //    /// <typeparam name="TTable"></typeparam>
-//    /// <param name="groupBy"></param>
-//    /// <param name="tableName"></param>
-//    /// <param name="aggregate"></param>
-//    /// <param name="query"></param>
+//    /// <param name="groupBy">分组查询</param>
+//    /// <param name="tableName">表名</param>
+//    /// <param name="aggregate">聚合</param>
+//    /// <param name="query">查询</param>
 //    /// <returns></returns>
 //    public static TGroupByMulti Or<TGroupByMulti, TTable>(TGroupByMulti groupBy, string tableName, Func<IAliasTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
 //        where TGroupByMulti : GroupByMultiQuery
@@ -89,11 +89,11 @@
 //    /// </summary>
 //    /// <typeparam name="TGroupByMulti"></typeparam>
 //    /// <typeparam name="TTable"></typeparam>
-//    /// <param name="groupBy"></param>
-//    /// <param name="tableName"></param>
-//    /// <param name="select"></param>
-//    /// <param name="aggregate"></param>
-//    /// <param name="query"></param>
+//    /// <param name="groupBy">分组查询</param>
+//    /// <param name="tableName">表名</param>
+//    /// <param name="select">筛选</param>
+//    /// <param name="aggregate">聚合</param>
+//    /// <param name="query">查询</param>
 //    /// <returns></returns>
 //    public static TGroupByMulti And<TGroupByMulti, TTable>(TGroupByMulti groupBy, string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
 //        where TGroupByMulti : GroupByMultiQuery
@@ -108,11 +108,11 @@
 //    /// </summary>
 //    /// <typeparam name="TGroupByMulti"></typeparam>
 //    /// <typeparam name="TTable"></typeparam>
-//    /// <param name="groupBy"></param>
-//    /// <param name="tableName"></param>
-//    /// <param name="select"></param>
-//    /// <param name="aggregate"></param>
-//    /// <param name="query"></param>
+//    /// <param name="groupBy">分组查询</param>
+//    /// <param name="tableName">表名</param>
+//    /// <param name="select">筛选</param>
+//    /// <param name="aggregate">聚合</param>
+//    /// <param name="query">查询</param>
 //    /// <returns></returns>
 //    public static TGroupByMulti Or<TGroupByMulti, TTable>(TGroupByMulti groupBy, string tableName, Func<TTable, IColumn> select, Func<IColumn, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
 //        where TGroupByMulti : GroupByMultiQuery

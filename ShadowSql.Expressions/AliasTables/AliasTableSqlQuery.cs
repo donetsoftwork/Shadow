@@ -12,8 +12,8 @@ namespace ShadowSql.Expressions.AliasTables;
 /// sql查询别名表
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-/// <param name="table"></param>
-/// <param name="query"></param>
+/// <param name="table">表</param>
+/// <param name="query">查询</param>
 public class AliasTableSqlQuery<TEntity>(IAliasTable table, SqlQuery query)
     : DataFilterBase<IAliasTable, SqlQuery>(table, query), IDataSqlQuery, IWhere
 {
@@ -21,7 +21,7 @@ public class AliasTableSqlQuery<TEntity>(IAliasTable table, SqlQuery query)
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableSqlQuery<TEntity> Where(Expression<Func<TEntity, bool>> query)
     {
@@ -31,7 +31,7 @@ public class AliasTableSqlQuery<TEntity>(IAliasTable table, SqlQuery query)
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableSqlQuery<TEntity> Where<TParameter>(Expression<Func<TEntity, TParameter, bool>> query)
     {

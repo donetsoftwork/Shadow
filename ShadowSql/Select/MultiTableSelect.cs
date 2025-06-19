@@ -7,25 +7,25 @@ namespace ShadowSql.Select;
 /// <summary>
 /// 多联表视图筛选列
 /// </summary>
-/// <param name="source"></param>
-/// <param name="multiTable"></param>
-public class MultiTableSelect(ITableView source, IMultiView multiTable)
-    : MultiSelectBase<ITableView>(source, multiTable)
+/// <param name="view"></param>
+/// <param name="multiTable">多表(联表)</param>
+public class MultiTableSelect(ITableView view, IMultiView multiTable)
+    : MultiSelectBase<ITableView>(view, multiTable)
 {
     /// <summary>
     /// 多联表视图筛选列
     /// </summary>
-    /// <param name="source"></param>
-    public MultiTableSelect(IMultiView source)
-        : this(source, source)
+    /// <param name="multiView">多(联)表</param>
+    public MultiTableSelect(IMultiView multiView)
+        : this(multiView, multiView)
     {
     }
     #region IColumn
     /// <summary>
     /// 筛选列
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableSelect Select<TTable>(string tableName, Func<TTable, IColumn> select)
         where TTable : ITable
@@ -37,8 +37,8 @@ public class MultiTableSelect(ITableView source, IMultiView multiTable)
     /// 筛选多列
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiTableSelect Select<TTable>(string tableName, Func<TTable, IEnumerable<IColumn>> select)
         where TTable : ITable
@@ -52,8 +52,8 @@ public class MultiTableSelect(ITableView source, IMultiView multiTable)
     /// 筛选列
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     public MultiTableSelect Select<TAliasTable>(string tableName, Func<TAliasTable, IFieldView> select)
         where TAliasTable : IAliasTable
     {
@@ -64,8 +64,8 @@ public class MultiTableSelect(ITableView source, IMultiView multiTable)
     /// 筛选多列
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     public MultiTableSelect Select<TAliasTable>(string tableName, Func<TAliasTable, IEnumerable<IFieldView>> select)
         where TAliasTable : IAliasTable
     {

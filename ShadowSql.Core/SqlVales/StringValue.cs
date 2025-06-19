@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
 
 namespace ShadowSql.SqlVales;
@@ -14,12 +14,7 @@ public class StringValue(string val) : ISqlValue
     /// </summary>
     protected readonly string _val = val;
 
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public virtual void Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append('\'').Append(_val).Append('\'');

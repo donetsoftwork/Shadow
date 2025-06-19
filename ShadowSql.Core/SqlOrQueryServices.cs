@@ -12,7 +12,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// not And为not每个子项的Or
     /// </summary>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     internal static SqlOrQuery Not(this SqlAndQuery and)
     {
@@ -44,7 +44,7 @@ public static partial class ShadowSqlCoreServices
     /// SqlOrQuery与SqlOrQuery合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     internal static SqlOrQuery MergeTo(this SqlOrQuery source, SqlOrQuery query)
     {
@@ -55,7 +55,7 @@ public static partial class ShadowSqlCoreServices
     /// SqlOrQuery与ComplexOrLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     internal static SqlOrQuery MergeTo(this SqlOrQuery source, ComplexOrLogic or)
         => or.MergeTo(source);
@@ -63,7 +63,7 @@ public static partial class ShadowSqlCoreServices
     /// SqlOrQuery与OrLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     internal static SqlOrQuery MergeTo(this SqlOrQuery source, OrLogic or)
         => or.MergeTo(source);
@@ -73,7 +73,7 @@ public static partial class ShadowSqlCoreServices
     /// SqlOrQuery与ComplexAndLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     internal static ComplexAndLogic MergeToAnd(this SqlOrQuery source, ComplexAndLogic and)
     {
@@ -98,7 +98,7 @@ public static partial class ShadowSqlCoreServices
     /// SqlOrQuery与AndLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     internal static SqlAndQuery MergeToAnd(this SqlOrQuery source, AndLogic and)
         => new(and.MergeTo(source.MergeToAnd(new ComplexAndLogic())));
@@ -107,8 +107,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或运算嵌套与逻辑
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static SqlOrQuery Or(this SqlOrQuery query, AndLogic logic)
     {
@@ -118,8 +118,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 或运算嵌套与逻辑
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="logic"></param>
+    /// <param name="query">查询</param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static SqlOrQuery Or(this SqlOrQuery query, ComplexAndLogic logic)
     {

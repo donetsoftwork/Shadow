@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
+    /// <param name="engine">数据库引擎</param>
     /// <param name="fragment"></param>
     /// <param name="capacity"></param>
     /// <returns></returns>
@@ -28,7 +28,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
+    /// <param name="engine">数据库引擎</param>
     /// <param name="entity"></param>
     /// <param name="capacity"></param>
     /// <returns></returns>
@@ -41,7 +41,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 拼写计数sql
     /// </summary>
-    /// <param name="engine"></param>
+    /// <param name="engine">数据库引擎</param>
     /// <param name="view"></param>
     /// <param name="capacity"></param>
     /// <returns></returns>
@@ -57,7 +57,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 前缀拼接
     /// </summary>
-    /// <param name="engine"></param>
+    /// <param name="engine">数据库引擎</param>
     /// <param name="entity"></param>
     /// <param name="builder"></param>
     /// <param name="suffix"></param>
@@ -74,29 +74,29 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// WHERE前缀
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     public static void WherePrefix(this ISqlEngine engine, StringBuilder sql)
         => sql.Append(" WHERE ");
     /// <summary>
     /// 联表ON前缀
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     public static void JoinOnPrefix(this ISqlEngine engine, StringBuilder sql)
         => sql.Append(" ON ");
     /// <summary>
     /// GROUP BY前缀
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     public static void GroupByPrefix(this ISqlEngine engine, StringBuilder sql)
         => sql.Append(" GROUP BY ");
     /// <summary>
     /// HAVING前缀
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     public static void HavingPrefix(this ISqlEngine engine, StringBuilder sql)
         => sql.Append(" HAVING ");
     #endregion
@@ -104,9 +104,9 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 拼写插入列名(避免出现列名前缀可能导致错误)
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="column"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="column">列</param>
     public static void WriteInsertColumnName(this ISqlEngine engine, StringBuilder sql, IColumn column)
         => engine.Identifier(sql, column.ViewName);
 }

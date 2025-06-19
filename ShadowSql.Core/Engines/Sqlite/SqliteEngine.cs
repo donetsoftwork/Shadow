@@ -1,4 +1,4 @@
-﻿using ShadowSql.Components;
+using ShadowSql.Components;
 using System.Text;
 
 namespace ShadowSql.Engines.Sqlite;
@@ -6,11 +6,11 @@ namespace ShadowSql.Engines.Sqlite;
 /// <summary>
 /// Sqlite
 /// </summary>
-/// <param name="select"></param>
-/// <param name="sqlVales"></param>
+/// <param name="select">筛选</param>
+/// <param name="sqlValues"></param>
 /// <param name="components"></param>
-public class SqliteEngine(ISelectComponent select, ISqlValueComponent sqlVales, IPluginProvider? components)
-    : EngineBase(select, sqlVales, components), ISqlEngine
+public class SqliteEngine(ISelectComponent select, ISqlValueComponent sqlValues, IPluginProvider? components)
+    : EngineBase(select, sqlValues, components), ISqlEngine
 {
     /// <summary>
     /// MsSql
@@ -19,20 +19,12 @@ public class SqliteEngine(ISelectComponent select, ISqlValueComponent sqlVales, 
         : this(new SqliteSelectComponent(), new SqlValueComponent("1", "0", "NULL"), null)
     {
     }
-    /// <summary>
-    /// 标识符格式化
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="name"></param>
+    /// <inheritdoc/>
     public override void Identifier(StringBuilder sql, string name)
     {
         sql.Append('\"').Append(name).Append('\"');
-    }    
-    /// <summary>
-    /// 插入自增列sql
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    }
+    /// <inheritdoc/>
     public override bool InsertedIdentity(StringBuilder sql)
     {
         sql.Append(";SELECT last_insert_rowid()");
@@ -41,7 +33,7 @@ public class SqliteEngine(ISelectComponent select, ISqlValueComponent sqlVales, 
     /// <summary>
     /// Sqlite不支持Truncate,使用Delete代替
     /// </summary>
-    /// <param name="sql"></param>
+    /// <param name="sql">sql</param>
     public override void TruncatePrefix(StringBuilder sql)
         => sql.Append("DELETE FROM ");
 }

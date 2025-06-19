@@ -9,7 +9,7 @@ namespace ShadowSql.CursorSelect;
 /// GroupBy后再范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public class GroupByTableCursorSelect<TTable>(GroupByTableCursor<TTable> cursor)
     : GroupCursorBySelectBase<TTable>(cursor, cursor.Source, cursor.Table)
     where TTable : ITable
@@ -17,7 +17,7 @@ public class GroupByTableCursorSelect<TTable>(GroupByTableCursor<TTable> cursor)
     /// <summary>
     /// 聚合筛选
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public GroupByTableCursorSelect<TTable> SelectAggregate(Func<TTable, IAggregateFieldAlias> select)
     {

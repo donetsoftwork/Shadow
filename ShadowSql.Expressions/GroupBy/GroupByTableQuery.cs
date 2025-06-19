@@ -25,9 +25,9 @@ public class GroupByTableQuery<TKey, TEntity>
     /// <summary>
     /// 对表进行分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupByTableQuery(ITable table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, new AndLogic())
     {
@@ -35,9 +35,9 @@ public class GroupByTableQuery<TKey, TEntity>
     /// <summary>
     /// 对别名表进行分组查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
-    /// <param name="fields"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
+    /// <param name="fields">字段</param>
     public GroupByTableQuery(IAliasTable table, ISqlLogic where, IField[] fields)
         : this(table, where, fields, new AndLogic())
     {
@@ -54,7 +54,7 @@ public class GroupByTableQuery<TKey, TEntity>
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableQuery<TKey, TEntity> And(Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
@@ -66,7 +66,7 @@ public class GroupByTableQuery<TKey, TEntity>
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TParameter">参数类型</typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableQuery<TKey, TEntity> And<TParameter>(Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {
@@ -77,7 +77,7 @@ public class GroupByTableQuery<TKey, TEntity>
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableQuery<TKey, TEntity> Or(Expression<Func<IGrouping<TKey, TEntity>, bool>> query)
     {
@@ -89,7 +89,7 @@ public class GroupByTableQuery<TKey, TEntity>
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TParameter">参数类型</typeparam>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public GroupByTableQuery<TKey, TEntity> Or<TParameter>(Expression<Func<IGrouping<TKey, TEntity>, TParameter, bool>> query)
     {
@@ -100,10 +100,10 @@ public class GroupByTableQuery<TKey, TEntity>
     #endregion
     #region ISqlEntity
     /// <summary>
-    /// 数据源拼写(+WHERE)
+    /// 分组数据源拼写(+WHERE)
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected override void WriteGroupBySource(ISqlEngine engine, StringBuilder sql)
     {

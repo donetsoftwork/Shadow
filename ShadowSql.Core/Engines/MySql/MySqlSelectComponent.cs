@@ -1,4 +1,4 @@
-﻿using ShadowSql.Components;
+using ShadowSql.Components;
 using ShadowSql.Cursors;
 using ShadowSql.Select;
 using System.Text;
@@ -6,17 +6,11 @@ using System.Text;
 namespace ShadowSql.Engines.MySql;
 
 /// <summary>
-/// 数据获取组件基类
+/// MySql数据获取组件
 /// </summary>
 public class MySqlSelectComponent : SelectComponentBase
 {
-    /// <summary>
-    /// 数据分页获取
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="select"></param>
-    /// <param name="cursor"></param>
+    /// <inheritdoc/>
     public override void SelectCursor(ISqlEngine engine, StringBuilder sql, ISelect select, ICursor cursor)
     {        
         int limit = cursor.Limit;

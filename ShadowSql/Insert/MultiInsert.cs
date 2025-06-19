@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System;
@@ -11,7 +11,7 @@ namespace ShadowSql.Insert;
 /// 多条插入
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="table"></param>
+/// <param name="table">表</param>
 /// <param name="items"></param>
 public class MultiInsert<TTable>(TTable table, List<IInsertValues> items)
     : MultiInsertBase(items), IMultiInsert
@@ -20,7 +20,7 @@ public class MultiInsert<TTable>(TTable table, List<IInsertValues> items)
     /// <summary>
     /// 插入多条
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public MultiInsert(TTable table)
         : this(table, [])
     {
@@ -41,13 +41,14 @@ public class MultiInsert<TTable>(TTable table, List<IInsertValues> items)
     /// <summary>
     /// 增加插入值
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public MultiInsert<TTable> Insert(Func<TTable, InsertValues> select)
     {
         Add(select(_table));
         return this;
     }
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteInsert(_table, engine, sql);
 }

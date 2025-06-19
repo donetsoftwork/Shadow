@@ -11,17 +11,17 @@ namespace ShadowSql.Insert;
 /// <summary>
 /// 插入Select子查询
 /// </summary>
-/// <param name="table"></param>
-/// <param name="columns"></param>
-/// <param name="select"></param>
+/// <param name="table">表</param>
+/// <param name="columns">列</param>
+/// <param name="select">筛选</param>
 public class SelectInsert(IInsertTable table, List<IColumn> columns, ISelect select)
     : SelectInsertBase(columns, select), ISelectInsert
 {
     /// <summary>
     /// 插入Select子查询
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     public SelectInsert(IInsertTable table, ISelect select)
         : this(table, [], select)
     {
@@ -29,8 +29,8 @@ public class SelectInsert(IInsertTable table, List<IColumn> columns, ISelect sel
     /// <summary>
     /// 插入多条
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
     public SelectInsert(string tableName, ISelect select)
         : this(EmptyTable.Use(tableName), select)
     {
@@ -46,6 +46,7 @@ public class SelectInsert(IInsertTable table, List<IColumn> columns, ISelect sel
     public IInsertTable Table
         => _table;
     #endregion
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteInsert(_table, engine, sql);
 }

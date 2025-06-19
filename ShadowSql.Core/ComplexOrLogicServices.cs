@@ -13,7 +13,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexOrLogic OrCore(this ComplexOrLogic logic, AndLogic other)
@@ -23,7 +23,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexOrLogic OrCore(this ComplexOrLogic logic, ComplexAndLogic other)
@@ -33,7 +33,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexOrLogic OrCore(this ComplexOrLogic logic, OrLogic other)
@@ -43,7 +43,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexOrLogic OrCore(this ComplexOrLogic logic, ComplexOrLogic other)
@@ -55,7 +55,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static Logic AndCore(this ComplexOrLogic or, AtomicLogic other)
@@ -69,7 +69,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static Logic AndCore(this ComplexOrLogic logic, AndLogic other)
@@ -86,7 +86,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexAndLogic AndCore(this ComplexOrLogic logic, ComplexAndLogic other)
@@ -96,7 +96,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexAndLogic AndCore(this ComplexOrLogic logic, OrLogic other)
@@ -106,7 +106,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexAndLogic AndCore(this ComplexOrLogic logic, ComplexOrLogic other)
@@ -133,7 +133,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// Not逻辑简化
     /// </summary>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     internal static ISqlLogic NotLogic(this ComplexOrLogic or)
     {
@@ -149,7 +149,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 添加包装后的And查询
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     internal static ComplexOrLogic AddOtherCore(this ComplexOrLogic logic, ComplexAndLogic other)        
@@ -160,8 +160,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// not子项
     /// </summary>
-    /// <param name="and"></param>
-    /// <param name="or"></param>
+    /// <param name="and">与逻辑</param>
+    /// <param name="or">或逻辑</param>
     internal static void NotOthers(this ComplexOrLogic or, ComplexAndLogic and)
     {
         foreach (var other in and._others)
@@ -189,7 +189,7 @@ public static partial class ShadowSqlCoreServices
     /// ComplexOrLogic与ComplexOrLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     internal static ComplexOrLogic MergeTo(this ComplexOrLogic source, ComplexOrLogic or)
     {
@@ -200,7 +200,7 @@ public static partial class ShadowSqlCoreServices
     /// 合并到SqlOrQuery
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     internal static SqlOrQuery MergeTo(this ComplexOrLogic source, SqlOrQuery or)
     {
@@ -211,7 +211,7 @@ public static partial class ShadowSqlCoreServices
     /// ComplexOrLogic与OrLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     internal static ComplexOrLogic MergeTo(this ComplexOrLogic source, OrLogic or)
     {
@@ -224,7 +224,7 @@ public static partial class ShadowSqlCoreServices
     /// ComplexOrLogic与ComplexAndLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     internal static ComplexAndLogic MergeToAnd(this ComplexOrLogic source, ComplexAndLogic and)
     {
@@ -241,7 +241,7 @@ public static partial class ShadowSqlCoreServices
     /// ComplexOrLogic与AndLogic合并
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     internal static Logic MergeToAnd(this ComplexOrLogic source, AndLogic and)
     {

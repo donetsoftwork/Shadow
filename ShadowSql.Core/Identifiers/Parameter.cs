@@ -46,7 +46,7 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// 检查参数名
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     /// <returns></returns>
     public static string CheckName(string name, string column)
     {
@@ -70,7 +70,7 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// 检查参数名
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="parameter"></param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static string CheckName2(string name, string parameter)
     {
@@ -82,7 +82,7 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// 检查参数名
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="parameter"></param>
+    /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static string CheckName2(string name, IView parameter)
     {
@@ -90,16 +90,11 @@ public class Parameter : IdentifierBase, IParameter, IView
             return string.Concat(parameter.ViewName, "2");
         return name;
     }
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
         => engine.Parameter(sql, _name);
     private static readonly CacheService<Parameter> _cacher = new(static name => new Parameter(name));
-
+    /// <inheritdoc/>
     string IView.ViewName
         => _name;
 }

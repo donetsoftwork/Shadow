@@ -23,21 +23,14 @@ public class UpdateVisitor(IFieldProvider source, ICollection<IAssignInfo> assig
         => _assigns;
     #endregion
     #region Visit
-    /// <summary>
-    /// 处理属性
-    /// </summary>
-    /// <param name="member"></param>
+    /// <inheritdoc/>
     protected override void CheckMember(MemberExpression member)
     {
         var list = _source.GetFieldsByMember(member);
         foreach (var item in list)
             _assigns.Add(item.Assign());
     }
-    /// <summary>
-    /// 处理赋值
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <param name="info"></param>
+    /// <inheritdoc/>
     protected override void CheckAssignment(Expression expression, MemberInfo info)
     {
         if (_source.GetFieldByName(info.Name) is IAssignView field

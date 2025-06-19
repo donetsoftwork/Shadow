@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using System;
@@ -11,8 +11,8 @@ namespace ShadowSql.Insert;
 /// <summary>
 /// 插入Select子查询
 /// </summary>
-/// <param name="columns"></param>
-/// <param name="select"></param>
+/// <param name="columns">列</param>
+/// <param name="select">筛选</param>
 public abstract class SelectInsertBase(List<IColumn> columns, ISelect select)
 {
     #region 配置
@@ -50,15 +50,15 @@ public abstract class SelectInsertBase(List<IColumn> columns, ISelect select)
     /// <summary>
     /// 增加插入列
     /// </summary>
-    /// <param name="column"></param>
+    /// <param name="column">列</param>
     internal void Add(IColumn column)
         => _columns.Add(column);
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="table">表</param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <exception cref="InvalidOperationException"></exception>
     protected void WriteInsert(IInsertTable table, ISqlEngine engine, StringBuilder sql)
     {

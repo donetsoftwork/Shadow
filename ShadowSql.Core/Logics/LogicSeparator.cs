@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Identifiers;
 using System.Text;
 
@@ -41,18 +41,15 @@ public abstract class LogicSeparator(string separator)
         : LogicSeparator(AndSeparator)
     {
         const string separator = " AND ";
-        /// <summary>
-        /// 拼写sql
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         internal override void Write(ISqlEngine engine, StringBuilder sql)
         {
             sql.Append(separator);
         }
+        /// <inheritdoc/>
         public override LogicSeparator Reverse()
             => Or;
+        /// <inheritdoc/>
         public override string Separator
             => separator;
     }
@@ -61,18 +58,15 @@ public abstract class LogicSeparator(string separator)
         : LogicSeparator(OrSeparator)
     {
         const string separator = " OR ";
-        /// <summary>
-        /// 拼写sql
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         internal override void Write(ISqlEngine engine, StringBuilder sql)
         {
             sql.Append(separator);
         }
+        /// <inheritdoc/>
         public override LogicSeparator Reverse()
             => And;
+        /// <inheritdoc/>
         public override string Separator
             => separator;
     }

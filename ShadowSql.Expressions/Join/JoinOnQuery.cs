@@ -11,27 +11,27 @@ namespace ShadowSql.Expressions.Join;
 /// <summary>
 /// 联表俩俩关联查询
 /// </summary>
-/// <param name="root"></param>
-/// <param name="left"></param>
-/// <param name="right"></param>
-/// <param name="onQuery"></param>
-public class JoinOnQuery<TLeft, TRight>(JoinTableQuery root, IAliasTable left, IAliasTable right, Logic onQuery)
-    : JoinOnCoreBase<JoinTableQuery, Logic>(root, left, right, onQuery), IDataQuery
+/// <param name="joinTable">联表</param>
+/// <param name="left">左</param>
+/// <param name="right">右</param>
+/// <param name="onQuery">联表逻辑</param>
+public class JoinOnQuery<TLeft, TRight>(JoinTableQuery joinTable, IAliasTable left, IAliasTable right, Logic onQuery)
+    : JoinOnCoreBase<JoinTableQuery, Logic>(joinTable, left, right, onQuery), IDataQuery
 {
     /// <summary>
     /// 联表俩俩关联查询
     /// </summary>
-    /// <param name="root"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    public JoinOnQuery(JoinTableQuery root, IAliasTable left, IAliasTable right)
-        : this(root, left, right, new AndLogic())
+    /// <param name="joinTable">联表</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    public JoinOnQuery(JoinTableQuery joinTable, IAliasTable left, IAliasTable right)
+        : this(joinTable, left, right, new AndLogic())
     {
     }
     /// <summary>
     /// 联表查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public JoinOnQuery<TLeft, TRight> And(Expression<Func<TLeft, TRight, bool>> query)
     {
@@ -42,7 +42,7 @@ public class JoinOnQuery<TLeft, TRight>(JoinTableQuery root, IAliasTable left, I
     /// <summary>
     /// 联表查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public JoinOnQuery<TLeft, TRight> Or(Expression<Func<TLeft, TRight, bool>> query)
     {

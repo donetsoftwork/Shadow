@@ -11,10 +11,9 @@ public abstract class ViewBase : GetFieldBase
     /// <summary>
     /// 获取比较字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     protected virtual ICompareField GetCompareField(string fieldName)
         => GetField(fieldName) ?? NewField(fieldName);
     #endregion
-
 }

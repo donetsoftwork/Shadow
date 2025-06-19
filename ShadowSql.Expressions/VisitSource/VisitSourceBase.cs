@@ -34,7 +34,7 @@ public abstract class VisitSourceBase(Expression entity)
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public virtual IEnumerable<IField> GetFieldsByExpression(Expression expression)
     {
@@ -55,7 +55,7 @@ public abstract class VisitSourceBase(Expression entity)
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public abstract IField? GetFieldByName(string fieldName);
     /// <summary>
@@ -68,7 +68,7 @@ public abstract class VisitSourceBase(Expression entity)
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public virtual IField? GetFieldByExpression(Expression expression)
     {
@@ -115,7 +115,7 @@ public abstract class VisitSourceBase(Expression entity)
     /// <summary>
     /// 获取比较字段
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public virtual ICompareView? GetCompareFieldByExpression(Expression expression)
     {
@@ -124,6 +124,8 @@ public abstract class VisitSourceBase(Expression entity)
             case ExpressionType.MemberAccess:
                 if (expression is MemberExpression member)
                 {
+                    if(member.Expression is ConstantExpression)
+                        return LogicVisitor.GetSqlValue(Expression.Lambda(member).Compile().DynamicInvoke());
                     if (GetFieldByMember(member) is IField field)
                         return field;
                     return Parameter.Use(member.Member.Name);
@@ -131,7 +133,7 @@ public abstract class VisitSourceBase(Expression entity)
                 break;
             case ExpressionType.Constant:
                 if (expression is ConstantExpression constant)
-                    return LogicVisitor.GetSqlValue(constant);
+                    return LogicVisitor.GetSqlValue(constant.Value);
                 break;
             case ExpressionType.Call:
                 if (expression is MethodCallExpression methodCall)

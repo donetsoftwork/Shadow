@@ -17,9 +17,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableSqlQuery Where<TEntity>(this MultiTableSqlQuery multiTable, string table, Expression<Func<TEntity, bool>> query)
     {
@@ -31,9 +31,9 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TParameter"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableSqlQuery Where<TEntity, TParameter>(this MultiTableSqlQuery multiTable, string table, Expression<Func<TEntity, TParameter, bool>> query)
     {
@@ -44,8 +44,8 @@ public static partial class ShadowSqlServices
     /// 直接查询(不建议对重名列查询)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableSqlQuery Where<TEntity>(this MultiTableSqlQuery multiTable, Expression<Func<TEntity, bool>> query)
     {
@@ -57,8 +57,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TParameter"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableSqlQuery Where<TEntity, TParameter>(this MultiTableSqlQuery multiTable, Expression<Func<TEntity, TParameter, bool>> query)
     {
@@ -73,9 +73,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static JoinTableQuery And<TEntity>(this JoinTableQuery multiTable, string table, Expression<Func<TEntity, bool>> query)
         => And<JoinTableQuery, TEntity>(multiTable, table, query);
@@ -83,9 +83,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableQuery And<TEntity>(this MultiTableQuery multiTable, string table, Expression<Func<TEntity, bool>> query)
         => And<MultiTableQuery, TEntity>(multiTable, table, query);
@@ -93,8 +93,8 @@ public static partial class ShadowSqlServices
     /// 直接查询(不建议对重名列查询)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static JoinTableQuery And<TEntity>(this JoinTableQuery multiTable, Expression<Func<TEntity, bool>> query)
         => And<JoinTableQuery, TEntity>(multiTable, query);
@@ -102,8 +102,8 @@ public static partial class ShadowSqlServices
     /// 直接查询(不建议对重名列查询)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableQuery And<TEntity>(this MultiTableQuery multiTable, Expression<Func<TEntity, bool>> query)
         => And<MultiTableQuery, TEntity>(multiTable, query);
@@ -112,9 +112,9 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable And<TMultiTable, TEntity>(this TMultiTable multiTable, string table, Expression<Func<TEntity, bool>> query)
          where TMultiTable : MultiTableBase, IDataQuery
@@ -128,8 +128,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable And<TMultiTable, TEntity>(this TMultiTable multiTable, Expression<Func<TEntity, bool>> query)
          where TMultiTable : MultiTableBase, IDataQuery
@@ -144,9 +144,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static JoinTableQuery Or<TEntity>(this JoinTableQuery multiTable, string table, Expression<Func<TEntity, bool>> query)
         => Or<JoinTableQuery, TEntity>(multiTable, table, query);
@@ -154,9 +154,9 @@ public static partial class ShadowSqlServices
     /// 指定表查询
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableQuery Or<TEntity>(this MultiTableQuery multiTable, string table, Expression<Func<TEntity, bool>> query)
         => Or<MultiTableQuery, TEntity>(multiTable, table, query);
@@ -164,8 +164,8 @@ public static partial class ShadowSqlServices
     /// 直接查询(不建议对重名列查询)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static MultiTableQuery Or<TEntity>(this MultiTableQuery multiTable, Expression<Func<TEntity, bool>> query)
         => Or<MultiTableQuery, TEntity>(multiTable, query);
@@ -174,9 +174,9 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable Or<TMultiTable, TEntity>(this TMultiTable multiTable, string table, Expression<Func<TEntity, bool>> query)
          where TMultiTable : MultiTableBase, IDataQuery
@@ -190,8 +190,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TMultiTable"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="multiTable"></param>
-    /// <param name="query"></param>
+    /// <param name="multiTable">多表(联表)</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TMultiTable Or<TMultiTable, TEntity>(this TMultiTable multiTable, Expression<Func<TEntity, bool>> query)
          where TMultiTable : MultiTableBase, IDataQuery

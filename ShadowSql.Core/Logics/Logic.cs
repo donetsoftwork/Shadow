@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Previews;
 using System;
@@ -59,25 +59,25 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     public abstract Logic And(AndLogic and);
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     public abstract Logic And(ComplexAndLogic and);
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     public abstract Logic And(OrLogic or);
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     public abstract Logic And(ComplexOrLogic or);
     #endregion
@@ -91,32 +91,32 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     public abstract Logic Or(OrLogic or);
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="or"></param>
+    /// <param name="or">或逻辑</param>
     /// <returns></returns>
     public abstract Logic Or(ComplexOrLogic or);
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     public abstract Logic Or(AndLogic and);
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="and"></param>
+    /// <param name="and">与逻辑</param>
     /// <returns></returns>
     public abstract Logic Or(ComplexAndLogic and);
     #endregion
     /// <summary>
     /// 增加逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     internal void AddLogic(AtomicLogic logic)
     {
         _logics.Add(logic);
@@ -142,8 +142,8 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     internal virtual bool TryWrite(ISqlEngine engine, StringBuilder sql)
     {
@@ -173,7 +173,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(Logic logic, AtomicLogic other)
@@ -183,7 +183,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(Logic logic, AndLogic other)
@@ -193,7 +193,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(Logic logic, ComplexAndLogic other)
@@ -203,7 +203,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(Logic logic, OrLogic other)
@@ -213,7 +213,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(Logic logic, ComplexOrLogic other)
@@ -223,7 +223,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(Logic logic, Logic other)
@@ -235,7 +235,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(Logic logic, AtomicLogic other)
@@ -245,7 +245,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(Logic logic, OrLogic other)
@@ -255,7 +255,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(Logic logic, ComplexOrLogic other)
@@ -265,7 +265,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(Logic logic, AndLogic other)
@@ -275,7 +275,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(Logic logic, ComplexAndLogic other)
@@ -285,7 +285,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(Logic logic, Logic other)
@@ -296,7 +296,7 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     /// <summary>
     /// 反逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static Logic operator !(Logic logic)
         => logic.Not();
@@ -310,18 +310,10 @@ public abstract class Logic(LogicSeparator separator, List<AtomicLogic> logics)
     bool IPreview<AtomicLogic>.HasSecond
         => _logics.Count >= 2;
     #endregion
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     bool ISqlFragment.TryWrite(ISqlEngine engine, StringBuilder sql)
         => TryWrite(engine, sql);
-    /// <summary>
-    /// 否定逻辑
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     ISqlLogic ISqlLogic.Not()
         => throw new NotImplementedException("由子类实现");
 }

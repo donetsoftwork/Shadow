@@ -14,27 +14,27 @@ public static partial class ShadowSqlServices
     /// 添加表
     /// </summary>
     /// <typeparam name="TMultiTableSelect"></typeparam>
-    /// <param name="multiSelect"></param>
-    /// <param name="tableName"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
-    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, string tableName)
+    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect select, string tableName)
         where TMultiTableSelect : SelectFieldsBase, IMultiSelect
     {
-        multiSelect.SelectTables.Add(multiSelect.Target.From(tableName));
-        return multiSelect;
+        select.SelectTables.Add(select.Target.From(tableName));
+        return select;
     }
     /// <summary>
     /// 添加表
     /// </summary>
     /// <typeparam name="TMultiTableSelect"></typeparam>
-    /// <param name="multiSelect"></param>
-    /// <param name="aliasTable"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="aliasTable">别名表</param>
     /// <returns></returns>
-    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, IAliasTable aliasTable)
+    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect select, IAliasTable aliasTable)
         where TMultiTableSelect : SelectFieldsBase, IMultiSelect
     {
-        multiSelect.SelectTables.Add(aliasTable);
-        return multiSelect;
+        select.SelectTables.Add(aliasTable);
+        return select;
     }
     #endregion
 }

@@ -27,6 +27,7 @@ public sealed class CountFieldInfo : IAggregateField
         => AggregateConstants.Count;
     IAggregateFieldAlias IAggregateField.As(string alias)
         => CountAliasFieldInfo.Use(alias);
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
          => engine.Count(sql);
 }

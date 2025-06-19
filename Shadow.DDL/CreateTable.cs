@@ -1,4 +1,4 @@
-﻿using Shadow.DDL.Components;
+using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
@@ -12,15 +12,15 @@ namespace Shadow.DDL;
 /// <summary>
 /// 建表
 /// </summary>
-/// <param name="table"></param>
-/// <param name="columns"></param>
+/// <param name="table">表</param>
+/// <param name="columns">列</param>
 public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     : IExecuteSql
 {
     /// <summary>
     /// 建表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public CreateTable(TableSchema table)
         : this(table, table.Columns)
     {
@@ -41,22 +41,17 @@ public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
         => _columns;
     #endregion
 
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
         => WriteCreateTable(engine, sql, _table, _columns);
 
     /// <summary>
     /// CREATE TABLE
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="table"></param>
-    /// <param name="columns"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="table">表</param>
+    /// <param name="columns">列</param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException">请先注册定义列组件</exception>
     public static void WriteCreateTable(ISqlEngine engine, StringBuilder sql, ITable table, IEnumerable<ColumnSchema> columns)
@@ -79,9 +74,9 @@ public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     /// <summary>
     /// CREATE TABLE
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="table"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException">请先注册定义列组件</exception>
     public static void WriteCreateTable(ISqlEngine engine, StringBuilder sql, TableSchema table)

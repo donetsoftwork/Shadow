@@ -14,7 +14,7 @@ namespace ShadowSql.Expressions.Insert;
 /// 插入单条
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-/// <param name="table"></param>
+/// <param name="table">表</param>
 /// <param name="items"></param>
 public class SingleInsert<TEntity>(ITable table, List<IInsertValue> items)
     : SingleInsertBase(items), ISingleInsert
@@ -22,7 +22,7 @@ public class SingleInsert<TEntity>(ITable table, List<IInsertValue> items)
     /// <summary>
     /// 插入单条
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public SingleInsert(ITable table)
         : this(table, [])
     {
@@ -43,7 +43,7 @@ public class SingleInsert<TEntity>(ITable table, List<IInsertValue> items)
     /// <summary>
     /// 增加插入值
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public SingleInsert<TEntity> Insert(Expression<Func<TEntity>> select)
     {
@@ -54,7 +54,7 @@ public class SingleInsert<TEntity>(ITable table, List<IInsertValue> items)
     /// <summary>
     /// 增加插入值
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public SingleInsert<TEntity> Insert<TParameter>(Expression<Func<TParameter, TEntity>> select)
     {
@@ -62,6 +62,7 @@ public class SingleInsert<TEntity>(ITable table, List<IInsertValue> items)
         visitor.Visit(select.Body);
         return this;
     }
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteInsert(_table, engine, sql);
 }

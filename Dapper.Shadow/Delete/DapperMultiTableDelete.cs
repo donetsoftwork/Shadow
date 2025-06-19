@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using ShadowSql.Delete;
 using ShadowSql.Identifiers;
 
@@ -7,17 +7,17 @@ namespace Dapper.Shadow.Delete;
 /// <summary>
 /// 多表(联表)数据删除
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="multiTable"></param>
-/// <param name="target"></param>
-public class DapperMultiTableDelete(IExecutor executor, IMultiView multiTable, IAliasTable target)
-    : MultiTableDelete(multiTable, target), IDapperExecute
+/// <param name="executor">执行器</param>
+/// <param name="multiTable">多表(联表)</param>
+/// <param name="aliasTable">别名表</param>
+public class DapperMultiTableDelete(IExecutor executor, IMultiView multiTable, IAliasTable aliasTable)
+    : MultiTableDelete(multiTable, aliasTable), IDapperExecute
 {
     /// <summary>
     /// 多表(联表)数据删除
     /// </summary>
-    /// <param name="executor"></param>
-    /// <param name="multiTable"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="multiTable">多表(联表)</param>
     public DapperMultiTableDelete(IExecutor executor, IMultiView multiTable)
         : this(executor, multiTable, multiTable.Tables.First())
     {

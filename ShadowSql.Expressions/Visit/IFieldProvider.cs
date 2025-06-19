@@ -20,7 +20,7 @@ public interface IFieldProvider
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     IEnumerable<IField> GetFieldsByExpression(Expression expression);
     ///// <summary>
@@ -32,7 +32,7 @@ public interface IFieldProvider
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     IField? GetFieldByName(string fieldName);
     /// <summary>
@@ -44,7 +44,7 @@ public interface IFieldProvider
     /// <summary>
     /// 获取字段
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     IField? GetFieldByExpression(Expression expression);
     #endregion
@@ -58,7 +58,7 @@ public interface IFieldProvider
     /// <summary>
     /// 从赋值中筛选
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <param name="info"></param>
     /// <returns></returns>
     IEnumerable<IFieldView> SelectFieldsByAssignment(Expression expression, MemberInfo info);
@@ -73,7 +73,7 @@ public interface IFieldProvider
     /// <summary>
     /// 获取比较字段
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     ICompareView? GetCompareFieldByExpression(Expression expression);
     /// <summary>

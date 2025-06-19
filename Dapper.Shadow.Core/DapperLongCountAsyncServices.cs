@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.SingleSelect;
 using System.Threading.Tasks;
@@ -14,8 +14,8 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="param"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<long> LongCountAsync(this IDapperSelect select, object? param = null)
         => select.Executor.CountAsync<long>(select.Source, param);
@@ -26,7 +26,7 @@ public static partial class DapperShadowCoreServices
     /// 计数
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<long> LongCountAsync(this IDapperSource source, object? param = null)
         => source.Executor.CountAsync<long>(source, param);
@@ -38,8 +38,8 @@ public static partial class DapperShadowCoreServices
     /// 计数
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<long> LongCountAsync(this ITableView view, IExecutor executor, object? param = null)
         => executor.CountAsync<long>(view, param);
@@ -48,9 +48,9 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<long> LongCountAsync(this CountSelect select, IExecutor executor, object? param = null)
         => executor.ExecuteScalarAsync<long>(select, param);
@@ -59,9 +59,9 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static Task<long> LongCountAsync(this ISelect select, IExecutor executor, object? param = null)
         => executor.CountAsync<long>(select.Source, param);

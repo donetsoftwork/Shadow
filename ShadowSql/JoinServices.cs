@@ -12,8 +12,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 联表(创建新联表)
     /// </summary>
-    /// <param name="main"></param>
-    /// <param name="table"></param>
+    /// <param name="main">主表</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery<LTable, RTable> Join<LTable, RTable>(this LTable main, RTable table)
         where LTable : ITable
@@ -32,8 +32,8 @@ public static partial class ShadowSqlServices
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery<LTable, TTable> LeftTableJoin<LTable, RTable, TTable>(this JoinOnQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
@@ -53,8 +53,8 @@ public static partial class ShadowSqlServices
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnQuery<RTable, TTable> RightTableJoin<LTable, RTable, TTable>(this JoinOnQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
@@ -71,20 +71,20 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 多表(创建新多表)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="aliasTable">别名表</param>
     /// <param name="other"></param>
     /// <returns></returns>
-    public static MultiTableQuery Multi(this IAliasTable table, IAliasTable other)
+    public static MultiTableQuery Multi(this IAliasTable aliasTable, IAliasTable other)
     {
         var multiTable = new MultiTableQuery();
-        multiTable.AddMemberCore(table);
+        multiTable.AddMemberCore(aliasTable);
         multiTable.AddMemberCore(other);
         return multiTable;
     }
     /// <summary>
     /// 多表(创建新多表)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static MultiTableQuery Multi(this ITable table, ITable other)
@@ -100,8 +100,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 联表(创建新联表)
     /// </summary>
-    /// <param name="main"></param>
-    /// <param name="table"></param>
+    /// <param name="main">主表</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<LTable, RTable> SqlJoin<LTable, RTable>(this LTable main, RTable table)
         where LTable : ITable
@@ -118,20 +118,20 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 多表(创建新多表)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="aliasTable">别名表</param>
     /// <param name="other"></param>
     /// <returns></returns>
-    public static MultiTableSqlQuery SqlMulti(this IAliasTable table, IAliasTable other)
+    public static MultiTableSqlQuery SqlMulti(this IAliasTable aliasTable, IAliasTable other)
     {
         var multiTable = new MultiTableSqlQuery();
-        multiTable.AddMemberCore(table);
+        multiTable.AddMemberCore(aliasTable);
         multiTable.AddMemberCore(other);
         return multiTable;
     }
     /// <summary>
     /// 多表(创建新多表)
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static MultiTableSqlQuery SqlMulti(this ITable table, ITable other)
@@ -148,8 +148,8 @@ public static partial class ShadowSqlServices
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<LTable, TTable> LeftTableJoin<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable
@@ -169,8 +169,8 @@ public static partial class ShadowSqlServices
     /// <typeparam name="LTable"></typeparam>
     /// <typeparam name="RTable"></typeparam>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="table"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static JoinOnSqlQuery<RTable, TTable> RightTableJoin<LTable, RTable, TTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, TTable table)
         where LTable : ITable

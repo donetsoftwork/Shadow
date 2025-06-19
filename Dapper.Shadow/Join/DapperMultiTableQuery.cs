@@ -6,8 +6,8 @@ namespace Dapper.Shadow.Join;
 /// <summary>
 /// 多表查询
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="filter"></param>
+/// <param name="executor">执行器</param>
+/// <param name="filter">过滤条件</param>
 public class DapperMultiTableQuery(IExecutor executor, Logic filter)
     : MultiTableQuery(filter), IDapperSource
 {

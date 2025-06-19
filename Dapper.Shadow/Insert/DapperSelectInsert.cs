@@ -9,9 +9,9 @@ namespace Dapper.Shadow.Insert;
 /// 插入Select子查询
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="executor"></param>
-/// <param name="table"></param>
-/// <param name="select"></param>
+/// <param name="executor">执行器</param>
+/// <param name="table">表</param>
+/// <param name="select">筛选</param>
 public class DapperSelectInsert<TTable>(IExecutor executor, TTable table, ISelect select)
     : SelectInsert<TTable>(table, select)
     , IDapperExecute

@@ -9,7 +9,7 @@ namespace ShadowSql.CursorSelect;
 /// 表范围(分页)及列筛选
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="cursor"></param>
+/// <param name="cursor">游标</param>
 public sealed class TableCursorSelect<TTable>(TableCursor<TTable> cursor)
     : CursorSelectBase<TTable>(cursor, cursor.Source)
     where TTable : ITable
@@ -17,7 +17,7 @@ public sealed class TableCursorSelect<TTable>(TableCursor<TTable> cursor)
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableCursorSelect<TTable> Select(Func<TTable, IFieldView> select)
     {
@@ -27,7 +27,7 @@ public sealed class TableCursorSelect<TTable>(TableCursor<TTable> cursor)
     /// <summary>
     /// 表筛选列
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableCursorSelect<TTable> Select(Func<TTable, IEnumerable<IFieldView>> select)
     {

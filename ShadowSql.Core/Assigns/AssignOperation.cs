@@ -1,6 +1,5 @@
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.SqlVales;
 using System.Text;
 
 namespace ShadowSql.Assigns;
@@ -33,12 +32,7 @@ public class AssignOperation(IAssignView column, AssignSymbol assign, ICompareVi
         => _assign;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
     {
         _column.Write(engine, sql);

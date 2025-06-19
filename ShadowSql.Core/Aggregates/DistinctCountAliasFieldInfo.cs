@@ -7,11 +7,11 @@ namespace ShadowSql.Aggregates;
 /// <summary>
 /// 去重字段统计别名
 /// </summary>
-public class DistinctCountAliasFieldInfo(ICompareField field, string alias/* = "Count"*/)
+public class DistinctCountAliasFieldInfo(ICompareField field, string fieldName/* = "Count"*/)
     : DistinctCountFieldInfoBase(field), IAggregateFieldAlias
 {
     #region 配置
-    private readonly string _alias = alias;
+    private readonly string _alias = fieldName;
     /// <summary>
     /// 别名
     /// </summary>
@@ -21,27 +21,26 @@ public class DistinctCountAliasFieldInfo(ICompareField field, string alias/* = "
     /// <summary>
     /// 匹配
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="fieldName"></param>
     /// <returns></returns>
-    public bool IsMatch(string name)
-        => Identifier.Match(name, _alias);
+    public bool IsMatch(string fieldName)
+        => Identifier.Match(fieldName, _alias);
     #region IFieldView
+    /// <inheritdoc/>
     string IView.ViewName
         => _alias;
+    /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => Column.Use(_alias);
-    IFieldAlias IFieldView.As(string alias)
-        => new DistinctCountAliasFieldInfo(_target, alias);
+    /// <inheritdoc/>
+    IFieldAlias IFieldView.As(string aliasName)
+        => new DistinctCountAliasFieldInfo(_target, aliasName);
     #endregion
+    /// <inheritdoc/>
     IAggregateField IAggregateFieldAlias.ToAggregate()
         => new DistinctCountFieldInfo(_target);
     #region ISqlEntity
-    /// <summary>
-    /// sql拼接
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(AggregateConstants.Count)

@@ -11,10 +11,10 @@ namespace Dapper.Shadow.GroupBy;
 /// <summary>
 /// 对MultiQuery进行分组查询
 /// </summary>
-/// <param name="executor"></param>
-/// <param name="multiTable"></param>
-/// <param name="fields"></param>
-/// <param name="filter"></param>
+/// <param name="executor">执行器</param>
+/// <param name="multiTable">多表(联表)</param>
+/// <param name="fields">字段</param>
+/// <param name="filter">过滤条件</param>
 public class DapperGroupByMultiSqlQuery(IExecutor executor, IMultiView multiTable, IField[] fields, SqlQuery filter)
     : GroupByMultiSqlQuery(multiTable, fields, filter)
     , IDapperSource
@@ -32,9 +32,9 @@ public class DapperGroupByMultiSqlQuery(IExecutor executor, IMultiView multiTabl
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TAliasTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="aggregate"></param>
-    /// <param name="query"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public GroupByMultiSqlQuery HavingAggregate<TAliasTable>(string tableName, Func<TAliasTable, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
          where TAliasTable : IAliasTable
@@ -46,10 +46,10 @@ public class DapperGroupByMultiSqlQuery(IExecutor executor, IMultiView multiTabl
     /// 按逻辑查询
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="tableName"></param>
-    /// <param name="select"></param>
-    /// <param name="aggregate"></param>
-    /// <param name="query"></param>
+    /// <param name="tableName">表名</param>
+    /// <param name="select">筛选</param>
+    /// <param name="aggregate">聚合</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     new public GroupByMultiSqlQuery HavingAggregate<TTable>(string tableName, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
         where TTable : ITable

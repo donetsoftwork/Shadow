@@ -10,30 +10,30 @@ namespace ShadowSql.Join;
 /// </summary>
 /// <typeparam name="TLeft"></typeparam>
 /// <typeparam name="TRight"></typeparam>
-/// <param name="root"></param>
-/// <param name="left"></param>
-/// <param name="right"></param>
-/// <param name="onSqlQuery"></param>
-public class AliasJoinOnSqlQuery<TLeft, TRight>(JoinTableSqlQuery root, TLeft left, TRight right, SqlQuery onSqlQuery)
-    : JoinOnBase<JoinTableSqlQuery, TLeft, TRight, ITable, ITable, SqlQuery>(root, left, right, onSqlQuery), IDataSqlQuery
+/// <param name="joinTable">联表</param>
+/// <param name="left">左</param>
+/// <param name="right">右</param>
+/// <param name="onSqlQuery">联表查询</param>
+public class AliasJoinOnSqlQuery<TLeft, TRight>(JoinTableSqlQuery joinTable, TLeft left, TRight right, SqlQuery onSqlQuery)
+    : JoinOnBase<JoinTableSqlQuery, TLeft, TRight, ITable, ITable, SqlQuery>(joinTable, left, right, onSqlQuery), IDataSqlQuery
     where TLeft : IAliasTable<ITable>
     where TRight : IAliasTable<ITable>
 {
     /// <summary>
     /// 联表俩俩关联查询
     /// </summary>
-    /// <param name="root"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    public AliasJoinOnSqlQuery(JoinTableSqlQuery root, TLeft left, TRight right)
-        : this(root, left, right, new SqlAndQuery())
+    /// <param name="joinTable">联表</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    public AliasJoinOnSqlQuery(JoinTableSqlQuery joinTable, TLeft left, TRight right)
+        : this(joinTable, left, right, new SqlAndQuery())
     {
     }
     #region On
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasJoinOnSqlQuery<TLeft, TRight> OnLeft(Func<TLeft, AtomicLogic> query)
     {
@@ -43,7 +43,7 @@ public class AliasJoinOnSqlQuery<TLeft, TRight>(JoinTableSqlQuery root, TLeft le
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasJoinOnSqlQuery<TLeft, TRight> OnRight(Func<TRight, AtomicLogic> query)
     {
@@ -55,7 +55,7 @@ public class AliasJoinOnSqlQuery<TLeft, TRight>(JoinTableSqlQuery root, TLeft le
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasJoinOnSqlQuery<TLeft, TRight> WhereLeft(Func<TLeft, AtomicLogic> query)
     {
@@ -65,7 +65,7 @@ public class AliasJoinOnSqlQuery<TLeft, TRight>(JoinTableSqlQuery root, TLeft le
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasJoinOnSqlQuery<TLeft, TRight> WhereRight(Func<TRight, AtomicLogic> query)
     {

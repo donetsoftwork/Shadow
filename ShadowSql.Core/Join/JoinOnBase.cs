@@ -61,19 +61,19 @@ public abstract class JoinOnBase
     /// <summary>
     /// 获取左边列
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public abstract IPrefixField? GetLeftField(string fieldName);
     /// <summary>
     /// 获取右边列
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public abstract IPrefixField? GetRightField(string fieldName);
     /// <summary>
     /// 获取列
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public IPrefixField? GetPrefixField(string fieldName)
     {
@@ -85,13 +85,13 @@ public abstract class JoinOnBase
     /// <summary>
     /// 获取右边字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public abstract IField LeftField(string fieldName);
     /// <summary>
     /// 获取右边字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public abstract IField RightField(string fieldName);
     #endregion
@@ -99,7 +99,7 @@ public abstract class JoinOnBase
     /// <summary>
     /// 左边比较字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public ICompareView GetLeftCompareField(string fieldName)
     {
@@ -110,7 +110,7 @@ public abstract class JoinOnBase
     /// <summary>
     /// 右边比较字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     public ICompareView GetRightCompareField(string fieldName)
     {
@@ -123,29 +123,21 @@ public abstract class JoinOnBase
     /// <summary>
     /// 获取联表成员
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     public abstract IAliasTable? GetMember(string tableName);
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 筛选前缀
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void FilterPrefix(ISqlEngine engine, StringBuilder sql)
         => engine.JoinOnPrefix(sql);
     /// <summary>
     /// 拼写联接右表
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected abstract void WriteRightSource(ISqlEngine engine, StringBuilder sql);
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(_joinType);

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace ShadowSql.Compares;
 
@@ -163,7 +163,7 @@ public class CompareManager
     /// <summary>
     /// 添加
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <param name="compare"></param>
     private void TryAdd(string operation, CompareSymbol compare)
     {
@@ -186,7 +186,7 @@ public class CompareManager
     /// <summary>
     /// 获取
     /// </summary>
-    /// <param name="operation"></param>
+    /// <param name="operation">操作</param>
     /// <returns></returns>
     public CompareSymbol Get(string operation)
     {

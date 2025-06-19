@@ -15,8 +15,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static TableDelete ToDelete(this ITable table, ISqlLogic where)
         => new(table, where);
@@ -24,8 +24,8 @@ public static partial class ShadowSqlCoreServices
     /// 删除
     /// </summary>
     /// <typeparam name="TTable"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableDelete ToDelete<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
         where TTable : ITable
@@ -33,14 +33,14 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableDelete ToDelete(this TableSqlQuery query)
         => new((ITable)query.Source, query._filter);
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableDelete ToDelete(this TableQuery query)
         => new((ITable)query.Source, query._filter);
@@ -49,8 +49,8 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 删除
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static AliasTableDelete ToDelete(this IAliasTable table, ISqlLogic where)
         => new(table, where);
@@ -68,7 +68,7 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 清空表
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public static TruncateTable ToTruncate(this ITable table)
         => new(table);
     #endregion

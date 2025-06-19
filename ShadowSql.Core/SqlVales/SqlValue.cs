@@ -14,7 +14,7 @@ public static class SqlValue
     /// 包装为数据库值
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="value"></param>
+    /// <param name="value">值</param>
     /// <returns></returns>
     public static ISqlValue From<T>(T value)
     {
@@ -36,7 +36,7 @@ public static class SqlValue
     /// 包装列表
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="values"></param>
+    /// <param name="values">值</param>
     /// <returns></returns>
     public static ISqlValue Values<T>(params IEnumerable<T> values)
     {
@@ -46,17 +46,12 @@ public static class SqlValue
     /// 数据库值包装类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="value"></param>
-    class SqlValueWraper<T>(T value) : ISqlValue
+    /// <param name="value">值</param>
+    internal class SqlValueWraper<T>(T value) : ISqlValue
     {
-        private readonly T _value = value;
+        internal readonly T _value = value;
 
-        /// <summary>
-        /// 拼写sql
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public void Write(ISqlEngine engine, StringBuilder sql)
         {
             var sqlValue = engine.SqlValue(_value);
@@ -67,17 +62,12 @@ public static class SqlValue
     /// 列表包装类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="values"></param>
-    class SqlValuesWraper<T>(IEnumerable<T> values) : ISqlValue
+    /// <param name="values">值</param>
+    internal class SqlValuesWraper<T>(IEnumerable<T> values) : ISqlValue
     {
-        private readonly IEnumerable<T> _values = values;
+        internal readonly IEnumerable<T> _values = values;
 
-        /// <summary>
-        /// 拼写sql
-        /// </summary>
-        /// <param name="engine"></param>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public void Write(ISqlEngine engine, StringBuilder sql)
         {
             bool appended = false;

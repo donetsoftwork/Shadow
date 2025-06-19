@@ -32,13 +32,13 @@ public interface IJoinOn : IMultiView, ISqlEntity
     /// <summary>
     /// 获取左表列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     IPrefixField? GetLeftField(string columName);
     /// <summary>
     /// 获取右表列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     IPrefixField? GetRightField(string columName);
 }

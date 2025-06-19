@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.SingleSelect;
 
@@ -13,8 +13,8 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="param"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Count(this IDapperSelect select, object? param = null)
         => select.Executor.Count<int>(select.Source, param);
@@ -25,7 +25,7 @@ public static partial class DapperShadowCoreServices
     /// 计数
     /// </summary>
     /// <param name="source"></param>
-    /// <param name="param"></param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Count(this IDapperSource source, object? param = null)
         => source.Executor.Count<int>(source, param);
@@ -37,8 +37,8 @@ public static partial class DapperShadowCoreServices
     /// 计数
     /// </summary>
     /// <param name="view"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Count(this ITableView view, IExecutor executor, object? param = null)
         => executor.Count<int>(view, param);
@@ -47,9 +47,9 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Count(this CountSelect select, IExecutor executor, object? param = null)
         => executor.ExecuteScalar<int>(select, param);
@@ -58,9 +58,9 @@ public static partial class DapperShadowCoreServices
     /// <summary>
     /// 计数
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="executor"></param>
-    /// <param name="param"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="executor">执行器</param>
+    /// <param name="param">参数</param>
     /// <returns></returns>
     public static int Count(this ISelect select, IExecutor executor, object? param = null)
         => executor.Count<int>(select.Source, param);

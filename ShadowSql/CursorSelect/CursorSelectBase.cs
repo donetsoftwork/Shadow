@@ -18,8 +18,8 @@ public abstract class CursorSelectBase<TTarget>(ICursor source, TTarget target)
     /// <summary>
     /// 拼写分页sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
         => engine.SelectCursor(sql, this, _source);
     #endregion

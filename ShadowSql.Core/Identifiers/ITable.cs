@@ -16,7 +16,7 @@ public interface ITable : IIdentifier, ITableView, IInsertTable, IUpdateTable
     /// <summary>
     /// 获取单个列
     /// </summary>
-    /// <param name="columName"></param>
+    /// <param name="columName">列名</param>
     /// <returns></returns>
     IColumn? GetColumn(string columName);
 }
@@ -32,7 +32,7 @@ public interface IInsertTable : IIdentifier, ISqlEntity
     /// <summary>
     /// 获取插入列
     /// </summary>
-    /// <param name="columnName"></param>
+    /// <param name="columnName">列名</param>
     /// <returns></returns>
     IColumn? GetInsertColumn(string columnName);
 }
@@ -48,7 +48,7 @@ public interface IUpdateTable : ISqlEntity
     /// <summary>
     /// 获取更新字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     IAssignView? GetAssignField(string fieldName);
 }
@@ -64,19 +64,19 @@ public interface ITableView : ISqlEntity
     /// <summary>
     /// 构造字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     IField? GetField(string fieldName);
     /// <summary>
     /// 获取比较字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     ICompareField GetCompareField(string fieldName);
     /// <summary>
     /// 构造新字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     IField NewField(string fieldName);
 }
@@ -92,7 +92,7 @@ public interface IMultiView : ITableView
     /// <summary>
     /// 获取成员表
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
     IAliasTable? GetMember(string tableName);
 }
@@ -108,7 +108,7 @@ public interface IJoinTable : IMultiView
     /// <summary>
     /// 添加连接
     /// </summary>
-    /// <param name="joinOn"></param>
+    /// <param name="joinOn">联接</param>
     void AddJoinOn(IJoinOn joinOn);
 }
 /// <summary>

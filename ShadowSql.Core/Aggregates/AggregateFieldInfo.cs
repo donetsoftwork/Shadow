@@ -5,26 +5,21 @@ using System.Text;
 
 namespace ShadowSql.Aggregates;
 
-/// <summary>
-/// 聚合字段信息
-/// </summary>
+/// <inheritdoc />
 public sealed class AggregateFieldInfo(ICompareField target, string aggregate)
     : AggregateFieldInfoBase(aggregate, target), IAggregateField, ISqlEntity
 {
-    /// <summary>
-    /// 拼写sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteCore(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append(_aggregate).Append('(');
         _target.Write(engine, sql);
         sql.Append(')');
     }
+    /// <inheritdoc/>
     IAggregateFieldAlias IAggregateField.As(string alias)
         => new AggregateAliasFieldInfo(_target, _aggregate, alias);
-
+    /// <inheritdoc/>
     string IAggregateField.TargetName
         => _target.ViewName;
 }

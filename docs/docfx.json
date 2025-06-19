@@ -11,8 +11,7 @@
             "ShadowSql.Expressions/ShadowSql.Expressions.csproj",
             "Dapper.Shadow.Core/Dapper.Shadow.Core.csproj",
             "Dapper.Shadow/Dapper.Shadow.csproj",
-            "Shadow.DDL/Shadow.DDL.csproj",
-            "filterConfig.yml"
+            "Shadow.DDL/Shadow.DDL.csproj"
           ],
           "exclude": [ "Benchmarks/*", "Tests/*" ]
         }
@@ -48,6 +47,7 @@
     "globalMetadata": {
       "_appName": "Shadow",
       "_appTitle": ".net拼写sql",
+      "_appFooter": "<span>Copyright (c) ShadowSql All Rights Reserved</span>",
       "_enableSearch": false,
       "pdf": false
     }

@@ -13,8 +13,8 @@ namespace ShadowSql.GroupBy;
 /// 分组基类
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="fields"></param>
-/// <param name="filter"></param>
+/// <param name="fields">字段</param>
+/// <param name="filter">过滤条件</param>
 public abstract class GroupByBase<TFilter>(IField[] fields, TFilter filter)
     : GroupByBase(fields), IDataFilter
     where TFilter : ISqlLogic
@@ -32,11 +32,7 @@ public abstract class GroupByBase<TFilter>(IField[] fields, TFilter filter)
         => _filter;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 筛选条件可选
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
         => _filter.TryWrite(engine, sql);
     #endregion
@@ -49,7 +45,7 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     /// <summary>
     /// 分组基类
     /// </summary>
-    /// <param name="fields"></param>
+    /// <param name="fields">字段</param>
     public GroupByBase(IField[] fields)
     {
         _groupByFields = fields;
@@ -74,11 +70,7 @@ public abstract class GroupByBase : FilterBase, IGroupByView
         => _columns.Value;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写数据源
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         WriteGroupBySource(engine, sql);
@@ -87,8 +79,8 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     /// <summary>
     /// 拼写分组条件
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
     protected void WriteGroupBy(ISqlEngine engine, StringBuilder sql)
@@ -116,37 +108,28 @@ public abstract class GroupByBase : FilterBase, IGroupByView
     /// <summary>
     /// 分组数据源拼写
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     protected abstract void WriteGroupBySource(ISqlEngine engine, StringBuilder sql);
-    /// <summary>
-    /// 筛选前缀
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void FilterPrefix(ISqlEngine engine, StringBuilder sql)
         => engine.HavingPrefix(sql);
     #endregion
     #region TableViewBase
-    /// <summary>
-    /// 获取所有字段
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
         => _groupByFields;
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
         => _groupByFields.FirstOrDefault(f => f.IsMatch(fieldName));
     /// <summary>
-    /// 构造新字段
+    /// 分组不支持构造新字段
     /// </summary>
-    /// <param name="fieldName"></param>
+    /// <param name="fieldName">字段名</param>
     /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+
     protected override IField NewField(string fieldName)
         => throw new ArgumentException(fieldName + "字段不存在", nameof(fieldName));
     #endregion    

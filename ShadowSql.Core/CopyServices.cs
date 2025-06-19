@@ -14,15 +14,15 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// 复制表
     /// </summary>
-    /// <param name="source"></param>
+    /// <param name="table">表</param>
     /// <param name="newName"></param>
     /// <returns></returns>
-    public static Table Copy(this Table source, string newName = "")
+    public static Table Copy(this Table table, string newName = "")
     {
         if (string.IsNullOrWhiteSpace(newName))
-            newName = source.Name;
+            newName = table.Name;
         var destination = new Table(newName);
-        source.CopyColumnsTo(destination);
+        table.CopyColumnsTo(destination);
         return destination;
     }
     /// <summary>

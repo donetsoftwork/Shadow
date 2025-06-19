@@ -10,12 +10,12 @@ namespace ShadowSql.Cursors;
 /// 表范围筛选游标
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="source"></param>
-/// <param name="where"></param>
-/// <param name="limit"></param>
-/// <param name="offset"></param>
-public sealed class TableCursor<TTable>(TTable source, ISqlLogic where, int limit, int offset)
-    : CursorBase<TTable>(source, limit, offset)
+/// <param name="table">表</param>
+/// <param name="where">查询条件</param>
+/// <param name="limit">筛选数量</param>
+/// <param name="offset">跳过数量</param>
+public sealed class TableCursor<TTable>(TTable table, ISqlLogic where, int limit, int offset)
+    : CursorBase<TTable>(table, limit, offset)
     where TTable : ITable
 {
     #region 配置
@@ -30,7 +30,7 @@ public sealed class TableCursor<TTable>(TTable source, ISqlLogic where, int limi
     /// <summary>
     /// 正序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableCursor<TTable> Asc(Func<TTable, IOrderView> select)
     {
@@ -40,20 +40,15 @@ public sealed class TableCursor<TTable>(TTable source, ISqlLogic where, int limi
     /// <summary>
     /// 倒序
     /// </summary>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public TableCursor<TTable> Desc(Func<TTable, IOrderAsc> select)
     {
         DescCore(select(_source));
         return this;
-    }    
+    }
     #endregion
-    /// <summary>
-    /// 拼写数据源(表)sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
     {
         base.WriteSource(engine, sql);
@@ -62,8 +57,8 @@ public sealed class TableCursor<TTable>(TTable source, ISqlLogic where, int limi
     /// <summary>
     /// 筛选条件可选
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     private bool WriteFilter(ISqlEngine engine, StringBuilder sql)
     {
         var point = sql.Length;

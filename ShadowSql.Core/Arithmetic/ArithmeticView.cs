@@ -8,9 +8,9 @@ namespace ShadowSql.Arithmetic;
 /// <summary>
 /// 计算视图
 /// </summary>
-/// <param name="left"></param>
-/// <param name="op"></param>
-/// <param name="right"></param>
+/// <param name="left">左</param>
+/// <param name="op">操作</param>
+/// <param name="right">右</param>
 public class ArithmeticView(ICompareView left, ArithmeticSymbol op, ICompareView right)
     : ICompareView
 {
@@ -35,7 +35,7 @@ public class ArithmeticView(ICompareView left, ArithmeticSymbol op, ICompareView
     public ICompareView Right 
         => _right;
     #endregion
-
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
     {
         sql.Append('(');

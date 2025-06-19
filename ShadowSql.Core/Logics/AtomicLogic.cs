@@ -1,4 +1,4 @@
-﻿using ShadowSql.Engines;
+using ShadowSql.Engines;
 using System.Text;
 
 namespace ShadowSql.Logics;
@@ -12,8 +12,8 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 拼写sql
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
     /// <returns></returns>
     public abstract bool TryWrite(ISqlEngine engine, StringBuilder sql);
     /// <summary>
@@ -33,7 +33,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AndLogic operator &(AtomicLogic logic, AtomicLogic other)
@@ -43,7 +43,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IAndLogic operator &(AtomicLogic logic, IAndLogic other)
@@ -52,7 +52,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IAndLogic operator &(IAndLogic other, AtomicLogic logic)
     //    => other.And(logic);
@@ -61,7 +61,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static AndLogic operator &(AtomicLogic logic, AndLogic other)
@@ -71,7 +71,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexAndLogic operator &(AtomicLogic logic, ComplexAndLogic other)
@@ -81,7 +81,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// <summary>
     ///// 与逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IAndLogic operator &(AtomicLogic logic, IOrLogic other)
@@ -90,7 +90,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// 与逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IAndLogic operator &(IOrLogic other, AtomicLogic logic)
     //    => other.And(logic);
@@ -99,7 +99,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(AtomicLogic logic, OrLogic other)
@@ -109,7 +109,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator &(AtomicLogic logic, ComplexOrLogic other)
@@ -121,7 +121,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static OrLogic operator |(AtomicLogic logic, AtomicLogic other)
@@ -131,7 +131,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IOrLogic operator |(AtomicLogic logic, IAndLogic other)
@@ -140,7 +140,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IOrLogic operator |(IAndLogic other, AtomicLogic logic)
     //  => other.Or(logic);
@@ -149,7 +149,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(AtomicLogic logic, AndLogic other)
@@ -159,7 +159,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static Logic operator |(AtomicLogic logic, ComplexAndLogic other)
@@ -169,7 +169,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// <summary>
     ///// 或逻辑
     ///// </summary>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <param name="other"></param>
     ///// <returns></returns>
     //public static IOrLogic operator |(AtomicLogic logic, IOrLogic other)
@@ -178,7 +178,7 @@ public abstract class AtomicLogic : ISqlLogic
     ///// 或逻辑
     ///// </summary>
     ///// <param name="other"></param>
-    ///// <param name="logic"></param>
+    ///// <param name="logic">查询逻辑</param>
     ///// <returns></returns>
     //public static IOrLogic operator |(IOrLogic other, AtomicLogic logic)
     //    => other.Or(logic);
@@ -187,7 +187,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static OrLogic operator |(AtomicLogic logic, OrLogic other)
@@ -197,7 +197,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <param name="other"></param>
     /// <returns></returns>
     public static ComplexOrLogic operator |(AtomicLogic logic, ComplexOrLogic other)
@@ -208,7 +208,7 @@ public abstract class AtomicLogic : ISqlLogic
     /// <summary>
     /// 反逻辑
     /// </summary>
-    /// <param name="logic"></param>
+    /// <param name="logic">查询逻辑</param>
     /// <returns></returns>
     public static AtomicLogic operator !(AtomicLogic logic)
         => logic.Not();

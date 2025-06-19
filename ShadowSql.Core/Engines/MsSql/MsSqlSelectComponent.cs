@@ -1,4 +1,4 @@
-﻿using ShadowSql.Components;
+using ShadowSql.Components;
 using ShadowSql.Cursors;
 using ShadowSql.Select;
 using System.Text;
@@ -6,17 +6,11 @@ using System.Text;
 namespace ShadowSql.Engines.MsSql;
 
 /// <summary>
-/// 数据获取组件基类
+/// MsSql数据获取组件
 /// </summary>
 public class MsSqlSelectComponent : SelectComponentBase
 {
-    /// <summary>
-    /// 数据分页获取
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="select"></param>
-    /// <param name="cursor"></param>
+    /// <inheritdoc/>
     public override void SelectCursor(ISqlEngine engine, StringBuilder sql, ISelect select, ICursor cursor)
     {
         int offset = cursor.Offset;
@@ -46,9 +40,9 @@ public class MsSqlSelectComponent : SelectComponentBase
     /// <summary>
     /// SELECT TOP
     /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
-    /// <param name="select"></param>
+    /// <param name="engine">数据库引擎</param>
+    /// <param name="sql">sql</param>
+    /// <param name="select">筛选</param>
     /// <param name="top"></param>
     public void SelectTop(ISqlEngine engine, StringBuilder sql, ISelect select, int top)
     {

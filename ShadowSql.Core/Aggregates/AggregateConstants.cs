@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 
 namespace ShadowSql.Aggregates;
 
@@ -31,7 +31,7 @@ public static class AggregateConstants
     /// <summary>
     /// 是否匹配Count聚合
     /// </summary>
-    /// <param name="aggregate"></param>
+    /// <param name="aggregate">聚合</param>
     /// <returns></returns>
     public static bool MatchCount(string aggregate)
         => Identifier.Match(Count, aggregate);

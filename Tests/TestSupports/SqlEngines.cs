@@ -19,19 +19,19 @@ public class SqlEngines
     /// <summary>
     /// 获取数据库引擎
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="engineName"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public static ISqlEngine Get(SqlEngineNames name)
+    public static ISqlEngine Get(SqlEngineNames engineName)
     {
-        return name switch
+        return engineName switch
         {
             SqlEngineNames.MsSql => MsSql,
             SqlEngineNames.MySql => MySql,
             SqlEngineNames.Sqlite => Sqlite,
             SqlEngineNames.Oracle => Oracle,
             SqlEngineNames.Postgres => Postgres,
-            _ => throw new ArgumentOutOfRangeException(nameof(name), name, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(engineName), engineName, null)
         };
     }}
 

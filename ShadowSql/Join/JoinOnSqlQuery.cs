@@ -1,7 +1,6 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using ShadowSql.Variants;
 using System;
 
 namespace ShadowSql.Join;
@@ -11,23 +10,23 @@ namespace ShadowSql.Join;
 /// </summary>
 /// <typeparam name="LTable"></typeparam>
 /// <typeparam name="RTable"></typeparam>
-/// <param name="root"></param>
-/// <param name="left"></param>
-/// <param name="right"></param>
-/// <param name="onQuery"></param>
-public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, IAliasTable<LTable> left, IAliasTable<RTable> right, SqlQuery onQuery)
-    : JoinOnBase<JoinTableSqlQuery, IAliasTable<LTable>, IAliasTable<RTable>, LTable, RTable, SqlQuery>(root, left, right, onQuery), IDataSqlQuery
+/// <param name="joinTable">联表</param>
+/// <param name="left">左</param>
+/// <param name="right">右</param>
+/// <param name="onQuery">联表查询</param>
+public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery joinTable, IAliasTable<LTable> left, IAliasTable<RTable> right, SqlQuery onQuery)
+    : JoinOnBase<JoinTableSqlQuery, IAliasTable<LTable>, IAliasTable<RTable>, LTable, RTable, SqlQuery>(joinTable, left, right, onQuery), IDataSqlQuery
     where LTable : ITable
     where RTable : ITable
 {
     /// <summary>
     /// 联表俩俩关联查询
     /// </summary>
-    /// <param name="root"></param>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    public JoinOnSqlQuery(JoinTableSqlQuery root, IAliasTable<LTable> left, IAliasTable<RTable> right)
-        : this(root, left, right, SqlQuery.CreateAndQuery())
+    /// <param name="joinTable">联表</param>
+    /// <param name="left">左</param>
+    /// <param name="right">右</param>
+    public JoinOnSqlQuery(JoinTableSqlQuery joinTable, IAliasTable<LTable> left, IAliasTable<RTable> right)
+        : this(joinTable, left, right, SqlQuery.CreateAndQuery())
     { 
     }
     #region IDataQuery
@@ -41,8 +40,8 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, IAliasTable<
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<LTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
@@ -52,8 +51,8 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, IAliasTable<
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> OnRight(Func<RTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
@@ -66,8 +65,8 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, IAliasTable<
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<LTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
@@ -79,8 +78,8 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery root, IAliasTable<
     /// <summary>
     /// 按逻辑查询
     /// </summary>
-    /// <param name="select"></param>
-    /// <param name="query"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<RTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {

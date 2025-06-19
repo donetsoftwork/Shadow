@@ -14,20 +14,20 @@ public static partial class ShadowSqlServicess
     /// 筛选计数
     /// </summary>
     /// <typeparam name="TSelect"></typeparam>
-    /// <param name="select"></param>
-    /// <param name="alias"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public static TSelect SelectCount<TSelect>(this TSelect select, string alias = "Count")
+    public static TSelect SelectCount<TSelect>(this TSelect select, string aliasName = "Count")
         where TSelect : SelectFieldsBase, IGroupBySelect
     {
-        select.SelectCore(CountAliasFieldInfo.Use(alias));
+        select.SelectCore(CountAliasFieldInfo.Use(aliasName));
         return select;
     }
     /// <summary>
     /// 筛选分组字段
     /// </summary>
     /// <typeparam name="TSelect"></typeparam>
-    /// <param name="select"></param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static TSelect SelectKey<TSelect>(this TSelect select)
         where TSelect : SelectFieldsBase, IGroupBySelect
@@ -40,27 +40,27 @@ public static partial class ShadowSqlServicess
     /// 添加表
     /// </summary>
     /// <typeparam name="TMultiTableSelect"></typeparam>
-    /// <param name="multiSelect"></param>
-    /// <param name="tableName"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="tableName">表名</param>
     /// <returns></returns>
-    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, string tableName)
+    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect select, string tableName)
         where TMultiTableSelect : SelectFieldsBase, IMultiSelect
     {
-        multiSelect.SelectTables.Add(multiSelect.Target.From(tableName));
-        return multiSelect;
+        select.SelectTables.Add(select.Target.From(tableName));
+        return select;
     }
     /// <summary>
     /// 添加表
     /// </summary>
     /// <typeparam name="TMultiTableSelect"></typeparam>
-    /// <param name="multiSelect"></param>
-    /// <param name="aliasTable"></param>
+    /// <param name="select">筛选</param>
+    /// <param name="aliasTable">别名表</param>
     /// <returns></returns>
-    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect multiSelect, IAliasTable aliasTable)
+    public static TMultiTableSelect SelectTable<TMultiTableSelect>(this TMultiTableSelect select, IAliasTable aliasTable)
         where TMultiTableSelect : SelectFieldsBase, IMultiSelect
     {
-        multiSelect.SelectTables.Add(aliasTable);
-        return multiSelect;
+        select.SelectTables.Add(aliasTable);
+        return select;
     }
     #endregion
 }

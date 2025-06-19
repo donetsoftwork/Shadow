@@ -1,4 +1,4 @@
-﻿using ShadowSql.Components;
+using ShadowSql.Components;
 using System.Text;
 
 namespace ShadowSql.Engines.Postgres;
@@ -6,11 +6,11 @@ namespace ShadowSql.Engines.Postgres;
 /// <summary>
 /// Postgres
 /// </summary>
-/// <param name="select"></param>
-/// <param name="sqlVales"></param>
+/// <param name="select">筛选</param>
+/// <param name="sqlValues"></param>
 /// <param name="components"></param>
-public class PostgresEngine(ISelectComponent select, ISqlValueComponent sqlVales, IPluginProvider? components)
-    : EngineBase(select, sqlVales, components), ISqlEngine
+public class PostgresEngine(ISelectComponent select, ISqlValueComponent sqlValues, IPluginProvider? components)
+    : EngineBase(select, sqlValues, components), ISqlEngine
 {
     /// <summary>
     /// Postgres
@@ -19,20 +19,12 @@ public class PostgresEngine(ISelectComponent select, ISqlValueComponent sqlVales
         : this(new PostgresSelectComponent() ,new SqlValueComponent("1", "0", "NULL"), null)
     {
     }
-    /// <summary>
-    /// 标识符格式化
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="name"></param>
+    /// <inheritdoc/>
     public override void Identifier(StringBuilder sql, string name)
     {
         sql.Append('\"').Append(name).Append('\"');
     }
-    /// <summary>
-    /// 插入自增列sql
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override bool InsertedIdentity(StringBuilder sql)
     {
         sql.Append(";SELECT lastval()");

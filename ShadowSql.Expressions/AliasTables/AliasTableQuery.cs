@@ -12,8 +12,8 @@ namespace ShadowSql.Expressions.AliasTables;
 /// 逻辑查询别名表
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-/// <param name="table"></param>
-/// <param name="filter"></param>
+/// <param name="table">表</param>
+/// <param name="filter">过滤条件</param>
 public class AliasTableQuery<TEntity>(IAliasTable table, Logic filter)
     : DataFilterBase<IAliasTable, Logic>(table, filter), IDataQuery
 {
@@ -21,7 +21,7 @@ public class AliasTableQuery<TEntity>(IAliasTable table, Logic filter)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableQuery<TEntity> And(Expression<Func<TEntity, bool>> query)
     {
@@ -32,7 +32,7 @@ public class AliasTableQuery<TEntity>(IAliasTable table, Logic filter)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableQuery<TEntity> Or(Expression<Func<TEntity, bool>> query)
     {
@@ -45,7 +45,7 @@ public class AliasTableQuery<TEntity>(IAliasTable table, Logic filter)
     /// <summary>
     /// 与逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableQuery<TEntity> And<TParameter>(Expression<Func<TEntity, TParameter, bool>> query)
     {
@@ -56,7 +56,7 @@ public class AliasTableQuery<TEntity>(IAliasTable table, Logic filter)
     /// <summary>
     /// 或逻辑
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public AliasTableQuery<TEntity> Or<TParameter>(Expression<Func<TEntity, TParameter, bool>> query)
     {

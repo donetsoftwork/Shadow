@@ -10,7 +10,7 @@ namespace ShadowSql.Insert;
 /// <summary>
 /// 多条插入
 /// </summary>
-/// <param name="table"></param>
+/// <param name="table">表</param>
 /// <param name="items"></param>
 public class MultiInsert(IInsertTable table, List<IInsertValues> items)
     : MultiInsertBase(items), IMultiInsert
@@ -18,7 +18,7 @@ public class MultiInsert(IInsertTable table, List<IInsertValues> items)
     /// <summary>
     /// 插入多条
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     public MultiInsert(IInsertTable table)
         : this(table, [])
     {
@@ -26,7 +26,7 @@ public class MultiInsert(IInsertTable table, List<IInsertValues> items)
     /// <summary>
     /// 插入多条
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="tableName">表名</param>
     public MultiInsert(string tableName)
         : this(EmptyTable.Use(tableName), [])
     {
@@ -42,6 +42,7 @@ public class MultiInsert(IInsertTable table, List<IInsertValues> items)
     public IInsertTable Table
         => _table;
     #endregion
+    /// <inheritdoc/>
     void ISqlEntity.Write(ISqlEngine engine, StringBuilder sql)
         => WriteInsert(_table, engine, sql);
 }

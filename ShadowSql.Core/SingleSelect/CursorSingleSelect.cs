@@ -8,8 +8,8 @@ namespace ShadowSql.SingleSelect;
 /// <summary>
 /// 游标单列选择
 /// </summary>
-/// <param name="cursor"></param>
-/// <param name="singleField"></param>
+/// <param name="cursor">游标</param>
+/// <param name="singleField">单列</param>
 public class CursorSingleSelect(ICursor cursor, IFieldView singleField)
     : TableSingleSelect(cursor, singleField)
 {
@@ -22,11 +22,7 @@ public class CursorSingleSelect(ICursor cursor, IFieldView singleField)
         => _cursor;
     #endregion
     #region ISqlEntity
-    /// <summary>
-    /// 拼写分页sql
-    /// </summary>
-    /// <param name="engine"></param>
-    /// <param name="sql"></param>
+    /// <inheritdoc/>
     protected override void Write(ISqlEngine engine, StringBuilder sql) 
         => engine.SelectCursor(sql, this, _cursor);
     #endregion

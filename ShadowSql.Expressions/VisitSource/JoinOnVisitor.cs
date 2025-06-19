@@ -11,7 +11,7 @@ namespace ShadowSql.Expressions.VisitSource;
 /// <summary>
 /// 联表表查询表达式解析
 /// </summary>
-/// <param name="joinOn"></param>
+/// <param name="joinOn">联接</param>
 /// <param name="leftEntity"></param>
 /// <param name="rightEntity"></param>
 public class JoinOnVisitor(IJoinOn joinOn, Expression leftEntity, Expression rightEntity)
@@ -42,18 +42,12 @@ public class JoinOnVisitor(IJoinOn joinOn, Expression leftEntity, Expression rig
     /// </summary>
     public Expression LeftEntity
         => _leftEntity;
-    /// <summary>
-    /// 所有字段
-    /// </summary>
+    /// <inheritdoc/>
     public override IEnumerable<IField> Fields
         => _rightTable.Fields;
     #endregion
     #region IFieldProvider
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IEnumerable<IField> GetFieldsByMember(MemberExpression member)
     {
         var entity = member.Expression;
@@ -63,11 +57,7 @@ public class JoinOnVisitor(IJoinOn joinOn, Expression leftEntity, Expression rig
             return [TableVisitor.GetFieldByName(_rightTable, member.Member.Name)];
         return [];
     }
-    /// <summary>
-    /// 获取字段
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override IField? GetFieldByName(string fieldName)
         => _joinOn.GetField(fieldName);
     #endregion
@@ -77,8 +67,8 @@ public class JoinOnVisitor(IJoinOn joinOn, Expression leftEntity, Expression rig
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
     /// <typeparam name="TField"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="expression"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public static IEnumerable<IField> GetFieldsByExpression<TLeft, TRight, TField>(IJoinOn joinOn, Expression<Func<TLeft, TRight, TField>> expression)
     {
@@ -93,9 +83,9 @@ public class JoinOnVisitor(IJoinOn joinOn, Expression leftEntity, Expression rig
     /// </summary>
     /// <typeparam name="TLeft"></typeparam>
     /// <typeparam name="TRight"></typeparam>
-    /// <param name="joinOn"></param>
-    /// <param name="logic"></param>
-    /// <param name="expression"></param>
+    /// <param name="joinOn">联接</param>
+    /// <param name="logic">查询逻辑</param>
+    /// <param name="expression">表达式</param>
     /// <returns></returns>
     public static LogicVisitor On<TLeft, TRight>(IJoinOn joinOn, Logic logic, Expression<Func<TLeft, TRight, bool>> expression)
     {

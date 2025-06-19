@@ -1,4 +1,4 @@
-﻿using ShadowSql.Identifiers;
+using ShadowSql.Identifiers;
 using ShadowSql.Queries;
 using ShadowSql.SingleSelect;
 using ShadowSql.SubQueries;
@@ -14,32 +14,32 @@ public static partial class ShadowSqlCoreServices
     /// <summary>
     /// EXISTS子查询逻辑
     /// </summary>
-    /// <param name="source"></param>
+    /// <param name="view"></param>
     /// <returns></returns>
-    public static ExistsLogic AsExists(this ITableView source)
-        => new(source);
+    public static ExistsLogic AsExists(this ITableView view)
+        => new(view);
     /// <summary>
     /// NOT EXISTS子查询逻辑
     /// </summary>
-    /// <param name="source"></param>
+    /// <param name="view"></param>
     /// <returns></returns>
-    public static NotExistsLogic AsNotExists(this ITableView source)
-        => new(source);
+    public static NotExistsLogic AsNotExists(this ITableView view)
+        => new(view);
     #endregion
     #region ICompareView
     /// <summary>
     /// IN子查询逻辑
     /// </summary>
-    /// <param name="field"></param>
-    /// <param name="select"></param>
+    /// <param name="field">字段</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SubInLogic In(this ICompareView field, ISingleSelect select)
         => new(field, select);
     /// <summary>
     /// NOT IN子查询逻辑
     /// </summary>
-    /// <param name="field"></param>
-    /// <param name="select"></param>
+    /// <param name="field">字段</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SubNotInLogic NotIn(this ICompareView field, ISingleSelect select)
         => new(field, select);
@@ -49,35 +49,35 @@ public static partial class ShadowSqlCoreServices
     /// EXISTS子查询逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="source"></param>
+    /// <param name="query">查询</param>
+    /// <param name="view"></param>
     /// <returns></returns>
-    public static Query Exists<Query>(this Query query, ITableView source)
+    public static Query Exists<Query>(this Query query, ITableView view)
         where Query : IDataSqlQuery
     {
-        query.Query.AddLogic(source.AsExists());
+        query.Query.AddLogic(view.AsExists());
         return query;
     }
     /// <summary>
     /// NOT EXISTS子查询逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="source"></param>
+    /// <param name="query">查询</param>
+    /// <param name="view"></param>
     /// <returns></returns>
-    public static Query NotExists<Query>(this Query query, ITableView source)
+    public static Query NotExists<Query>(this Query query, ITableView view)
         where Query : IDataSqlQuery
     {
-        query.Query.AddLogic(source.AsNotExists());
+        query.Query.AddLogic(view.AsNotExists());
         return query;
     }
     /// <summary>
     /// IN子查询逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="field"></param>
-    /// <param name="select"></param>
+    /// <param name="query">查询</param>
+    /// <param name="field">字段</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static Query In<Query>(this Query query, ICompareView field, ISingleSelect select)
         where Query : IDataSqlQuery
@@ -89,9 +89,9 @@ public static partial class ShadowSqlCoreServices
     /// NOT IN子查询逻辑
     /// </summary>
     /// <typeparam name="Query"></typeparam>
-    /// <param name="query"></param>
-    /// <param name="field"></param>
-    /// <param name="select"></param>
+    /// <param name="query">查询</param>
+    /// <param name="field">字段</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static Query NotIn<Query>(this Query query, ICompareView field, ISingleSelect select)
         where Query : IDataSqlQuery

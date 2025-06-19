@@ -15,8 +15,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="where"></param>
+    /// <param name="table">表</param>
+    /// <param name="where">查询条件</param>
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TTable table, ISqlLogic where)
         where TTable : IUpdateTable
@@ -24,8 +24,8 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="query"></param>
+    /// <param name="table">表</param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TTable table, Func<TTable, ISqlLogic> query)
         where TTable : IUpdateTable
@@ -33,32 +33,32 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
-    public static TableUpdate<TTable> ToUpdate<TTable>(this TableSqlQuery<TTable> tableQuery)
+    public static TableUpdate<TTable> ToUpdate<TTable>(this TableSqlQuery<TTable> query)
         where TTable : ITable, IUpdateTable
-        => new(tableQuery.Source, tableQuery._filter);
+        => new(query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
-    public static TableUpdate<IUpdateTable> ToUpdate(this TableSqlQuery tableQuery)
-        => new(tableQuery.Source.AsUpdate(), tableQuery._filter);
+    public static TableUpdate<IUpdateTable> ToUpdate(this TableSqlQuery query)
+        => new(query.Source.AsUpdate(), query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
-    public static TableUpdate<TTable> ToUpdate<TTable>(this TableQuery<TTable> tableQuery)
+    public static TableUpdate<TTable> ToUpdate<TTable>(this TableQuery<TTable> query)
         where TTable : ITable, IUpdateTable
-        => new(tableQuery.Source, tableQuery._filter);
+        => new(query.Source, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
-    /// <param name="tableQuery"></param>
+    /// <param name="query">查询</param>
     /// <returns></returns>
-    public static TableUpdate<IUpdateTable> ToUpdate(this TableQuery tableQuery)
-        => new(tableQuery.Source.AsUpdate(), tableQuery._filter);
+    public static TableUpdate<IUpdateTable> ToUpdate(this TableQuery query)
+        => new(query.Source.AsUpdate(), query._filter);
     #endregion   
 }

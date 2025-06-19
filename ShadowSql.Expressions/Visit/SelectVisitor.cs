@@ -30,31 +30,21 @@ public class SelectVisitor(IFieldProvider source, List<IFieldView> fields)
     public List<IFieldView> Fields 
         => _fields;
     #endregion
-    /// <summary>
-    /// 处理属性
-    /// </summary>
-    /// <param name="member"></param>
+    /// <inheritdoc/>
     protected override void CheckMember(MemberExpression member)
     {
         var list = _source.SelectFieldsByMember(member);
         foreach (var item in list)
             _fields.Add(item);
     }
-    /// <summary>
-    /// 处理赋值
-    /// </summary>
-    /// <param name="expression"></param>
-    /// <param name="info"></param>
+    /// <inheritdoc/>
     protected override void CheckAssignment(Expression expression, MemberInfo info)
     {
         var list = _source.SelectFieldsByAssignment(expression, info);
         foreach (var item in list)
             _fields.Add(item);
     }
-    /// <summary>
-    /// 处理方法调用
-    /// </summary>
-    /// <param name="method"></param>
+    /// <inheritdoc/>
     protected override void CheckMethodCall(MethodCallExpression method)
     {
         if (_source.GetCompareFieldByMethodCall(method) is ICompareView field)
@@ -73,38 +63,38 @@ public class SelectVisitor(IFieldProvider source, List<IFieldView> fields)
     /// <summary>
     /// 作为参数
     /// </summary>
-    /// <param name="member"></param>
-    /// <param name="alias"></param>
+    /// <param name="memberInfo"></param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public static AliasFieldInfo SelectParameter(MemberInfo member, string alias)
-        => new(Parameter.Use(member.Name), alias);
+    public static AliasFieldInfo SelectParameter(MemberInfo memberInfo, string aliasName)
+        => new(Parameter.Use(memberInfo.Name), aliasName);
     /// <summary>
     /// 作为参数
     /// </summary>
-    /// <param name="member"></param>
+    /// <param name="memberInfo"></param>
     /// <returns></returns>
-    public static AliasFieldInfo SelectParameter(MemberInfo member)
-        => new(Parameter.Use(member.Name), member.Name);
+    public static AliasFieldInfo SelectParameter(MemberInfo memberInfo)
+        => new(Parameter.Use(memberInfo.Name), memberInfo.Name);
     /// <summary>
     /// 选择常量
     /// </summary>
     /// <param name="constant"></param>
-    /// <param name="alias"></param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public static AliasFieldInfo SelectValue(ConstantExpression constant, string alias)
-        => new(SqlValueService.From(constant.Type, constant.Value), alias);
+    public static AliasFieldInfo SelectValue(ConstantExpression constant, string aliasName)
+        => new(SqlValueService.From(constant.Type, constant.Value), aliasName);
     #endregion
     /// <summary>
     /// 筛选字段
     /// </summary>
-    /// <param name="field"></param>
-    /// <param name="alias"></param>
+    /// <param name="field">字段</param>
+    /// <param name="aliasName">别名</param>
     /// <returns></returns>
-    public static IFieldView SelectField(IField field, string alias)
+    public static IFieldView SelectField(IField field, string aliasName)
     {
-        if (field.IsMatch(alias))
+        if (field.IsMatch(aliasName))
             return field;
         else
-            return field.As(alias);
+            return field.As(aliasName);
     }
 }

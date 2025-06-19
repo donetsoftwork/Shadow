@@ -8,16 +8,16 @@ namespace ShadowSql.Select;
 /// GroupBy别名表后再筛选列
 /// </summary>
 /// <typeparam name="TTable"></typeparam>
-/// <param name="groupBy"></param>
-/// <param name="target"></param>
-public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, IAliasTable<TTable> target)
-    : GroupBySelectBase<IGroupByView, IAliasTable<TTable>>(groupBy, groupBy, target)
+/// <param name="groupBy">分组查询</param>
+/// <param name="aliasTable">别名表</param>
+public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, IAliasTable<TTable> aliasTable)
+    : GroupBySelectBase<IGroupByView, IAliasTable<TTable>>(groupBy, groupBy, aliasTable)
     where TTable : ITable
 {
     /// <summary>
     /// GroupBy别名表后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByAliasTableSelect(GroupByAliasTableSqlQuery<TTable> groupBy)
         : this(groupBy, groupBy._source)
     {
@@ -25,7 +25,7 @@ public sealed class GroupByAliasTableSelect<TTable>(IGroupByView groupBy, IAlias
     /// <summary>
     /// GroupBy别名表后再筛选列
     /// </summary>
-    /// <param name="groupBy"></param>
+    /// <param name="groupBy">分组查询</param>
     public GroupByAliasTableSelect(GroupByAliasTableQuery<TTable> groupBy)
         : this(groupBy, groupBy._source)
     {

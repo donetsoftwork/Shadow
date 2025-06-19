@@ -15,7 +15,7 @@ public static partial class ShadowSqlServices
     /// <summary>
     /// 插入
     /// </summary>
-    /// <param name="table"></param>
+    /// <param name="table">表</param>
     /// <returns></returns>
     public static SingleInsert<TEntity> ToInsert<TEntity>(this ITable table)
         => new(table);
@@ -23,8 +23,8 @@ public static partial class ShadowSqlServices
     /// 插入
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SingleInsert<TEntity> ToInsert<TEntity>(this ITable table, Expression<Func<TEntity>> select)
         => new(table, SingleInsertVisitor.Insert(table, select).Items);
@@ -33,8 +33,8 @@ public static partial class ShadowSqlServices
     /// </summary>
     /// <typeparam name="TParameter"></typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    /// <param name="table"></param>
-    /// <param name="select"></param>
+    /// <param name="table">表</param>
+    /// <param name="select">筛选</param>
     /// <returns></returns>
     public static SingleInsert<TEntity> ToInsert<TParameter, TEntity>(this ITable table, Expression<Func<TParameter, TEntity>> select)
         => new(table, SingleInsertVisitor.Insert(table, select).Items);
