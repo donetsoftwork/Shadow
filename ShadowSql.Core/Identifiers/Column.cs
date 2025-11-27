@@ -1,4 +1,4 @@
-using ShadowSql.Services;
+using Hand.Cache;
 
 namespace ShadowSql.Identifiers;
 
@@ -22,10 +22,24 @@ public class Column : ColumnBase, IColumn
     /// <returns></returns>
     public static Column Use(string columnName)
         => _cacher.Get(columnName); 
+    /// <inheritdoc/>
+    IColumn IFieldView.ToColumn()
+        => this;
+    #region ColumnCacher
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<Column> _cacher = new(static columnName => new Column(columnName));
-    IColumn IFieldView.ToColumn()
-        => this;
+    private static readonly ColumnCacher _cacher = new(new DictionaryCacher<string, Column>());
+    /// <summary>
+    /// 列缓存器
+    /// </summary>
+    /// <param name="cacher"></param>
+    internal class ColumnCacher(ICacher<string, Column> cacher)
+        : CacheFactoryBase<string, Column>(cacher)
+    {
+        /// <inheritdoc/>
+        protected override Column CreateNew(in string key)
+            => new(key);
+    }
+    #endregion
 }

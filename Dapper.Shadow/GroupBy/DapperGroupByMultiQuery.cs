@@ -53,7 +53,7 @@ public class DapperGroupByMultiQuery(IExecutor executor, IMultiView multiTable, 
         where TTable : ITable
     {
         var table = _source.Alias<TTable>(tableName);
-        _filter = query(_filter, aggregate(table.Prefix(select(table.Target))));
+        _filter = query(_filter, aggregate(table.Prefix(select(table.Original))));
         return this;
     }
 }

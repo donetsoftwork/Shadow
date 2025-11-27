@@ -1,5 +1,5 @@
 using ShadowSql.Expressions.Services;
-using static ShadowSql.SqlVales.SqlValue;
+using static ShadowSql.Values.SqlValue;
 
 namespace ShadowSql.ExpressionsTests.Services;
 

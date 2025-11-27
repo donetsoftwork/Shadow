@@ -7,9 +7,9 @@
 ## 1. 读取一张表
 ~~~csharp
     var table = EmptyTable.Use("Students");        
-    var count = table.Count(Executor);
+    var count = await table.CountAsync(Executor);
     var select = new TableSelect(table);
-    var students = select.Get<Student>(Executor)；
+    var students = await select.GetAsync<Student>(Executor)；
 ~~~
 
 ### 2. 分页查询
@@ -17,13 +17,13 @@
     var table = new StudentTable("Students");
     var query = new TableSqlQuery(table)
         .Where(table.Age.GreaterEqualValue(9));
-    var count = query.Count(Executor);
+    var count = await query.CountAsync(Executor);
     var cursor = new TableCursor(query)
         .Desc(table.Id)
         .Skip(1)
         .Take(10);
     var select = new TableSelect(cursor);
-    var students = select.Get<Student>(Executor);
+    var students = await select.GetAsync<Student>(Executor);
 ~~~
 
 ## 3. 删除
@@ -32,7 +32,7 @@
     var query = new TableSqlQuery(table)
         .Where(table.Age.LessValue(7));
     var delete = new TableDelete(table, query.Filter);
-    var result = Executor.Execute(delete);
+    var result = await Executor.ExecuteAsync(delete);
 ~~~
 
 ## 4. 更新
@@ -42,7 +42,7 @@
         .Where(table.Age.LessValue(7));
     var update = new TableUpdate(table, query.Filter)
         .Set(table.ClassId.AssignValue(1));
-    var result = SqliteExecutor.Execute(update);
+    var result = await SqliteExecutor.ExecuteAsync(update);
 ~~~
 
 ## 5. 插入
@@ -52,6 +52,6 @@
     var insert = new SingleInsert(table)
         .Insert(_name.InsertValue("张三"))
         .Insert(_age.InsertValue(11));
-    var result = insert.Execute(Executor);
+    var result = await insert.ExecuteAsync(Executor);
 ~~~
->
+

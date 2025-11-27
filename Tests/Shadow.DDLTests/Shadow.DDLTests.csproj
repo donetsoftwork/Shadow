@@ -1,30 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net4.7.2;net4.8;net6.0;net7.0;net8.0;net9.0;</TargetFrameworks>
+    <TargetFrameworks>net4.7.2;net4.8;net8.0;net9.0;net10.0</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.3" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />    
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper.Shadow\Dapper.Shadow.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.Sqlite\ShadowSql.Engines.Sqlite.csproj" />
     <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
     <ProjectReference Include="..\..\ShadowSql.Expressions\ShadowSql.Expressions.csproj" />
+    <ProjectReference Include="..\..\ShadowSql.Queries\ShadowSql.Queries.csproj" />
     <ProjectReference Include="..\..\ShadowSql\ShadowSql.csproj" />
   </ItemGroup>
-
+  <ItemGroup Condition="'$(TargetFramework)' == 'net4.7.2' or '$(TargetFramework)' == 'net4.8'">
+    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
+  </ItemGroup>
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>

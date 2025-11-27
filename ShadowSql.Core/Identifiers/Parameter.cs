@@ -1,6 +1,6 @@
+using Hand.Cache;
 using ShadowSql.Engines;
-using ShadowSql.Services;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 using System.Text;
 
 namespace ShadowSql.Identifiers;
@@ -18,7 +18,9 @@ public class Parameter : IdentifierBase, IParameter, IView
         : base(name)
     {
     }
-    
+    /// <inheritdoc/>
+    string IView.ViewName
+        => _name;
     /// <summary>
     /// 获取参数(已缓存,避免重复构造)
     /// </summary>
@@ -93,8 +95,5 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
         => engine.Parameter(sql, _name);
-    private static readonly CacheService<Parameter> _cacher = new(static name => new Parameter(name));
-    /// <inheritdoc/>
-    string IView.ViewName
-        => _name;
+    private static readonly FuncCacheService<string, Parameter> _cacher = new(static name => new Parameter(name));
 }

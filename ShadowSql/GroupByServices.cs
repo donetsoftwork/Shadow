@@ -91,7 +91,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IField[] fields)
         where TTable : ITable
-        => new(query.Source, query._filter, fields);
+        => new(query.Original, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -100,7 +100,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, Func<TTable, IField[]> select)
         where TTable : ITable
-        => new(query.Source, query._filter, select(query.Source));
+        => new(query.Original, query._filter, select(query.Original));
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -110,7 +110,7 @@ public static partial class ShadowSqlServices
     public static GroupByTableQuery<TTable> GroupBy<TTable>(this TableQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
     {
-        var table = query.Source;
+        var table = query.Original;
         return new GroupByTableQuery<TTable>(table, query._filter, [.. table.Fields(columnNames)]);
     }
     #endregion
@@ -122,7 +122,7 @@ public static partial class ShadowSqlServices
     /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableQuery<ITable> GroupBy(this TableQuery query, params IField[] fields)
-        => new((ITable)query.Source, query._filter, fields);
+        => new((ITable)query.Original, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -131,7 +131,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableQuery<ITable> GroupBy(this TableQuery query, params IEnumerable<string> columnNames)
     {
-        var table = (ITable)query.Source;
+        var table = (ITable)query.Original;
         return new GroupByTableQuery<ITable>(table, query._filter, [.. table.Fields(columnNames)]);
     }
     #endregion
@@ -155,7 +155,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this IAliasTable<TTable> aliasTable, Func<TTable, IColumn[]> select)
         where TTable : ITable
-        => new(aliasTable, EmptyLogic.Instance, [.. select(aliasTable.Target).Select(aliasTable.Prefix)]);
+        => new(aliasTable, EmptyLogic.Instance, [.. select(aliasTable.Original).Select(aliasTable.Prefix)]);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -199,7 +199,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this AliasTableQuery<TTable> query, params IField[] fields)
         where TTable : ITable
-        => new(query.Source, query._filter, fields);
+        => new(query.Original, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -209,8 +209,8 @@ public static partial class ShadowSqlServices
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this AliasTableQuery<TTable> query, Func<TTable, IColumn[]> select)
         where TTable : ITable
     {
-        var table = query.Source;
-        return new GroupByAliasTableQuery<TTable>(table, query._filter, [.. select(table.Target).Select(table.Prefix)]);
+        var table = query.Original;
+        return new GroupByAliasTableQuery<TTable>(table, query._filter, [.. select(table.Original).Select(table.Prefix)]);
     }
     /// <summary>
     /// 分组查询
@@ -221,7 +221,7 @@ public static partial class ShadowSqlServices
     public static GroupByAliasTableQuery<TTable> GroupBy<TTable>(this AliasTableQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
     {
-        var table = query.Source;
+        var table = query.Original;
         return new GroupByAliasTableQuery<TTable>(table, query._filter, [.. table.Fields(columnNames)]);
     }
     #endregion
@@ -287,7 +287,7 @@ public static partial class ShadowSqlServices
     public static GroupByMultiQuery GroupBy<LTable, RTable>(this JoinOnQuery<LTable, RTable> joinOn, Func<LTable, RTable, IColumn[]> select)
         where LTable : ITable
         where RTable : ITable
-        => new(joinOn.Root, [.. select(joinOn.Left.Target, joinOn.Source.Target).Select(joinOn.Prefix)]);
+        => new(joinOn.Root, [.. select(joinOn.Left.Original, joinOn.Source.Original).Select(joinOn.Prefix)]);
     #endregion
     #endregion
     #endregion
@@ -366,7 +366,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, params IField[] fields)
         where TTable : ITable
-        => new(query.Source, query._filter, fields);
+        => new(query.Original, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -375,7 +375,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, Func<TTable, IField[]> select)
         where TTable : ITable
-        => new(query.Source, query._filter, select(query.Source));
+        => new(query.Original, query._filter, select(query.Original));
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -385,7 +385,7 @@ public static partial class ShadowSqlServices
     public static GroupByTableSqlQuery<TTable> SqlGroupBy<TTable>(this TableSqlQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
     {
-        var table = query.Source;
+        var table = query.Original;
         return new GroupByTableSqlQuery<TTable>(table, query._filter, [.. table.Fields(columnNames)]);
     }
     #endregion
@@ -397,7 +397,7 @@ public static partial class ShadowSqlServices
     /// <param name="fields">字段</param>
     /// <returns></returns>
     public static GroupByTableSqlQuery<ITable> SqlGroupBy(this TableSqlQuery query, params IField[] fields)
-        => new((ITable)query.Source, query._filter, fields);
+        => new((ITable)query.Original, query._filter, fields);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -406,7 +406,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableSqlQuery<ITable> SqlGroupBy(this TableSqlQuery query, params IEnumerable<string> columnNames)
     {
-        var table = (ITable)query.Source;
+        var table = (ITable)query.Original;
         return new GroupByTableSqlQuery<ITable>(table, query._filter, [.. table.Fields(columnNames)]);
     }
     #endregion
@@ -430,7 +430,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this IAliasTable<TTable> table, Func<TTable, IColumn[]> select)
         where TTable : ITable
-        => new(table, EmptyLogic.Instance, [.. select(table.Target).Select(table.Prefix)]);
+        => new(table, EmptyLogic.Instance, [.. select(table.Original).Select(table.Prefix)]);
     /// <summary>
     /// 分组查询
     /// </summary>
@@ -475,7 +475,7 @@ public static partial class ShadowSqlServices
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this AliasTableSqlQuery<TTable> query, params IField[] fields)
         where TTable : ITable
     {
-        return new GroupByAliasTableSqlQuery<TTable>(query.Source, query._filter, fields);
+        return new GroupByAliasTableSqlQuery<TTable>(query.Original, query._filter, fields);
     }
     /// <summary>
     /// 分组查询
@@ -486,8 +486,8 @@ public static partial class ShadowSqlServices
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this AliasTableSqlQuery<TTable> query, Func<TTable, IColumn[]> select)
         where TTable : ITable
     {
-        var table = query.Source;
-        return new GroupByAliasTableSqlQuery<TTable>(table, query._filter, [.. select(table.Target).Select(table.Prefix)]);
+        var table = query.Original;
+        return new GroupByAliasTableSqlQuery<TTable>(table, query._filter, [.. select(table.Original).Select(table.Prefix)]);
     }
     /// <summary>
     /// 分组查询
@@ -498,7 +498,7 @@ public static partial class ShadowSqlServices
     public static GroupByAliasTableSqlQuery<TTable> SqlGroupBy<TTable>(this AliasTableSqlQuery<TTable> query, params IEnumerable<string> columnNames)
         where TTable : ITable
     {
-        var table = query.Source;
+        var table = query.Original;
         return new GroupByAliasTableSqlQuery<TTable>(table, query._filter, [.. table.Fields(columnNames)]);
     }
     #endregion
@@ -564,7 +564,7 @@ public static partial class ShadowSqlServices
     public static GroupByMultiSqlQuery SqlGroupBy<LTable, RTable>(this JoinOnSqlQuery<LTable, RTable> joinOn, Func<LTable, RTable, IColumn[]> select)
         where LTable : ITable
         where RTable : ITable
-        => new(joinOn.Root, [.. select(joinOn.Left.Target, joinOn.Source.Target).Select(joinOn.Prefix)]);
+        => new(joinOn.Root, [.. select(joinOn.Left.Original, joinOn.Source.Original).Select(joinOn.Prefix)]);
     #endregion
     #endregion
     #endregion

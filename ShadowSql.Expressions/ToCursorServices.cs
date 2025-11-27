@@ -85,7 +85,7 @@ public static partial class ShadowSqlServices
     /// <param name="offset">跳过数量</param>
     /// <returns></returns>
     public static TableCursor<ITable> ToCursor(this TableQuery query, int limit = 0, int offset = 0)
-        => new((ITable)query.Source, query._filter, limit, offset);
+        => new((ITable)query.Original, query._filter, limit, offset);
     /// <summary>
     /// 表查询范围筛选
     /// </summary>
@@ -94,7 +94,7 @@ public static partial class ShadowSqlServices
     /// <param name="offset">跳过数量</param>
     /// <returns></returns>
     public static TableCursor<ITable> Take(this TableQuery query, int limit, int offset = 0)
-        => new((ITable)query.Source, query._filter, limit, offset);
+        => new((ITable)query.Original, query._filter, limit, offset);
     /// <summary>
     /// 表查询范围筛选
     /// </summary>
@@ -123,7 +123,7 @@ public static partial class ShadowSqlServices
     /// <param name="offset">跳过数量</param>
     /// <returns></returns>
     public static TableCursor<ITable> ToCursor(this TableSqlQuery query, int limit = 0, int offset = 0)
-        => new((ITable)query.Source, query._filter, limit, offset);
+        => new((ITable)query.Original, query._filter, limit, offset);
     /// <summary>
     /// 表查询范围筛选
     /// </summary>
@@ -132,7 +132,7 @@ public static partial class ShadowSqlServices
     /// <param name="offset">跳过数量</param>
     /// <returns></returns>
     public static TableCursor<ITable> Take(this TableSqlQuery query, int limit, int offset = 0)
-        => new((ITable)query.Source, query._filter, limit, offset);
+        => new((ITable)query.Original, query._filter, limit, offset);
     #endregion
     #region AliasTable
     /// <summary>

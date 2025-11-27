@@ -15,7 +15,7 @@ using SqlKata.Compilers;
 
 namespace ShadowSqlBench;
 
-[MemoryDiagnoser, SimpleJob(launchCount: 2, warmupCount: 10, iterationCount: 10, invocationCount: 500000)]
+[MemoryDiagnoser, SimpleJob(launchCount: 2, warmupCount: 10, iterationCount: 10, invocationCount: 50000)]
 //[MemoryDiagnoser, SimpleJob(launchCount: 1, warmupCount: 0, iterationCount: 0, invocationCount: 1)]
 public class CursorBench
 {

@@ -4,7 +4,7 @@ using ShadowSql.Identifiers;
 using ShadowSql.Join;
 using ShadowSql.Logics;
 using ShadowSql.Queries;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 using System;
 using System.Collections.Generic;
 
@@ -624,7 +624,7 @@ public static partial class StrictQueryServices
         where TQuery : IDataSqlQuery
     {
         begin = Parameter.CheckName(begin, columnName);
-        end = Parameter.CheckName(end, begin);
+        end = Parameter.CheckName2(end, begin);
         query.Query.AddLogic(new NotBetweenLogic(query.Strict(columnName), Parameter.Use(begin), Parameter.Use(end)));
         return query;
     }
@@ -1118,7 +1118,7 @@ public static partial class StrictQueryServices
         where TQuery : MultiTableBase, IDataSqlQuery
     {
         begin = Parameter.CheckName(begin, columnName);
-        end = Parameter.CheckName(end, begin);
+        end = Parameter.CheckName2(end, begin);
         query.Query.AddLogic(new NotBetweenLogic(query.From(tableName).Strict(columnName), Parameter.Use(begin), Parameter.Use(end)));
         return query;
     }

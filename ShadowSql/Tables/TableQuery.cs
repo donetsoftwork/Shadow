@@ -32,7 +32,7 @@ public class TableQuery<TTable>(TTable table, Logic filter)
     /// <returns></returns>
     public TableQuery<TTable> And(Func<TTable, AtomicLogic> query)
     {
-        _filter = _filter.And(query(_source));
+        _filter = _filter.And(query(_original));
         return this;
     }
     /// <summary>
@@ -42,7 +42,7 @@ public class TableQuery<TTable>(TTable table, Logic filter)
     /// <returns></returns>
     public TableQuery<TTable> Or(Func<TTable, AtomicLogic> query)
     {
-        _filter = _filter.Or(query(_source));
+        _filter = _filter.Or(query(_original));
         return this;
     }
     /// <summary>
@@ -52,7 +52,7 @@ public class TableQuery<TTable>(TTable table, Logic filter)
     /// <returns></returns>
     public TableQuery<TTable> Apply(Func<Logic, TTable, Logic> query)
     {
-        _filter = query(_filter, _source);
+        _filter = query(_filter, _original);
         return this;
     }
     #endregion

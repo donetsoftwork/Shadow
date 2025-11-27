@@ -8,7 +8,8 @@ namespace Shadow.DDLTests
     public class CreateTableTests : ExecuteTestBase, IDisposable
     {
         public CreateTableTests()
-            => DropStudentsTable();
+        {
+        }
 
         [Fact]
         public void Create()
@@ -22,14 +23,16 @@ namespace Shadow.DDLTests
         }
 
         [Fact]
-        public void Execute()
+        public async Task Execute()
         {
+            await DropStudentsTable();
             ColumnSchema id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
             ColumnSchema name = new("Name", "TEXT");
-            var result = new TableSchema("Students", [id, name])
+            var result = await new TableSchema("Students", [id, name])
                 .ToCreate()
-                .Execute(SqliteExecutor);
+                .ExecuteAsync(SqliteExecutor);
             Assert.Equal(0, result);
+            await DropStudentsTable();
         }
         [Fact]
         public void Build()
@@ -55,7 +58,6 @@ namespace Shadow.DDLTests
             Assert.Equal("CREATE TABLE \"tenant1\".\"Students\"(\"Id\" INTEGER PRIMARY KEY AUTOINCREMENT,\"Name\" TEXT)", sql);
         }
 
-        void IDisposable.Dispose()
-            => DropStudentsTable();
+        void IDisposable.Dispose() { }
     }
 }

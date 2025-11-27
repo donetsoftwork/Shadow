@@ -36,7 +36,7 @@ public abstract class MultiSelectBase<TSource>(TSource view, IMultiView multiVie
     {
         var member = _target.Alias<TTable>(tableName);
         //增加前缀
-        if (member.GetPrefixField(select(member.Target)) is IPrefixField prefixField)
+        if (member.GetPrefixField(select(member.Original)) is IPrefixField prefixField)
             SelectCore(prefixField);
     }
     /// <summary>
@@ -50,7 +50,7 @@ public abstract class MultiSelectBase<TSource>(TSource view, IMultiView multiVie
         where TTable : ITable
     {
         var member = _target.Alias<TTable>(tableName);
-        var columns = select(member.Target);
+        var columns = select(member.Original);
         foreach (var column in columns)
         {
             //增加前缀

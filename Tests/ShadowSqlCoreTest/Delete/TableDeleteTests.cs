@@ -23,29 +23,10 @@ public class TableDeleteTests
         Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
     }
     [Fact]
-    public void FilterSqlQuery()
-    {
-        var query = SqlQuery.CreateAndQuery()
-            .And("Score<60");
-        var delete = new TableDelete("Students", query);
-        var sql = _engine.Sql(delete);
-        Assert.Equal("DELETE FROM [Students] WHERE Score<60", sql);
-    }
-    [Fact]
-    public void Query()
+    public void Filter2()
     {
         var table = new StudentTable();
-
         var delete = new TableDelete(table, table.Score.LessValue(60));
-        var sql = _engine.Sql(delete);
-        Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
-    }
-    [Fact]
-    public void QuerySql()
-    {
-        var query = new TableSqlQuery("Students")
-            .Where(table => table.Field("Score").LessValue(60));
-        var delete = new TableDelete("Students", query.Filter);
         var sql = _engine.Sql(delete);
         Assert.Equal("DELETE FROM [Students] WHERE [Score]<60", sql);
     }

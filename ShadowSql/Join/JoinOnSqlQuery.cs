@@ -45,7 +45,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery joinTable, IAliasT
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> OnLeft(Func<LTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
-        _filter.AddLogic(query(_left.Prefix(select(_left.Target))));
+        _filter.AddLogic(query(_left.Prefix(select(_left.Original))));
         return this;
     }
     /// <summary>
@@ -56,7 +56,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery joinTable, IAliasT
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> OnRight(Func<RTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
-        _filter.AddLogic(query(_source.Prefix(select(_source.Target))));
+        _filter.AddLogic(query(_source.Prefix(select(_source.Original))));
         return this;
     }
     #endregion
@@ -70,7 +70,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery joinTable, IAliasT
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> WhereLeft(Func<LTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
-        _root.Where(query(_left.Prefix(select(_left.Target))));
+        _root.Where(query(_left.Prefix(select(_left.Original))));
         return this;
     }
     #endregion
@@ -83,7 +83,7 @@ public class JoinOnSqlQuery<LTable, RTable>(JoinTableSqlQuery joinTable, IAliasT
     /// <returns></returns>
     public JoinOnSqlQuery<LTable, RTable> WhereRight(Func<RTable, IColumn> select, Func<IPrefixField, AtomicLogic> query)
     {
-        _root.Where(query(_source.Prefix(select(_source.Target))));
+        _root.Where(query(_source.Prefix(select(_source.Original))));
         return this;
     }
     #endregion

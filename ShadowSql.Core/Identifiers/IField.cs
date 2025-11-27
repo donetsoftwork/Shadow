@@ -32,12 +32,12 @@ public interface IFieldView : IView, IMatch, ISqlEntity
     /// </summary>
     /// <returns></returns>
     IColumn ToColumn();
-    /// <summary>
-    /// 别名
-    /// </summary>
-    /// <param name="aliasName">别名</param>
-    /// <returns></returns>
-    IFieldAlias As(string aliasName);
+    ///// <summary>
+    ///// 别名
+    ///// </summary>
+    ///// <param name="aliasName">别名</param>
+    ///// <returns></returns>
+    //IFieldAlias As(string aliasName);
 }
 ///// <summary>
 ///// 去重字段统计

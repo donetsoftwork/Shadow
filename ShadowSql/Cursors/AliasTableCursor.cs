@@ -25,7 +25,7 @@ public sealed class AliasTableCursor<TTable>(IAliasTable<TTable> aliasTable, ISq
     /// </summary>
     public ISqlLogic Where
         => _where;
-    private readonly TTable _table = aliasTable.Target;
+    private readonly TTable _table = aliasTable.Original;
     /// <summary>
     /// 原始表
     /// </summary>

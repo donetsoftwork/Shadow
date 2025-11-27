@@ -1,5 +1,5 @@
+using Hand.Cache;
 using ShadowSql.Engines;
-using ShadowSql.Services;
 using System.Text;
 
 namespace ShadowSql.Logics;
@@ -43,7 +43,7 @@ public sealed class StatementLogic : AtomicLogic
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<StatementLogic> _cacher = new(static statement => new StatementLogic(statement));
+    private static readonly FuncCacheService<string, StatementLogic> _cacher = new(static statement => new StatementLogic(statement));
 
     #region AtomicLogic
     /// <inheritdoc/>

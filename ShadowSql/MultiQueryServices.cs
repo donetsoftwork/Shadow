@@ -53,7 +53,7 @@ public static partial class ShadowSqlServices
         where TTable : ITable
     {
         var aliasTable = multiTable.Alias<TTable>(tableName);
-        var prefixField = aliasTable.GetPrefixField(select(aliasTable.Target));
+        var prefixField = aliasTable.GetPrefixField(select(aliasTable.Original));
         if (prefixField is not null)
             multiTable._filter.AddLogic(query(prefixField));
         return multiTable;

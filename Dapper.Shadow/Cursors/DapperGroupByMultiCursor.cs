@@ -67,7 +67,7 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery g
     {
         var member = _multiTable.Alias<TTable>(tableName);
         //增加前缀
-        if (member.GetPrefixField(select(member.Target)) is IPrefixField prefixField)
+        if (member.GetPrefixField(select(member.Original)) is IPrefixField prefixField)
             AscCore(aggregate(prefixField));
         return this;
     }
@@ -84,7 +84,7 @@ public class DapperGroupByMultiCursor(IExecutor executor, GroupByMultiSqlQuery g
     {
         var member = _multiTable.Alias<TTable>(tableName);
         //增加前缀
-        var prefixField = member.GetPrefixField(select(member.Target));
+        var prefixField = member.GetPrefixField(select(member.Original));
         if (prefixField is not null)
             DescCore(aggregate(prefixField));
         return this;

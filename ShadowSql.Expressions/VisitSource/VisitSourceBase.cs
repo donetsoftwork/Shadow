@@ -2,6 +2,7 @@ using ShadowSql.Arithmetic;
 using ShadowSql.Expressions.Visit;
 using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
+using ShadowSql.Variants;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;

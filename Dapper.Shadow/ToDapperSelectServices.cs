@@ -47,7 +47,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TableSqlQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query.Source.Executor, query);
+        => new(query.Original.Executor, query);
     /// <summary>
     /// 表筛选列
     /// </summary>
@@ -56,7 +56,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableSelect<TTable> ToDapperSelect<TTable>(this TableQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query.Source.Executor, query);
+        => new(query.Original.Executor, query);
     /// <summary>
     /// 表范围筛选列
     /// </summary>
@@ -76,7 +76,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> aliasTable)
         where TTable : IDapperTable
-        => new(aliasTable.Target.Executor, aliasTable);
+        => new(aliasTable.Original.Executor, aliasTable);
     /// <summary>
     /// 别名表过滤筛选列
     /// </summary>
@@ -86,7 +86,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperAliasTableSelect<TTable> ToDapperSelect<TTable>(this IAliasTable<TTable> table, ISqlLogic filter)
         where TTable : IDapperTable
-        => new(table.Target.Executor, table, filter);
+        => new(table.Original.Executor, table, filter);
     /// <summary>
     /// 别名表筛选列
     /// </summary>
@@ -153,7 +153,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableSqlQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query._source.Target.Executor, query);
+        => new(query._source.Original.Executor, query);
     /// <summary>
     /// GroupBy别名表后再筛选列
     /// </summary>
@@ -162,7 +162,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperGroupByAliasTableSelect<TTable> ToDapperSelect<TTable>(this GroupByAliasTableQuery<TTable> query)
         where TTable : IDapperTable
-        => new(query._source.Target.Executor, query);
+        => new(query._source.Original.Executor, query);
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选
     /// </summary>

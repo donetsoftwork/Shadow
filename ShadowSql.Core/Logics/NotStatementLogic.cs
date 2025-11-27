@@ -1,5 +1,5 @@
+using Hand.Cache;
 using ShadowSql.Engines;
-using ShadowSql.Services;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -73,7 +73,7 @@ public class NotStatementLogic : AtomicLogic
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<AtomicLogic> _cacher = new(static statement => new NotStatementLogic(statement));
+    private static readonly FuncCacheService<string, AtomicLogic> _cacher = new(static statement => new NotStatementLogic(statement));
 
     #region AtomicLogic
     /// <inheritdoc/>

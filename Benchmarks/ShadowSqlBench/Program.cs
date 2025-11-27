@@ -1,9 +1,12 @@
 using BenchmarkDotNet.Running;
 using ShadowSqlBench;
 
-//BenchmarkRunner.Run<WhereBench>();
+//WhereBench bench = new();
+//bench.ShadowSqlByExpression();
+
+BenchmarkRunner.Run<WhereBench>();
 //BenchmarkRunner.Run<CursorBench>();
 //BenchmarkRunner.Run<GroupByBench>();
-BenchmarkRunner.Run<JoinBench>();
+//BenchmarkRunner.Run<JoinBench>();
 
 partial class Program { }

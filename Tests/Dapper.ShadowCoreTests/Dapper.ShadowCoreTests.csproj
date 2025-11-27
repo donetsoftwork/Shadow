@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net4.7.2;net4.8;net6.0;net7.0;net8.0;net9.0;</TargetFrameworks>
+    <TargetFrameworks>net4.7.2;net4.8;net8.0;net9.0;net10.0</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.Sqlite\ShadowSql.Engines.Sqlite.csproj" />
     <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net4.7.2' or '$(TargetFramework)' == 'net4.8'">
+    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
   </ItemGroup>
 
   <ItemGroup>

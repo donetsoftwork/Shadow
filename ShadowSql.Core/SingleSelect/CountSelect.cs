@@ -11,16 +11,17 @@ namespace ShadowSql.SingleSelect;
 /// <summary>
 /// 计数选择
 /// </summary>
-/// <param name="view"></param>
-public class CountSelect(ITableView view) : ISingleSelect
+/// <param name="original">原始视图</param>
+public class CountSelect(ITableView original)
+    : ISingleSelect
 {
     #region 配置
-    private readonly ITableView _source = view;
+    private readonly ITableView _original = original;
     /// <summary>
     /// 数据源
     /// </summary>
-    public ITableView Source 
-        => _source;
+    public ITableView Original 
+        => _original;
     IFieldView ISingleSelect.SingleField
         => CountAliasFieldInfo.Use();
     #endregion

@@ -28,7 +28,7 @@ public abstract class SelectBase<TSource, TTarget>(TSource source, TTarget targe
     /// <summary>
     /// 数据源筛选
     /// </summary>
-    public TSource Source 
+    public TSource Original 
         => _source;
     /// <summary>
     /// 筛选对象
@@ -39,7 +39,7 @@ public abstract class SelectBase<TSource, TTarget>(TSource source, TTarget targe
     /// </summary>
     public TTarget Target
         => _target;
-    ITableView ISelect.Source
+    ITableView ISelect.Original
         => _source;
     #endregion
     /// <summary>

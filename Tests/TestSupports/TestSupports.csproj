@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net8.0;net9.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0;net10.0;netstandard2.0;netstandard2.1</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -10,7 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MySql\ShadowSql.Engines.MySql.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.Oracle\ShadowSql.Engines.Oracle.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.Postgres\ShadowSql.Engines.Postgres.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.Sqlite\ShadowSql.Engines.Sqlite.csproj" />
     <ProjectReference Include="..\..\ShadowSql.Core\ShadowSql.Core.csproj" />
+    <ProjectReference Include="..\..\ShadowSql.Queries\ShadowSql.Queries.csproj" />
   </ItemGroup>
 
 </Project>

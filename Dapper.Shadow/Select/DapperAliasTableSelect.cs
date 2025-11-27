@@ -43,7 +43,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView view,
     /// <param name="executor">执行器</param>
     /// <param name="query">查询</param>
     public DapperAliasTableSelect(IExecutor executor, AliasTableSqlQuery<TTable> query)
-        : this(executor, query, query.Source)
+        : this(executor, query, query.Original)
     {
     }
     /// <summary>
@@ -52,7 +52,7 @@ public class DapperAliasTableSelect<TTable>(IExecutor executor, ITableView view,
     /// <param name="executor">执行器</param>
     /// <param name="query">查询</param>
     public DapperAliasTableSelect(IExecutor executor, AliasTableQuery<TTable> query)
-        : this(executor, query, query.Source)
+        : this(executor, query, query.Original)
     {
     }
     #region 配置

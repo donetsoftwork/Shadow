@@ -2,7 +2,7 @@
 using ShadowSql.Components;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 
 namespace ShadowSqlTest.SqlValues;
 

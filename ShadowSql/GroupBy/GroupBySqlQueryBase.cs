@@ -24,7 +24,7 @@ public abstract class GroupBySqlQueryBase<TSource>(TSource view, IField[] fields
     /// <summary>
     /// 分组数据源表
     /// </summary>
-    public override ITableView Source
+    public override ITableView Original
         => _source;
     #endregion
     #region ISqlEntity

@@ -1,6 +1,6 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

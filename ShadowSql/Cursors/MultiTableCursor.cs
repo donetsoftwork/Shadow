@@ -54,7 +54,7 @@ public class MultiTableCursor(IMultiView multiView, int limit = 0, int offset = 
     {
         var member = _source.Alias<TTable>(tableName);
         //增加前缀
-        var prefixField = member.GetPrefixField(select(member.Target));
+        var prefixField = member.GetPrefixField(select(member.Original));
         if (prefixField is not null)
             AscCore(prefixField);
         return this;
@@ -71,7 +71,7 @@ public class MultiTableCursor(IMultiView multiView, int limit = 0, int offset = 
     {
         var member = _source.Alias<TTable>(tableName);
         //增加前缀
-        var prefixField = member.GetPrefixField(select(member.Target));
+        var prefixField = member.GetPrefixField(select(member.Original));
         if (prefixField is not null)
             DescCore(prefixField);
         return this;

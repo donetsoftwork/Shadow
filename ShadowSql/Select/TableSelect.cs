@@ -44,7 +44,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// </summary>
     /// <param name="query">查询</param>
     public TableSelect(TableQuery<TTable> query)
-        : base(query, query.Source)
+        : base(query, query.Original)
     {
     }
     /// <summary>
@@ -52,7 +52,7 @@ public sealed class TableSelect<TTable> : SelectBase<ITableView, TTable>
     /// </summary>
     /// <param name="query">查询</param>
     public TableSelect(TableSqlQuery<TTable> query)
-        : base(query, query.Source)
+        : base(query, query.Original)
     {
     }
     /// <summary>

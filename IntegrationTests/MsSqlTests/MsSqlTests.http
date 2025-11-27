@@ -1,0 +1,28 @@
+@MsSqlTests_HostAddress = http://localhost:5150
+
+GET {{MsSqlTests_HostAddress}}/
+
+###
+
+GET {{MsSqlTests_HostAddress}}/api/student
+
+###
+
+POST {{MsSqlTests_HostAddress}}/api/student/Add
+Content-Type: application/json
+
+{
+  "Id" : 2,
+  "Name" : "李四",
+  "Age" : 9,
+  "Score" : 80
+}
+
+###
+
+POST {{MsSqlTests_HostAddress}}/api/student/Delete
+Content-Type: application/json
+
+1
+
+###

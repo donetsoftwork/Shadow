@@ -1,7 +1,6 @@
 using ShadowSql.Compares;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.SqlVales;
 
 namespace ShadowSql.CompareLogics;
 

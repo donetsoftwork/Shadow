@@ -24,7 +24,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this TableSqlQuery<TTable> query, Func<TTable, IFieldView> select)
         where TTable : ITable
-        => new(query, select(query.Source));
+        => new(query, select(query.Original));
     /// <summary>
     /// 表筛选单列
     /// </summary>
@@ -34,7 +34,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this TableQuery<TTable> query, Func<TTable, IFieldView> select)
     where TTable : ITable
-        => new(query, select(query.Source));
+        => new(query, select(query.Original));
     /// <summary>
     /// 表范围筛选单列
     /// </summary>
@@ -56,7 +56,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this AliasTableSqlQuery<TTable> query, Func<TTable, IColumn> select)
         where TTable : ITable
-        => new(query, query.Source.Prefix(select(query.Source.Target)));
+        => new(query, query.Original.Prefix(select(query.Original.Original)));
     /// <summary>
     /// 别名表筛选单列
     /// </summary>
@@ -66,7 +66,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this AliasTableQuery<TTable> query, Func<TTable, IColumn> select)
         where TTable : ITable
-    => new(query, query.Source.Prefix(select(query.Source.Target)));
+    => new(query, query.Original.Prefix(select(query.Original.Original)));
     /// <summary>
     /// 别名表范围筛选单列
     /// </summary>
@@ -76,7 +76,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static CursorSingleSelect ToSingle<TTable>(this AliasTableCursor<TTable> cursor, Func<TTable, IColumn> select)
         where TTable : ITable
-        => new(cursor, cursor.Source.Prefix(select(cursor.Source.Target)));
+        => new(cursor, cursor.Source.Prefix(select(cursor.Source.Original)));
     #endregion
     #region MultiTableFields
     /// <summary>
@@ -131,7 +131,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableSqlQuery<TTable> groupBy, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
-        => new(groupBy, aggregate(groupBy._source.Prefix(select(groupBy._source.Target))));
+        => new(groupBy, aggregate(groupBy._source.Prefix(select(groupBy._source.Original))));
     /// <summary>
     /// GroupBy别名表后再筛选单列
     /// </summary>
@@ -142,7 +142,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableSingleSelect ToSingle<TTable>(this GroupByAliasTableQuery<TTable> groupBy, Func<TTable, IColumn> select, Func<IPrefixField, IAggregateFieldAlias> aggregate)
         where TTable : ITable
-        => new(groupBy, aggregate(groupBy._source.Prefix(select(groupBy._source.Target))));
+        => new(groupBy, aggregate(groupBy._source.Prefix(select(groupBy._source.Original))));
     /// <summary>
     /// GroupBy别名表后再范围(分页)及列筛选单列
     /// </summary>

@@ -1,5 +1,5 @@
+using Hand.Cache;
 using ShadowSql.Identifiers;
-using ShadowSql.Services;
 using System.Collections.Generic;
 
 namespace ShadowSql.Tables;
@@ -13,7 +13,6 @@ public class EmptyTable : Identifier, ITable, IInsertTable, IUpdateTable
         : base(tableName)
     {
     }
-    private static readonly CacheService<EmptyTable> _cacher = new(static tableName => new EmptyTable(tableName));
     /// <summary>
     /// 获取表
     /// </summary>
@@ -46,5 +45,22 @@ public class EmptyTable : Identifier, ITable, IInsertTable, IUpdateTable
     /// <inheritdoc/>
     IAssignView? IUpdateTable.GetAssignField(string fieldName)
         => Column.Use(fieldName);
+    #endregion
+    #region TableCacher
+    /// <summary>
+    /// 缓存
+    /// </summary>
+    private static readonly TableCacher _cacher = new(new DictionaryCacher<string, EmptyTable>());
+    /// <summary>
+    /// 列缓存器
+    /// </summary>
+    /// <param name="cacher"></param>
+    internal class TableCacher(ICacher<string, EmptyTable> cacher)
+        : CacheFactoryBase<string, EmptyTable>(cacher)
+    {
+        /// <inheritdoc/>
+        protected override EmptyTable CreateNew(in string key)
+            => new(key);
+    }
     #endregion
 }

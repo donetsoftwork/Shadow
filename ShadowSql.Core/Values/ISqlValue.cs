@@ -1,0 +1,12 @@
+using ShadowSql.Identifiers;
+
+namespace ShadowSql.Values;
+
+/// <summary>
+/// 数据库的值
+/// </summary>
+public interface ISqlValue : ICompareView;
+/// <summary>
+/// 参数标识
+/// </summary>
+public interface IParameter : IIdentifier, ISqlValue;

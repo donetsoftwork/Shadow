@@ -3,12 +3,12 @@ using ShadowSql.Compares;
 using ShadowSql.Expressions.Services;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.SqlVales;
 using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using ShadowSql.Values;
 
 namespace ShadowSql.Expressions.Visit;
 
@@ -245,6 +245,13 @@ public class LogicVisitor(IFieldProvider source, Logic logic)
             case ExpressionType.Convert:
                 if (right is UnaryExpression unary)
                     CheckInLogic(logic, left, unary.Operand);
+                break;
+            case ExpressionType.Call:
+                if (right is MethodCallExpression method)
+                {
+                    if (method.Arguments.Count == 1)
+                        CheckInLogic(logic, left, method.Arguments[0], not);
+                }
                 break;
             default:
                 break;

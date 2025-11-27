@@ -20,7 +20,7 @@ public class ExpressionCursorSelectTests
             .Desc(u => u.Id)
             .ToSelect();
         var sql = new StringBuilder();
-        _engine.SelectCursor(sql, select, select.Source);
+        _engine.SelectCursor(sql, select, select.Original);
         Assert.Equal("SELECT * FROM [tenant1].[Users] WHERE [Status]=1 ORDER BY [Id] DESC OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY", sql.ToString());
     }
 }

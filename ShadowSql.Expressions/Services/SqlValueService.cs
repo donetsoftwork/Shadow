@@ -1,5 +1,5 @@
 using ShadowSql;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;

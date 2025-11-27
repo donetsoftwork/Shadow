@@ -37,14 +37,14 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TableSqlQuery<TTable> query)
         where TTable : ITable, IUpdateTable
-        => new(query.Source, query._filter);
+        => new(query.Original, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
     /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<IUpdateTable> ToUpdate(this TableSqlQuery query)
-        => new(query.Source.AsUpdate(), query._filter);
+        => new(query.Original.AsUpdate(), query._filter);
     /// <summary>
     /// 修改
     /// </summary>
@@ -52,13 +52,13 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableUpdate<TTable> ToUpdate<TTable>(this TableQuery<TTable> query)
         where TTable : ITable, IUpdateTable
-        => new(query.Source, query._filter);
+        => new(query.Original, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
     /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<IUpdateTable> ToUpdate(this TableQuery query)
-        => new(query.Source.AsUpdate(), query._filter);
+        => new(query.Original.AsUpdate(), query._filter);
     #endregion   
 }

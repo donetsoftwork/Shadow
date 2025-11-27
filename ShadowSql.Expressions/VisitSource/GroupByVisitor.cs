@@ -3,6 +3,7 @@ using ShadowSql.Expressions.Visit;
 using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
+using ShadowSql.Variants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     /// <param name="groupBy">分组查询</param>
     /// <param name="entity"></param>
     public GroupByVisitor(IGroupByView groupBy, Expression entity)
-        : this(groupBy, groupBy.Source, entity)
+        : this(groupBy, groupBy.Original, entity)
     {
     }
     #region 配置
@@ -451,7 +452,7 @@ public class GroupByVisitor(IGroupByView groupBy, ITableView source, Expression 
     public static IField? GetSourceFieldByExpression(IGroupByView groupBy, ITableView view, Expression entity, Expression expression)
     {
         if (entity == expression)
-            return TableVisitor.GetField(groupBy.Source.Fields);
+            return TableVisitor.GetField(groupBy.Original.Fields);
         if (expression is MemberExpression member)
             return GetSourceFieldByMember(groupBy, view, entity, member);
         return null;

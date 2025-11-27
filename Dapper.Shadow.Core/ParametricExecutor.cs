@@ -4,6 +4,7 @@ using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dapper.Shadow;
@@ -26,75 +27,41 @@ public class ParametricExecutor(ISqlEngine engine, IDbConnection connection, boo
     protected ParametricContext CreateContext(object? param)
         => new(_engine, param);
     /// <inheritdoc/>
-    public override int Execute(ISqlEntity fragment, object? param = null)
+    public override Task<int> ExecuteAsync(ISqlEntity fragment, object? param, CancellationToken token)
     {
         var context = CreateContext(param);
         var sql = context.Sql(fragment, _capacity);
-        return Execute(sql, context.Parameters);
+        return ExecuteAsync(sql, context.Parameters, token);
     }
     /// <inheritdoc/>
-    public override T? ExecuteScalar<T>(ISqlEntity fragment, object? param = null) where T : default
-    {
-        var context = CreateContext(param);
-        var sql = context.Sql(fragment, _capacity);
-        return ExecuteScalar<T>(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override T? Count<T>(ITableView view, object? param = null) where T : default
-    {
-        var context = CreateContext(param);
-        var sql = context.CountSql(view, _capacity);
-        return ExecuteScalar<T>(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override Task<int> ExecuteAsync(ISqlEntity fragment, object? param = null)
-    {
-        var context = CreateContext(param);
-        var sql = context.Sql(fragment, _capacity);
-        return ExecuteAsync(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override Task<T?> ExecuteScalarAsync<T>(ISqlEntity fragment, object? param = null) where T : default
-    {
-        var context = CreateContext(param);
-        var sql = context.Sql(fragment, _capacity);
-        return ExecuteScalarAsync<T>(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override Task<T?> CountAsync<T>(ITableView view, object? param = null) where T : default
-    {
-        var context = CreateContext(param);
-        var sql = context.CountSql(view, _capacity);
-        return ExecuteScalarAsync<T>(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override IEnumerable<T> Query<T>(ISqlEntity fragment, object? param = null)
-    {
-        var context = CreateContext(param);
-        var sql = context.Sql(fragment, _capacity);
-        return Query<T>(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override Task<IEnumerable<T>> QueryAsync<T>(ISqlEntity fragment, object? param = null)
-    {
-        var context = CreateContext(param);
-        var sql = context.Sql(fragment, _capacity);
-        return QueryAsync<T>(sql, context.Parameters);
-    }
-    /// <inheritdoc/>
-    public override T? QueryFirstOrDefault<T>(ISqlEntity fragment, object? param = null)
+    public override Task<T?> ExecuteScalarAsync<T>(ISqlEntity fragment, object? param, CancellationToken token)
         where T : default
     {
         var context = CreateContext(param);
         var sql = context.Sql(fragment, _capacity);
-        return QueryFirstOrDefault<T>(sql, context.Parameters);
+        return ExecuteScalarAsync<T>(sql, context.Parameters, token);
     }
     /// <inheritdoc/>
-    public override Task<T?> QueryFirstOrDefaultAsync<T>(ISqlEntity fragment, object? param = null)
+    public override Task<T?> CountAsync<T>(ITableView view, object? param, CancellationToken token)
+        where T : default
+    {
+        var context = CreateContext(param);
+        var sql = context.CountSql(view, _capacity);
+        return ExecuteScalarAsync<T>(sql, context.Parameters, token);
+    }
+    /// <inheritdoc/>
+    public override Task<IEnumerable<T>> QueryAsync<T>(ISqlEntity fragment, object? param, CancellationToken token)
+    {
+        var context = CreateContext(param);
+        var sql = context.Sql(fragment, _capacity);
+        return QueryAsync<T>(sql, context.Parameters, token);
+    }
+    /// <inheritdoc/>
+    public override Task<T?> QueryFirstOrDefaultAsync<T>(ISqlEntity fragment, object? param, CancellationToken token)
         where T : default
     {
         var context = CreateContext(param);
         var sql = context.Sql(fragment, _capacity);
-        return QueryFirstOrDefaultAsync<T>(sql, context.Parameters);
+        return QueryFirstOrDefaultAsync<T>(sql, context.Parameters, token);
     }
 }

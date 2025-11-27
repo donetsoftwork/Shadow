@@ -70,7 +70,7 @@ public static partial class ShadowSqlServices
     /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableSelect<TEntity> ToSelect<TEntity>(this TableQuery query)
-        => new(query, (ITable)query.Source);
+        => new(query, (ITable)query.Original);
     /// <summary>
     /// 表筛选列
     /// </summary>
@@ -85,7 +85,7 @@ public static partial class ShadowSqlServices
     /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableSelect<TEntity> ToSelect<TEntity>(this TableSqlQuery query)
-        => new(query, (ITable)query.Source);
+        => new(query, (ITable)query.Original);
     #endregion
     #region TableCursorSelect
     /// <summary>

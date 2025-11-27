@@ -39,7 +39,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> query)
         where TSource : IDapperTable
-        => new(query.Source.Executor, query.Source, ((IDataFilter)query).Filter);
+        => new(query.Original.Executor, query.Original, ((IDataFilter)query).Filter);
     /// <summary>
     /// 删除
     /// </summary>
@@ -59,7 +59,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableDelete ToDapperDelete<TSource>(this TableSqlQuery<TSource> query, IExecutor executor)
         where TSource : ITable
-        => new(executor, query.Source, ((IDataFilter)query).Filter);
+        => new(executor, query.Original, ((IDataFilter)query).Filter);
     #endregion
     #region MultiTableDelete
     /// <summary>

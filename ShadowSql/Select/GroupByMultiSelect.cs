@@ -78,7 +78,7 @@ public sealed class GroupByMultiSelect : GroupByMultiSelectBase<IGroupByView>
         where TTable : ITable
     {
         var member = _groupSource.Alias<TTable>(tableName);
-        SelectCore(aggregate(member.Prefix(select(member.Target))));
+        SelectCore(aggregate(member.Prefix(select(member.Original))));
         return this;
     }
     #endregion

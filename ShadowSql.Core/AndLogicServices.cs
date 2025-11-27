@@ -1,5 +1,4 @@
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 
 namespace ShadowSql;
 
@@ -34,16 +33,6 @@ public static partial class ShadowSqlCoreServices
     internal static AndLogic AndCore(this AndLogic logic, AndLogic other)
         => other.MergeTo(logic);
     #endregion
-    #region ComplexAndLogic
-    /// <summary>
-    /// 与逻辑
-    /// </summary>
-    /// <param name="logic">查询逻辑</param>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    internal static ComplexAndLogic AndCore(this AndLogic logic, ComplexAndLogic other)
-        => logic.MergeTo(other);
-    #endregion
     #region OrLogic
     /// <summary>
     /// 或逻辑
@@ -52,16 +41,6 @@ public static partial class ShadowSqlCoreServices
     /// <param name="other"></param>
     /// <returns></returns>
     internal static Logic AndCore(this AndLogic logic, OrLogic other)
-        => other.MergeToAnd(logic);
-    #endregion
-    #region ComplexOrLogic
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="logic">查询逻辑</param>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    internal static Logic AndCore(this AndLogic logic, ComplexOrLogic other)
         => other.MergeToAnd(logic);
     #endregion
     #endregion
@@ -102,16 +81,6 @@ public static partial class ShadowSqlCoreServices
         };
     }
     #endregion
-    #region ComplexAndLogic
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="logic">查询逻辑</param>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    internal static ComplexOrLogic OrCore(this AndLogic logic, ComplexAndLogic other)
-        => other.MergeToOr(logic.MergeToOr(new ComplexOrLogic()));
-    #endregion
     #region OrLogic
     /// <summary>
     /// 或逻辑
@@ -120,16 +89,6 @@ public static partial class ShadowSqlCoreServices
     /// <param name="other"></param>
     /// <returns></returns>
     internal static Logic OrCore(this AndLogic logic, OrLogic other)
-        => logic.MergeToOr(other);
-    #endregion
-    #region ComplexOrLogic
-    /// <summary>
-    /// 或逻辑
-    /// </summary>
-    /// <param name="logic">查询逻辑</param>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    internal static ComplexOrLogic OrCore(this AndLogic logic, ComplexOrLogic other)
         => logic.MergeToOr(other);
     #endregion
     #endregion
@@ -182,17 +141,6 @@ public static partial class ShadowSqlCoreServices
         source.CopyTo(and);
         return and;
     }
-    /// <summary>
-    /// 合并到SqlAndQuery
-    /// </summary>
-    /// <param name="source"></param>
-    /// <param name="and">与逻辑</param>
-    /// <returns></returns>
-    internal static SqlAndQuery MergeTo(this AndLogic source, SqlAndQuery and)
-    {
-        source.CopyTo(and.Complex);
-        return and;
-    }
     #endregion
     #region MergeToOr
     /// <summary>
@@ -220,23 +168,6 @@ public static partial class ShadowSqlCoreServices
                         return logic;
                 }
         }
-    }
-    /// <summary>
-    /// 合并到ComplexOrLogic
-    /// </summary>
-    /// <param name="source"></param>
-    /// <param name="or">或逻辑</param>
-    /// <returns></returns>
-    internal static ComplexOrLogic MergeToOr(this AndLogic source, ComplexOrLogic or)
-    {
-        var preview = source.Preview();
-        if (preview.IsEmpty)
-            return or;
-        if (preview.HasSecond)
-            or.AddOther(source.MergeTo(new ComplexAndLogic()));
-        else
-            or.AddLogic(preview.First);
-        return or;
     }
     #endregion
 }

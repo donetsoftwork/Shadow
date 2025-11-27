@@ -54,7 +54,7 @@ public class GroupByAliasTableSqlQuery<TTable>(IAliasTable<TTable> aliasTable, I
     /// <returns></returns>
     public GroupByAliasTableSqlQuery<TTable> HavingAggregate(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        _filter.AddLogic(query(aggregate(_source.Prefix(select(_source.Target)))));
+        _filter.AddLogic(query(aggregate(_source.Prefix(select(_source.Original)))));
         return this;
     }
     #endregion

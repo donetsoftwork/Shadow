@@ -1,4 +1,4 @@
-﻿using ShadowSql.Components;
+using ShadowSql.Components;
 using System.Collections;
 
 namespace Shadow.DDL.Components;
@@ -18,7 +18,6 @@ public class DictionaryProvider(IDictionary provider)
     public IDictionary Provider 
         => _provider;
     #endregion
-
     /// <summary>
     /// 获取组件
     /// </summary>

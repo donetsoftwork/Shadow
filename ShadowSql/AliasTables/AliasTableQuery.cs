@@ -25,7 +25,7 @@ public class AliasTableQuery<TTable>(IAliasTable<TTable> aliasTable, Logic filte
     {
     }
     #region 配置
-    private readonly TTable _table = aliasTable.Target;
+    private readonly TTable _table = aliasTable.Original;
     /// <summary>
     /// 原始表
     /// </summary>
@@ -62,7 +62,7 @@ public class AliasTableQuery<TTable>(IAliasTable<TTable> aliasTable, Logic filte
     /// <param name="select">筛选</param>
     /// <returns></returns>
     protected IPrefixField Prefix(Func<TTable, IColumn> select)
-        => _source.Prefix(select(_table));
+        => _original.Prefix(select(_table));
     #region IDataQuery
     /// <inheritdoc/>
     Logic IDataQuery.Logic

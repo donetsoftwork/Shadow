@@ -10,9 +10,9 @@ namespace ShadowSql.Filters;
 /// 数据筛选基类
 /// </summary>
 /// <typeparam name="TFilter"></typeparam>
-/// <param name="view"></param>
+/// <param name="original">原始表</param>
 /// <param name="filter">过滤条件</param>
-public abstract class DataFilterBase<TFilter>(ITableView view, TFilter filter)
+public abstract class DataFilterBase<TFilter>(ITableView original, TFilter filter)
     : FilterBase, ITableView, IDataFilter
     where TFilter : ISqlLogic
 {
@@ -20,12 +20,12 @@ public abstract class DataFilterBase<TFilter>(ITableView view, TFilter filter)
     /// <summary>
     /// 数据源表
     /// </summary>
-    protected readonly ITableView _source = view;
+    protected readonly ITableView _original = original;
     /// <summary>
     /// 数据源表
     /// </summary>
-    public ITableView Source
-        => _source;
+    public ITableView Original
+        => _original;
     /// <summary>
     /// 过滤条件
     /// </summary>
@@ -38,30 +38,27 @@ public abstract class DataFilterBase<TFilter>(ITableView view, TFilter filter)
     #endregion
     #region IDataFilter
     /// <inheritdoc/>
-    ITableView IDataFilter.Source
-        => _source;
-    /// <inheritdoc/>
     ISqlLogic IDataFilter.Filter
         => _filter;
     #endregion
     #region FilterBase
     /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
-        => _source.Fields;
+        => _original.Fields;
     /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
-        => _source.GetField(fieldName);
+        => _original.GetField(fieldName);
     /// <inheritdoc/>
     protected override ICompareField GetCompareField(string fieldName)
-        => _source.GetCompareField(fieldName);
+        => _original.GetCompareField(fieldName);
     /// <inheritdoc/>
     protected override IField NewField(string fieldName)
-        => _source.NewField(fieldName);
+        => _original.NewField(fieldName);
     #endregion
     #region ISqlEntity
     /// <inheritdoc/>
     protected override void WriteSource(ISqlEngine engine, StringBuilder sql)
-        => _source.Write(engine, sql);
+        => _original.Write(engine, sql);
     /// <inheritdoc/>
     protected override bool WriteFilter(ISqlEngine engine, StringBuilder sql)
         => _filter.TryWrite(engine, sql);

@@ -1,3 +1,4 @@
+using Hand.Structural;
 using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
@@ -36,7 +37,7 @@ public abstract class DataFilterBase<TSource, TFilter>(TSource view, TFilter fil
     #endregion
     #region IDataFilter
     /// <inheritdoc/>
-    ITableView IDataFilter.Source
+    ITableView IWrapper<ITableView>.Original
         => _source;
     /// <inheritdoc/>
     ISqlLogic IDataFilter.Filter

@@ -1,7 +1,5 @@
-using Dapper;
 using Dapper.Shadow;
 using Microsoft.Data.Sqlite;
-using Shadow.DDL;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Components;
@@ -35,52 +33,6 @@ public abstract class ExecuteTestBase
         return new DapperExecutor(engine, connection);
     }
 
-    protected StudentTable CreateStudentTable(string tableName = "Students")
-    {
-        var table = new StudentTable(tableName);
-        try
-        {
-            table.ToCreate()
-                .Execute(SqliteExecutor);
-        }
-        catch { }
-        return table;
-    }
-    protected SchoolClassTable CreateSchoolClassTable(string tableName = "Classes")
-    {
-        var table = new SchoolClassTable(tableName);
-        try
-        {
-            table.ToCreate()
-                .Execute(SqliteExecutor);
-        }
-        catch { }
-        return table;
-    }
-    protected void DropStudentTable(string tableName = "Students")
-    {
-        try
-        {
-            new StudentTable(tableName)
-            .ToDrop()
-            .Execute(SqliteExecutor);
-        }
-        catch { }
-        //var sql = DropTable.WriteDropTable(tableName);
-        //SqliteExecutor.Execute(sql);
-    }
-    protected void DropSchoolClassTable(string tableName = "Classes")
-    {
-        try
-        {
-            new SchoolClassTable(tableName)
-            .ToDrop()
-            .Execute(SqliteExecutor);
-        }
-        catch { }
-        //var sql = DropTable.WriteDropTable(tableName);
-        //SqliteExecutor.Execute(sql);
-    }
     public static readonly ColumnSchema _id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
     public static readonly ColumnSchema _name = new("Name", "TEXT");
     public static readonly ColumnSchema _age = new("Age", "INTEGER");

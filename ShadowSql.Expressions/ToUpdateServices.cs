@@ -54,7 +54,7 @@ public static partial class ShadowSqlServices
     /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableSqlQuery query)
-        => new((ITable)query.Source, query._filter);
+        => new((ITable)query.Original, query._filter);
     /// <summary>
     /// 修改
     /// </summary>
@@ -68,6 +68,6 @@ public static partial class ShadowSqlServices
     /// <param name="query">查询</param>
     /// <returns></returns>
     public static TableUpdate<TEntity> ToUpdate<TEntity>(this TableQuery query)
-        => new((ITable)query.Source, query._filter);
+        => new((ITable)query.Original, query._filter);
     #endregion   
 }

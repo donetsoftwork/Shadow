@@ -10,7 +10,7 @@ namespace ShadowSql.CompareLogics;
 /// <param name="field">字段</param>
 /// <param name="op">操作</param>
 public abstract class CompareLogicBase(ICompareView field, CompareSymbol op)
-    : AtomicLogic/*, ICompareLogic*/
+    : AtomicLogic
 {
     #region 配置
     /// <summary>

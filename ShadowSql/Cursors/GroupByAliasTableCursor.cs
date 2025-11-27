@@ -20,7 +20,7 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <param name="limit">筛选数量</param>
     /// <param name="offset">跳过数量</param>
     public GroupByAliasTableCursor(GroupByAliasTableQuery<TTable> groupBy, int limit, int offset)
-        : this(groupBy, groupBy._source, groupBy._source.Target, limit, offset)
+        : this(groupBy, groupBy._source, groupBy._source.Original, limit, offset)
     {
     }
     /// <summary>
@@ -30,7 +30,7 @@ public class GroupByAliasTableCursor<TTable> : GroupByCursorBase
     /// <param name="limit">筛选数量</param>
     /// <param name="offset">跳过数量</param>
     public GroupByAliasTableCursor(GroupByAliasTableSqlQuery<TTable> groupBy, int limit, int offset)
-        : this(groupBy, groupBy._source, groupBy._source.Target, limit, offset)
+        : this(groupBy, groupBy._source, groupBy._source.Original, limit, offset)
     {
     }
     private GroupByAliasTableCursor(IGroupByView groupBy, IAliasTable<TTable> aliasTable, TTable table, int limit, int offset)

@@ -65,7 +65,7 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView multiView, in
     {
         var member = _source.Alias<TTable>(tableName);
         //增加前缀
-        var prefixField = member.GetPrefixField(select(member.Target));
+        var prefixField = member.GetPrefixField(select(member.Original));
         if (prefixField is not null)
             AscCore(prefixField);
         return this;
@@ -82,7 +82,7 @@ public class DapperMultiTableCursor(IExecutor executor, IMultiView multiView, in
     {
         var member = _source.Alias<TTable>(tableName);
         //增加前缀
-        var prefixField = member.GetPrefixField(select(member.Target));
+        var prefixField = member.GetPrefixField(select(member.Original));
         if (prefixField is not null)
             DescCore(prefixField);
         return this;

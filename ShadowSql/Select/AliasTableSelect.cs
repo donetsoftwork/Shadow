@@ -45,7 +45,7 @@ public sealed class AliasTableSelect<TTable>
     /// </summary>
     /// <param name="query">查询</param>
     public AliasTableSelect(AliasTableSqlQuery<TTable> query)
-        : this(query, query.Source)
+        : this(query, query.Original)
     {
     }
     /// <summary>
@@ -53,7 +53,7 @@ public sealed class AliasTableSelect<TTable>
     /// </summary>
     /// <param name="query">查询</param>
     public AliasTableSelect(AliasTableQuery<TTable> query)
-        : this(query, query.Source)
+        : this(query, query.Original)
     {
     }
 }

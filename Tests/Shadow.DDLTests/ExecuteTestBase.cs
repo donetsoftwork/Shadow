@@ -1,6 +1,5 @@
-﻿using Dapper;
+using Dapper;
 using Dapper.Shadow;
-using Microsoft.Data.Sqlite;
 using Shadow.DDL;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
@@ -29,18 +28,22 @@ public abstract class ExecuteTestBase
         var provider = new DictionaryProvider(new Hashtable())
             .AddComponent<IDefineColumComponent>(new DefineSqliteColumComponent());
         var engine = new SqliteEngine(new SqliteSelectComponent(), new SqlValueComponent("1", "0", "NULL"), provider);
+        //#if NET8_0_OR_GREATER
 
-        var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
+        //#else
+        //        var connection = new System.Data.SQLite.SQLiteConnection("Data Source=:memory:;");
+        //#endif
+        var connection = new Microsoft.Data.Sqlite.SqliteConnection("Data Source=file::memory:;Cache=Shared");
         return new DapperExecutor(engine, connection);
     }
 
-    protected void CreateStudentsTable(string tableName = "Students")
+    protected async Task CreateStudentsTable(string tableName = "Students")
     {
         try
         {
-            new StudentTable(tableName)
+            await new StudentTable(tableName)
                 .ToCreate()
-                .Execute(SqliteExecutor);
+                .ExecuteAsync(SqliteExecutor);
         }
         catch { }
         //        var sql = @$"CREATE TABLE {tableName} (
@@ -50,13 +53,13 @@ public abstract class ExecuteTestBase
         //)";
         //        SqliteExecutor.Execute(sql);
     }
-    protected void DropStudentsTable(string tableName = "Students")
+    protected async Task DropStudentsTable(string tableName = "Students")
     {
         try
         {
-            new StudentTable(tableName)
+            await new StudentTable(tableName)
             .ToDrop()
-            .Execute(SqliteExecutor);
+            .ExecuteAsync(SqliteExecutor);
         }
         catch { }
         //var sql = DropTable.WriteDropTable(tableName);

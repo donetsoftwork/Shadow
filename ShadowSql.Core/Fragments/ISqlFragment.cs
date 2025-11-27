@@ -16,23 +16,3 @@ public interface ISqlFragment
     /// <returns></returns>
     bool TryWrite(ISqlEngine engine, StringBuilder sql);
 }
-/// <summary>
-/// 可执行的sql
-/// </summary>
-public interface IExecuteSql : ISqlEntity;
-///// <summary>
-///// 查询数据的sql
-///// </summary>
-//public interface IQuerySql : IExecuteSql;
-/// <summary>
-/// sql实体
-/// </summary>
-public interface ISqlEntity
-{
-    /// <summary>
-    /// sql拼接
-    /// </summary>
-    /// <param name="engine">数据库</param>
-    /// <param name="sql">sql</param>
-    void Write(ISqlEngine engine, StringBuilder sql);
-}

@@ -1,6 +1,5 @@
 using ShadowSql.Identifiers;
 using ShadowSql.SelectFields;
-using ShadowSql.SingleSelect;
 using System.Collections.Generic;
 
 namespace ShadowSql;
@@ -38,48 +37,6 @@ public static partial class ShadowSqlCoreServices
         return select;
     }
     /// <summary>
-    /// 筛选别名
-    /// </summary>
-    /// <typeparam name="TSelectFields"></typeparam>
-    /// <param name="fields">字段</param>
-    /// <param name="statement"></param>
-    /// <param name="aliasName">别名</param>
-    /// <returns></returns>
-    public static TSelectFields Alias<TSelectFields>(this TSelectFields fields, string statement, string aliasName)
-        where TSelectFields : SelectFieldsBase
-    {
-        fields.AliasCore(aliasName, statement);
-        return fields;
-    }
-    #region 子查询
-    /// <summary>
-    /// 子查询作为字段
-    /// </summary>
-    /// <typeparam name="TSelectFields"></typeparam>
-    /// <param name="fields">字段</param>
-    /// <param name="select">筛选</param>
-    /// <returns></returns>
-    public static TSelectFields Select<TSelectFields>(this TSelectFields fields, ISingleSelect select)
-        where TSelectFields : SelectFieldsBase
-    {
-        fields.SelectCore(select.ToField());
-        return fields;
-    }
-    /// <summary>
-    /// 子查询作为字段别名
-    /// </summary>
-    /// <typeparam name="TSelectFields"></typeparam>
-    /// <param name="fields">字段</param>
-    /// <param name="select">筛选</param>
-    /// <param name="aliasName">别名</param>
-    /// <returns></returns>
-    public static TSelectFields Alias<TSelectFields>(this TSelectFields fields, ISingleSelect select, string aliasName)
-        where TSelectFields : SelectFieldsBase
-    {
-        fields.SelectCore(select.ToField(aliasName));
-        return fields;
-    }
-    /// <summary>
     /// 筛选自身所有字段
     /// </summary>
     /// <typeparam name="TSelectFields"></typeparam>
@@ -91,6 +48,5 @@ public static partial class ShadowSqlCoreServices
         fields.SelfColumnsCore();
         return fields;
     }
-    #endregion
     #endregion
 }

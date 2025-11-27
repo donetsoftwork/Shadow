@@ -22,7 +22,7 @@ public class AliasUpdateTable<TTable>(IAliasTable<TTable> aliasTable)
     /// </summary>
     public IAliasTable<TTable> Source
         => _source;
-    private readonly TTable _table = aliasTable.Target;
+    private readonly TTable _table = aliasTable.Original;
     /// <summary>
     /// 
     /// </summary>

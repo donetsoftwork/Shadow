@@ -52,7 +52,7 @@ public class GroupByMultiSqlQuery(IMultiView multiTable, IField[] fields, SqlQue
         where TTable : ITable
     {
         var table = _source.Alias<TTable>(tableName);
-        _filter.AddLogic(query(aggregate(table.Prefix(select(table.Target)))));
+        _filter.AddLogic(query(aggregate(table.Prefix(select(table.Original)))));
         return this;
     }
     #endregion

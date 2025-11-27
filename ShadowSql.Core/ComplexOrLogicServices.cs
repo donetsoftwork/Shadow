@@ -1,12 +1,11 @@
 using ShadowSql.Logics;
-using ShadowSql.Queries;
 
 namespace ShadowSql;
 
 /// <summary>
 /// 复合或逻辑扩展方法
 /// </summary>
-public static partial class ShadowSqlCoreServices
+public static partial class ShadowSqlQueryServices
 {
     #region Or
     #region AndLogic
@@ -18,6 +17,14 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     internal static ComplexOrLogic OrCore(this ComplexOrLogic logic, AndLogic other)
         => other.MergeToOr(logic);
+    /// <summary>
+    /// 或逻辑
+    /// </summary>
+    /// <param name="logic">查询逻辑</param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    internal static ComplexOrLogic OrCore(this AndLogic logic, ComplexOrLogic other)
+        => logic.MergeToOr(other);
     #endregion
     #region ComplexAndLogic
     /// <summary>
@@ -38,6 +45,14 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     internal static ComplexOrLogic OrCore(this ComplexOrLogic logic, OrLogic other)
         => other.MergeTo(logic);
+    /// <summary>
+    /// 或逻辑
+    /// </summary>
+    /// <param name="logic">查询逻辑</param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    internal static ComplexOrLogic OrCore(this OrLogic logic, ComplexOrLogic other)
+        => logic.MergeTo(other);
     #endregion
     #region ComplexOrLogic
     /// <summary>
@@ -81,6 +96,14 @@ public static partial class ShadowSqlCoreServices
             return other.MergeTo(new ComplexAndLogic().AddOtherCore(logic));
         return other.MergeTo(new AndLogic(preview.First));
     }
+    /// <summary>
+    /// 或逻辑
+    /// </summary>
+    /// <param name="logic">查询逻辑</param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    internal static Logic AndCore(this AndLogic logic, ComplexOrLogic other)
+        => other.MergeToAnd(logic);
     #endregion
     #region ComplexAndLogic
     /// <summary>
@@ -111,6 +134,21 @@ public static partial class ShadowSqlCoreServices
     /// <returns></returns>
     internal static ComplexAndLogic AndCore(this ComplexOrLogic logic, ComplexOrLogic other)
         => other.MergeToAnd(logic.MergeToAnd(new ComplexAndLogic()));
+    /// <summary>
+    /// 与逻辑
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    internal static Logic AndCore(this OrLogic source, ComplexOrLogic other)
+    {
+        return source.LogicCount switch
+        {
+            0 => other.ToAndCore(),
+            1 => other.ToAndCore(source.FirstLogic),
+            _ => other.MergeToAnd(new ComplexAndLogic().AddOtherCore(source.MergeTo(new ComplexOrLogic()))),
+        };
+    }
     #endregion
     #endregion
     #region Not
@@ -197,17 +235,6 @@ public static partial class ShadowSqlCoreServices
         return or;
     }
     /// <summary>
-    /// 合并到SqlOrQuery
-    /// </summary>
-    /// <param name="source"></param>
-    /// <param name="or">或逻辑</param>
-    /// <returns></returns>
-    internal static SqlOrQuery MergeTo(this ComplexOrLogic source, SqlOrQuery or)
-    {
-        source.MergeTo(or.Complex);
-        return or;
-    }
-    /// <summary>
     /// ComplexOrLogic与OrLogic合并
     /// </summary>
     /// <param name="source"></param>
@@ -251,6 +278,25 @@ public static partial class ShadowSqlCoreServices
         if (preview.HasSecond)
             return and.MergeTo(new ComplexAndLogic()).AddOtherCore(source);
         return and.AndCore(preview.First);
+    }
+    #endregion
+    #region MergeToOr
+    /// <summary>
+    /// 合并到ComplexOrLogic
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="or">或逻辑</param>
+    /// <returns></returns>
+    internal static ComplexOrLogic MergeToOr(this AndLogic source, ComplexOrLogic or)
+    {
+        var preview = source.Preview();
+        if (preview.IsEmpty)
+            return or;
+        if (preview.HasSecond)
+            or.AddOther(source.MergeTo(new ComplexAndLogic()));
+        else
+            or.AddLogic(preview.First);
+        return or;
     }
     #endregion
 }

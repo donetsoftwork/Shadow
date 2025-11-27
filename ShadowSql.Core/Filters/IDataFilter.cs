@@ -1,3 +1,4 @@
+using Hand.Structural;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
@@ -7,12 +8,10 @@ namespace ShadowSql.Filters;
 /// <summary>
 /// 数据过滤
 /// </summary>
-public interface IDataFilter : ITableView
+public interface IDataFilter
+    : ITableView
+    , IWrapper<ITableView>
 {
-    /// <summary>
-    /// 数据源表
-    /// </summary>
-    ITableView Source { get; }
     /// <summary>
     /// 过滤逻辑
     /// </summary>

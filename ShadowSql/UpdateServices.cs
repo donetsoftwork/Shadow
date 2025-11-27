@@ -22,12 +22,12 @@ public static partial class ShadowSqlServices
         where TTable : ITable
 
     {
-        var updateFields = aliasTable.Target.AssignFields.ToList();
+        var updateFields = aliasTable.Original.AssignFields.ToList();
         foreach (var field in aliasTable.PrefixFields)
         {
             if (field is PrefixField prefixField)
             {
-                IAssignView assignField = prefixField.Target;
+                IAssignView assignField = prefixField.Original;
                 if (updateFields.Any(c => c == field))
                     yield return field;
             }

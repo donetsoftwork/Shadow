@@ -59,7 +59,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableQuery<TKey, TEntity> GroupBy<TKey, TEntity>(this TableQuery query, Expression<Func<TEntity, TKey>> select)
     {
-        var table = (ITable)query.Source;
+        var table = (ITable)query.Original;
         return new(table, query._filter, [.. TableVisitor.GetFieldsByExpression(table, select)]);
     }
     #endregion
@@ -177,7 +177,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static GroupByTableSqlQuery<TKey, TEntity> SqlGroupBy<TKey, TEntity>(this TableSqlQuery query, Expression<Func<TEntity, TKey>> select)
     {
-        var table = (ITable)query.Source;
+        var table = (ITable)query.Original;
         return new(table, query._filter, [.. TableVisitor.GetFieldsByExpression(table, select)]);
     }
     #endregion

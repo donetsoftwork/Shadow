@@ -3,23 +3,8 @@ using ShadowSql;
 
 namespace Dapper.ShadowTests.Update;
 
-public class MultiTableUpdateTests : ExecuteTestBase, IDisposable
+public class MultiTableUpdateTests : ExecuteTestBase
 {
-    public MultiTableUpdateTests()
-    {
-        var classInsert = CreateSchoolClassTable()
-            .ToInsert()
-            .InsertSelfColumns();
-        SqliteExecutor.Execute(classInsert, new SchoolClass(1, "五(1)班", "王老师"));
-        SqliteExecutor.Execute(classInsert, new SchoolClass(2, "五(2)班", "李老师"));
-
-        var studentInsert = CreateStudentTable()
-            .ToInsert()
-            .InsertSelfColumns();
-        SqliteExecutor.Execute(studentInsert, new Student(1, "张三", 10, 2));
-        SqliteExecutor.Execute(studentInsert, new Student(2, "李四", 11, 1));
-    }
-
     /// <summary>
     /// Sqlite不支持联表修改
     /// </summary>
@@ -45,12 +30,5 @@ public class MultiTableUpdateTests : ExecuteTestBase, IDisposable
         //var students = select.Get<Student>(SqliteExecutor)
         //    .ToList();
         //Assert.True(students.Count > 0);
-    }
-
-
-    void IDisposable.Dispose()
-    {
-        DropStudentTable();
-        DropSchoolClassTable();
     }
 }

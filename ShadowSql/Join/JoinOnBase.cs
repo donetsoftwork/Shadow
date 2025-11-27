@@ -1,3 +1,4 @@
+using Hand.Structural;
 using ShadowSql.Engines;
 using ShadowSql.Filters;
 using ShadowSql.Identifiers;
@@ -124,7 +125,7 @@ public abstract class JoinOnBase<TJoinTable, TLeft, TRight, LTable, RTable, TFil
     #endregion
     #region IDataFilter
     /// <inheritdoc/>
-    ITableView IDataFilter.Source
+    ITableView IWrapper<ITableView>.Original
         => this;
     /// <inheritdoc/>
     ISqlLogic IDataFilter.Filter

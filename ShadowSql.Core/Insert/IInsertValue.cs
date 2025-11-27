@@ -1,5 +1,5 @@
 using ShadowSql.Identifiers;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 
 namespace ShadowSql.Insert;
 

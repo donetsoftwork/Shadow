@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\package.props" />
+	<PropertyGroup>
+		<Version>$(VersionBase).0-alpha</Version>
+		<PackageId>ShadowSql.Queries</PackageId>
+		<RootNamespace>ShadowSql</RootNamespace>
+		<Description>拼接sql工具</Description>
+		<PackageTags>sql;sql-builder;sql-query</PackageTags>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="ShadowSql" />
+		<InternalsVisibleTo Include="ShadowSql.Expressions" />
+		<InternalsVisibleTo Include="ShadowExpressionSql" />
+		<InternalsVisibleTo Include="Dapper.Shadow" />
+		<InternalsVisibleTo Include="ShadowSqlQueryTests" />
+		<InternalsVisibleTo Include="ShadowSqlTest" />
+		<InternalsVisibleTo Include="ShadowSql.ExpressionsTests" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ShadowSql.Core\ShadowSql.Core.csproj" />
+	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hand.Core" Version="0.2.1-alpha" />
+    <PackageReference Include="Hand.AutoCache" Version="0.2.1-alpha" />
+  </ItemGroup>
+</Project>

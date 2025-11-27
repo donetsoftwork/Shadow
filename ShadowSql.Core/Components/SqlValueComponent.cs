@@ -1,4 +1,4 @@
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 using System;
 
 namespace ShadowSql.Components;

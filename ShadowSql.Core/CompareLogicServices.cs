@@ -3,7 +3,7 @@ using ShadowSql.CompareLogics;
 using ShadowSql.Compares;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
-using ShadowSql.SqlVales;
+using ShadowSql.Values;
 using System.Collections.Generic;
 
 namespace ShadowSql;
@@ -116,7 +116,7 @@ public static partial class ShadowSqlCoreServices
     public static AtomicLogic Between(this ICompareField field, string begin = "", string end = "")
     {
         var parameter = Parameter.Use(begin, field);
-        var parameter2 = Parameter.Use(end, parameter);
+        var parameter2 = Parameter.Use(Parameter.CheckName2(end, parameter.Name));
         return new BetweenLogic(field, parameter, parameter2);
     }
     /// <summary>
@@ -129,7 +129,7 @@ public static partial class ShadowSqlCoreServices
     public static AtomicLogic NotBetween(this ICompareField field, string begin = "", string end = "")
     {
         var parameter = Parameter.Use(begin, field);
-        var parameter2 = Parameter.Use(end, parameter);
+        var parameter2 = Parameter.Use(Parameter.CheckName2(end, parameter.Name));
         return new NotBetweenLogic(field, parameter, parameter2);
     }
     #endregion
@@ -246,7 +246,7 @@ public static partial class ShadowSqlCoreServices
     public static AtomicLogic Between(this IAggregateField field, string begin = "", string end = "")
     {
         var parameter = Parameter.Use(begin, field.TargetName);
-        var parameter2 = Parameter.Use(end, parameter);
+        var parameter2 = Parameter.Use(Parameter.CheckName2(end, parameter.Name));
         return new BetweenLogic(field, parameter, parameter2);
     }
     /// <summary>
@@ -259,7 +259,7 @@ public static partial class ShadowSqlCoreServices
     public static AtomicLogic NotBetween(this IAggregateField field, string begin = "", string end = "")
     {
         var parameter = Parameter.Use(begin, field.TargetName);
-        var parameter2 = Parameter.Use(end, parameter);
+        var parameter2 = Parameter.Use(Parameter.CheckName2(end, parameter.Name));
         return new NotBetweenLogic(field, parameter, parameter2);
     }
     #endregion

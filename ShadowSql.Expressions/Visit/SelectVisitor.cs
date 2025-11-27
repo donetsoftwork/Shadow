@@ -1,7 +1,7 @@
 using ShadowSql.Aggregates;
 using ShadowSql.Expressions.Services;
-using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
+using ShadowSql.Variants;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;

@@ -21,7 +21,7 @@ public abstract class SelectComponentBase : ISelectComponent
     public virtual void Select(ISqlEngine engine, StringBuilder sql, ISelect select)
     {
         engine.SelectPrefix(sql);
-        WriteView(engine, sql, select.Source, select);
+        WriteView(engine, sql, select.Original, select);
     }
     /// <summary>
     /// 数据分页获取

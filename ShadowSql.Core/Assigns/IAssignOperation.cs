@@ -1,6 +1,5 @@
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
-using ShadowSql.SqlVales;
 
 namespace ShadowSql.Assigns;
 

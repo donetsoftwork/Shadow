@@ -6,32 +6,28 @@ using ShadowSql.Insert;
 using ShadowSql.Select;
 namespace Dapper.ShadowCoreTests.Insert;
 
-public class SelectInsertTests : ExecuteTestBase, IDisposable
+public class SelectInsertTests : ExecuteTestBase
 {
-    public SelectInsertTests()
-    {
-        CreateStudentTable("Students");
-        CreateStudentTable("Backup2025");
-    }
-
     [Fact]
-    public void SelectInsert()
+    public async Task SelectInsert()
     {
-        var table = new Table("Students");
+        var table = new StudentTable("Students");
+        await using var resource = new TableResource<StudentTable>(SqliteExecutor, table);
+        await resource.InitAsync();
+
         var name = Column.Use("Name");
         var age = Column.Use("Age");
         var select = new TableSelect(table)
             .Select(name, age);
         var backup = new Table("Backup2025")
             .AddColums(name, age);
-        var insert = new SelectInsert(backup, select);
-        var result = insert.Execute(SqliteExecutor);
-        Assert.Equal(0, result);
-    }
 
-    void IDisposable.Dispose()
-    {
-        DropStudentTable("Students");
-        DropStudentTable("Backup2025");
+        var table2 = new StudentTable("Backup2025");
+        await using var resource2 = new TableResource<StudentTable>(SqliteExecutor, table2);
+        await resource2.InitAsync();
+
+        var insert = new SelectInsert(backup, select);
+        var result = await insert.ExecuteAsync(SqliteExecutor);
+        Assert.Equal(0, result);
     }
 }

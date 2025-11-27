@@ -1,3 +1,4 @@
+using Hand.Previews;
 using ShadowSql.Logics;
 
 namespace ShadowSql.Previews;
@@ -5,7 +6,7 @@ namespace ShadowSql.Previews;
 /// <summary>
 /// 逻辑展开
 /// </summary>
-public class LogicPreview : LogicPreviewBase
+public class LogicPreview : PreviewBase<AtomicLogic>
 {
     /// <summary>
     /// 复合逻辑展开

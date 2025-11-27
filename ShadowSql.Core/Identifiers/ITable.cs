@@ -1,5 +1,4 @@
 using ShadowSql.Fragments;
-using ShadowSql.Join;
 using System.Collections.Generic;
 
 namespace ShadowSql.Identifiers;
@@ -79,49 +78,4 @@ public interface ITableView : ISqlEntity
     /// <param name="fieldName">字段名</param>
     /// <returns></returns>
     IField NewField(string fieldName);
-}
-/// <summary>
-/// 多表视图
-/// </summary>
-public interface IMultiView : ITableView
-{
-    /// <summary>
-    /// 表
-    /// </summary>
-    IEnumerable<IAliasTable> Tables { get; }
-    /// <summary>
-    /// 获取成员表
-    /// </summary>
-    /// <param name="tableName">表名</param>
-    /// <returns></returns>
-    IAliasTable? GetMember(string tableName);
-}
-/// <summary>
-/// 联表
-/// </summary>
-public interface IJoinTable : IMultiView
-{
-    /// <summary>
-    /// 连接
-    /// </summary>
-    IEnumerable<IJoinOn> JoinOns { get;  }
-    /// <summary>
-    /// 添加连接
-    /// </summary>
-    /// <param name="joinOn">联接</param>
-    void AddJoinOn(IJoinOn joinOn);
-}
-/// <summary>
-/// 分组视图
-/// </summary>
-public interface IGroupByView : ITableView
-{
-    /// <summary>
-    /// 分组数据源表
-    /// </summary>
-    ITableView Source { get; }
-    /// <summary>
-    /// 分组字段
-    /// </summary>
-    IField[] GroupByFields { get; }
 }

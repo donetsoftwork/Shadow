@@ -11,7 +11,8 @@ namespace ShadowSql.Select;
 /// 获取表视图数据
 /// </summary>
 /// <param name="table">表</param>
-public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
+public class TableSelect(ITableView table)
+    : SelectFieldsBase, ISelect
 {
     /// <summary>
     /// 获取表视图数据
@@ -22,23 +23,23 @@ public class TableSelect(ITableView table) : SelectFieldsBase, ISelect
     {
     }
     #region 配置
-    private readonly ITableView _source = table;
+    private readonly ITableView _original = table;
     /// <summary>
-    /// 表视图
+    /// 原始视图
     /// </summary>
-    public ITableView Source
-        => _source;
+    public ITableView Original
+        => _original;
     #endregion
     #region TableViewBase
     /// <inheritdoc/>
     protected override IEnumerable<IField> GetFields()
-        => _source.Fields;
+        => _original.Fields;
     /// <inheritdoc/>
     protected override IField? GetField(string fieldName)
-        => _source.GetField(fieldName);
+        => _original.GetField(fieldName);
     /// <inheritdoc/>
     protected override IField NewField(string fieldName)
-        => _source.NewField(fieldName);
+        => _original.NewField(fieldName);
     #endregion
     #region ISqlEntity
     /// <inheritdoc/>

@@ -1,6 +1,7 @@
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dapper.Shadow;
@@ -10,102 +11,57 @@ namespace Dapper.Shadow;
 /// </summary>
 public interface IExecutor
 {
-    #region Execute
-    /// <summary>
-    /// Execute parameterized SQL.
-    /// </summary>
-    /// <param name="sql">The SQL to execute for this query.</param>
-    /// <param name="param">The parameters to use for this query.</param>
-    /// <returns>The number of rows affected.</returns>
-    public int Execute(ISqlEntity sql, object? param = null);
-    #endregion
-    #region ExecuteScalar
-    /// <summary>
-    /// Execute parameterized SQL that selects a single value.
-    /// </summary>
-    /// <typeparam name="T">The type to return.</typeparam>
-    /// <param name="entity">The SQL to execute.</param>
-    /// <param name="param">The parameters to use for this command.</param>
-    /// <returns>The first cell returned, as <typeparamref name="T"/>.</returns>
-    public T? ExecuteScalar<T>(ISqlEntity entity, object? param = null);
-    #endregion
-    #region Count
-    /// <summary>
-    /// 计数
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="view"></param>
-    /// <param name="param">参数</param>
-    /// <returns></returns>
-    T? Count<T>(ITableView view, object? param = null);
-    #endregion
     #region CountAsync
     /// <summary>
     /// 异步计数
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="view"></param>
-    /// <param name="param">参数</param>
+    /// <param name="param"></param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    Task<T?> CountAsync<T>(ITableView view, object? param = null);
+    Task<T?> CountAsync<T>(ITableView view, object? param, CancellationToken token);
     #endregion
     #region ExecuteAsync
     /// <summary>
-    /// Execute parameterized SQL.
+    /// 执行SQL
+    /// 并返回受影响的行数
     /// </summary>
-    /// <param name="entity">The SQL to execute for this query.</param>
-    /// <param name="param">The parameters to use for this query.</param>
-    /// <returns>The number of rows affected.</returns>
-    public Task<int> ExecuteAsync(ISqlEntity entity, object? param = null);
+    /// <param name="entity"></param>
+    /// <param name="param"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task<int> ExecuteAsync(ISqlEntity entity, object? param, CancellationToken token);
     #endregion
     #region ExecuteScalarAsync
     /// <summary>
-    /// Execute parameterized SQL that selects a single value.
+    /// 获取第一行第一列
     /// </summary>
-    /// <typeparam name="T">The type to return.</typeparam>
-    /// <param name="entity">The SQL to execute.</param>
-    /// <param name="param">The parameters to use for this command.</param>
-    /// <returns>The first cell returned, as <typeparamref name="T"/>.</returns>
-    public Task<T?> ExecuteScalarAsync<T>(ISqlEntity entity, object? param = null);
-    #endregion
-    #region Query
-    /// <summary>
-    /// Executes a query, returning the data typed as <typeparamref name="T"/>.
-    /// </summary>
-    /// <typeparam name="T">The type of results to return.</typeparam>
-    /// <param name="entity">The SQL to execute for the query.</param>
-    /// <param name="param">The parameters to pass, if any.</param>
-    /// <returns>
-    /// A sequence of data of the supplied type; if a basic type (int, string, etc) is queried then the data from the first column is assumed, otherwise an instance is
-    /// created per row, and a direct column-name===member-name mapping is assumed (case insensitive).
-    /// </returns>
-    public IEnumerable<T> Query<T>(ISqlEntity entity, object? param = null);
-    /// <summary>
-    /// Executes a single-row query, returning the data typed as <typeparamref name="T"/>.
-    /// </summary>
-    /// <typeparam name="T">The type of result to return.</typeparam>
-    /// <param name="entity">The SQL to execute for the query.</param>
-    /// <param name="param">The parameters to pass, if any.</param>
-    /// <returns>
-    /// A sequence of data of the supplied type; if a basic type (int, string, etc) is queried then the data from the first column is assumed, otherwise an instance is
-    /// created per row, and a direct column-name===member-name mapping is assumed (case insensitive).
-    /// </returns>
-    public T? QueryFirstOrDefault<T>(ISqlEntity entity, object? param = null);
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="param"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task<T?> ExecuteScalarAsync<T>(ISqlEntity entity, object? param, CancellationToken token);
     #endregion
     #region QueryAsync
     /// <summary>
-    /// Execute a query asynchronously using Task.
+    /// 获取多行结果
     /// </summary>
-    /// <typeparam name="T">The type of results to return.</typeparam>
-    /// <param name="entity">The SQL to execute for the query.</param>
-    /// <param name="param">The parameters to pass, if any.</param>
-    public Task<IEnumerable<T>> QueryAsync<T>(ISqlEntity entity, object? param = null);
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="param"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task<IEnumerable<T>> QueryAsync<T>(ISqlEntity entity, object? param, CancellationToken token);
     /// <summary>
-    /// Execute a single-row query asynchronously using Task.
+    /// 获取一行结果
     /// </summary>
-    /// <typeparam name="T">The type of result to return.</typeparam>
-    /// <param name="entity">The SQL to execute for the query.</param>
-    /// <param name="param">The parameters to pass, if any.</param>
-    public Task<T?> QueryFirstOrDefaultAsync<T>(ISqlEntity entity, object? param = null);
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="param"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task<T?> QueryFirstOrDefaultAsync<T>(ISqlEntity entity, object? param, CancellationToken token);
     #endregion
 }

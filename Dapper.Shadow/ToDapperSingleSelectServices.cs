@@ -58,7 +58,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this TableSqlQuery<TTable> query, IFieldView singleField)
         where TTable : IDapperTable
-        => new(query.Source.Executor, query, singleField);
+        => new(query.Original.Executor, query, singleField);
     /// <summary>
     /// 表范围筛选单列
     /// </summary>
@@ -80,7 +80,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> aliasTable, IFieldView singleField)
         where TTable : IDapperTable
-        => new(aliasTable.Target.Executor, aliasTable, singleField);
+        => new(aliasTable.Original.Executor, aliasTable, singleField);
     /// <summary>
     /// 别名表过滤筛选单列
     /// </summary>
@@ -91,7 +91,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableSingleSelect ToDapperSingle<TTable>(this IAliasTable<TTable> aliasTable, ISqlLogic filter, IFieldView singleField)
         where TTable : IDapperTable
-        => new(aliasTable.Target.Executor, new TableFilter(aliasTable, filter), singleField);
+        => new(aliasTable.Original.Executor, new TableFilter(aliasTable, filter), singleField);
     /// <summary>
     /// 别名表筛选单列
     /// </summary>

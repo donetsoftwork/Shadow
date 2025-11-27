@@ -1,6 +1,7 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
 using ShadowSql.SingleSelect;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dapper.Shadow;
@@ -16,9 +17,10 @@ public static partial class DapperShadowCoreServices
     /// </summary>
     /// <param name="select">筛选</param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<long> LongCountAsync(this IDapperSelect select, object? param = null)
-        => select.Executor.CountAsync<long>(select.Source, param);
+    public static Task<long> LongCountAsync(this IDapperSelect select, object? param = null, CancellationToken token = default)
+        => select.Executor.CountAsync<long>(select.Original, param, token);
     #endregion
     #region Dapper
     #region IDapperSource
@@ -27,9 +29,10 @@ public static partial class DapperShadowCoreServices
     /// </summary>
     /// <param name="source"></param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<long> LongCountAsync(this IDapperSource source, object? param = null)
-        => source.Executor.CountAsync<long>(source, param);
+    public static Task<long> LongCountAsync(this IDapperSource source, object? param = null, CancellationToken token = default)
+        => source.Executor.CountAsync<long>(source, param, token);
     #endregion
     #endregion
     #region IExecutor    
@@ -40,9 +43,10 @@ public static partial class DapperShadowCoreServices
     /// <param name="view"></param>
     /// <param name="executor">执行器</param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<long> LongCountAsync(this ITableView view, IExecutor executor, object? param = null)
-        => executor.CountAsync<long>(view, param);
+    public static Task<long> LongCountAsync(this ITableView view, IExecutor executor, object? param = null, CancellationToken token = default)
+        => executor.CountAsync<long>(view, param, token);
     #endregion
     #region CountSelect
     /// <summary>
@@ -51,9 +55,10 @@ public static partial class DapperShadowCoreServices
     /// <param name="select">筛选</param>
     /// <param name="executor">执行器</param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<long> LongCountAsync(this CountSelect select, IExecutor executor, object? param = null)
-        => executor.ExecuteScalarAsync<long>(select, param);
+    public static Task<long> LongCountAsync(this CountSelect select, IExecutor executor, object? param = null, CancellationToken token = default)
+        => executor.ExecuteScalarAsync<long>(select, param, token);
     #endregion
     #region ISelect
     /// <summary>
@@ -62,9 +67,10 @@ public static partial class DapperShadowCoreServices
     /// <param name="select">筛选</param>
     /// <param name="executor">执行器</param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<long> LongCountAsync(this ISelect select, IExecutor executor, object? param = null)
-        => executor.CountAsync<long>(select.Source, param);
+    public static Task<long> LongCountAsync(this ISelect select, IExecutor executor, object? param = null, CancellationToken token = default)
+        => executor.CountAsync<long>(select.Original, param, token);
     #endregion
     #endregion
 }

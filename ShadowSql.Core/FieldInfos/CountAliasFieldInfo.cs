@@ -1,7 +1,7 @@
+using Hand.Cache;
 using ShadowSql.Aggregates;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.Services;
 using System.Text;
 
 namespace ShadowSql.FieldInfos;
@@ -29,14 +29,14 @@ public sealed class CountAliasFieldInfo : IdentifierBase, IAggregateFieldAlias
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<CountAliasFieldInfo> _cacher = new(static aliasName => new CountAliasFieldInfo(aliasName));
+    private static readonly FuncCacheService<string, CountAliasFieldInfo> _cacher = new(static aliasName => new CountAliasFieldInfo(aliasName));
     #region IFieldAlias
     /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => Column.Use(_name);
-    /// <inheritdoc/>
-    IFieldAlias IFieldView.As(string aliasName)
-        => Use(aliasName);
+    ///// <inheritdoc/>
+    //IFieldAlias IFieldView.As(string aliasName)
+    //    => Use(aliasName);
     /// <inheritdoc/>
     string IFieldAlias.Alias
         => _name;

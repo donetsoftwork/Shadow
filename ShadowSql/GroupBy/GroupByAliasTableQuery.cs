@@ -47,7 +47,7 @@ public class GroupByAliasTableQuery<TTable>(IAliasTable<TTable> aliasTable, ISql
     public GroupByAliasTableQuery<TTable> And(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
         
-        _filter = _filter.And(query(aggregate(_source.Prefix(select(_source.Target)))));
+        _filter = _filter.And(query(aggregate(_source.Prefix(select(_source.Original)))));
         return this;
     }
     /// <summary>
@@ -59,7 +59,7 @@ public class GroupByAliasTableQuery<TTable>(IAliasTable<TTable> aliasTable, ISql
     /// <returns></returns>
     public GroupByAliasTableQuery<TTable> Or(Func<TTable, IColumn> select, Func<IPrefixField, IAggregateField> aggregate, Func<IAggregateField, AtomicLogic> query)
     {
-        _filter = _filter.Or(query(aggregate(_source.Prefix(select(_source.Target)))));
+        _filter = _filter.Or(query(aggregate(_source.Prefix(select(_source.Original)))));
         return this;
     }
     #region ISqlEntity

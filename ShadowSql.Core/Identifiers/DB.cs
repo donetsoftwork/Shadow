@@ -1,4 +1,4 @@
-using ShadowSql.Services;
+using Hand.Cache;
 
 namespace ShadowSql.Identifiers;
 
@@ -24,15 +24,15 @@ public sealed class DB(string dbName)
     /// <returns></returns>
     public Table From(string tableName)
         => _tables.Get(tableName);
-
+    /// <inheritdoc/>
     ITable IDB.From(string tableName)
         => From(tableName);
     /// <summary>
     /// 数据表
     /// </summary>
-    private readonly CacheService<Table> _tables = new(static tableName => new Table(tableName));
+    private readonly FuncCacheService<string, Table> _tables = new(static tableName => new Table(tableName));
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<DB> _cacher = new(static dbName => new DB(dbName));
+    private static readonly FuncCacheService<string, DB> _cacher = new(static dbName => new DB(dbName));
 }

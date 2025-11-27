@@ -18,8 +18,10 @@ public class MemberQueryTests
     {
         var employees = _db.From("Employees")
             .DefineColums("Id", "Name", "DepartmentId");
-        var multiTable = new MultiTableSqlQuery(SqlQuery.CreateAndQuery());
-        multiTable.AliasGenerator = new CharIncrementGenerator('a');
+        var multiTable = new MultiTableSqlQuery(SqlQuery.CreateAndQuery())
+        {
+            AliasGenerator = new CharIncrementGenerator('a')
+        };
         var member = multiTable.CreateMember(employees);
         var column = member.GetPrefixField("Id");
         Assert.NotNull(column);

@@ -1,13 +1,14 @@
-using ShadowSql.Identifiers;
-using ShadowSql.Generators;
-using ShadowSql.SqlVales;
-using ShadowSql.Engines;
-using System.Text;
-using ShadowSql.Select;
-using ShadowSql.Components;
+using Hand.Creational;
 using ShadowSql;
-using ShadowSql.Fragments;
+using ShadowSql.Components;
 using ShadowSql.Cursors;
+using ShadowSql.Engines;
+using ShadowSql.Fragments;
+using ShadowSql.Generators;
+using ShadowSql.Identifiers;
+using ShadowSql.Select;
+using ShadowSql.Values;
+using System.Text;
 
 namespace Dapper.Shadow;
 
@@ -17,7 +18,7 @@ namespace Dapper.Shadow;
 /// <param name="engine">数据库引擎</param>
 /// <param name="parameterGenerator"></param>
 /// <param name="param">参数</param>
-public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameterGenerator, object? param = null)
+public class ParametricContext(ISqlEngine engine, ICreator<string> parameterGenerator, object? param)
     : ISqlValueComponent, ISqlEngine
 {
     /// <summary>
@@ -31,12 +32,12 @@ public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameter
     }
     #region 配置
     private readonly ISqlEngine _engine = engine;
-    private readonly IIdentifierGenerator _parameterGenerator = parameterGenerator;
+    private readonly ICreator<string> _parameterGenerator = parameterGenerator;
     private readonly DynamicParameters _parameters = new(param);
     /// <summary>
     /// 参数名生成器
     /// </summary>
-    public IIdentifierGenerator ParameterGenerator
+    public ICreator<string> ParameterGenerator
         => _parameterGenerator;
     /// <summary>
     /// 参数
@@ -62,7 +63,7 @@ public class ParametricContext(ISqlEngine engine, IIdentifierGenerator parameter
 
     ISqlValue ISqlValueComponent.SqlValue<T>(T value)
     {
-        var name = _parameterGenerator.NewName();
+        var name = _parameterGenerator.Create();
         _parameters.Add(name, value);
         return Parameter.Use(name);
     }

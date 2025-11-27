@@ -1,28 +1,23 @@
-﻿using ShadowSql;
+using ShadowSql;
 using ShadowSql.Delete;
 using ShadowSql.Tables;
-using Dapper.Shadow;
 
 namespace Dapper.ShadowCoreTests.Delete;
 
-public class TableDeleteTests : ExecuteTestBase, IDisposable
+public class TableDeleteTests : ExecuteTestBase
 {
-    public TableDeleteTests()
-    {
-        CreateStudentTable();
-    }
     [Fact]
-    public void ToDapperDelete()
+    public async Task ToDapperDelete()
     {
         var table = new StudentTable();
+        await using var resource = new TableResource<StudentTable>(SqliteExecutor, table);
+        await resource.InitAsync();
+
         var query = new TableSqlQuery(table)
             .Where(table.Age.LessValue(7));
         var delete = new TableDelete(table, query.Filter);
-        var result = SqliteExecutor.Execute(delete);
+        var result = await SqliteExecutor.ExecuteAsync(delete);
         //var result = delete.Execute(SqliteExecutor);
         Assert.Equal(0, result);
     }
-
-    void IDisposable.Dispose()
-        => DropStudentTable();
 }

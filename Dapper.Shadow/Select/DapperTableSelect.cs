@@ -42,7 +42,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView view, TTab
     /// <param name="executor">执行器</param>
     /// <param name="query">查询</param>
     public DapperTableSelect(IExecutor executor, TableSqlQuery<TTable> query)
-        : this(executor, query, query.Source)
+        : this(executor, query, query.Original)
     {
     }
     /// <summary>
@@ -51,7 +51,7 @@ public class DapperTableSelect<TTable>(IExecutor executor, ITableView view, TTab
     /// <param name="executor">执行器</param>
     /// <param name="query">查询</param>
     public DapperTableSelect(IExecutor executor, TableQuery<TTable> query)
-        : this(executor, query, query.Source)
+        : this(executor, query, query.Original)
     {
     }
     #region 配置

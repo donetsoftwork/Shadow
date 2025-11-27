@@ -6,50 +6,55 @@ using ShadowSql.Insert;
 
 namespace Dapper.ShadowCoreTests.Insert;
 
-public class SingleInsertTests : ExecuteTestBase, IDisposable
+public class SingleInsertTests : ExecuteTestBase
 {
-    public SingleInsertTests()
-        => CreateStudentTable();
     static readonly DB _db = DB.Use("MyDB");
     /// <summary>
     /// 按值添加
     /// </summary>
     [Fact]
-    public void InsertValue()
+    public async Task InsertValue()
     {
-        var table = _db.From("Students")
+        var table = new StudentTable("Students");
+        await using var resource = new TableResource<StudentTable>(SqliteExecutor, table);
+        await resource.InitAsync();
+
+        var table2 = _db.From("Students")
             .AddColums(_name, _age);
-        var insert = new SingleInsert(table)
+        var insert = new SingleInsert(table2)
             .Insert(_name.InsertValue("张三"))
             .Insert(_age.InsertValue(11));
 
-        var result = insert.Execute(SqliteExecutor);
+        var result = await insert.ExecuteAsync(SqliteExecutor);
         Assert.Equal(1, result);        
     }
 
     [Fact]
-    public void Table()
+    public async Task Table()
     {
         var table = new StudentTable();
+        await using var resource = new TableResource<StudentTable>(SqliteExecutor, table);
+        await resource.InitAsync();
+
         var insert = new  SingleInsert(table)
             .Insert(table.Name.Insert("StudentName"))
             .Insert(table.Age.InsertValue(11));
 
-        var result = insert.Execute(SqliteExecutor, new { StudentName = "张三" });
+        var result = await insert.ExecuteAsync(SqliteExecutor, new { StudentName = "张三" });
         Assert.Equal(1, result);
     }
     [Fact]
-    public void Execute()
+    public async Task Execute()
     {
         var table = new StudentTable();
+        await using var resource = new TableResource<StudentTable>(SqliteExecutor, table);
+        await resource.InitAsync();
+
         var insert = new SingleInsert(table)
             .Insert(table.Name.Insert())
             .Insert(table.Age.InsertValue(11));
 
-        var result = insert.Execute(SqliteExecutor, new { Name = "张三" });
+        var result = await insert.ExecuteAsync(SqliteExecutor, new { Name = "张三" });
         Assert.Equal(1, result);
     }
-
-    void IDisposable.Dispose()
-        => DropStudentTable();
 }

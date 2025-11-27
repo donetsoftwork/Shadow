@@ -10,7 +10,7 @@ namespace ShadowSql.Select;
 public interface ISelect : ISelectFields, ISqlEntity
 {
     /// <summary>
-    /// 数据源表(视图)
+    /// 原始视图
     /// </summary>
-    ITableView Source { get; }
+    ITableView Original { get; }
 }

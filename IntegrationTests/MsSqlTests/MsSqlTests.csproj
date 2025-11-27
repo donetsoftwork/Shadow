@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>Latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
+    <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
+    <ProjectReference Include="..\..\ShadowSql.Expressions\ShadowSql.Expressions.csproj" />
+    <ProjectReference Include="..\IntegrationTests.ServiceDefaults\IntegrationTests.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\ShadowApp\ShadowApp.csproj" />
+  </ItemGroup>
+
+</Project>

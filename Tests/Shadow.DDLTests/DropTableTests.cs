@@ -1,4 +1,4 @@
-﻿using ShadowSql;
+using ShadowSql;
 using Dapper.Shadow;
 using Shadow.DDL;
 
@@ -7,8 +7,7 @@ namespace Shadow.DDLTests;
 public class DropTableTests : ExecuteTestBase, IDisposable
 {
     public DropTableTests()
-    {
-        CreateStudentsTable();
+    {       
     }
     [Fact]
     public void Drop()
@@ -18,13 +17,14 @@ public class DropTableTests : ExecuteTestBase, IDisposable
         Assert.Equal("DROP TABLE \"Students\"", sql);
     }
     [Fact]
-    public void Execute()
+    public async Task Execute()
     {
-        var result = new StudentTable()
+        await CreateStudentsTable();
+        var result = await new StudentTable()
             .ToDrop()
-            .Execute(SqliteExecutor);
+            .ExecuteAsync(SqliteExecutor);
         Assert.Equal(0, result);
+        await DropStudentsTable();
     }
-    void IDisposable.Dispose()
-     => DropStudentsTable();
+    void IDisposable.Dispose() {}
 }

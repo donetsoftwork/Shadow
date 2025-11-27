@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net4.7.2;net4.8;net6.0;net7.0;net8.0;net9.0;</TargetFrameworks>
+    <TargetFrameworks>net4.7.2;net4.8;net8.0;net9.0;net10.0</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
     <ProjectReference Include="..\..\ShadowSql.Core\ShadowSql.Core.csproj" />
     <ProjectReference Include="..\..\ShadowSql.Expressions\ShadowSql.Expressions.csproj" />
   </ItemGroup>

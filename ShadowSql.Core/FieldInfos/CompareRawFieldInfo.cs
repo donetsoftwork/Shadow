@@ -1,6 +1,6 @@
+using Hand.Cache;
 using ShadowSql.Engines;
 using ShadowSql.Identifiers;
-using ShadowSql.Services;
 using System.Text;
 
 namespace ShadowSql.FieldInfos;
@@ -24,7 +24,7 @@ public sealed class CompareRawFieldInfo : IdentifierBase, ICompareView
     /// <summary>
     /// 缓存
     /// </summary>
-    private static readonly CacheService<CompareRawFieldInfo> _cacher = new(static statement => new CompareRawFieldInfo(statement));
+    private static readonly FuncCacheService<string, CompareRawFieldInfo> _cacher = new(static statement => new CompareRawFieldInfo(statement));
     #region ISqlEntity
     /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)

@@ -1,4 +1,4 @@
-﻿using ShadowSql.Fragments;
+using ShadowSql.Fragments;
 
 namespace ShadowSql.Logics;
 
@@ -16,8 +16,8 @@ public interface ISqlLogic : ISqlFragment
 /// <summary>
 /// 与逻辑标记
 /// </summary>
-public interface IAndLogic { }
+public interface IAndLogic : ISqlLogic { }
 /// <summary>
 /// 或逻辑标记
 /// </summary>
-public interface IOrLogic { }
+public interface IOrLogic : ISqlLogic { }

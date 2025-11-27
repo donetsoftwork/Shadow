@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).3-alpha</Version>
+    <Version>$(VersionBase).0-alpha</Version>
     <PackageId>ShadowSql.Dapper</PackageId>
     <Description>ShadowSql的Dapper扩展</Description>
     <PackageTags>sql;sql-builder;sql-query;dapper;orm</PackageTags>
@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
+    <ProjectReference Include="..\ShadowSql.Queries\ShadowSql.Queries.csproj" />
     <ProjectReference Include="..\ShadowSql\ShadowSql.csproj" />
   </ItemGroup>
 

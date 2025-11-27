@@ -1,4 +1,5 @@
 using ShadowSql.Fragments;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dapper.Shadow;
@@ -9,39 +10,19 @@ namespace Dapper.Shadow;
 public static partial class DapperShadowCoreServices
 {
     #region IDapperExecute
-    #region Execute
-    /// <summary>
-    /// 执行
-    /// </summary>
-    /// <param name="sql">sql</param>
-    /// <param name="param">参数</param>
-    /// <returns></returns>
-    public static int Execute(this IDapperExecute sql, object? param = null)
-        => sql.Executor.Execute(sql, param);
-    #endregion
     #region ExecuteAsync
     /// <summary>
     /// 异步执行
     /// </summary>
     /// <param name="sql">sql</param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<int> ExecuteAsync(this IDapperExecute sql, object? param = null)
-        => sql.Executor.ExecuteAsync(sql, param);
+    public static Task<int> ExecuteAsync(this IDapperExecute sql, object? param = null, CancellationToken token = default)
+        => sql.Executor.ExecuteAsync(sql, param, token);
     #endregion
     #endregion
     #region IExecuteSql
-    #region Execute
-    /// <summary>
-    /// 执行
-    /// </summary>
-    /// <param name="sql">sql</param>
-    /// <param name="executor">执行器</param>
-    /// <param name="param">参数</param>
-    /// <returns></returns>
-    public static int Execute(this IExecuteSql sql, IExecutor executor, object? param = null)
-        => executor.Execute(sql, param);    
-    #endregion
     #region ExecuteAsync
     /// <summary>
     /// 异步执行
@@ -49,9 +30,10 @@ public static partial class DapperShadowCoreServices
     /// <param name="sql">sql</param>
     /// <param name="executor">执行器</param>
     /// <param name="param">参数</param>
+    /// <param name="token"></param>
     /// <returns></returns>
-    public static Task<int> ExecuteAsync(this IExecuteSql sql, IExecutor executor, object? param = null)
-        => executor.ExecuteAsync(sql, param);
+    public static Task<int> ExecuteAsync(this IExecuteSql sql, IExecutor executor, object? param = null, CancellationToken token = default)
+        => executor.ExecuteAsync(sql, param, token);
     #endregion
     #endregion
 }

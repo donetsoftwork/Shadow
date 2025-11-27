@@ -19,7 +19,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableDelete ToDelete<TSource>(this TableSqlQuery<TSource> query)
         where TSource : ITable
-        => new(query.Source, query._filter);
+        => new(query.Original, query._filter);
     /// <summary>
     /// 删除
     /// </summary>
@@ -28,7 +28,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static TableDelete ToDelete<TSource>(this TableQuery<TSource> query)
         where TSource : ITable
-        => new(query.Source, query._filter);
+        => new(query.Original, query._filter);
     #endregion
     #region AliasTableDelete
     /// <summary>
@@ -38,7 +38,7 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static AliasTableDelete ToDelete<TSource>(this AliasTableSqlQuery<TSource> query)
         where TSource : ITable
-        => new(query.Source, query._filter);
+        => new(query.Original, query._filter);
     /// <summary>
     /// 删除
     /// </summary>
@@ -46,6 +46,6 @@ public static partial class ShadowSqlServices
     /// <returns></returns>
     public static AliasTableDelete ToDelete<TSource>(this AliasTableQuery<TSource> query)
         where TSource : ITable
-        => new(query.Source, query._filter);
+        => new(query.Original, query._filter);
     #endregion
 }

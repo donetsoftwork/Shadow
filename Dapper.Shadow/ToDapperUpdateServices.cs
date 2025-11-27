@@ -39,7 +39,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> query)
         where TTable : IDapperTable, IUpdateTable
-        => new(query.Source.Executor, query.Source, ((IDataFilter)query).Filter);
+        => new(query.Original.Executor, query.Original, ((IDataFilter)query).Filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>
@@ -81,7 +81,7 @@ public static partial class DapperShadowServices
     /// <returns></returns>
     public static DapperTableUpdate<TTable> ToDapperUpdate<TTable>(this TableSqlQuery<TTable> query, IExecutor executor)
         where TTable : ITable, IUpdateTable
-        => new(executor, query.Source, ((IDataFilter)query).Filter);
+        => new(executor, query.Original, ((IDataFilter)query).Filter);
     #endregion
     #region MultiTableUpdate
     /// <summary>

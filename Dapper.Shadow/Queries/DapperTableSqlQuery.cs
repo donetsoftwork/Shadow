@@ -33,7 +33,7 @@ public class DapperTableSqlQuery<TTable>(IExecutor executor, TTable table, SqlQu
     /// <returns></returns>
     new public DapperTableSqlQuery<TTable> Where(Func<TTable, AtomicLogic> query)
     {
-        _filter.AddLogic(query(_source));
+        _filter.AddLogic(query(_original));
         return this;
     }
     /// <summary>
@@ -43,7 +43,7 @@ public class DapperTableSqlQuery<TTable>(IExecutor executor, TTable table, SqlQu
     /// <returns></returns>
     new public DapperTableSqlQuery<TTable> Apply(Func<SqlQuery, TTable, SqlQuery> query)
     {
-        _filter = query(_filter, _source);
+        _filter = query(_filter, _original);
         return this;
     }
     #endregion

@@ -65,7 +65,7 @@ public static partial class ShadowSqlServices
     {
         var lTable = joinOn.Left;
         var rTable = joinOn.Source;
-        return joinOn.On(query(lTable.Prefix(left(lTable.Target)), rTable.Prefix(right(rTable.Target))));
+        return joinOn.On(query(lTable.Prefix(left(lTable.Original)), rTable.Prefix(right(rTable.Original))));
     }
     #endregion
     #endregion
@@ -208,7 +208,7 @@ public static partial class ShadowSqlServices
     {
         var lTable = joinOn.Left;
         var rTable = joinOn.Source;
-        joinOn._filter = logic(joinOn._filter, lTable.Prefix(left(lTable.Target)), rTable.Prefix(right(rTable.Target)));
+        joinOn._filter = logic(joinOn._filter, lTable.Prefix(left(lTable.Original)), rTable.Prefix(right(rTable.Original)));
         return joinOn;
     }
     #endregion

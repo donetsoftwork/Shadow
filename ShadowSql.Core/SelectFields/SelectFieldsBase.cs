@@ -51,16 +51,6 @@ public abstract class SelectFieldsBase : GetFieldBase, ISelectFields
             _selected.Add(CheckField(columnName));
     }
     /// <summary>
-    /// 筛选别名
-    /// </summary>
-    /// <param name="alias"></param>
-    /// <param name="statement"></param>
-    /// <returns></returns>
-    internal void AliasCore(string alias, string statement)
-    {
-        _selected.Add(new RawFieldAliasInfo(statement, alias));
-    }
-    /// <summary>
     /// 筛选自身所有字段
     /// </summary>
     internal void SelfColumnsCore()
