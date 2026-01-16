@@ -1,13 +1,14 @@
+using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
 using System.Text;
 
-namespace Shadow.DDL.Components;
+namespace ShadowSql.MsSql;
 
 /// <summary>
-/// 定义SQLite列
+/// 定义SQL Server列
 /// </summary>
-public class DefineSqliteColumComponent : IDefineColumComponent
+public class DefineMsSqlColumComponent : IDefineColumComponent
 {
     /// <summary>
     /// 写入的列定义
@@ -31,7 +32,7 @@ public class DefineSqliteColumComponent : IDefineColumComponent
         }
         if ((column.ColumnType & ColumnType.Identity) == ColumnType.Identity)
         {
-            sql.Append(" AUTOINCREMENT");
+            sql.Append(" IDENTITY(1,1)");
         }
         if ((column.ColumnType & ColumnType.NOTNULL) == ColumnType.NOTNULL)
         {

@@ -1,8 +1,10 @@
 using Dapper.Shadow;
 using Microsoft.Data.Sqlite;
 using ShadowSql;
+using Hand.Data;
 using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
+using System.Security.Cryptography;
 
 namespace Dapper.ShadowTests.Select;
 
@@ -183,11 +185,12 @@ public class DapperTableSelectTests : ExecuteTestBase
 
         var query = SqliteExecutor.From("Students")
             .ToSqlQuery()
-            .Where(student => student.Field("Age").EqualValue(10));
-        int count = await query.CountAsync();
+            .Where(student => student.Field("Age").In("Ages"));
+        var param = new { Ages = new int[] { 9, 10 } };
+        int count = await query.CountAsync(param);
         Assert.True(count > 0);
         var students = await query.ToDapperSelect()
-            .GetAsync<Student>();
+            .GetAsync<Student>(param);
         Assert.True(students.Any());
     }
     [Fact]
@@ -196,8 +199,8 @@ public class DapperTableSelectTests : ExecuteTestBase
         await using var resource = new StudentTableResource(SqliteExecutor);
         await resource.InitAsync();
 
-        var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
-        var excutor = new ParametricExecutor(new SqliteEngine(), connection);
+        var dataSource = new StringDataSource("Data Source=file::memory:;Cache=Shared", conn => new SqliteConnection(conn));
+        var excutor = new ParametricExecutor(new SqliteEngine(), new SqlSource(dataSource));
         var query = excutor.From("Students")
             .ToSqlQuery()
             .Where(table => table.Field("Age").EqualValue(10));

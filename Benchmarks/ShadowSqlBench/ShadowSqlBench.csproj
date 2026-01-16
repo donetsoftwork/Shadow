@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
     <PublishAot>True</PublishAot>
+    <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
@@ -21,8 +22,8 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
-    <PackageReference Include="ShadowSql.Dapper" Version="0.8.4.3-alpha" />
-    <PackageReference Include="ShadowSql.Expressions" Version="0.8.4.3-alpha" />
+    <PackageReference Include="ShadowSql.Dapper" Version="0.9.0-alpha" />
+    <PackageReference Include="ShadowSql.Expressions" Version="0.9.0-alpha" />
     <PackageReference Include="SqlKata" Version="4.0.1" />
   </ItemGroup>
 

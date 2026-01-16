@@ -44,7 +44,6 @@ public abstract class EngineBase(ISelectComponent select, ISqlValueComponent sql
     public IPluginProvider? PluginProvider 
         => _plugin;
     #endregion
-
     #region 格式化
     /// <inheritdoc/>
     public abstract void Identifier(StringBuilder sql, string name);
@@ -53,6 +52,9 @@ public abstract class EngineBase(ISelectComponent select, ISqlValueComponent sql
     {
         sql.Append('@').Append(name);
     }
+    /// <inheritdoc/>
+    public virtual void CollectParameter(StringBuilder sql, string name)
+        => Parameter(sql, name);
     /// <inheritdoc/>
     public virtual void ColumnAs(StringBuilder sql, string aliasName)
     {

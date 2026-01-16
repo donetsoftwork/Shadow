@@ -2,7 +2,6 @@ using ShadowSql.AliasTables;
 using ShadowSql.Identifiers;
 using ShadowSql.Logics;
 using ShadowSql.Tables;
-using ShadowSql.Variants;
 
 namespace ShadowSql.Select;
 

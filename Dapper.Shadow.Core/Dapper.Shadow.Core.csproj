@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Hand.Data" Version="0.2.1-alpha" />
   </ItemGroup>
   
   <ItemGroup>

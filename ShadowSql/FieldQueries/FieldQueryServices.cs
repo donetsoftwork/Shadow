@@ -338,7 +338,7 @@ public static partial class FieldQueryServices
     public static TQuery FieldIn<TQuery>(this TQuery query, string fieldName, string parameter = "")
         where TQuery : IDataSqlQuery
     {
-        query.Query.AddLogic(CreateCompareLogic(query, fieldName, CompareSymbol.In, parameter));
+        query.Query.AddLogic(CreateCompareCollectLogic(query, fieldName, CompareSymbol.In, parameter));
         return query;
     }
     /// <summary>
@@ -875,7 +875,7 @@ public static partial class FieldQueryServices
     public static TQuery TableFieldIn<TQuery>(this TQuery query, string tableName, string fieldName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), fieldName, CompareSymbol.In, parameter));
+        query.Query.AddLogic(CreateCompareCollectLogic(query.From(tableName), fieldName, CompareSymbol.In, parameter));
         return query;
     }
     /// <summary>
@@ -1115,5 +1115,11 @@ public static partial class FieldQueryServices
         var field = view.GetCompareField(fieldName);
         parameter = Parameter.CheckName(parameter, fieldName);
         return new CompareLogic(field, op, Parameter.Use(parameter));
+    }
+    private static CompareLogic CreateCompareCollectLogic(ITableView view, string fieldName, CompareSymbol op, string parameter)
+    {
+        var field = view.GetCompareField(fieldName);
+        parameter = Parameter.CheckName(parameter, fieldName);
+        return new CompareLogic(field, op, CollectParameter.Use(parameter));
     }
 }

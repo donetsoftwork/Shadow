@@ -32,7 +32,6 @@ public class DropTable(ITable table)
     /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
         => WriteDropTable(engine, sql, _table);
-
     /// <summary>
     /// DROP TABLE
     /// </summary>

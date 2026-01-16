@@ -12,6 +12,9 @@
     <Content Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Hand.Data" Version="0.2.1-alpha" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
     <ProjectReference Include="..\ShadowSql.Queries\ShadowSql.Queries.csproj" />
     <ProjectReference Include="..\ShadowSql\ShadowSql.csproj" />

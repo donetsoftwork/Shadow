@@ -353,7 +353,7 @@ public static partial class StrictQueryServices
     public static TQuery StrictIn<TQuery>(this TQuery query, string columnName, string parameter = "")
         where TQuery : IDataSqlQuery
     {
-        query.Query.AddLogic(CreateCompareLogic(query, columnName, CompareSymbol.In, parameter));
+        query.Query.AddLogic(CreateCompareCollectLogic(query, columnName, CompareSymbol.In, parameter));
         return query;
     }
     /// <summary>
@@ -919,7 +919,7 @@ public static partial class StrictQueryServices
     public static TQuery TableStrictIn<TQuery>(this TQuery query, string tableName, string columnName, string parameter = "")
         where TQuery : MultiTableBase, IDataSqlQuery
     {
-        query.Query.AddLogic(CreateCompareLogic(query.From(tableName), columnName, CompareSymbol.In, parameter));
+        query.Query.AddLogic(CreateCompareCollectLogic(query.From(tableName), columnName, CompareSymbol.In, parameter));
         return query;
     }
     /// <summary>
@@ -1200,5 +1200,19 @@ public static partial class StrictQueryServices
         var field = view.Strict(columnName);
         parameter = Parameter.CheckName(parameter, columnName);
         return new CompareLogic(field, op, Parameter.Use(parameter));
+    }
+    /// <summary>
+    /// 创建IN逻辑
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="columnName"></param>
+    /// <param name="op"></param>
+    /// <param name="parameter"></param>
+    /// <returns></returns>
+    private static CompareLogic CreateCompareCollectLogic(ITableView view, string columnName, CompareSymbol op, string parameter)
+    {
+        var field = view.Strict(columnName);
+        parameter = Parameter.CheckName(parameter, columnName);
+        return new CompareLogic(field, op, CollectParameter.Use(parameter));
     }
 }

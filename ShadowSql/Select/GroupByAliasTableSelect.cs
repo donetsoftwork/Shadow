@@ -1,6 +1,5 @@
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
-using ShadowSql.Variants;
 
 namespace ShadowSql.Select;
 

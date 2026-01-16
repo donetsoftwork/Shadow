@@ -97,7 +97,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static AtomicLogic In(this ICompareField field, string parameter = "")
-        => new CompareLogic(field, CompareSymbol.In, Parameter.Use(parameter, field));
+        => new CompareLogic(field, CompareSymbol.In, CollectParameter.Use(parameter, field));
     /// <summary>
     /// 不包含逻辑
     /// </summary>
@@ -105,7 +105,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static AtomicLogic NotIn(this ICompareField field, string parameter = "")
-        => new CompareLogic(field, CompareSymbol.NotIn, Parameter.Use(parameter, field));
+        => new CompareLogic(field, CompareSymbol.NotIn, CollectParameter.Use(parameter, field));
     /// <summary>
     /// 在...之间逻辑
     /// </summary>
@@ -227,7 +227,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="parameter">参数</param>
     /// <returns></returns>
     public static AtomicLogic In(this IAggregateField field, string parameter = "")
-        => new CompareLogic(field, CompareSymbol.In, Parameter.Use(parameter, field.TargetName));
+        => new CompareLogic(field, CompareSymbol.In, CollectParameter.Use(parameter, field.TargetName));
     /// <summary>
     /// 不包含逻辑
     /// </summary>

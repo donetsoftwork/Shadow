@@ -3,8 +3,10 @@ using Microsoft.Data.Sqlite;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Components;
+using Hand.Data;
 using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
+using ShadowSql.Sqlite;
 using ShadowSql.Variants;
 using System.Collections;
 
@@ -29,8 +31,8 @@ public abstract class ExecuteTestBase
             .AddComponent<IDefineColumComponent>(new DefineSqliteColumComponent());
         var engine = new SqliteEngine(new SqliteSelectComponent(), new SqlValueComponent("1", "0", "NULL"), provider);
 
-        var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
-        return new DapperExecutor(engine, connection);
+        var dataSource = new StringDataSource("Data Source=file::memory:;Cache=Shared", conn => new SqliteConnection(conn));
+        return new DapperExecutor(engine, new SqlSource(dataSource));
     }
     
     public static readonly ColumnSchema _id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };

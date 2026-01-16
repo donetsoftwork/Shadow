@@ -1,13 +1,14 @@
+using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
 using System.Text;
 
-namespace Shadow.DDL.Components;
+namespace ShadowSql.Sqlite;
 
 /// <summary>
-/// 定义PostgreSQL列
+/// 定义SQLite列
 /// </summary>
-public class DefinePostgresColumComponent : IDefineColumComponent
+public class DefineSqliteColumComponent : IDefineColumComponent
 {
     /// <summary>
     /// 写入的列定义
@@ -31,7 +32,7 @@ public class DefinePostgresColumComponent : IDefineColumComponent
         }
         if ((column.ColumnType & ColumnType.Identity) == ColumnType.Identity)
         {
-            sql.Append(" SERIAL");
+            sql.Append(" AUTOINCREMENT");
         }
         if ((column.ColumnType & ColumnType.NOTNULL) == ColumnType.NOTNULL)
         {

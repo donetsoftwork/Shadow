@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\package.props" />
+  <PropertyGroup>
+    <Version>$(VersionBase).1-alpha</Version>
+    <PackageId>ShadowSql.DDL.Oracle</PackageId>
+    <RootNamespace>ShadowSql.Oracle</RootNamespace>
+    <Description>拼接sql工具</Description>
+    <PackageTags>Oracle</PackageTags>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.Oracle\ShadowSql.Engines.Oracle.csproj" />
+    <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
+  </ItemGroup>
+</Project>

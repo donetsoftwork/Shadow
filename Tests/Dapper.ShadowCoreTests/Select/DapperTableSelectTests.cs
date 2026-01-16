@@ -8,6 +8,7 @@ using ShadowSql.Identifiers;
 using ShadowSql.Insert;
 using ShadowSql.Select;
 using ShadowSql.Tables;
+using Hand.Data;
 
 namespace Dapper.ShadowCoreTests.Select;
 
@@ -177,8 +178,8 @@ public class DapperTableSelectTests : ExecuteTestBase
         await using var resource = new StudentTableResource(SqliteExecutor);
         await resource.InitAsync();
 
-        var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
-        var excutor = new ParametricExecutor(new SqliteEngine(), connection);
+        var dataSource = new StringDataSource("Data Source=file::memory:;Cache=Shared", conn => new SqliteConnection(conn));
+        var excutor = new ParametricExecutor(new SqliteEngine(), new SqlSource(dataSource));
         var query = new TableSqlQuery("Students")
             .Where(table => table.Field("Age").EqualValue(10));
         var count = await query.CountAsync(SqliteExecutor);

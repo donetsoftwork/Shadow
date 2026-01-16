@@ -1,5 +1,3 @@
-using Dapper;
-using Dapper.Shadow;
 using ShadowSql;
 using ShadowSql.Tables;
 using ShadowSql.Update;

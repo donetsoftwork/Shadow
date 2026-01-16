@@ -1,16 +1,17 @@
+using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
 using System.Text;
 
-namespace Shadow.DDL.Components;
+namespace ShadowSql.Postgres;
 
 /// <summary>
-/// 定义MySQL列
+/// 定义PostgreSQL列
 /// </summary>
-public class DefineMySqlColumComponent : IDefineColumComponent
+public class DefinePostgresColumComponent : IDefineColumComponent
 {
     /// <summary>
-    /// 
+    /// 写入的列定义
     /// </summary>
     /// <param name="column">列</param>
     /// <param name="engine">数据库引擎</param>
@@ -31,7 +32,7 @@ public class DefineMySqlColumComponent : IDefineColumComponent
         }
         if ((column.ColumnType & ColumnType.Identity) == ColumnType.Identity)
         {
-            sql.Append(" AUTO_INCREMENT");
+            sql.Append(" SERIAL");
         }
         if ((column.ColumnType & ColumnType.NOTNULL) == ColumnType.NOTNULL)
         {

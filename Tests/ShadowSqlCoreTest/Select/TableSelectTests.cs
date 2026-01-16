@@ -1,11 +1,8 @@
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
-using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
-using ShadowSql.Tables;
-using TestSupports;
 
 namespace ShadowSqlCoreTest.Select;
 
@@ -17,9 +14,16 @@ public class TableSelectTests
     [Fact]
     public void Table()
     {
+        var select = new TableSelect(_db.From("Users"));
+        var sql = _engine.Sql(select);
+        Assert.Equal("SELECT * FROM [Users]", sql);
+    }
+    [Fact]
+    public void Select()
+    {
         var select = new TableSelect(_db.From("Users"))
             .Select("Id", "Name");
         var sql = _engine.Sql(select);
         Assert.Equal("SELECT [Id],[Name] FROM [Users]", sql);
-    }    
+    }
 }

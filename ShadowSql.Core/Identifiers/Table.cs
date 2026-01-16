@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NET9_0_OR_GREATER
 using System.Threading;
+#endif
 
 namespace ShadowSql.Identifiers;
 

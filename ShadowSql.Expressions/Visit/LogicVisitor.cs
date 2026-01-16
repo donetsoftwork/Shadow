@@ -227,7 +227,7 @@ public class LogicVisitor(IFieldProvider source, Logic logic)
                         }
                         else
                         {
-                            logic.AddLogic(new CompareLogic(field, not ? CompareSymbol.NotIn : CompareSymbol.In, Parameter.Use(member.Member.Name)));
+                            logic.AddLogic(new CompareLogic(field, not ? CompareSymbol.NotIn : CompareSymbol.In, CollectParameter.Use(member.Member.Name)));
                         }
                     }
                 }

@@ -10,6 +10,13 @@ namespace Shadow.DDL.Components;
 public class DictionaryProvider(IDictionary provider)
     : IPluginProvider
 {
+    /// <summary>
+    /// 字典组件(插件)工厂
+    /// </summary>
+    public DictionaryProvider()
+        : this(new Hashtable())
+    {
+    }
     #region 配置
     private readonly IDictionary _provider = provider;
     /// <summary>

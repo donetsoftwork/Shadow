@@ -36,6 +36,12 @@ public interface ISqlEngine : ISqlValueComponent
     /// <returns></returns>
     void Parameter(StringBuilder sql, string name);
     /// <summary>
+    /// 集合参数(IN参数)
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="name"></param>
+    void CollectParameter(StringBuilder sql, string name);
+    /// <summary>
     /// 字段别名格式化
     /// </summary>
     /// <param name="sql">sql</param>

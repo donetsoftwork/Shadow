@@ -1,11 +1,14 @@
 using Dapper;
 using Dapper.Shadow;
+using Microsoft.Data.Sqlite;
 using Shadow.DDL;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Components;
+using Hand.Data;
 using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
+using ShadowSql.Sqlite;
 using System.Collections;
 
 namespace Shadow.DDLTests;
@@ -33,8 +36,9 @@ public abstract class ExecuteTestBase
         //#else
         //        var connection = new System.Data.SQLite.SQLiteConnection("Data Source=:memory:;");
         //#endif
-        var connection = new Microsoft.Data.Sqlite.SqliteConnection("Data Source=file::memory:;Cache=Shared");
-        return new DapperExecutor(engine, connection);
+        //var connection = new SqliteConnection("Data Source=file::memory:;Cache=Shared");
+        var dataSource = new StringDataSource("Data Source=file::memory:;Cache=Shared", conn => new SqliteConnection(conn));
+        return new DapperExecutor(engine, new SqlSource(dataSource));
     }
 
     protected async Task CreateStudentsTable(string tableName = "Students")
