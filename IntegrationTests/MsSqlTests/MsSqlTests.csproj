@@ -8,12 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.66" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="Dapper" Version="2.1.79" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper.Shadow.Core\Dapper.Shadow.Core.csproj" />
+    <ProjectReference Include="..\..\DDL\Shadow.DDL.MsSql\Shadow.DDL.MsSql.csproj" />
     <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
     <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
     <ProjectReference Include="..\..\ShadowSql.Expressions\ShadowSql.Expressions.csproj" />

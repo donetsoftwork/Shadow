@@ -5,7 +5,7 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 比较运算字段
 /// </summary>
-public interface ICompareField : IView, ICompareView, IOrderField
+public interface ICompareField : IView, ICompareView, IOrderField, IMember
 {
     ///// <summary>
     ///// 聚合(逻辑运算使用)
@@ -27,6 +27,19 @@ public interface ICompareField : IView, ICompareView, IOrderField
 /// <summary>
 /// 比较运算字段或表达式
 /// </summary>
-public interface ICompareView : IOrderAsc, ISqlEntity
-{
-}
+public interface ICompareView : IOrderAsc, ISqlEntity;
+//#if NET7_0_OR_GREATER
+//    , System.Numerics.IAdditionOperators<ICompareView, ICompareView, ArithmeticView>
+//#endif
+//{
+//#if NET7_0_OR_GREATER
+//    /// <summary>
+//    /// +
+//    /// </summary>
+//    /// <param name="left"></param>
+//    /// <param name="right"></param>
+//    /// <returns></returns>
+//    public static ArithmeticView operator +(ICompareView left, ICompareView right)
+//        => left.Add(right);
+//#endif
+//}

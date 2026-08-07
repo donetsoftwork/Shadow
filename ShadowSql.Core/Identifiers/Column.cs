@@ -1,4 +1,6 @@
 using Hand.Cache;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace ShadowSql.Identifiers;
 
@@ -21,7 +23,15 @@ public class Column : ColumnBase, IColumn
     /// <param name="columnName">列名</param>
     /// <returns></returns>
     public static Column Use(string columnName)
-        => _cacher.Get(columnName); 
+        => _cacher.Get(columnName);
+    /// <summary>
+    /// 获取列(已缓存,避免重复构造)
+    /// </summary>
+    /// <param name="columnNames"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Column[] Use(string[] columnNames)
+        => Array.ConvertAll(columnNames, Use);
     /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => this;

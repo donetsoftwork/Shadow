@@ -4,7 +4,7 @@ using System.Text;
 namespace ShadowSql.Engines.MsSql;
 
 /// <summary>
-/// MsSql
+/// MsSql引擎
 /// </summary>
 /// <param name="select">筛选</param>
 /// <param name="sqlValues"></param>

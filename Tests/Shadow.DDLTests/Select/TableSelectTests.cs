@@ -1,10 +1,12 @@
 using Shadow.DDL;
+using Shadow.DDL.SqlTypes;
 using Shadow.DDLTests.Supports;
 using ShadowSql;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.GroupBy;
 using ShadowSql.Select;
+using ShadowSql.Sqlite;
 using ShadowSql.Tables;
 
 namespace Shadow.DDLTests.Select;
@@ -17,7 +19,7 @@ public class TableSelectTests
     public void Table()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "Id", "Name");
+            .DefinColumns(SqliteSqlType.Text, "Id", "Name");
         var select = new TableSelect(builder.Build())
             .Select("Id", "Name");
         var sql = _engine.Sql(select);
@@ -49,7 +51,7 @@ public class TableSelectTests
     public void GroupBySqlQueryTest()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "City");
+            .DefinColumns(SqliteSqlType.Text, "City");
         var query = new TableSqlQuery(builder.Build())
             .Where("Age<20");
         var groupBy = GroupBySqlQuery.Create(query, "City");

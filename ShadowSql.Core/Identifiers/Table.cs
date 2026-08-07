@@ -108,6 +108,29 @@ public class Table(string tableName)
         return column;
     }
     /// <summary>
+    /// 定义列
+    /// </summary>
+    /// <param name="memberName">成员名</param>
+    /// <param name="columnName">列名</param>
+    /// <returns></returns>
+    public IColumn DefineColumn(string memberName, string columnName)
+    {
+        if (_columns.TryGetValue(columnName, out var column))
+            return column;
+#if NET9_0_OR_GREATER
+        lock (_columnLock)
+#else
+        lock (_columns)
+#endif
+        {
+            if (_columns.TryGetValue(columnName, out column))
+                return column;
+            column = new MemberColumn(memberName, columnName);
+            _columns[columnName] = column;
+        }
+        return column;
+    }
+    /// <summary>
     /// 添加列
     /// </summary>
     /// <param name="column">列</param>
@@ -138,7 +161,7 @@ public class Table(string tableName)
         if (_insertIgnores.Contains(column))
             return;
 #if NET9_0_OR_GREATER
-            lock (_insertIgnoreLock)
+        lock (_insertIgnoreLock)
 #else
         lock (_insertIgnores)
 #endif

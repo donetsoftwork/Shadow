@@ -1,5 +1,6 @@
 using Shadow.DDL.Schemas;
 using ShadowSql.Identifiers;
+using ShadowSql.Sqlite;
 using ShadowSql.Variants;
 
 namespace Shadow.DDLTests.Supports;
@@ -16,11 +17,11 @@ public class CommentTable(string tableName = "Comments", string schema = "")
 
     class Defines
     {
-        public static readonly ColumnSchema Id = new("Id") { ColumnType = ColumnType.Key };
-        public static readonly ColumnSchema UserId = new("UserId");
-        public static readonly ColumnSchema PostId = new("PostId");
-        public static readonly ColumnSchema Content = new("Content");
-        public static readonly ColumnSchema Pick = new("Pick");
+        public static readonly ColumnSchema Id = new("Id", SqliteSqlType.Integer, ColumnType.Key);
+        public static readonly ColumnSchema UserId = new("UserId", SqliteSqlType.Integer);
+        public static readonly ColumnSchema PostId = new("PostId", SqliteSqlType.Integer);
+        public static readonly ColumnSchema Content = new("Content", SqliteSqlType.Text);
+        public static readonly ColumnSchema Pick = new("Pick", SqliteSqlType.Integer);
     }
 }
 

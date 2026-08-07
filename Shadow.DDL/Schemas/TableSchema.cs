@@ -1,3 +1,4 @@
+using Shadow.DDL.Constraints;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
@@ -9,16 +10,28 @@ using System.Text;
 namespace Shadow.DDL.Schemas;
 
 /// <summary>
-/// 表
+/// 表结构
 /// </summary>
 /// <param name="tableName">表名</param>
 /// <param name="columns">列</param>
+/// <param name="constraints">约束</param>
 /// <param name="schema"></param>
-public class TableSchema(string tableName, ColumnSchema[] columns, string schema = "")
+public class TableSchema(string tableName, ColumnSchema[] columns, IConstraint[] constraints, string schema = "")
     : Identifier(tableName), ITable, IInsertTable, IUpdateTable, ISqlEntity
 {
+    /// <summary>
+    /// 表结构
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="columns"></param>
+    /// <param name="schema"></param>
+    public TableSchema(string tableName, ColumnSchema[] columns, string schema = "")
+        : this(tableName, columns, [], schema)
+    {
+    }
+    #region 配置
     private readonly string _schema = schema;
-    private readonly ColumnSchema[] _columns = columns;
+    private ColumnSchema[] _columns = columns;
     /// <summary>
     /// 架构
     /// </summary>
@@ -29,18 +42,36 @@ public class TableSchema(string tableName, ColumnSchema[] columns, string schema
     /// </summary>
     public ColumnSchema[] Columns
         => _columns;
+    /// <summary>
+    /// 约束
+    /// </summary>
+    public IConstraint[] Constraints { get; } = constraints;
 
-    #region 配置
     ////内联的展开运算符“..”
-    private readonly ColumnSchema[] _keys = [.. ColumnSchema.GetKeys(columns)];
-    private readonly ColumnSchema[] _insertColumns = [.. ColumnSchema.GetInsertColumns(columns)];
-    private readonly ColumnSchema[] _updateColumns = [.. ColumnSchema.GetUpdateColumns(columns)];
+    private ColumnSchema[] _keys = [.. ColumnSchema.GetKeys(columns)];
+    private ColumnSchema[] _insertColumns = [.. ColumnSchema.GetInsertColumns(columns)];
+    private ColumnSchema[] _updateColumns = [.. ColumnSchema.GetUpdateColumns(columns)];
    /// <summary>
    /// 主键
    /// </summary>
    public ColumnSchema[] Keys
         => _keys;
     #endregion
+    /// <summary>
+    /// 添加列
+    /// </summary>
+    /// <param name="columns"></param>
+    public void AddColumns(params ColumnSchema[] columns)
+    {
+        ColumnSchema[] newColumns = [.. _columns, .. columns];
+        ColumnSchema[] keys = [.. ColumnSchema.GetKeys(newColumns)];
+        ColumnSchema[] insertColumns = [.. ColumnSchema.GetInsertColumns(newColumns)];
+        ColumnSchema[] updateColumns = [.. ColumnSchema.GetUpdateColumns(newColumns)];
+        _columns = newColumns;
+        _keys = keys;
+        _insertColumns = insertColumns;
+        _updateColumns = updateColumns;
+    }
     /// <summary>
     /// 查找字段
     /// </summary>

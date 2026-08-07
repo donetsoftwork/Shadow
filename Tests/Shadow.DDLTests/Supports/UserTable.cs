@@ -1,5 +1,6 @@
 using Shadow.DDL.Schemas;
 using ShadowSql.Identifiers;
+using ShadowSql.Sqlite;
 using ShadowSql.Variants;
 
 namespace Shadow.DDLTests.Supports;
@@ -15,9 +16,9 @@ public class UserTable(string tableName = "Users", string schema = "")
 
     class Defines
     {
-        public static readonly ColumnSchema Id = new("Id") { ColumnType = ColumnType.Key };
-        public static readonly ColumnSchema Name = new("Name");
-        public static readonly ColumnSchema Status = new("Status");
+        public static readonly ColumnSchema Id = new("Id", SqliteSqlType.Integer, ColumnType.Key);
+        public static readonly ColumnSchema Name = new("Name", SqliteSqlType.Text);
+        public static readonly ColumnSchema Status = new("Status", SqliteSqlType.Integer);
     }
 }
 

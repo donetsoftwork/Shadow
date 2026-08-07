@@ -1,5 +1,6 @@
 using ShadowSql.Identifiers;
 using ShadowSql.Variants;
+using System.Data;
 
 namespace TestSupports;
 
@@ -31,6 +32,7 @@ public class UserAliasTable : TableAlias<UserTable>
         Id = AddColumn(table.Id);
         Name = AddColumn(table.Name);
         Status = AddColumn(table.Status);
+        DataTable dataTable = new();
     }
     public IPrefixField Id { get; private set; }
     new public IPrefixField Name { get; private set; }

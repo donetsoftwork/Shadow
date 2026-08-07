@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).0-alpha</Version>
+    <Version>$(VersionBase).1-alpha</Version>
     <PackageId>ShadowSql.Core</PackageId>
     <RootNamespace>ShadowSql</RootNamespace>
     <Description>拼接sql工具</Description>
@@ -9,7 +9,7 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Bcl.Memory" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="10.0.10" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.md" Pack="true" PackagePath="\" />
@@ -27,8 +27,8 @@
     <InternalsVisibleTo Include="ShadowSql.ExpressionsTests" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Hand.Core" Version="0.2.1-alpha" />
-    <PackageReference Include="Hand.AutoCache" Version="0.2.1-alpha" />
+    <PackageReference Include="Hand.Core" Version="0.3.1.11-alpha" />
+    <PackageReference Include="Hand.AutoCache" Version="0.3.1.3-alpha" />
   </ItemGroup>
 
 </Project>

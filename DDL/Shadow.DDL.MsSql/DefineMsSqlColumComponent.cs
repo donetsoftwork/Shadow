@@ -8,24 +8,24 @@ namespace ShadowSql.MsSql;
 /// <summary>
 /// 定义SQL Server列
 /// </summary>
-public class DefineMsSqlColumComponent : IDefineColumComponent
+public class DefineMsSqlColumComponent()
+    : DefineColumComponent(new MsSqlType()), IDefineColumComponent
 {
-    /// <summary>
-    /// 写入的列定义
-    /// </summary>
-    /// <param name="column">列</param>
-    /// <param name="engine">数据库引擎</param>
-    /// <param name="sql">sql</param>
-    public void WriteColumnSchema(ColumnSchema column, ISqlEngine engine, StringBuilder sql)
+    /// <inheritdoc/>
+    public override bool WriteColumnSchema(ISqlEngine engine, StringBuilder sql, ColumnSchema column)
     {
         engine.Identifier(sql, column.Name);
         sql.Append(' ');
+        var defaultValue = column.Default;
         if ((column.ColumnType & ColumnType.Computed) == ColumnType.Computed)
         {
-            engine.ColumnAs(sql, column.SqlType);
-            return;
+            // 通过默认值配置计算列
+            if (string.IsNullOrWhiteSpace(defaultValue))
+                return false;
+            sql.Append("AS ").Append(defaultValue);
+            return true;
         }
-        sql.Append(column.SqlType);
+        column.SqlType.Write(engine, sql);
         if ((column.ColumnType & ColumnType.Key) == ColumnType.Key)
         {
             sql.Append(" PRIMARY KEY");
@@ -34,13 +34,18 @@ public class DefineMsSqlColumComponent : IDefineColumComponent
         {
             sql.Append(" IDENTITY(1,1)");
         }
-        if ((column.ColumnType & ColumnType.NOTNULL) == ColumnType.NOTNULL)
+        if ((column.ColumnType & ColumnType.Unique) == ColumnType.Unique)
+        {
+            sql.Append(" UNIQUE");
+        }
+        if ((column.ColumnType & ColumnType.NotNull) == ColumnType.NotNull)
         {
             sql.Append(" NOT NULL");
         }
-        if (!string.IsNullOrWhiteSpace(column.Default))
+        if (!string.IsNullOrWhiteSpace(defaultValue))
         {
-            sql.Append(" DEFAULT ").Append(column.Default);
+            sql.Append(" DEFAULT ").Append(defaultValue);
         }
+        return true;
     }
 }

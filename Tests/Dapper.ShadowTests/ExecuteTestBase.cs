@@ -35,7 +35,7 @@ public abstract class ExecuteTestBase
         return new DapperExecutor(engine, new SqlSource(dataSource));
     }
     
-    public static readonly ColumnSchema _id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
+    public static readonly ColumnSchema _id = new("Id", "INTEGER", ColumnType.Identity | ColumnType.Key);
     public static readonly ColumnSchema _name = new("Name", "TEXT");
     public static readonly ColumnSchema _age = new("Age", "INTEGER");
     public static readonly ColumnSchema _classId = new("ClassId", "INTEGER");

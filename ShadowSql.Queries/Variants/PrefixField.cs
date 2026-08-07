@@ -1,5 +1,4 @@
 using ShadowSql.Aggregates;
-using ShadowSql.FieldInfos;
 using ShadowSql.Fragments;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
@@ -89,6 +88,9 @@ public class PrefixField(IColumn column, params string[] prefix)
     /// <inheritdoc/>
     string IView.ViewName
         => _original.ViewName;
+    /// <inheritdoc/>
+    string IMember.MemberName
+        => _original.MemberName;
     /// <inheritdoc/>
     IColumn IFieldView.ToColumn()
         => _original;

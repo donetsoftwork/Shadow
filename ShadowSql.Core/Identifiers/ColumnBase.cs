@@ -27,4 +27,7 @@ public abstract class ColumnBase(string columnName)
     /// <inheritdoc/>
     string IView.ViewName
         => _name;
+    /// <inheritdoc/>
+    string IMember.MemberName 
+        => _name;
 }

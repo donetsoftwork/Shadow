@@ -9,4 +9,4 @@ public interface ISqlValue : ICompareView;
 /// <summary>
 /// 参数标识
 /// </summary>
-public interface IParameter : IIdentifier, ISqlValue;
+public interface IParameter : IMember, ISqlValue;

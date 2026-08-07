@@ -6,14 +6,14 @@ using ShadowSql.Cursors;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.GroupBy;
-using ShadowSql.Identifiers;
+using ShadowSql.Sqlite;
 using ShadowSql.Tables;
 
 namespace Shadow.DDLTests.Cursors;
 
 public class TableCursorTests
 {
-    static readonly ISqlEngine _engine = new MsSqlEngine();
+    private readonly ISqlEngine _engine = new MsSqlEngine();
 
     [Fact]
     public void Cursor()
@@ -31,7 +31,7 @@ public class TableCursorTests
     public void Where()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1");
-        var age = builder.DefineColumn("Age");
+        var age = builder.DefineColumn("Age", SqliteSqlType.Integer);
         var query = new TableSqlQuery(builder.Build())
             .Where(age.GreaterValue(30));
         var cursor = new TableCursor(query);
@@ -51,7 +51,7 @@ public class TableCursorTests
     public void Desc()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "Age");
+            .DefinColumns(SqliteSqlType.Text, "Age");
         var cursor = new TableCursor(builder.Build())
             .Desc("Age");
         var sql = _engine.Sql(cursor);
@@ -61,7 +61,7 @@ public class TableCursorTests
     public void Table()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "Age");
+            .DefinColumns(SqliteSqlType.Text, "Age");
         var cursor = new TableCursor(builder.Build())
             .Desc("Age")
             .Skip(20)

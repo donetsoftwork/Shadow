@@ -10,6 +10,6 @@ public class StudentTable : Table
         Name = DefineColumn(nameof(Name));
         Score = DefineColumn(nameof(Score));
     }
-    public readonly IColumn Score;
-    new public readonly IColumn Name;
+    public IColumn Score { get; }
+    public new IColumn Name { get; }
 }

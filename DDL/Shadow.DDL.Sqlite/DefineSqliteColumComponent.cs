@@ -1,6 +1,7 @@
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
+using ShadowSql.Identifiers;
 using System.Text;
 
 namespace ShadowSql.Sqlite;
@@ -8,24 +9,18 @@ namespace ShadowSql.Sqlite;
 /// <summary>
 /// 定义SQLite列
 /// </summary>
-public class DefineSqliteColumComponent : IDefineColumComponent
+public class DefineSqliteColumComponent()
+    : DefineColumComponent(new SqliteSqlType())
 {
-    /// <summary>
-    /// 写入的列定义
-    /// </summary>
-    /// <param name="column">列</param>
-    /// <param name="engine">数据库引擎</param>
-    /// <param name="sql">sql</param>
-    public void WriteColumnSchema(ColumnSchema column, ISqlEngine engine, StringBuilder sql)
+    /// <inheritdoc/>
+    public override bool WriteColumnSchema(ISqlEngine engine, StringBuilder sql, ColumnSchema column)
     {
+        // Sqlite不支持计算列,忽略
+        if ((column.ColumnType & ColumnType.Computed) == ColumnType.Computed)
+            return false;
         engine.Identifier(sql, column.Name);
         sql.Append(' ');
-        if ((column.ColumnType & ColumnType.Computed) == ColumnType.Computed)
-        {
-            engine.ColumnAs(sql, column.SqlType);
-            return;
-        }
-        sql.Append(column.SqlType);
+        column.SqlType.Write(engine, sql);
         if ((column.ColumnType & ColumnType.Key) == ColumnType.Key)
         {
             sql.Append(" PRIMARY KEY");
@@ -34,7 +29,11 @@ public class DefineSqliteColumComponent : IDefineColumComponent
         {
             sql.Append(" AUTOINCREMENT");
         }
-        if ((column.ColumnType & ColumnType.NOTNULL) == ColumnType.NOTNULL)
+        if ((column.ColumnType & ColumnType.Unique) == ColumnType.Unique)
+        {
+            sql.Append(" UNIQUE");
+        }
+        if ((column.ColumnType & ColumnType.NotNull) == ColumnType.NotNull)
         {
             sql.Append(" NOT NULL");
         }
@@ -42,5 +41,15 @@ public class DefineSqliteColumComponent : IDefineColumComponent
         {
             sql.Append(" DEFAULT ").Append(column.Default);
         }
+        return true;
+    }
+    /// <inheritdoc/>
+    public override bool WriteUniqueConstraint(ISqlEngine engine, StringBuilder sql, string name, IColumn[] columns)
+    {
+        // CONSTRAINT uc_PersonID UNIQUE (Id,Name)
+        if (string.IsNullOrWhiteSpace(name) || columns.Length == 0)
+            return false;
+        WriteUnique(engine, sql, columns);
+        return true;
     }
 }

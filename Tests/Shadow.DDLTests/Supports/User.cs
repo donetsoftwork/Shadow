@@ -18,14 +18,6 @@ public class UserParameter
     public bool Status { get; set; }
 }
 
-public class UserRole
-{
-    public int Id { get; set; }
-    public int UserId { get; set; }
-    public string Name { get; set; }
-    public int Score { get; set; }
-}
-
 public class UserScore
 {
     public int UserId { get; set; }

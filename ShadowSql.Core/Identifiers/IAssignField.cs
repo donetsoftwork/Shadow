@@ -9,4 +9,4 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// 赋值字段(用于update)
 /// </summary>
-public interface IAssignView : IView, IMatch, ISqlEntity;
+public interface IAssignView : IView, IMatch, IMember, ISqlEntity;

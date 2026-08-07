@@ -1,11 +1,10 @@
-using ShadowSql.FieldInfos;
 using ShadowSql.Identifiers;
 using ShadowSql.Insert;
-using ShadowSql.SingleSelect;
 using ShadowSql.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace ShadowSql;
 
@@ -83,6 +82,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column">列</param>
     /// <param name="value">值</param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static InsertValue InsertValue<TValue>(this IColumn column, TValue value)
         => new(column, SqlValue.From(value));
 
@@ -93,6 +93,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column">列</param>
     /// <param name="values">值</param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static InsertValues InsertValues<TValue>(this IColumn column, params IEnumerable<TValue> values)
         => new(column, [.. values.Select(value => SqlValue.From(value))]);
     #endregion
@@ -103,6 +104,7 @@ public static partial class ShadowSqlCoreServices
     /// <param name="column">列</param>
     /// <param name="parameterName"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static InsertValue Insert(this IColumn column, string parameterName = "")
          => new(column, Parameter.Use(parameterName, column));
     #endregion

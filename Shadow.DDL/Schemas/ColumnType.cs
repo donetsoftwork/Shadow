@@ -27,21 +27,9 @@ public enum ColumnType
     /// <summary>
     /// 非空
     /// </summary>
-    NOTNULL = 8,
-    /// <summary>
-    /// 普通
-    /// </summary>
-    Normal = 16,
+    NotNull = 8,
     /// <summary>
     /// 计算列
     /// </summary>
-    Computed = 32,
-    /// <summary>
-    /// 逻辑删除
-    /// </summary>
-    Del = 64,
-    /// <summary>
-    /// 忽略
-    /// </summary>
-    Ignore = 128
+    Computed = 16
 }

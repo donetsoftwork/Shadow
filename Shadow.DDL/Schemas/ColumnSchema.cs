@@ -1,3 +1,4 @@
+using Shadow.DDL.SqlTypes;
 using ShadowSql.Identifiers;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,65 @@ namespace Shadow.DDL.Schemas;
 /// 列定义
 /// </summary>
 /// <param name="columnName">列</param>
+/// <param name="memberName">成员名</param>
 /// <param name="sqlType">数据库字段类型</param>
-public class ColumnSchema(string columnName, string sqlType = "INT")
+/// <param name="columnType"></param>
+public class ColumnSchema(string columnName, string memberName, ISqlType sqlType, ColumnType columnType = ColumnType.Empty)
     : ColumnBase(columnName), IColumn
 {
-    private readonly string _sqlType = sqlType.ToUpperInvariant();
+    /// <summary>
+    /// 列定义
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <param name="sqlType"></param>
+    /// <param name="columnType"></param>
+    public ColumnSchema(string columnName, ISqlType sqlType, ColumnType columnType = ColumnType.Empty)
+        : this(columnName, columnName, sqlType, columnType)
+    {
+    }
+    /// <summary>
+    /// 列定义
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <param name="memberName">成员名</param>
+    /// <param name="sqlType"></param>
+    /// <param name="columnType"></param>
+    public ColumnSchema(string columnName, string memberName, string sqlType, ColumnType columnType = ColumnType.Empty)
+        : this(columnName, memberName, new SqlRawType(sqlType), columnType)
+    {
+    }
+    /// <summary>
+    /// 列定义
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <param name="sqlType"></param>
+    /// <param name="columnType"></param>
+    public ColumnSchema(string columnName, string sqlType, ColumnType columnType = ColumnType.Empty)
+        : this(columnName, columnName, new SqlRawType(sqlType), columnType)
+    {
+    }
+    #region 配置
+
+    private readonly string _memberName = memberName;
+    /// <summary>
+    /// 成员名
+    /// </summary>
+    public string MemberName
+        => _memberName;
+    /// <inheritdoc/>
+    string IMember.MemberName
+        => _memberName;
     /// <summary>
     /// 数据库类型
     /// </summary>
-    public string SqlType
-        => _sqlType;
+    public ISqlType SqlType { get; } = sqlType;
+
+    private readonly ColumnType _columnType = columnType;
+    /// <summary>
+    /// 字段类型
+    /// </summary>
+    public ColumnType ColumnType
+        => _columnType;
     private string _default = string.Empty;
     /// <summary>
     /// 数据库默认值
@@ -27,24 +77,7 @@ public class ColumnSchema(string columnName, string sqlType = "INT")
         get { return _default; }
         set { _default = value; }
     }
-    private bool _notNull = false;
-    /// <summary>
-    /// 是否NotNull
-    /// </summary>
-    public bool NotNull
-    {
-        get { return _notNull; }
-        set { _notNull = value; }
-    }
-    private ColumnType _columnType = ColumnType.Normal;
-    /// <summary>
-    /// 字段类型
-    /// </summary>
-    public ColumnType ColumnType
-    {
-        get { return _columnType; }
-        set { _columnType = value; }
-    }
+    #endregion
     /// <summary>
     /// 转化为列
     /// </summary>
@@ -65,19 +98,19 @@ public class ColumnSchema(string columnName, string sqlType = "INT")
     /// <param name="fields">字段</param>
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetKeys(IEnumerable<ColumnSchema> fields)
-        => fields.Where(o => (o.ColumnType & ColumnType.Key) == ColumnType.Key);
+        => fields.Where(o => (o._columnType & ColumnType.Key) == ColumnType.Key);
     /// <summary>
     /// 获取插入列
     /// </summary>
     /// <param name="fields">字段</param>
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetInsertColumns(IEnumerable<ColumnSchema> fields)
-        => fields.Where(o => (o.ColumnType & InsertIgnoreType) == ColumnType.Empty);
+        => fields.Where(o => (o._columnType & InsertIgnoreType) == ColumnType.Empty);
     /// <summary>
     /// 获取修改列
     /// </summary>
     /// <param name="fields">字段</param>
     /// <returns></returns>
     internal static IEnumerable<ColumnSchema> GetUpdateColumns(IEnumerable<ColumnSchema> fields)
-        => fields.Where(o => (o.ColumnType & UpdateIgnoreType) == ColumnType.Empty);
+        => fields.Where(o => (o._columnType & UpdateIgnoreType) == ColumnType.Empty);
 }

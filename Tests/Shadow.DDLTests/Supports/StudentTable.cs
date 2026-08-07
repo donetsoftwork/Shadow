@@ -1,4 +1,5 @@
 using Shadow.DDL.Schemas;
+using ShadowSql.Sqlite;
 
 namespace Shadow.DDLTests.Supports;
 
@@ -10,8 +11,8 @@ public class StudentTable(string tableName = "Students", string schema = "")
     public readonly ColumnSchema Score = Defines.Score;
     class Defines
     {
-        public static readonly ColumnSchema Id = new("Id") { ColumnType = ColumnType.Key };
-        public static readonly ColumnSchema Name = new("Name");
-        public static readonly ColumnSchema Score = new("Score");
+        public static readonly ColumnSchema Id = new("Id", SqliteSqlType.Integer, ColumnType.Key);
+        public static readonly ColumnSchema Name = new("Name", SqliteSqlType.Text);
+        public static readonly ColumnSchema Score = new("Score", SqliteSqlType.Text);
     }
 }

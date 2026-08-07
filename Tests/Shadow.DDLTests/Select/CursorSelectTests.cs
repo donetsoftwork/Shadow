@@ -1,5 +1,6 @@
 using Shadow.DDL;
 using Shadow.DDL.Schemas;
+using Shadow.DDL.SqlTypes;
 using Shadow.DDLTests.Supports;
 using ShadowSql;
 using ShadowSql.Cursors;
@@ -8,6 +9,7 @@ using ShadowSql.Engines.MsSql;
 using ShadowSql.GroupBy;
 using ShadowSql.Identifiers;
 using ShadowSql.Select;
+using ShadowSql.Sqlite;
 using ShadowSql.Tables;
 
 namespace Shadow.DDLTests.Select;
@@ -33,7 +35,7 @@ public class CursorSelectTests
     public void Desc()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "Id", "Name", "Age");
+            .DefinColumns(SqliteSqlType.Text, "Id", "Name", "Age");
         var cursor = new TableCursor(builder.Build())
             .Desc(u => u.Field("Age"))
             .Asc(u => u.Field("Id"));
@@ -64,7 +66,7 @@ public class CursorSelectTests
     public void Table()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "Id", "Name");
+            .DefinColumns(SqliteSqlType.Text, "Id", "Name");
         var cursor = new TableCursor(builder.Build())
             .OrderBy("Id DESC")
             .Skip(20)
@@ -104,7 +106,7 @@ public class CursorSelectTests
     public void GroupBySqlQueryTest()
     {
         var builder = new TableSchemaBuilder("Users", "tenant1")
-            .DefinColumns("TEXT", "City");
+            .DefinColumns(SqliteSqlType.Text, "City");
         var query = new TableSqlQuery(builder.Build())
             .Where("Age<20");
         var groupBy = GroupBySqlQuery.Create(query, "City");

@@ -1,5 +1,6 @@
 using Shadow.DDL.Schemas;
 using ShadowSql.Identifiers;
+using ShadowSql.Sqlite;
 using ShadowSql.Variants;
 
 namespace Shadow.DDLTests.Supports;
@@ -15,10 +16,10 @@ public class PostTable(string tableName = "Posts", string schema = "")
 
     class Defines
     {
-        public static readonly ColumnSchema Id = new("Id") { ColumnType = ColumnType.Key };
-        public static readonly ColumnSchema Title = new("Title");
-        public static readonly ColumnSchema Author = new("Author");
-        public static readonly ColumnSchema AuthorId = new("AuthorId");
+        public static readonly ColumnSchema Id = new("Id", SqliteSqlType.Integer, ColumnType.Key);
+        public static readonly ColumnSchema Title = new("Title", SqliteSqlType.Text);
+        public static readonly ColumnSchema Author = new("Author", SqliteSqlType.Text);
+        public static readonly ColumnSchema AuthorId = new("AuthorId", SqliteSqlType.Integer);
     }
 }
 

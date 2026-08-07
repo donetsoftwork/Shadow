@@ -1,11 +1,23 @@
 using ShadowSql.Fragments;
+using ShadowSql.Values;
 
 namespace ShadowSql.Identifiers;
 
 /// <summary>
-/// 字段
+/// 数据库字段
 /// </summary>
-public interface IField : IFieldView, ICompareField, IOrderField, IAssignView;
+public interface IField : IFieldView, ICompareField, IOrderField, IAssignView, IMember;
+/// <summary>
+/// 实体成员
+/// </summary>
+public interface IMember
+{
+    /// <summary>
+    /// 成员名
+    /// </summary>
+    string MemberName { get; }
+}
+
 /// <summary>
 /// 前缀字段(前缀限定符)
 /// </summary>

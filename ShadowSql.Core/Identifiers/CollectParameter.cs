@@ -8,7 +8,7 @@ namespace ShadowSql.Identifiers;
 /// <summary>
 /// sql参数
 /// </summary>
-public class CollectParameter : IdentifierBase, IParameter, IView
+public class CollectParameter : IdentifierBase, IParameter
 {
     /// <summary>
     /// sql参数
@@ -19,7 +19,7 @@ public class CollectParameter : IdentifierBase, IParameter, IView
     {
     }
     /// <inheritdoc/>
-    string IView.ViewName
+    string IMember.MemberName
         => _name;
     /// <summary>
     /// 获取参数(已缓存,避免重复构造)
@@ -32,10 +32,10 @@ public class CollectParameter : IdentifierBase, IParameter, IView
     /// 获取参数
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="identifier"></param>
+    /// <param name="member"></param>
     /// <returns></returns>
-    public static CollectParameter Use(string name, IView identifier)
-         => _cacher.Get(CheckName(name, identifier));
+    public static CollectParameter Use(string name, IMember member)
+         => _cacher.Get(CheckName(name, member));
     /// <summary>
     /// 获取参数
     /// </summary>
@@ -60,12 +60,12 @@ public class CollectParameter : IdentifierBase, IParameter, IView
     /// 检查参数名
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="identifier"></param>
+    /// <param name="member"></param>
     /// <returns></returns>
-    public static string CheckName(string name, IView identifier)
+    public static string CheckName(string name, IMember member)
     {
         if (string.IsNullOrEmpty(name))
-            return identifier.ViewName;
+            return member.MemberName;
         return name;
     }
     /// <inheritdoc/>

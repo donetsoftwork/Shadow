@@ -19,6 +19,9 @@ public class Parameter : IdentifierBase, IParameter, IView
     {
     }
     /// <inheritdoc/>
+    string IMember.MemberName
+        => _name;
+    /// <inheritdoc/>
     string IView.ViewName
         => _name;
     /// <summary>
@@ -32,40 +35,40 @@ public class Parameter : IdentifierBase, IParameter, IView
     /// 获取参数
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="identifier"></param>
+    /// <param name="member"></param>
     /// <returns></returns>
-    public static Parameter Use(string name, IView identifier)
-         => _cacher.Get(CheckName(name, identifier));
+    public static Parameter Use(string name, IMember member)
+         => _cacher.Get(CheckName(name, member));
     /// <summary>
     /// 获取参数
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="identifier"></param>
+    /// <param name="memberName"></param>
     /// <returns></returns>
-    public static Parameter Use(string name, string identifier)
-        => _cacher.Get(CheckName(name, identifier));
+    public static Parameter Use(string name, string memberName)
+        => _cacher.Get(CheckName(name, memberName));
     /// <summary>
     /// 检查参数名
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="column">列</param>
+    /// <param name="memberName">成员</param>
     /// <returns></returns>
-    public static string CheckName(string name, string column)
+    public static string CheckName(string name, string memberName)
     {
         if (string.IsNullOrEmpty(name))
-            return column;
+            return memberName;
         return name;
     }
     /// <summary>
     /// 检查参数名
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="identifier"></param>
+    /// <param name="member"></param>
     /// <returns></returns>
-    public static string CheckName(string name, IView identifier)
+    public static string CheckName(string name, IMember member)
     {
         if (string.IsNullOrEmpty(name))
-            return identifier.ViewName;
+            return member.MemberName;
         return name;
     }
     /// <summary>
@@ -80,18 +83,18 @@ public class Parameter : IdentifierBase, IParameter, IView
             return string.Concat(parameter, "2");
         return name;
     }
-    /// <summary>
-    /// 检查参数名
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="parameter">参数</param>
-    /// <returns></returns>
-    public static string CheckName2(string name, IView parameter)
-    {
-        if (string.IsNullOrEmpty(name))
-            return string.Concat(parameter.ViewName, "2");
-        return name;
-    }
+    ///// <summary>
+    ///// 检查参数名
+    ///// </summary>
+    ///// <param name="name"></param>
+    ///// <param name="parameter">参数</param>
+    ///// <returns></returns>
+    //public static string CheckName2(string name, IView parameter)
+    //{
+    //    if (string.IsNullOrEmpty(name))
+    //        return string.Concat(parameter.ViewName, "2");
+    //    return name;
+    //}
     /// <inheritdoc/>
     internal override void Write(ISqlEngine engine, StringBuilder sql)
         => engine.Parameter(sql, _name);

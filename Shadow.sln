@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowSql", "ShadowSql\ShadowSql.csproj", "{5C6D4FEB-88FF-465C-8086-98484E48C775}"
 EndProject
@@ -81,6 +81,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shadow.DDL.Postgres", "DDL\Shadow.DDL.Postgres\Shadow.DDL.Postgres.csproj", "{6BD589B9-E56A-4DEC-B586-591ACE5EE654}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shadow.DDL.Sqlite", "DDL\Shadow.DDL.Sqlite\Shadow.DDL.Sqlite.csproj", "{217769D5-133A-45C4-8142-0D9BF85C5172}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", "{DBF90F62-C127-4299-92F9-28EBCE0F2486}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateTableTests", "Tests\GenerateTableTests\GenerateTableTests.csproj", "{9977F7C3-641E-4252-6AF6-63C075728646}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowSql.GenerateTable", "Generators\ShadowSql.GenerateTable\ShadowSql.GenerateTable.csproj", "{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateSchemaTableTests", "Tests\GenerateSchemaTableTests\GenerateSchemaTableTests.csproj", "{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -320,6 +328,30 @@ Global
 		{217769D5-133A-45C4-8142-0D9BF85C5172}.Release|Any CPU.Build.0 = Release|Any CPU
 		{217769D5-133A-45C4-8142-0D9BF85C5172}.Release|x64.ActiveCfg = Release|Any CPU
 		{217769D5-133A-45C4-8142-0D9BF85C5172}.Release|x64.Build.0 = Release|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Debug|x64.Build.0 = Debug|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Release|x64.ActiveCfg = Release|Any CPU
+		{9977F7C3-641E-4252-6AF6-63C075728646}.Release|x64.Build.0 = Release|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Debug|x64.Build.0 = Debug|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Release|x64.ActiveCfg = Release|Any CPU
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444}.Release|x64.Build.0 = Release|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Debug|x64.Build.0 = Debug|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Release|x64.ActiveCfg = Release|Any CPU
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -349,6 +381,9 @@ Global
 		{96E50581-68AE-4469-A2B8-CBC9481083A0} = {4689943B-AE2B-452C-A736-8649A6098923}
 		{6BD589B9-E56A-4DEC-B586-591ACE5EE654} = {4689943B-AE2B-452C-A736-8649A6098923}
 		{217769D5-133A-45C4-8142-0D9BF85C5172} = {4689943B-AE2B-452C-A736-8649A6098923}
+		{9977F7C3-641E-4252-6AF6-63C075728646} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{641FE0DE-A06B-7CA2-2E5B-CBC15A8D7444} = {DBF90F62-C127-4299-92F9-28EBCE0F2486}
+		{A243AFCD-D13C-4FB9-A579-0CAF42FCCB58} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86396870-E402-4203-9799-57FE0BCCF5D8}

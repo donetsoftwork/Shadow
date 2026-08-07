@@ -1,4 +1,4 @@
-using Shadow.DDL.Components;
+using Shadow.DDL.Constraints;
 using Shadow.DDL.Schemas;
 using ShadowSql.Engines;
 using ShadowSql.Fragments;
@@ -14,7 +14,8 @@ namespace Shadow.DDL;
 /// </summary>
 /// <param name="table">表</param>
 /// <param name="columns">列</param>
-public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
+/// <param name="constraints">约束</param>
+public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns, IEnumerable<IConstraint> constraints)
     : IExecuteSql
 {
     /// <summary>
@@ -22,12 +23,13 @@ public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     /// </summary>
     /// <param name="table">表</param>
     public CreateTable(TableSchema table)
-        : this(table, table.Columns)
+        : this(table, table.Columns, table.Constraints)
     {
     }
     #region 配置
     private readonly ITable _table = table;
     private readonly IEnumerable<ColumnSchema> _columns = columns;
+    private readonly IEnumerable<IConstraint> _constraints = constraints;
 
     /// <summary>
     /// 表
@@ -39,11 +41,16 @@ public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     /// </summary>
     public IEnumerable<ColumnSchema> Columns
         => _columns;
+    /// <summary>
+    /// 约束
+    /// </summary>
+    public IEnumerable<IConstraint> Constraint
+        => _constraints;
     #endregion
 
     /// <inheritdoc/>
     public void Write(ISqlEngine engine, StringBuilder sql)
-        => WriteCreateTable(engine, sql, _table, _columns);
+        => WriteCreateTable(engine, sql, _table, _columns, _constraints);
 
     /// <summary>
     /// CREATE TABLE
@@ -52,22 +59,37 @@ public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     /// <param name="sql">sql</param>
     /// <param name="table">表</param>
     /// <param name="columns">列</param>
+    /// <param name="constraints">约束</param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException">请先注册定义列组件</exception>
-    public static void WriteCreateTable(ISqlEngine engine, StringBuilder sql, ITable table, IEnumerable<ColumnSchema> columns)
+    public static void WriteCreateTable(ISqlEngine engine, StringBuilder sql, ITable table, IEnumerable<ColumnSchema> columns, IEnumerable<IConstraint> constraints)
     {
-        var columComponent = engine.PluginProvider?.GetPlugin<IDefineColumComponent>()
-            ?? throw new NotSupportedException("请先注册定义列组件");
+        var columComponent = engine.GetDefineColumComponent();
         sql.Append("CREATE TABLE ");
         table.Write(engine, sql);
         sql.Append('(');
         var appended = false;
+        var point = sql.Length;
         foreach (var column in columns)
         {
             if (appended)
+            {
+                point = sql.Length;
                 sql.Append(',');
-            columComponent.WriteColumnSchema(column, engine, sql);
-            appended = true;
+            }                
+            appended = columComponent.WriteColumnSchema(engine, sql, column);
+        }
+        // 最后一次添加失败,回滚到上次添加之前
+        if (!appended)
+            sql.Length = point;        
+        foreach (var constraint in constraints)
+        {
+            point = sql.Length;
+            sql.Append(',');
+            if (constraint.TryWrite(engine, sql))
+                continue;
+            // 写失败回滚
+            sql.Length = point;
         }
         sql.Append(')');
     }
@@ -80,6 +102,5 @@ public class CreateTable(ITable table, IEnumerable<ColumnSchema> columns)
     /// <returns></returns>
     /// <exception cref="NotSupportedException">请先注册定义列组件</exception>
     public static void WriteCreateTable(ISqlEngine engine, StringBuilder sql, TableSchema table)
-        => WriteCreateTable(engine, sql, table, table.Columns);
-
+        => WriteCreateTable(engine, sql, table, table.Columns, table.Constraints);
 }

@@ -1,12 +1,15 @@
 using Dapper.Shadow;
+using Hand.Data;
 using Microsoft.Data.SqlClient;
 using Shadow.DDL;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
+using Shadow.DDL.SqlTypes;
 using ShadowSql.Components;
 using ShadowSql.Engines;
 using ShadowSql.Engines.MsSql;
 using ShadowSql.Identifiers;
+using ShadowSql.MsSql;
 using System.Collections;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,20 +38,25 @@ static void RegistDB(IConfiguration configuration, IServiceCollection services)
     var tableName = "Students";
     TableSchema studentTable = new(tableName,
         [
-            new ColumnSchema("Id", "int"){ ColumnType = ColumnType.Unique | ColumnType.Key },
-            new ColumnSchema("Name", "nvarchar(100)"){ ColumnType = ColumnType.Unique },
-            new ColumnSchema("Age", "int"),
-            new ColumnSchema("Score", "int")
+            new ColumnSchema<int>("Id", ColumnType.Unique | ColumnType.Key),
+            new ColumnSchema<string>("Name", 100, ColumnType.Unique),
+            new ColumnSchema<int>("Age"),
+            new ColumnSchema<int>("Score")
         ]
     );
     services.AddKeyedSingleton(tableName, studentTable);
     var provider = new DictionaryProvider(new Hashtable())
         .AddComponent<IDefineColumComponent>(new DefineMsSqlColumComponent());
     ISqlEngine engine = new MsSqlEngine(new MsSqlSelectComponent(), new SqlValueComponent("1", "0", "NULL"), provider);
+
+    //SQLServerDataSource
+    //Microsoft.Data.SqlClient.
+    //Microsoft.Data.SqlClient.SqlBatchCommand
     var connectionString = configuration.GetConnectionString("TestDB");
     Console.WriteLine($"Connection String: {connectionString}");
-    var connection = new SqlConnection(connectionString!);
-    var executor = new DapperExecutor(engine, connection);
+    var dataSource = new StringDataSource(connectionString, conn => new SqlConnection(conn));
+    var sqlSource = new SqlSource(dataSource);
+    var executor = new DapperExecutor(engine, sqlSource);
     services.AddSingleton<IExecutor>(executor);
     DBSchema db = new(engine, "TestDB");
     db.AddTable(studentTable);

@@ -67,3 +67,13 @@ var students = await SqliteExecutor.From("Students")
     .ToDapperSelect()
     .GetAsync<Student>();
 ~~~
+
+## MERGE INTO
+
+|Database|Features|
+|:--|:--|
+|MySql|on duplicate key update|
+|PostgreSQL|on conflict do update|
+|SqlServer|merge into|
+|Oracle|merge into|
+|Sqlite|replace into|

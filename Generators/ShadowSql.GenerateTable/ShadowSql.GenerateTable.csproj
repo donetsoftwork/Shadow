@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<Version>0.9.1.0-alpha</Version>
+		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<IsRoslynComponent>true</IsRoslynComponent>
+		<LangVersion>Latest</LangVersion>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<Authors>jiangxiangji</Authors>
+		<Company>ShadowSql</Company>
+		<Copyright>Copyright (c) ShadowSql All Rights Reserved</Copyright>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/donetsoftwork/Shadow</RepositoryUrl>
+		<PackageProjectUrl>https://donetsoftwork.github.io/Shadow</PackageProjectUrl>
+		<!-- SourceLink settings -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PackageOutputPath>D:\nuget</PackageOutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Hand.Collections" Version="0.3.1.2-alpha">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Hand.Core" Version="0.3.1.11-alpha">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Hand.Generators.EasySyntax" Version="0.2.1.2">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Hand.GenerateCore" Version="0.2.1.4">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Hand.MemberValidation" Version="0.3.1.3-alpha">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Hand.Naming" Version="0.3.1.3-alpha">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Hand.Validation" Version="0.3.1.4-alpha">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.6.0">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.6.0">
+			<IncludeAssets>compile; analyzers</IncludeAssets>
+			<PrivateAssets>compile</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+</Project>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+    <Version>$(VersionBase).2-alpha</Version>
     <PackageId>ShadowSql.DDL.Sqlite</PackageId>
     <RootNamespace>ShadowSql.Sqlite</RootNamespace>
     <Description>拼接sql工具</Description>

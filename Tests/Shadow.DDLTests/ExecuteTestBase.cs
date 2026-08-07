@@ -1,11 +1,11 @@
 using Dapper;
 using Dapper.Shadow;
+using Hand.Data;
 using Microsoft.Data.Sqlite;
 using Shadow.DDL;
 using Shadow.DDL.Components;
 using Shadow.DDL.Schemas;
 using ShadowSql.Components;
-using Hand.Data;
 using ShadowSql.Engines.Sqlite;
 using ShadowSql.Identifiers;
 using ShadowSql.Sqlite;
@@ -28,9 +28,7 @@ public abstract class ExecuteTestBase
 
     private static DapperExecutor CreateSqlite()
     {
-        var provider = new DictionaryProvider(new Hashtable())
-            .AddComponent<IDefineColumComponent>(new DefineSqliteColumComponent());
-        var engine = new SqliteEngine(new SqliteSelectComponent(), new SqlValueComponent("1", "0", "NULL"), provider);
+        var engine = SqliteSqlType.Engine;
         //#if NET8_0_OR_GREATER
 
         //#else
@@ -69,9 +67,9 @@ public abstract class ExecuteTestBase
         //var sql = DropTable.WriteDropTable(tableName);
         //SqliteExecutor.Execute(sql);
     }
-    public static readonly ColumnSchema _id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
-    public static readonly ColumnSchema _name = new("Name", "TEXT");
-    public static readonly ColumnSchema _age = new("Age", "INTEGER");
+    public static readonly ColumnSchema _id = new("Id", SqliteSqlType.Integer, ColumnType.Identity | ColumnType.Key);
+    public static readonly ColumnSchema _name = new("Name", SqliteSqlType.Text);
+    public static readonly ColumnSchema _age = new("Age", SqliteSqlType.Integer);
 
 
     public class StudentTable(string tableName = "Students")

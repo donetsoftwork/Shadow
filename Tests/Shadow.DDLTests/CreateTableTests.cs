@@ -2,20 +2,17 @@ using Dapper.Shadow;
 using Shadow.DDL;
 using Shadow.DDL.Schemas;
 using ShadowSql;
+using ShadowSql.Sqlite;
 
 namespace Shadow.DDLTests
 {
     public class CreateTableTests : ExecuteTestBase, IDisposable
     {
-        public CreateTableTests()
-        {
-        }
-
         [Fact]
         public void Create()
         {
-            ColumnSchema id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
-            ColumnSchema name = new("Name", "TEXT");
+            ColumnSchema id = new("Id", SqliteSqlType.Integer,  ColumnType.Identity | ColumnType.Key);
+            ColumnSchema name = new("Name", SqliteSqlType.Text);
             TableSchema table = new("Students", [id, name]);
             CreateTable create = new(table);
             var sql = SqliteExecutor.Engine.Sql(create);
@@ -26,8 +23,8 @@ namespace Shadow.DDLTests
         public async Task Execute()
         {
             await DropStudentsTable();
-            ColumnSchema id = new("Id", "INTEGER") { ColumnType = ColumnType.Identity | ColumnType.Key };
-            ColumnSchema name = new("Name", "TEXT");
+            ColumnSchema id = new("Id", SqliteSqlType.Integer, ColumnType.Identity | ColumnType.Key);
+            ColumnSchema name = new("Name", SqliteSqlType.Text);
             var result = await new TableSchema("Students", [id, name])
                 .ToCreate()
                 .ExecuteAsync(SqliteExecutor);
@@ -38,8 +35,8 @@ namespace Shadow.DDLTests
         public void Build()
         {
             var builder = new TableSchemaBuilder("Students", "tenant1")
-                .DefineIdentity("Id", "INTEGER")
-                .DefinColumns("TEXT", "Name");
+                .DefineIdentity("Id", SqliteSqlType.Integer)
+                .DefinColumns(SqliteSqlType.Text, "Name");
             TableSchema table = builder.Build();
             CreateTable create = new(table);
             var sql = SqliteExecutor.Engine.Sql(create);
@@ -49,9 +46,8 @@ namespace Shadow.DDLTests
         public void Build2()
         {
             var builder = new TableSchemaBuilder("Students", "tenant1");
-            builder.DefineColumn("Id", "INTEGER")
-                .ColumnType = ColumnType.Identity | ColumnType.Key;
-            builder.DefineColumn("Name", "TEXT");
+            builder.DefineColumn("Id", SqliteSqlType.Integer, ColumnType.Identity | ColumnType.Key);
+            builder.DefineColumn("Name", SqliteSqlType.Text);
             TableSchema table = builder.Build();
             CreateTable create = new(table);
             var sql = SqliteExecutor.Engine.Sql(create);
