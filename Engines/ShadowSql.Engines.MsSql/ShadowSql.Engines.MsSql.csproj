@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).2-alpha</Version>
+<Version>$(VersionBase).0-alpha</Version>
     <PackageId>ShadowSql.MsSql</PackageId>
     <RootNamespace>ShadowSql</RootNamespace>
     <Description>拼接sql工具</Description>

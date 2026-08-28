@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\package.props" />
   <PropertyGroup>
-    <Version>$(VersionBase).1-alpha</Version>
+<Version>$(VersionBase).0-alpha</Version>
     <PackageId>ShadowSql</PackageId>
     <Description>拼接sql工具</Description>
     <PackageTags>sql;sql-builder;sql-query</PackageTags>
@@ -23,6 +23,6 @@
     <ProjectReference Include="..\ShadowSql.Queries\ShadowSql.Queries.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Hand.Core" Version="0.3.1.11-alpha" />
+    <PackageReference Include="Hand.Core" Version="0.3.1.13-alpha" />
   </ItemGroup>
 </Project>

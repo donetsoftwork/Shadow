@@ -4,6 +4,7 @@ using Hand.Reflection;
 using Hand.Rule;
 using Hand.Sources;
 using Hand.Symbols;
+using Hand.Types;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -17,34 +18,35 @@ namespace ShadowSql.GenerateTable;
 /// <summary>
 /// 表结构源对象
 /// </summary>
-/// <param name="type"></param>
+/// <param name="generator"></param>
 /// <param name="compilation"></param>
-/// <param name="typeSymbol"></param>
-/// <param name="baseTypeSymbol"></param>
-/// <param name="sourseSymbol"></param>.
+/// <param name="targetInfo"></param>
+/// <param name="sourseInfo"></param>
+/// <param name="baseSymbol"></param>
 /// <param name="columnType"></param>
 /// <param name="rule"></param>
 /// <param name="notMappedAttributeType"></param>
-public class TableSource(TypeDeclarationSyntax type, Compilation compilation, INamedTypeSymbol typeSymbol, INamedTypeSymbol baseTypeSymbol, INamedTypeSymbol sourseSymbol, INamedTypeSymbol columnType, IValidation<string> rule, INamedTypeSymbol? notMappedAttributeType)
+public class TableSource(SyntaxGenerator generator, Compilation compilation, ComplexTypeInfo targetInfo, ComplexTypeInfo sourseInfo, INamedTypeSymbol baseSymbol, INamedTypeSymbol columnType, IValidation<string> rule, INamedTypeSymbol? notMappedAttributeType)
     : IGeneratorSource
 {
-    public TableSource(TypeDeclarationSyntax type, Compilation compilation, INamedTypeSymbol typeSymbol, INamedTypeSymbol baseTypeSymbol, INamedTypeSymbol sourseSymbol, INamedTypeSymbol columnType, IValidation<string> rule)
-        : this(type, compilation, typeSymbol, baseTypeSymbol, sourseSymbol, columnType, rule, GetNotMappedAttributeType(compilation))
+    public TableSource(SyntaxGenerator generator, Compilation compilation, ComplexTypeInfo typeSymbol, ComplexTypeInfo sourseInfo, INamedTypeSymbol baseSymbol, INamedTypeSymbol columnType, IValidation<string> rule)
+        : this(generator, compilation, typeSymbol, sourseInfo, baseSymbol, columnType, rule, GetNotMappedAttributeType(compilation))
     {
     }
     #region 配置
     /// <summary>
     /// 类型语法
     /// </summary>
-    protected readonly TypeDeclarationSyntax _type = type;
-    protected readonly INamedTypeSymbol _typeSymbol = typeSymbol;
-    protected readonly INamedTypeSymbol _baseTypeSymbol = baseTypeSymbol;
-    protected readonly INamedTypeSymbol _sourseSymbol = sourseSymbol;
+    protected readonly SyntaxGenerator _generator = generator;
+    protected readonly ComplexTypeInfo _targetInfo = targetInfo;
+    protected readonly INamedTypeSymbol _baseSymbol = baseSymbol;
+    protected readonly ComplexTypeInfo _sourseInfo = sourseInfo;
     protected readonly INamedTypeSymbol _columnType = columnType;
+    protected readonly TypeSyntax _columnSyntax = generator.Display(columnType);
     /// <summary>
     /// 原属性
     /// </summary>
-    protected readonly IPropertySymbol[] _properties = [.. SymbolReflection.GetProperties(typeSymbol)];
+    protected readonly IPropertySymbol[] _properties = [.. SymbolReflection.GetProperties(targetInfo.Symbol)];
     ///// <summary>
     ///// 基类属性
     ///// </summary>
@@ -52,23 +54,23 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
     /// <summary>
     /// 基类成员名
     /// </summary>
-    protected readonly FrozenSet<string> _baseMemberNames = SymbolReflection.GetNotPrivateMembersWithBase(baseTypeSymbol)
+    protected readonly FrozenSet<string> _baseMemberNames = SymbolReflection.GetNotPrivateMembersWithBase(baseSymbol)
         .Select(static item => item.Name)
         .ToFrozenSet();
     /// <summary>
     /// 原成员名
     /// </summary>
-    protected readonly FrozenSet<string> _memberNames = typeSymbol.GetMembers()
+    protected readonly FrozenSet<string> _memberNames = targetInfo.Symbol.GetMembers()
         .Select(static item => item.Name)
         .ToFrozenSet();
     /// <summary>
     /// 源属性
     /// </summary>
-    protected readonly IPropertySymbol[] _sourseProperties = [.. GetSourseProperties(sourseSymbol, rule, notMappedAttributeType)];
+    protected readonly IPropertySymbol[] _sourseProperties = [.. GetSourseProperties(sourseInfo.Symbol, rule, notMappedAttributeType)];
     /// <summary>
     /// 源字段
     /// </summary>
-    protected readonly IFieldSymbol[] _sourseFields = [.. GetSourseFields(sourseSymbol, rule, notMappedAttributeType)];
+    protected readonly IFieldSymbol[] _sourseFields = [.. GetSourseFields(sourseInfo.Symbol, rule, notMappedAttributeType)];
     private readonly INamedTypeSymbol? _tableAttributeType = GetTableAttributeType(compilation);
     /// <summary>
     /// DatabaseGenerated标记类型
@@ -82,16 +84,16 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
     /// 列标记类型
     /// </summary>
     protected readonly INamedTypeSymbol? _columnAttributeType = GetColumnAttributeType(compilation);
-    /// <summary>
-    /// 类型
-    /// </summary>
-    public TypeDeclarationSyntax Type
-        => _type;
+    ///// <summary>
+    ///// 类型
+    ///// </summary>
+    //public TypeDeclarationSyntax Type
+    //    => _type;
     /// <summary>
     /// 反射信息
     /// </summary>
-    public INamedTypeSymbol Symbol
-        => _typeSymbol;
+    public ComplexTypeInfo Symbol
+        => _targetInfo;
     /// <summary>
     /// 列类型
     /// </summary>
@@ -118,18 +120,18 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
         => _sourseFields;
     /// <inheritdoc />
     public string GenerateFileName
-        => $"{_typeSymbol.ToDisplayString()}.g.cs";
+        => $"{_targetInfo.Symbol.ToDisplayString()}.g.cs";
     #endregion
     /// <inheritdoc />
     public SyntaxGenerator Generate()
     {
-        var builder = SyntaxGenerator.Clone(_type);
+        //var builder = SyntaxGenerator.Clone(_type);
         var tableName = SyntaxFactory.IdentifierName("tableName");
-        builder.AddBaseType(CreateBaseType(_baseTypeSymbol));
-        var constructor = CreateConstructor(builder, tableName);
-        builder.AddConstructor(constructor);
+        //_generator.AddBaseType(CreateBaseType(_baseTypeSymbol));
+        var constructor = CreateConstructor(_generator, tableName);
+        _generator.AddConstructor(constructor);
 
-        return builder;
+        return _generator;
     }
     /// <summary>
     /// 定义构造函数
@@ -139,7 +141,7 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
     private ConstructorDeclarationSyntax CreateConstructor(IdentifierNameSyntax tableName)
     {
         var defaultValue = GetTableDefaultValue();
-        var constructor = _type.Constructor(Parameter(tableName.Identifier, defaultValue))
+        var constructor = _generator.Type.Constructor(Parameter(tableName.Identifier, defaultValue))
             // Table(string tableName)
             .WithBaseInitializer(tableName)
             .Public();
@@ -176,7 +178,7 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
         {
             var name = member.Name;
             var columnName = GetColumnName(member);
-            var column = SyntaxFactory.IdentifierName(name);            
+            var column = SyntaxFactory.IdentifierName(name);
             var arguments = GetColumnArguments(name, columnName);
             // eg: Id = DefineColumn(nameof(Id))
             var expression = column.Assign(defineColumn.Invocation(arguments));
@@ -249,7 +251,7 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
         if (attribute is not null)
             tableName = SymbolAttributeHelper.GetArgumentValue<string>(attribute, 0);
         if (string.IsNullOrWhiteSpace(tableName))
-            return _sourseSymbol.Name;
+            return _sourseInfo.Symbol.Name;
         return tableName!;
     }
     private string? GetColumnName(ISymbol symbol)
@@ -272,8 +274,8 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
     {
         if (_tableAttributeType is null)
             return null;
-        return SymbolAttributeHelper.GetAttributesByType(_typeSymbol, _tableAttributeType).FirstOrDefault() ??
-            SymbolAttributeHelper.GetAttributesByType(_sourseSymbol, _tableAttributeType).FirstOrDefault();
+        return SymbolAttributeHelper.GetAttributesByType(_targetInfo.Symbol, _tableAttributeType).FirstOrDefault() ??
+            SymbolAttributeHelper.GetAttributesByType(_sourseInfo.Symbol, _tableAttributeType).FirstOrDefault();
     }
     ///// <summary>
     ///// 获取源类型属性
@@ -356,7 +358,7 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
     /// <returns></returns>
     private IEnumerable<ISymbol> CreateColumns(SyntaxGenerator builder, List<string> updateIgnores)
     {
-        var columnType = _columnType.ToSyntax();
+        //var columnType = _columnType.ToSyntax();
 
         //// 原属性名
         //var properties0 = _properties.Select(static item => item.Name)
@@ -371,7 +373,7 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
             if (_memberNames.Contains(name))
                 continue;
             // 生成新属性
-            var column = CreateProperty(columnType, property, _baseMemberNames);
+            var column = CreateProperty(_columnSyntax, property, _baseMemberNames);
             builder.AddProperty(column);
             if (CheckUpdateIgnores(property))
                 updateIgnores.Add(name);
@@ -384,7 +386,7 @@ public class TableSource(TypeDeclarationSyntax type, Compilation compilation, IN
             if (_memberNames.Contains(name))
                 continue;
             // 生成新属性
-            var column = CreateProperty(columnType, field, _baseMemberNames);
+            var column = CreateProperty(_columnSyntax, field, _baseMemberNames);
             builder.AddProperty(column);
             if (CheckUpdateIgnores(field))
                 updateIgnores.Add(name);

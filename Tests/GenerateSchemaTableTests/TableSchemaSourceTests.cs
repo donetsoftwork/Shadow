@@ -32,15 +32,14 @@ public class TableSchemaSourceTests
             .FirstOrDefault(item => item.Modifiers.IsPartial());
         Assert.NotNull(type);
         var semanticModel = compilation.GetSemanticModel(syntaxTree);
-        var symbol = semanticModel.GetDeclaredSymbol(type);
-        Assert.NotNull(symbol);
-        var tableType = TableTransform.GetTableType(compilation);
-        Assert.NotNull(tableType);
-        var attribute = GetGenerateTableAttribute(compilation, symbol.GetAttributes());
+        var targetSymbol = semanticModel.GetDeclaredSymbol(type);
+        Assert.NotNull(targetSymbol);
+        //var tableType = TableTransform.GetTableType(compilation);
+        //Assert.NotNull(tableType);
+        var attribute = GetGenerateTableAttribute(compilation, targetSymbol.GetAttributes());
         Assert.NotNull(attribute);
-        var sourseSymbol = TableTransform.GetFromSymbol(attribute);
-        Assert.NotNull(sourseSymbol);
-        var table = TableTransform.CreateByTableSchema(compilation, type, symbol, sourseSymbol, attribute);
+
+        var table = TableTransform.Transform(compilation, type, targetSymbol, attribute) as TableSchemaSource;
         Assert.NotNull(table);
         return table;
     }
@@ -114,6 +113,7 @@ partial class ProductTable;
         Assert.NotNull(id);
         GroupList tableConstraints = new();
         var initializer = table.CheckColumnInitializer(id, id.Type, tableConstraints);
+        Assert.NotNull(initializer);
         var code = initializer.NormalizeWhitespace().ToString();
         Assert.Contains("ColumnSchema<int>(\"Id\"", code);
     }
@@ -138,6 +138,7 @@ partial class ProductTable;
         Assert.NotNull(id);
         GroupList tableConstraints = new();
         var initializer = table.CheckColumnInitializer(id, id.Type, tableConstraints);
+        Assert.NotNull(initializer);
         var columnType = table.ColumnType.ToSyntax();
         //var baseFileds = table.BaseFields.Select(static item => item.Name)
         //    .ToFrozenSet();
@@ -172,6 +173,7 @@ partial class ProductTable;
         Assert.NotNull(name);
         GroupList tableConstraints = new();
         var initializer = table.CheckColumnInitializer(name, name.Type, tableConstraints);
+        Assert.NotNull(initializer);
         var columnType = table.ColumnType.ToSyntax();
         //var baseFileds = table.BaseFields.Select(static item => item.Name)
         //    .ToFrozenSet();
@@ -205,6 +207,7 @@ partial class ProductTable;
         Assert.NotNull(name);
         GroupList tableConstraints = new();
         var initializer = table.CheckColumnInitializer(name, name.Type, tableConstraints);
+        Assert.NotNull(initializer);
         var columnType = table.ColumnType.ToSyntax();
         //var baseFileds = table.BaseMemberNames;
         var field = TableSchemaSource.CreateField("_name", columnType, table.BaseMemberNames, initializer);

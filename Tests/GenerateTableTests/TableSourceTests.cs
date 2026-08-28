@@ -32,15 +32,14 @@ public class TableSourceTests
             .FirstOrDefault(item => item.Modifiers.IsPartial());
         Assert.NotNull(type);
         var semanticModel = compilation.GetSemanticModel(syntaxTree);
-        var symbol = semanticModel.GetDeclaredSymbol(type);
-        Assert.NotNull(symbol);
-        var tableType = TableTransform.GetTableType(compilation);
-        Assert.NotNull(tableType);
-        var attribute = GetGenerateTableAttribute(compilation, symbol.GetAttributes());
+        var targetSymbol = semanticModel.GetDeclaredSymbol(type);
+        Assert.NotNull(targetSymbol);
+        //var tableType = TableTransform.GetTableType(compilation);
+        //Assert.NotNull(tableType);
+        var attribute = GetGenerateTableAttribute(compilation, targetSymbol.GetAttributes());
         Assert.NotNull(attribute);
-        var sourseSymbol = TableTransform.GetFromSymbol(attribute);
-        Assert.NotNull(sourseSymbol);
-        var table = TableTransform.CreateByTable(compilation, type, symbol, sourseSymbol, attribute);
+
+        var table = TableTransform.Transform(compilation, type, targetSymbol, attribute);
         Assert.NotNull(table);
         return table;
     }
@@ -118,7 +117,7 @@ partial class ProductTable;
         Assert.NotNull(id);
         var property = TableSource.CreateProperty(columnType, id, properties0);
         var code = property.NormalizeWhitespace().ToString();
-        Assert.Equal("public global::ShadowSql.Identifiers.IColumn Id { get; }", code);
+        Assert.Equal("public ShadowSql.Identifiers.IColumn Id { get; }", code);
     }
     [Fact]
     public void CreateNewProperty()
@@ -143,6 +142,6 @@ partial class ProductTable;
         Assert.NotNull(name);
         var property = TableSource.CreateProperty(columnType, name, table.BaseMemberNames);
         var code = property.NormalizeWhitespace().ToString();
-        Assert.Equal("public new global::ShadowSql.Identifiers.IColumn Name { get; }", code);
+        Assert.Equal("public new ShadowSql.Identifiers.IColumn Name { get; }", code);
     }    
 }

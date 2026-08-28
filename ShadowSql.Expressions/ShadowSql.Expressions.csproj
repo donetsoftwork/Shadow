@@ -27,7 +27,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hand.Core" Version="0.3.1.11-alpha" />
+    <PackageReference Include="Hand.Core" Version="0.3.1.13-alpha" />
   </ItemGroup>
 
 </Project>

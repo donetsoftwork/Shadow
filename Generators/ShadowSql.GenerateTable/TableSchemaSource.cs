@@ -1,9 +1,10 @@
 ﻿using Hand;
+using Hand.Cachers;
 using Hand.Collections;
 using Hand.Collections.Grouping;
 using Hand.Reflection;
 using Hand.Rule;
-using Hand.Symbols;
+using Hand.Types;
 using Hand.Words;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -19,17 +20,19 @@ namespace ShadowSql.GenerateTable;
 /// <summary>
 /// 表结构源对象
 /// </summary>
-/// <param name="type"></param>
+/// <param name="generator"></param>
+/// <param name="typeSymbols"></param>
 /// <param name="compilation"></param>
-/// <param name="typeSymbol"></param>
-/// <param name="baseTypeSymbol"></param>
-/// <param name="sourseSymbol"></param>.
+/// <param name="targetInfo"></param>
+/// <param name="sourseSymbol"></param>
+/// <param name="baseSymbol"></param>.
 /// <param name="columnType"></param>
 /// <param name="rule"></param>
-public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilation, INamedTypeSymbol typeSymbol, INamedTypeSymbol baseTypeSymbol, INamedTypeSymbol sourseSymbol, INamedTypeSymbol columnType, IValidation<string> rule)
-    : TableSource(type, compilation, typeSymbol, baseTypeSymbol, sourseSymbol, columnType, rule)
+public class TableSchemaSource(SyntaxGenerator generator, TypeSymbolCacher typeSymbols, Compilation compilation, ComplexTypeInfo targetInfo, ComplexTypeInfo sourseSymbol, INamedTypeSymbol baseSymbol, INamedTypeSymbol columnType, IValidation<string> rule)
+    : TableSource(generator, compilation, targetInfo, sourseSymbol, baseSymbol, columnType, rule)
 {
     #region 配置
+    private readonly TypeSymbolCacher _typeSymbols = typeSymbols;
     private readonly Compilation _compilation = compilation;
     private readonly INamedTypeSymbol? _requiredAttributeType = GetRequiredAttributeType(compilation);
     private readonly INamedTypeSymbol? _precisionAttributeType = GetPrecisionAttributeType(compilation);
@@ -46,7 +49,7 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
     private ConstructorDeclarationSyntax CreateConstructor(IdentifierNameSyntax tableName, IdentifierNameSyntax schema)
     {
         var (schemaDefaultValue, tableNameDefaultValue) = GetTableDefaultValue();
-        var constructor = _type.Constructor(Parameter(tableName.Identifier, tableNameDefaultValue), Parameter(schema.Identifier, schemaDefaultValue))
+        var constructor = _generator.Type.Constructor(Parameter(tableName.Identifier, tableNameDefaultValue), Parameter(schema.Identifier, schemaDefaultValue))
             .Public();
         return constructor;
     }
@@ -76,9 +79,9 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
              // TableSchema(string tableName, ColumnSchema[] columns, string schema = "")
              .WithBaseInitializer(tableName, SyntaxGenerator.Collection([.. columns]), SyntaxGenerator.Collection([.. constraints]), schema);
     }
-    public IEnumerable<string> CreateConstraints(SyntaxGenerator builder, IGroupCollection<string, string> tableConstraints)
+    public IEnumerable<string> CreateConstraints(SyntaxGenerator generator, IGroupCollection<string, string> tableConstraints)
     {
-        var constraintType = SyntaxFactory.IdentifierName("global::Shadow.DDL.Constraints.UniqueConstraint");
+        var constraintType = generator.Display("UniqueConstraint", "Shadow.DDL.Constraints");
         foreach (var name in tableConstraints.Keys)
         {
             var columnNames = tableConstraints.GetValues(name)
@@ -92,7 +95,7 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
                 continue;
             var constraintInitializer = CheckConstraintInitializer(constraintType, name, columnNames);
             var field = CreateField(fieldName, constraintType, _baseMemberNames, constraintInitializer);
-            builder.AddField(field);
+            generator.AddField(field);
             yield return fieldName;
         }
     }
@@ -108,17 +111,17 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
     }
     public IEnumerable<string> CreateColumns(SyntaxGenerator builder, IGroupCollection<string, string> tableConstraints)
     {
-        var columnType = _columnType.ToSyntax();
+        //var columnType = _columnType.ToSyntax();
         foreach (var property in _sourseProperties)
         {
-            var fieldName = CreateColumn(builder, tableConstraints, columnType, property, property.Type);
+            var fieldName = CreateColumn(builder, tableConstraints, _columnSyntax, property, property.Type);
             if (string.IsNullOrEmpty(fieldName))
                 continue;
             yield return fieldName;
         }
         foreach (var field in _sourseFields)
         {
-            var fieldName = CreateColumn(builder, tableConstraints, columnType, field, field.Type);
+            var fieldName = CreateColumn(builder, tableConstraints, _columnSyntax, field, field.Type);
             if (string.IsNullOrEmpty(fieldName))
                 continue;
             yield return fieldName;
@@ -149,6 +152,8 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
             return string.Empty;
         // 生成字段 
         var columnInitializer = CheckColumnInitializer(member, memberType, tableConstraints);
+        if (columnInitializer is null)
+            return string.Empty;
         var field = CreateField(fieldName, columnType, _baseMemberNames, columnInitializer);
         builder.AddField(field);
         // 生成属性
@@ -220,24 +225,32 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
     /// <param name="fieldType"></param>
     /// <param name="tableConstraints"></param>
     /// <returns></returns>
-    public ExpressionSyntax CheckColumnInitializer(ISymbol member, ITypeSymbol memberType, IGroupCollection<string, string> tableConstraints)
+    public ExpressionSyntax? CheckColumnInitializer(ISymbol member, ITypeSymbol memberType, IGroupCollection<string, string> tableConstraints)
     {
-        const string columnTypeName = "global::Shadow.DDL.Schemas.ColumnSchema";
-        var (fieldType, nullable) = CheckMemberType(member, memberType);
+        //const string columnTypeName = "Shadow.DDL.Schemas.ColumnSchema";
+        var columnTypeName = _generator.Display("ColumnSchema", "Shadow.DDL.Schemas");
+        var fieldInfo = GetMemberInfo(member, memberType);
+        if (fieldInfo is null)
+            return null;
+        //var (fieldType, nullable) = CheckMemberType(member, memberType);
         var defaultValue = CheckInitializer(member);
         var (columnName, memberName, typeName) = GetColumn(member);
         List<ExpressionSyntax> arguments = CheckColumnArguments(columnName, memberName);
-        var columnTypeArgument = CheckColumnTypes(columnName, member, nullable, tableConstraints);
+        var columnTypeArgument = CheckColumnTypes(columnName, member, fieldInfo.IsNullable, tableConstraints);
         if (!string.IsNullOrWhiteSpace(typeName))
         {
             arguments.Add(SyntaxGenerator.Literal(typeName!));
             if (columnTypeArgument is not null)
                 arguments.Add(columnTypeArgument);
-            return SyntaxFactory.IdentifierName(columnTypeName).New(arguments, defaultValue);
+            return columnTypeName.New(arguments, defaultValue);
         }
         if (columnTypeArgument is not null)
             arguments.Add(columnTypeArgument);
-        var columnType = SyntaxGenerator.Generic(columnTypeName, fieldType.ToSyntax());
+        TypeSyntax columnType;
+        if (columnTypeName is QualifiedNameSyntax qualifiedName)
+            columnType = SyntaxGenerator.Generic("ColumnSchema", _generator.Display(fieldInfo)).Qualify(qualifiedName.Left);
+        else
+            columnType = SyntaxGenerator.Generic("ColumnSchema", _generator.Display(fieldInfo));
         if (_precisionAttributeType is not null && SymbolAttributeHelper.GetAttributesByType(member, _precisionAttributeType).FirstOrDefault() is AttributeData precisionAttribute)
         {
             // 获取字段精度配置
@@ -304,8 +317,8 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
             .ToArray();
         var count = columnTypes.Length;
         if (count == 0)
-            return null;
-        var columnType = SyntaxFactory.IdentifierName("global::Shadow.DDL.Schemas.ColumnType");
+            return null;        
+        var columnType = _generator.Display("ColumnType", "Shadow.DDL.Schemas");
         ExpressionSyntax expression = columnType.Access(columnTypes[0]);
         for (var i = 1; i < count; i++)
         {
@@ -391,9 +404,16 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
     /// <exception cref="Exception"></exception>
     public (INamedTypeSymbol memberType, bool nullable) CheckMemberType(ISymbol member, ITypeSymbol type)
     {
+        var info = _typeSymbols.Get(type);
+        var nullable = info.IsNullable;
+        //switch(info.Kind)
+        //{
+        //    case  TypeSymbolKind.Enum:
+        //        return ((EnumTypeInfo)info).Element
+        //}
         var checkType = SymbolReflection.CheckOriginalSymbol(_compilation, type)
             ?? throw new Exception("propertyType not supported");
-        var nullable = checkType.IsNullable();
+        //var nullable = checkType.IsNullable();
         if (nullable && checkType.TypeArguments[0] is INamedTypeSymbol namedType)
             checkType = namedType;
         if (_requiredAttributeType is not null)
@@ -402,6 +422,26 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
                 nullable = false;
         }
         return (checkType, nullable);
+    }
+    public ITypeSymbolInfo? GetMemberInfo(ISymbol member, ITypeSymbol type)
+    {
+        var info = _typeSymbols.Get(type);
+        return info.Kind switch
+        {
+            TypeSymbolKind.Primitive => info,
+            TypeSymbolKind.Enum => CheckNull(((EnumTypeInfo)info).ElementInfo, info.IsNullable),
+            TypeSymbolKind.Entity => CheckNull(((EntityTypeInfo)info).ElementInfo, info.IsNullable),
+            TypeSymbolKind.Array => CheckArray((ArrayTypeInfo)info),
+            _ => null,
+        };
+        ITypeSymbolInfo? CheckArray(ArrayTypeInfo array)
+        {
+            if (array.Element.SpecialType == SpecialType.System_Byte)
+                return array;
+            return null;
+        }
+        PrimitiveTypeInfo CheckNull(PrimitiveTypeInfo info, bool nullable)
+            => nullable ? info.GetNullable(_compilation) : info;
     }
     /// <summary>
     /// 获取表名默认值
@@ -419,7 +459,7 @@ public class TableSchemaSource(TypeDeclarationSyntax type, Compilation compilati
         }
 
         if (string.IsNullOrWhiteSpace(tableName))
-            return (schema, _sourseSymbol.Name);
+            return (schema, _sourseInfo.Symbol.Name);
         return (schema, tableName!);
     }
     #region AttributeType

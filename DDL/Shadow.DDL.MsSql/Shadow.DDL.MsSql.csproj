@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\package.props" />
-  <PropertyGroup>
-    <Version>$(VersionBase).2-alpha</Version>
-    <PackageId>ShadowSql.DDL.MsSql</PackageId>
-    <RootNamespace>ShadowSql.MsSql</RootNamespace>
-    <Description>拼接sql工具</Description>
-    <PackageTags>MsSql</PackageTags>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="readme.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
-    <ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
-  </ItemGroup>
+	<Import Project="..\..\package.props" />
+	<PropertyGroup>
+		<Version>$(VersionBase).0-alpha</Version>
+		<PackageId>ShadowSql.DDL.MsSql</PackageId>
+		<RootNamespace>ShadowSql.MsSql</RootNamespace>
+		<Description>拼接sql工具</Description>
+		<PackageTags>MsSql</PackageTags>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Engines\ShadowSql.Engines.MsSql\ShadowSql.Engines.MsSql.csproj" />
+		<ProjectReference Include="..\..\Shadow.DDL\Shadow.DDL.csproj" />
+	</ItemGroup>
 </Project>
